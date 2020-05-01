@@ -1,0 +1,5 @@
+[flake8]
+max-line-length = 88
+ignore =
+    E203, # See https://github.com/PyCQA/pycodestyle/issues/373
+    W503

@@ -1,0 +1,33 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+black = "*"
+isort = {extras = ["pipfile"],version = "*"}
+pytest = "~=4.6"
+flake8 = "*"
+python-githooks = "*"
+pytest-pythonpath = "*"
+mypy = "*"
+ptvsd = "*"
+coverage = "*"
+pytest-xdist = "*"
+ipython = "*"
+pre-commit = "*"
+
+[packages]
+
+[requires]
+python_version = "3.7"
+
+[pipenv]
+allow_prereleases = true
+
+[scripts]
+setup = "./scripts/setup.sh"
+test = "./scripts/test.sh"
+lint = "./scripts/lint.sh"
+format = "./scripts/format.sh"
+coverage = "./scripts/coverage.sh"
