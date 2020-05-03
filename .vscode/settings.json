@@ -3,6 +3,7 @@
   "editor.rulers": [88],
   "python.linting.enabled": true,
   "python.linting.flake8Enabled": true,
+  "python.jediEnabled": false,
   "python.linting.mypyEnabled": true,
   "python.envFile": "${workspaceFolder}/.env",
   "python.pythonPath": "${workspaceFolder}/.venv",
@@ -13,6 +14,7 @@
   "editor.formatOnSave": true,
   "files.exclude": {
     ".venv/": true,
-    ".pytest_cache/": true
+    ".pytest_cache/": true,
+    ".mypy_cache/": true
   }
 }
