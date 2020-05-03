@@ -6,7 +6,7 @@ verify_ssl = true
 [dev-packages]
 black = "*"
 isort = {extras = ["pipfile"],version = "*"}
-pytest = "~=4.6"
+pytest = "~=5.4"
 flake8 = "*"
 python-githooks = "*"
 pytest-pythonpath = "*"
@@ -16,6 +16,7 @@ coverage = "*"
 pytest-xdist = "*"
 ipython = "*"
 pre-commit = "*"
+pytest-asyncio = "*"
 
 [packages]
 pydantic = "~=1.5"
