@@ -18,9 +18,11 @@ ipython = "*"
 pre-commit = "*"
 
 [packages]
+pydantic = "~=1.5"
+motor = "~=2.1.0"
 
 [requires]
-python_version = "3.7"
+python_version = "3.8"
 
 [pipenv]
 allow_prereleases = true

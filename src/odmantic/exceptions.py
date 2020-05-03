@@ -1,0 +1,2 @@
+class MultiplePrimaryKeysException(BaseException):
+    pass
