@@ -17,6 +17,7 @@ pytest-xdist = "*"
 ipython = "*"
 pre-commit = "*"
 pytest-asyncio = "*"
+mkdocs-material = "*"
 
 [packages]
 pydantic = "~=1.5"

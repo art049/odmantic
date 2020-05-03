@@ -1,0 +1,20 @@
+site_name: ODMantic
+site_description: AsyncIO MongoDB ODM (Object Document Mapper) using python type hinting
+theme:
+  name: material
+  palette:
+    primary: light green
+    accent: light green
+  features:
+    - instant
+markdown_extensions:
+  - admonition
+  - codehilite:
+      linenums: false
+      guess_lang: false
+  - pymdownx.tabbed
+  - pymdownx.superfences
+
+nav:
+  - index.md
+  - API Reference: ...
