@@ -1,6 +1,6 @@
 import pytest
-from odmantic.fields import ObjectId
 from odmantic.session import AIOSession
+from odmantic.types import objectId
 
 from ..zoo.person import PersonModel
 
@@ -11,7 +11,7 @@ async def test_add(session: AIOSession):
     instance = await session.add(
         PersonModel(first_name="Jean-Pierre", last_name="Pernaud")
     )
-    assert isinstance(instance.id, ObjectId)
+    assert isinstance(instance.id, objectId)
 
 
 async def test_add_find(session: AIOSession):
@@ -31,11 +31,15 @@ async def test_add_multiple_simple_find(session: AIOSession):
     ]
     await session.add_all(initial_instances)
 
-    found_instances = await session.find(PersonModel, {"first_name": "Michel"})
+    found_instances = await session.find(
+        PersonModel, PersonModel.first_name == "Michel"
+    )
     assert len(found_instances) == 1
     assert found_instances[0].first_name == initial_instances[2].first_name
     assert found_instances[0].last_name == initial_instances[2].last_name
 
-    found_instances = await session.find(PersonModel, {"first_name": "Jean-Pierre"})
+    found_instances = await session.find(
+        PersonModel, PersonModel.first_name == "Jean-Pierre"
+    )
     assert len(found_instances) == 2
     assert found_instances[0].id != found_instances[1].id
