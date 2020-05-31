@@ -6,8 +6,6 @@ import pytest
 from motor.motor_asyncio import AsyncIOMotorClient
 from odmantic.session import AIOSession
 
-print()
-
 
 @pytest.fixture(scope="session")
 def event_loop():
@@ -24,11 +22,20 @@ def motor_client(event_loop):
     client.close()
 
 
+@pytest.fixture(scope="function")
+def database_name():
+    return f"odmantic-test-{uuid4()}"
+
+
 @pytest.mark.asyncio
 @pytest.fixture(scope="function")
-async def session(motor_client):
-    database_name = f"odmantic-test-{uuid4()}"
+async def session(motor_client, database_name):
     sess = AIOSession(motor_client, database_name)
     yield sess
     if os.getenv("TEST_DEBUG") is None:
         await motor_client.drop_database(database_name)
+
+
+@pytest.fixture(scope="function")
+def motor_database(database_name, motor_client):
+    return motor_client[database_name]
