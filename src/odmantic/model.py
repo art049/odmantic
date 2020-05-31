@@ -5,7 +5,8 @@ from typing import Dict, Optional, TypeVar, no_type_check
 import pydantic
 
 from .exceptions import MultiplePrimaryKeysException
-from .fields import MISSING_DEFAULT, Field, ObjectId
+from .fields import MISSING_DEFAULT, Field
+from .types import objectId
 
 UNTOUCHED_TYPES = FunctionType, property, type, classmethod, staticmethod
 
@@ -73,10 +74,12 @@ class Model(pydantic.BaseModel, metaclass=ModelMetaclass):
     __primary_key__: str
     __odm_name_mapping__: Dict[str, str]
 
-    id: Optional[ObjectId]
+    id: Optional[objectId]
 
-    # def __init_subclass__(cls):
-    #     ...
+    def __init_subclass__(cls):
+        for field in cls.__fields__.values():
+            setattr(cls, field.name, Field(mongo_name=field.name))
+        setattr(cls, "id", Field(primary_key=True, mongo_name="_id"))
 
 
 class EmbeddedModel(pydantic.BaseModel):
