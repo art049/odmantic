@@ -17,4 +17,5 @@ markdown_extensions:
 
 nav:
   - index.md
+  - types.md
   - API Reference: ...
