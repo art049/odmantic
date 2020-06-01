@@ -1,0 +1,27 @@
+
+0.0.1:
+  ☐ Handle default fields -> Save or not default values on optional fields
+  ☐ Support Embedded Documents
+  ☐ Support Reference Documents
+  ☐ Reuse pydantic Field constructor
+  ☐ truncate microseconds on validation
+  ☐ check that datetime is naive on validation
+  ☐ |,& operators
+  ☐ $type operator
+  ☐ Use directly bson types (same way pydantic builtin validators are defined)
+  ☐ Doc enum fields
+  ☐ None / Undefined / Null ?
+  ☐ Fix repr/ str ?
+
+
+
+
+
+Further Improvements:
+  ☐ Generate Mongo Schema
+  ☐ Read preferences
+  ☐ Retrieve only certain fields
+  ☐ Custom indexes
+  ☐ Aggregation pipeline
+  ☐ Handle transactions
+
