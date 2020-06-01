@@ -18,7 +18,7 @@ Additionnaly, all types supported by pydantic are supported. See [pydantic: Fiel
 | int                        |   long    | value not between -2^31 and 2^31 - 1                         |
 | bson.int64.Int64           |   long    |
 | float                      |  double   |
-| bson.decimal128.Decimal128 |  decimal  | decimal.Decimal is not supported                             |
+| bson.decimal128.Decimal128 |  decimal  | decimal.Decimal is not supported yet                         |
 | str                        |  string   |
 | typing.Pattern             |   regex   |
 | bytes                      |  binData  |

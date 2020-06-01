@@ -18,4 +18,5 @@ markdown_extensions:
 nav:
   - index.md
   - types.md
+  - fields.md
   - API Reference: ...

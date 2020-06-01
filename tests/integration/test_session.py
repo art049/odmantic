@@ -1,4 +1,5 @@
 import pytest
+
 from odmantic.session import AIOSession
 from odmantic.types import objectId
 
