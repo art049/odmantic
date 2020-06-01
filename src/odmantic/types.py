@@ -47,3 +47,16 @@ class decimal(BsonDecimal):
             return v
         a = decimal_validator(v)  # Todo change error behavior
         return cls(a)
+
+
+class binary(BsonBinary):
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate
+
+    @classmethod
+    def validate(cls, v):
+        if isinstance(v, (BsonBinary, cls)):
+            return v
+        a = bytes_validator(v)  # Todo change error behavior
+        return cls(a)

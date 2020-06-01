@@ -1,14 +1,14 @@
 import dataclasses
 from datetime import datetime, timezone
 from decimal import Decimal
-from typing import Dict, Generic, Pattern, Type, TypeVar
+from typing import Dict, Generic, List, Pattern, Sequence, Tuple, Type, TypeVar
 
 import pytest
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
 from odmantic.model import Model
 from odmantic.session import AIOSession
-from odmantic.types import decimal, long, objectId
+from odmantic.types import binary, decimal, long, objectId
 
 pytestmark = pytest.mark.asyncio
 
@@ -36,8 +36,12 @@ type_test_data = [
     TypeTestCase(Pattern, "regex", r"^.*$"),
     TypeTestCase(objectId, "objectId", objectId()),
     TypeTestCase(bytes, "binData", b"\xf0\xf1\xf2"),
+    TypeTestCase(binary, "binData", binary(b"\xf0\xf1\xf2")),
     TypeTestCase(datetime, "date", datetime.now()),
     TypeTestCase(datetime, "date", datetime.now(timezone.utc)),
+    TypeTestCase(List, "array", ["one"]),
+    TypeTestCase(Sequence, "array", ["one"]),
+    TypeTestCase(Tuple[str, ...], "array", ("one",)),
 ]
 
 
