@@ -2,7 +2,13 @@ from bson import ObjectId as BsonObjectId
 from bson.binary import Binary as BsonBinary
 from bson.decimal128 import Decimal128 as BsonDecimal
 from bson.int64 import Int64 as BsonLong
-from pydantic.validators import bytes_validator, decimal_validator, int_validator
+from bson.regex import Regex as BsonRegex
+from pydantic.validators import (
+    bytes_validator,
+    decimal_validator,
+    int_validator,
+    pattern_validator,
+)
 
 
 class objectId(BsonObjectId):
@@ -59,4 +65,17 @@ class binary(BsonBinary):
         if isinstance(v, (BsonBinary, cls)):
             return v
         a = bytes_validator(v)  # Todo change error behavior
+        return cls(a)
+
+
+class regex(BsonRegex):
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate
+
+    @classmethod
+    def validate(cls, v):
+        if isinstance(v, (BsonRegex, cls)):
+            return v
+        a = pattern_validator(v)  # Todo change error behavior
         return cls(a)
