@@ -23,8 +23,8 @@ class Field:
         mongo_name: Optional[str] = None,
         default=MISSING_DEFAULT
     ):
-        assert primary_key and (
-            mongo_name != "_id" or mongo_name is None
+        assert not primary_key or (
+            mongo_name == "_id" or mongo_name is None
         ), "Setting primary_key enforce the mongo_name to _id"
         self.primary_key = primary_key
         self.mongo_name = mongo_name  # actual field name in mongo
