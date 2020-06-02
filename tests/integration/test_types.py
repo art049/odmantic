@@ -1,5 +1,5 @@
 import dataclasses
-from datetime import datetime, timezone
+from datetime import datetime
 from decimal import Decimal
 from typing import Dict, Generic, List, Pattern, Sequence, Tuple, Type, TypeVar
 
@@ -64,7 +64,7 @@ async def test_type_inference(
     motor_database: AsyncIOMotorDatabase, session: AIOSession, case: TypeTestCase
 ):
     class ModelWithTypedField(Model):
-        field: case.python_type
+        field: case.python_type  # type: ignore
 
     instance = await session.add(ModelWithTypedField(field=case.sample_value))
     document = await motor_database[ModelWithTypedField.__collection__].find_one(
