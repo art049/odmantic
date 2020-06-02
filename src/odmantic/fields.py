@@ -1,4 +1,4 @@
-from typing import Any, Optional, Sequence
+from typing import Any, Generic, Optional, Sequence, Type, TypeVar, Union
 
 
 class _MISSING_TYPE:
@@ -83,3 +83,7 @@ class Field:
 
     def not_exists(self):
         return self.__cmp_expression__("$exists", False)
+
+
+def Reference() -> Any:
+    ...
