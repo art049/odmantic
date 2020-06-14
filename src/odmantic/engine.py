@@ -1,5 +1,5 @@
 import asyncio
-from typing import Dict, List, Sequence, Type, TypeVar, Union
+from typing import Dict, List, Optional, Sequence, Type, TypeVar, Union
 
 from motor.motor_asyncio import AsyncIOMotorClient
 
@@ -39,6 +39,18 @@ class AIOEngine:
             instance = model.parse_obj(doc)
             instances.append(instance)
         return instances
+
+    async def find_one(
+        self,
+        model: Type[ModelType],
+        query: Union[Dict, bool] = {},  # bool: allow using binary operators
+    ) -> Optional[ModelType]:
+        results = await self.find(
+            model, query, limit=1
+        )  # TODO: check if mongo find_one method is faster
+        if len(results) == 0:
+            return None
+        return results[0]
 
     async def add(self, instance: ModelType) -> ModelType:
         collection = self._get_collection(type(instance))
