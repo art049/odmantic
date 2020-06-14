@@ -6,7 +6,11 @@
 - ObjectId (objectId)
 - Decimal128 (decimal)
 
-Additionnaly, all types supported by pydantic are supported. See [pydantic: Field Types](https://pydantic-docs.helpmanual.io/usage/types) for more details.
+Additionnaly, most of the types supported by pydantic are supported. See [pydantic: Field Types](https://pydantic-docs.helpmanual.io/usage/types) for more details.
+
+## Unsupported types
+
+- typing.Set / set
 
 ## Python to BSON type mapping
 

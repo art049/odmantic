@@ -1,4 +1,4 @@
 from .engine import AIOEngine
-from .model import Model
+from .model import EmbeddedModel, Model
 
-__all__ = ["AIOEngine", "Model"]
+__all__ = ["AIOEngine", "Model", "EmbeddedModel"]

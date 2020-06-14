@@ -24,7 +24,7 @@ async def test_add_find_find_one(engine: AIOEngine):
     assert found_instances[0].last_name == initial_instance.last_name
 
     single_fetched_instance = await engine.find_one(
-        PersonModel, PersonModel.last_name == "Jean-Pierre"
+        PersonModel, PersonModel.first_name == "Jean-Pierre"
     )
     assert single_fetched_instance is not None
     assert single_fetched_instance.first_name == initial_instance.first_name
