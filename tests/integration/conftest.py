@@ -4,7 +4,8 @@ from uuid import uuid4
 
 import pytest
 from motor.motor_asyncio import AsyncIOMotorClient
-from odmantic.session import AIOSession
+
+from odmantic.engine import AIOEngine
 
 
 @pytest.fixture(scope="session")
@@ -29,8 +30,8 @@ def database_name():
 
 @pytest.mark.asyncio
 @pytest.fixture(scope="function")
-async def session(motor_client, database_name):
-    sess = AIOSession(motor_client, database_name)
+async def engine(motor_client, database_name):
+    sess = AIOEngine(motor_client, database_name)
     yield sess
     if os.getenv("TEST_DEBUG") is None:
         await motor_client.drop_database(database_name)

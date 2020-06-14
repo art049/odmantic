@@ -4,7 +4,7 @@
 
 ## Embedded Models
 
-```python hl_lines="9"
+```python hl_lines="1 9"
 class Publisher(Model):
     name: str
     founded: int

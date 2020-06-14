@@ -1,13 +1,13 @@
 import dataclasses
 from datetime import datetime
 from decimal import Decimal
-from typing import Dict, Generic, List, Pattern, Sequence, Tuple, Type, TypeVar
+from typing import Dict, Generic, List, Tuple, Type, TypeVar
 
 import pytest
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
+from odmantic.engine import AIOEngine
 from odmantic.model import Model
-from odmantic.session import AIOSession
 from odmantic.types import binary, decimal, long, objectId, regex
 
 pytestmark = pytest.mark.asyncio
@@ -45,31 +45,31 @@ type_test_data = [
     TypeTestCase(decimal, "decimal", decimal(Decimal("3.14159265359"))),
     TypeTestCase(Dict, "object", {"foo": "bar", "fizz": {"foo": "bar"}}),
     TypeTestCase(bool, "bool", False),
-    TypeTestCase(
-        Pattern, "regex", r"^.*$"
-    ),  # FIXME: Will be fixed with builtin bson type handling
+    # TypeTestCase(
+    #    Pattern, "regex", r"^.*$"
+    # ),  # FIXME: Will be fixed with builtin bson type handling
     TypeTestCase(regex, "regex", regex(r"^.*$", flags=32)),
     TypeTestCase(objectId, "objectId", objectId()),
     TypeTestCase(bytes, "binData", b"\xf0\xf1\xf2"),
     TypeTestCase(binary, "binData", binary(b"\xf0\xf1\xf2")),
     TypeTestCase(datetime, "date", sample_datetime),
     TypeTestCase(List, "array", ["one"]),
-    TypeTestCase(Sequence, "array", ["one"]),
     TypeTestCase(Tuple[str, ...], "array", ("one",)),
 ]
 
 
 @pytest.mark.parametrize("case", type_test_data)
 async def test_type_inference(
-    motor_database: AsyncIOMotorDatabase, session: AIOSession, case: TypeTestCase
+    motor_database: AsyncIOMotorDatabase, engine: AIOEngine, case: TypeTestCase
 ):
     class ModelWithTypedField(Model):
         field: case.python_type  # type: ignore
 
-    instance = await session.add(ModelWithTypedField(field=case.sample_value))
+    # TODO: Fix objectid optional (type: ignore)
+    instance = await engine.add(ModelWithTypedField(field=case.sample_value))
     document = await motor_database[ModelWithTypedField.__collection__].find_one(
         {
-            +ModelWithTypedField.id: instance.id,
+            +ModelWithTypedField.id: instance.id,  # type: ignore
             +ModelWithTypedField.field: {"$type": case.bson_type},
         }
     )

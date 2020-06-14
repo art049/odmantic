@@ -13,6 +13,7 @@ print(p)
 
 ```
 
+<!-- prettier-ignore -->
 !!! note
     For `typing.Optional` fields, `None` is already set to the default value
 
@@ -27,22 +28,21 @@ engine.save(Player(name="Jack"))
 
 Resulting document:
 
-``` json
+```json
 {
     "_id": ObjectId("5ed50fcad11d1975aa3d7a28"), # See the next section for more details
     "nickname": "Jack",
 }
 ```
 
+<!-- prettier-ignore -->
 !!! tip
-
     You can combine default values and custom field name by using the `default` keyword argument when building the field
     ``` python hl_lines="3"
     class Player(Model):
         name: str
         level: int = field(default=0, mongo_name="lvl")
     ```
-
 
 ## Primary key definition
 
@@ -51,7 +51,7 @@ Resulting document:
 If not explicitly declared, an `id` primary key will be added to each model (corresponding to the `_id` key in Mongo documents).
 This key will be populated when the instances are saved or fetched.
 
-``` python
+```python
 class Player(Model):
     name: str
 
@@ -65,6 +65,7 @@ print(leeroy)
 
 If you want to use a field as the primary key
 
+<!-- prettier-ignore -->
 !!! warning
     The Mongo name of the primary key field will be enforced to `_id`
 

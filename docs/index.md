@@ -31,11 +31,11 @@ print(person_instance.last_name)
 === "AsyncIO"
 
     ```python
-    from odmantic import AIOSession
     from motor.motor_asyncio import AsyncIOMotorClient
+    from odmantic import AIOEngine
 
     client = AsyncIOMotorClient("mongodb://localhost:27017/")
-    session = AIOSession(motor_client=client, db_name="example_db")
+    engine = AIOEngine(motor_client=client, db_name="example_db")
     ```
 
 === "Sync"
@@ -45,13 +45,13 @@ print(person_instance.last_name)
 === "AsyncIO"
 
     ```python
-    await session.add(person_instance)
+    await engine.add(person_instance)
     ```
 
 === "Sync"
 
     ```python
-    session.add(person_instance)
+    engine.add(person_instance)
     ```
 
 ## Querying instances
@@ -59,7 +59,7 @@ print(person_instance.last_name)
 === "AsyncIO"
 
     ```python
-    freddies = await session.find(Person, Person.first_name == "Freddie")
+    freddies = await engine.find(Person, Person.first_name == "Freddie")
     for fred in freddies:
         print(fred)
     #> Person(first_name="Freddie", last_name="Mercury")
@@ -69,7 +69,7 @@ print(person_instance.last_name)
 === "Sync"
 
     ```python
-    freddies = session.find(Person, Person.first_name == "Freddie")
+    freddies = engine.find(Person, Person.first_name == "Freddie")
     for fred in freddies:
         print(fred)
     #> Person(first_name="Freddie", last_name="Mercury")

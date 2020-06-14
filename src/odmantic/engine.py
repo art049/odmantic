@@ -9,13 +9,13 @@ from .types import objectId
 ModelType = TypeVar("ModelType", bound=Model)
 
 
-class AIOSession:
+class AIOEngine:
     def __init__(self, motor_client: AsyncIOMotorClient, db_name: str):
         self.client = motor_client
         self.db_name = db_name
         self.database = motor_client[self.db_name]
 
-    def _get_colletion(self, model: Type[ModelType]):
+    def _get_collection(self, model: Type[ModelType]):
         return self.database[model.__collection__]
 
     async def find(
@@ -26,7 +26,7 @@ class AIOSession:
         limit: int = 0,
         skip: int = 0
     ) -> List[ModelType]:
-        collection = self._get_colletion(model)
+        collection = self._get_collection(model)
         cursor = collection.find(query)
         cursor = cursor.limit(limit).skip(skip)
         docs = await cursor.to_list(length=None)
@@ -41,7 +41,7 @@ class AIOSession:
         return instances
 
     async def add(self, instance: ModelType) -> ModelType:
-        collection = self._get_colletion(type(instance))
+        collection = self._get_collection(type(instance))
 
         doc = instance.dict()
         for field_name, mongo_name in instance.__odm_name_mapping__:
