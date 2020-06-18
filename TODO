@@ -13,6 +13,11 @@
   None / Undefined / Null -> Undefined is deprecated None <-> Null
   ☐ Define policy for optional fields default set to null ?
   ☐ Fix repr/ str ?
+  ☐ Smart instance update
+  ☐ Read/Write concern
+  ☐ Duplicate key error/ Upsert
+  ☐ Array queries $elemMatch $all $size
+  ☐ Document usage outside odm (aggregation example)
 
 
   Further Improvements:
@@ -27,3 +32,4 @@
   ☐ Aggregation pipeline
   ☐ Handle transactions
   ☐ Set support
+  ☐ Collation support
