@@ -1,25 +1,27 @@
 
 0.0.1:
   ☐ Handle default fields -> Save or not default values on optional fields
-  ☐ Support Embedded Documents
+  Support Embedded Documents
+  ☐ Query document based on embedded document content
   ☐ Support Reference Documents
   ☐ Reuse pydantic Field constructor
   ☐ truncate microseconds on validation
   ☐ check that datetime is naive on validation
-  ☐ |,& operators
-  ☐ $type operator
+  |,& and other common expressions operators
   ☐ Use directly bson types (same way pydantic builtin validators are defined)
   ☐ Doc enum fields
-  ☐ None / Undefined / Null ?
+  None / Undefined / Null -> Undefined is deprecated None <-> Null
+  ☐ Define policy for optional fields default set to null ?
   ☐ Fix repr/ str ?
 
 
+  Further Improvements:
 
-
-
-Further Improvements:
+  ☐ Use bson.son for embedded documents https://docs.mongodb.com/manual/tutorial/query-array-of-documents/
+  ☐ Querying on embedded documents
   ☐ Generate Mongo Schema
   ☐ Read preferences
+  ☐ $type operator -> a bit contradictory to the ODM principle
   ☐ Retrieve only certain fields
   ☐ Custom indexes
   ☐ Aggregation pipeline
