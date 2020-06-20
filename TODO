@@ -15,7 +15,7 @@
   ☐ Fix repr/ str ?
   ☐ Smart instance update
   ☐ Read/Write concern
-  ☐ Duplicate key error
+  Duplicate key error
   ☐ Upsert
   ☐ Array queries $elemMatch $all $size
   ☐ Document usage outside odm (aggregation example)

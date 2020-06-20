@@ -101,6 +101,3 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-
-#Pipenv lock file to allow slightly different python versions
-Pipfile.lock
