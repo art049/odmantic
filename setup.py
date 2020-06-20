@@ -3,6 +3,7 @@ See:
 https://packaging.python.org/guides/distributing-packages-using-setuptools/
 https://github.com/pypa/sampleproject
 Modified by Madoshakalaka@Github (dependency links added)
+isort:skip_file
 """
 
 
@@ -151,7 +152,7 @@ setup(
     # a list of one or more dependency_links URLs where the package can
     # be downloaded, along with some additional hints, and setuptools
     # will find and install the package correctly.
-    # see https://python-packaging.readthedocs.io/en/latest/dependencies.html#packages-not-on-pypi
+    # see https://python-packaging.readthedocs.io/en/latest/dependencies.html#packages-not-on-pypi # noqa: E501
     #
     dependency_links=[],
     # If using Python 2.6 or earlier, then these have to be included in

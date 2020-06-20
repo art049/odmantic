@@ -28,6 +28,7 @@ repos:
     rev: v0.740
     hooks:
       - id: mypy
+        args: [--no-pretty]
   - repo: https://gitlab.com/pycqa/flake8.git
     rev: 8f9b4931b9a28896fb43edccb23016a7540f5b82
     hooks:

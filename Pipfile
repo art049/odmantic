@@ -5,7 +5,7 @@ verify_ssl = true
 
 [dev-packages]
 black = "*"
-isort = {extras = ["pipfile"],version = "*"}
+isort = {extras = ["pipfile"],version = "~=4.3"}
 pytest = "~=5.4"
 flake8 = "*"
 python-githooks = "*"
