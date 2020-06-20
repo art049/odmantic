@@ -15,12 +15,13 @@
   ☐ Fix repr/ str ?
   ☐ Smart instance update
   ☐ Read/Write concern
-  ☐ Duplicate key error/ Upsert
+  ☐ Duplicate key error
+  ☐ Upsert
   ☐ Array queries $elemMatch $all $size
   ☐ Document usage outside odm (aggregation example)
 
 
-  Further Improvements:
+Further Improvements:
 
   ☐ Use bson.son for embedded documents https://docs.mongodb.com/manual/tutorial/query-array-of-documents/
   ☐ Querying on embedded documents
@@ -29,6 +30,7 @@
   ☐ $type operator -> a bit contradictory to the ODM principle
   ☐ Retrieve only certain fields
   ☐ Custom indexes
+  ☐ Unique fields with indexes
   ☐ Aggregation pipeline
   ☐ Handle transactions
   ☐ Set support

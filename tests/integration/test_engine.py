@@ -1,6 +1,7 @@
 import pytest
 
 from odmantic.engine import AIOEngine
+from odmantic.exceptions import DuplicatePrimaryKeyError
 from odmantic.types import objectId
 
 from ..zoo.person import PersonModel
@@ -61,3 +62,16 @@ async def test_add_multiple_simple_find_find_one(engine: AIOEngine):
 
     assert single_retrieved is not None
     assert single_retrieved in initial_instances
+
+
+async def test_add_multiple_time_same_document(engine: AIOEngine):
+    fixed_id = objectId()
+    instance = PersonModel(first_name="Jean-Pierre", last_name="Pernaud", id=fixed_id)
+
+    await engine.add(instance)
+    with pytest.raises(DuplicatePrimaryKeyError) as exc:
+        await engine.add(instance)
+        assert exc.model is PersonModel
+        assert exc.duplicated_instance == instance
+        assert exc.duplicated_field == "id"
+        assert exc.duplicated_value == fixed_id

@@ -1,10 +1,9 @@
 import re
 from types import FunctionType
-from typing import Dict, Optional, TypeVar, no_type_check
+from typing import ClassVar, Dict, Optional, TypeVar, no_type_check
 
 import pydantic
 
-from .exceptions import MultiplePrimaryKeysException
 from .fields import MISSING_DEFAULT, Field
 from .types import objectId
 
@@ -40,11 +39,15 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
                 field_cls_default = namespace.get(field_name)
                 if isinstance(field_cls_default, Field):
                     if field_cls_default.primary_key:
-                        if primary_key is not None:
-                            # TODO handle inheritance with primary keys
-                            raise MultiplePrimaryKeysException
+                        # TODO handle inheritance with primary keys
+                        assert (
+                            primary_key is None
+                        ), f"Cannot define multiple primary keys on model {name}"
+                        assert field_cls_default.mongo_name is None, (
+                            f"Cannot customize name={field_cls_default.mongo_name}"
+                            f" on a primary key field model: {name}"
+                        )
                         primary_key = field_name
-                        # TODO handle primary key + mongo_name
 
                     if field_cls_default.mongo_name is not None:
                         odm_name_mapping[field_name] = field_cls_default.mongo_name
@@ -53,6 +56,8 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
                         namespace[field_name] = field_cls_default.default
                     else:
                         del namespace[field_name]
+            if primary_key is None:
+                primary_key = "id"
             # TODO handle auto primary key
             namespace["__primary_key__"] = primary_key
             namespace["__odm_name_mapping__"] = odm_name_mapping
@@ -70,9 +75,9 @@ T = TypeVar("T", bound="Model")
 
 
 class Model(pydantic.BaseModel, metaclass=ModelMetaclass):
-    __collection__: str
-    __primary_key__: str
-    __odm_name_mapping__: Dict[str, str]
+    __collection__: ClassVar[str]
+    __primary_key__: ClassVar[str]
+    __odm_name_mapping__: ClassVar[Dict[str, str]]
 
     id: Optional[objectId]
 

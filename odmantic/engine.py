@@ -2,6 +2,9 @@ import asyncio
 from typing import Dict, List, Optional, Sequence, Type, TypeVar, Union
 
 from motor.motor_asyncio import AsyncIOMotorClient
+from pymongo.errors import DuplicateKeyError as PyMongoDuplicateKeyError
+
+from odmantic.exceptions import DuplicatePrimaryKeyError
 
 from .model import Model
 from .types import objectId
@@ -59,12 +62,20 @@ class AIOEngine:
         for field_name, mongo_name in instance.__odm_name_mapping__.items():
             doc[mongo_name] = doc[field_name]
             del doc[field_name]
-        if doc["id"] is not None:
+        instance_has_existing_id = doc["id"] is not None
+        if instance_has_existing_id:
             doc["_id"] = doc["id"]
         del doc["id"]
-        result = await collection.insert_one(doc, bypass_document_validation=True)
-        _id = objectId(str(result.inserted_id))
-        instance.__setattr__("id", _id)
+
+        try:
+            result = await collection.insert_one(doc, bypass_document_validation=True)
+        except PyMongoDuplicateKeyError as e:
+            if "_id" in e.details["keyPattern"]:
+                raise DuplicatePrimaryKeyError(instance)
+
+        if not instance_has_existing_id:
+            _id = objectId(str(result.inserted_id))
+            instance.__setattr__("id", _id)
 
         return instance
 
