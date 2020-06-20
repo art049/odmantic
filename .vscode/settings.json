@@ -3,7 +3,6 @@
   "editor.rulers": [88],
   "python.linting.enabled": true,
   "python.linting.flake8Enabled": true,
-  "python.jediEnabled": false,
   "python.linting.mypyEnabled": true,
   "python.envFile": "${workspaceFolder}/.env",
   "python.pythonPath": "${workspaceFolder}/.venv",
@@ -16,5 +15,10 @@
     ".venv/": true,
     ".pytest_cache/": true,
     ".mypy_cache/": true
-  }
+  },
+  "python.languageServer": "Microsoft",
+  "python.linting.mypyArgs": [
+    "--config-file=${workspaceFolder}/mypy.ini",
+    "--no-pretty"
+  ]
 }

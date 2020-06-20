@@ -18,6 +18,8 @@ ipython = "*"
 pre-commit = "*"
 pytest-asyncio = "*"
 mkdocs-material = "*"
+pipenv-setup = "*"
+odmantic = {editable = true,path = "."}
 
 [packages]
 pydantic = "~=1.5"

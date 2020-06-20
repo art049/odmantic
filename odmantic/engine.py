@@ -32,7 +32,7 @@ class AIOEngine:
         docs = await cursor.to_list(length=None)
         instances = []
         for doc in docs:
-            for field_name, mongo_name in model.__odm_name_mapping__:
+            for field_name, mongo_name in model.__odm_name_mapping__.items():
                 doc[field_name] = doc[mongo_name]
                 del doc[mongo_name]
             doc["id"] = doc["_id"]
@@ -56,7 +56,7 @@ class AIOEngine:
         collection = self._get_collection(type(instance))
 
         doc = instance.dict()
-        for field_name, mongo_name in instance.__odm_name_mapping__:
+        for field_name, mongo_name in instance.__odm_name_mapping__.items():
             doc[mongo_name] = doc[field_name]
             del doc[field_name]
         if doc["id"] is not None:
