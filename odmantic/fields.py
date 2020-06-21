@@ -151,6 +151,8 @@ class ODMFieldInfo:
 class ODMField:
     """Used to interact with the ODM model class"""
 
+    __slots__ = ("primary_field", "key_name")
+
     def __init__(self, *, primary_field: bool, key_name: str):
         self.primary_field = primary_field
         self.key_name = key_name  # actual field name in mongo
