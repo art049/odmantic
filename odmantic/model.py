@@ -16,6 +16,7 @@ from typing import (
 
 import pydantic
 from pydantic.fields import Field as PDField
+from pydantic.fields import FieldInfo as PDFieldInfo
 from pydantic.fields import Undefined
 from pydantic.types import PyObject
 from pydantic.typing import resolve_annotations
@@ -87,6 +88,10 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
                 elif value is Undefined:
                     odm_fields[field_name] = ODMField(
                         primary_field=False, key_name=field_name
+                    )
+                elif value is PDFieldInfo:
+                    raise TypeError(
+                        "please use odmantic.Field instead of pydantic.Field"
                     )
                 else:
                     raise TypeError(f"Unhandled field definition {name}:{value}")

@@ -1,4 +1,7 @@
+from typing import Any
+
 import pytest
+from pydantic import Field as PDField
 
 from odmantic.fields import Field
 from odmantic.model import Model
@@ -43,3 +46,23 @@ def test_duplicated_key_name():
         class M(Model):
             a: int
             b: int = Field(key_name="a")
+
+
+def test_wrong_model_field():
+    with pytest.raises(TypeError):
+
+        class M(Model):
+            a: int = PDField()
+
+
+def test_unknown_model_field():
+    class UnknownType:
+        pass
+
+    def U() -> Any:
+        return UnknownType()
+
+    with pytest.raises(TypeError):
+
+        class M(Model):
+            a: int = U()
