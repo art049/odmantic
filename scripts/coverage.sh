@@ -1,5 +1,5 @@
 #!/bin/bash
 set -e
-coverage run -m pytest -c pytest.ini
+coverage run -m pytest -c pytest.ini -v
 coverage report -m
-coverage html
+coverage xml
