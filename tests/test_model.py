@@ -1,3 +1,6 @@
+import pytest
+
+from odmantic.fields import Field
 from odmantic.model import Model
 
 
@@ -32,3 +35,11 @@ def test_auto_collection_name_nested():
         __collection__ = "collection_name"
 
     assert TheNestedClassNameOverriden.__collection__ == "collection_name"
+
+
+def test_duplicated_key_name():
+    with pytest.raises(TypeError):
+
+        class M(Model):
+            a: int
+            b: int = Field(key_name="a")

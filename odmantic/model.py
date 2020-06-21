@@ -6,6 +6,8 @@ from typing import (
     ClassVar,
     Dict,
     Optional,
+    Sequence,
+    Set,
     Type,
     TypeVar,
     cast,
@@ -32,6 +34,15 @@ def is_valid_odm_field(name: str) -> bool:
 def to_snake_case(s: str) -> str:
     tmp = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", s)
     return re.sub("([a-z0-9])([A-Z])", r"\1_\2", tmp).lower()
+
+
+def are_key_names_uniques(fields: Sequence[ODMField]) -> Optional[str]:
+    seen: Set[str] = set()
+    for f in fields:
+        if f.key_name in seen:
+            return f.key_name
+        seen.add(f.key_name)
+    return None
 
 
 class ModelMetaclass(pydantic.main.ModelMetaclass):
@@ -66,9 +77,11 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
                             )
                         primary_field = field_name
 
+                    key_name = (
+                        value.key_name if value.key_name is not None else field_name
+                    )
                     odm_fields[field_name] = ODMField(
-                        primary_field=value.primary_field,
-                        key_name=value.keyname or field_name,
+                        primary_field=value.primary_field, key_name=key_name
                     )
                     namespace[field_name] = value.pydantic_field_info
                 elif value is Undefined:
@@ -76,11 +89,11 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
                         primary_field=False, key_name=field_name
                     )
                 else:
-                    raise TypeError(f"Unhandled field definition {value}")
+                    raise TypeError(f"Unhandled field definition {name}:{value}")
 
             for field_name, value in namespace.items():
                 if (
-                    field_name not in annotations
+                    field_name in annotations
                     or not is_valid_odm_field(field_name)
                     or isinstance(value, UNTOUCHED_TYPES)
                 ):
@@ -88,11 +101,14 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
                 odm_fields[field_name] = ODMField(
                     primary_field=False, key_name=field_name
                 )
-            # TODO check ambiguity when key_name used multiple times
             if primary_field is None:
                 primary_field = "id"
                 odm_fields["id"] = ODMField(primary_field=True, key_name="_id")
                 namespace["id"] = PDField(default_factory=objectId)
+
+            duplicate_key = are_key_names_uniques(odm_fields.values())
+            if duplicate_key is not None:
+                raise TypeError(f"Duplicate key_name: {duplicate_key} in {name}")
 
             namespace["__odm_fields__"] = odm_fields
             namespace["__primary_key__"] = primary_field

@@ -1,7 +1,7 @@
 import enum
 from typing import Dict, List
 
-from odmantic.fields import field
+from odmantic.fields import Field
 from odmantic.model import Model
 
 
@@ -11,8 +11,8 @@ class TreeKind(str, enum.Enum):
 
 
 class TreeModel(Model):
-    name: str = field(primary_key=True, default="Acacia des montagnes")
-    average_size: float = field(mongo_name="size")
+    name: str = Field(primary_key=True, default="Acacia des montagnes")
+    average_size: float = Field(mongo_name="size")
     discovery_year: int
     kind: TreeKind
     genesis_continents: List[str]

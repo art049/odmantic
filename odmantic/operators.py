@@ -4,7 +4,7 @@ Query operators
 
 from typing import Any, Sequence
 
-from .fields import Field
+from .fields import ODMField
 
 
 def not_(element):
@@ -23,8 +23,8 @@ def nor_(*elements):
     return {"$nor": elements}
 
 
-def _cmp_expression(f: Field, op: str, value: Any):
-    return {f.mongo_name: {op: value}}
+def _cmp_expression(f: ODMField, op: str, value: Any):
+    return {f.key_name: {op: value}}
 
 
 def eq(field, value):

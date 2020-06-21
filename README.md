@@ -7,6 +7,7 @@
 [![codecov](https://codecov.io/gh/.../........)](https://codecov.io/gh/.....)
 [![Maintainability](https://api.codeclimate.com/v1/badges/......)](https://codeclimate.com/repos/....)
 -->
+
 [![Build status](https://github.com/art049/odmantic/workflows/build/badge.svg)](https://github.com/art049/odmantic/actions?query=workflow%3A%22build%22+branch%3Amaster)
 ![Docs status](https://github.com/art049/odmantic/workflows/docs/badge.svg)
 ![Python: 3.8](https://img.shields.io/badge/python-3.8-informational.svg)
