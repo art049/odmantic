@@ -1,13 +1,28 @@
 import re
 from types import FunctionType
-from typing import ClassVar, Dict, Optional, TypeVar, no_type_check
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    ClassVar,
+    Dict,
+    Optional,
+    Type,
+    TypeVar,
+    cast,
+    no_type_check,
+)
 
 import pydantic
+from pydantic.fields import Field as PDField
+from pydantic.fields import Undefined
+from pydantic.types import PyObject
+from pydantic.typing import resolve_annotations
 
-from .fields import MISSING_DEFAULT, Field
+from odmantic.fields import ODMField, ODMFieldInfo
+
 from .types import objectId
 
-UNTOUCHED_TYPES = FunctionType, property, type, classmethod, staticmethod
+UNTOUCHED_TYPES = FunctionType, property, classmethod, staticmethod
 
 
 def is_valid_odm_field(name: str) -> bool:
@@ -20,51 +35,72 @@ def to_snake_case(s: str) -> str:
 
 
 class ModelMetaclass(pydantic.main.ModelMetaclass):
-    @no_type_check  # noqa C901
+    @no_type_check
     def __new__(cls, name, bases, namespace, **kwargs):  # noqa C901
         if (namespace.get("__module__"), namespace.get("__qualname__")) != (
-            "model",
+            "odmantic.model",
             "Model",
         ):
             print(cls)
             print(name)
             print(bases)
             print(namespace)
-            primary_key: Optional[str] = None
-            odm_name_mapping: Dict[str, str] = {}
-            annotations = namespace.get("__annotations__", {})
-            for field_name in annotations:
-                if not is_valid_odm_field(field_name):
+            annotations = resolve_annotations(
+                namespace.get("__annotations__", {}), namespace.get("__module__")
+            )
+            primary_field: Optional[str] = None
+            odm_fields: Dict[str, ODMField] = {}
+            # TODO handle class vars
+            for (field_name, field_type) in annotations.items():
+                if not is_valid_odm_field(field_name) or (
+                    isinstance(field_type, UNTOUCHED_TYPES) and field_type != PyObject
+                ):
                     continue
-                field_cls_default = namespace.get(field_name)
-                if isinstance(field_cls_default, Field):
-                    if field_cls_default.primary_key:
+                value = namespace.get(field_name, Undefined)
+                if isinstance(value, ODMFieldInfo):
+                    if value.primary_field:
                         # TODO handle inheritance with primary keys
-                        assert (
-                            primary_key is None
-                        ), f"Cannot define multiple primary keys on model {name}"
-                        assert field_cls_default.mongo_name is None, (
-                            f"Cannot customize name={field_cls_default.mongo_name}"
-                            f" on a primary key field model: {name}"
-                        )
-                        primary_key = field_name
+                        if primary_field is not None:
+                            raise TypeError(
+                                f"cannot define multiple primary keys on model {name}"
+                            )
+                        primary_field = field_name
 
-                    if field_cls_default.mongo_name is not None:
-                        odm_name_mapping[field_name] = field_cls_default.mongo_name
+                    odm_fields[field_name] = ODMField(
+                        primary_field=value.primary_field,
+                        key_name=value.keyname or field_name,
+                    )
+                    namespace[field_name] = value.pydantic_field_info
+                elif value is Undefined:
+                    odm_fields[field_name] = ODMField(
+                        primary_field=False, key_name=field_name
+                    )
+                else:
+                    raise TypeError(f"Unhandled field definition {value}")
 
-                    if field_cls_default.default is not MISSING_DEFAULT:
-                        namespace[field_name] = field_cls_default.default
-                    else:
-                        del namespace[field_name]
-            if primary_key is None:
-                primary_key = "id"
-            # TODO handle auto primary key
-            namespace["__primary_key__"] = primary_key
-            namespace["__odm_name_mapping__"] = odm_name_mapping
+            for field_name, value in namespace.items():
+                if (
+                    field_name not in annotations
+                    or not is_valid_odm_field(field_name)
+                    or isinstance(value, UNTOUCHED_TYPES)
+                ):
+                    continue
+                odm_fields[field_name] = ODMField(
+                    primary_field=False, key_name=field_name
+                )
+            # TODO check ambiguity when key_name used multiple times
+            if primary_field is None:
+                primary_field = "id"
+                odm_fields["id"] = ODMField(primary_field=True, key_name="_id")
+                namespace["id"] = PDField(default_factory=objectId)
+
+            namespace["__odm_fields__"] = odm_fields
+            namespace["__primary_key__"] = primary_field
 
             if "__collection__" not in namespace:
                 cls_name = name
                 if cls_name.endswith("Model"):
+                    # TODO document this
                     cls_name = cls_name[:-5]  # Strip Model in the class name
                 namespace["__collection__"] = to_snake_case(cls_name)
 
@@ -75,16 +111,30 @@ T = TypeVar("T", bound="Model")
 
 
 class Model(pydantic.BaseModel, metaclass=ModelMetaclass):
-    __collection__: ClassVar[str]
-    __primary_key__: ClassVar[str]
-    __odm_name_mapping__: ClassVar[Dict[str, str]]
+    if TYPE_CHECKING:
+        __collection__: ClassVar[str] = ""
+        __primary_key__: ClassVar[str] = ""
+        __odm_fields__: ClassVar[Dict[str, ODMField]] = {}
 
-    id: Optional[objectId]
+    __slots__ = ()
 
     def __init_subclass__(cls):
-        for field in cls.__fields__.values():
-            setattr(cls, field.name, Field(mongo_name=field.name))
-        setattr(cls, "id", Field(primary_key=True, mongo_name="_id"))
+        for name, field in cls.__odm_fields__.items():
+            setattr(cls, name, field)
+
+    @classmethod
+    def parse_doc(cls: Type[T], raw_doc: Dict) -> T:
+        doc: Dict[str, Any] = {}
+        for field_name, field in cls.__odm_fields__.items():
+            doc[field_name] = raw_doc[field.key_name]
+        return cast(T, cls.parse_obj(doc))
+
+    def doc(self) -> Dict[str, Any]:
+        raw_doc = self.dict()
+        doc: Dict[str, Any] = {}
+        for field_name, field in self.__odm_fields__.items():
+            doc[field.key_name] = raw_doc[field_name]
+        return doc
 
 
 class EmbeddedModel(pydantic.BaseModel):

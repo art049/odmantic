@@ -12,7 +12,7 @@
   "python.testing.pytestEnabled": true,
   "editor.formatOnSave": true,
   "files.exclude": {
-    ".venv/": true,
+    ".venv/": false,
     ".pytest_cache/": true,
     ".mypy_cache/": true
   },

@@ -1,5 +1,6 @@
 [flake8]
 max-line-length = 88
+max-complexity = 10
 ignore =
     E203, # See https://github.com/PyCQA/pycodestyle/issues/373
     W503

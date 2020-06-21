@@ -7,7 +7,6 @@ from pymongo.errors import DuplicateKeyError as PyMongoDuplicateKeyError
 from odmantic.exceptions import DuplicatePrimaryKeyError
 
 from .model import Model
-from .types import objectId
 
 ModelType = TypeVar("ModelType", bound=Model)
 
@@ -32,14 +31,10 @@ class AIOEngine:
         collection = self._get_collection(model)
         cursor = collection.find(query)
         cursor = cursor.limit(limit).skip(skip)
-        docs = await cursor.to_list(length=None)
+        raw_docs = await cursor.to_list(length=None)
         instances = []
-        for doc in docs:
-            for field_name, mongo_name in model.__odm_name_mapping__.items():
-                doc[field_name] = doc[mongo_name]
-                del doc[mongo_name]
-            doc["id"] = doc["_id"]
-            instance = model.parse_obj(doc)
+        for raw_doc in raw_docs:
+            instance = model.parse_doc(raw_doc)
             instances.append(instance)
         return instances
 
@@ -58,25 +53,12 @@ class AIOEngine:
     async def add(self, instance: ModelType) -> ModelType:
         collection = self._get_collection(type(instance))
 
-        doc = instance.dict()
-        for field_name, mongo_name in instance.__odm_name_mapping__.items():
-            doc[mongo_name] = doc[field_name]
-            del doc[field_name]
-        instance_has_existing_id = doc["id"] is not None
-        if instance_has_existing_id:
-            doc["_id"] = doc["id"]
-        del doc["id"]
-
+        doc = instance.doc()
         try:
-            result = await collection.insert_one(doc, bypass_document_validation=True)
+            await collection.insert_one(doc, bypass_document_validation=True)
         except PyMongoDuplicateKeyError as e:
             if "_id" in e.details["keyPattern"]:
                 raise DuplicatePrimaryKeyError(instance)
-
-        if not instance_has_existing_id:
-            _id = objectId(str(result.inserted_id))
-            instance.__setattr__("id", _id)
-
         return instance
 
     async def add_all(self, instances: Sequence[ModelType]) -> List[ModelType]:

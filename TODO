@@ -1,6 +1,5 @@
 
 0.0.1:
-  ☐ Handle default fields -> Save or not default values on optional fields
   Support Embedded Documents
   ☐ Query document based on embedded document content
   ☐ Support Reference Documents
@@ -19,12 +18,15 @@
   ☐ Upsert
   ☐ Array queries $elemMatch $all $size
   ☐ Document usage outside odm (aggregation example)
+  ☐ Support Documents/EmbeddedDocuments inheritance
 
 
 Further Improvements:
 
   ☐ Use bson.son for embedded documents https://docs.mongodb.com/manual/tutorial/query-array-of-documents/
   ☐ Querying on embedded documents
+  ☐ Enable usage of document not matching the schema
+  ☐ Custom field types
   ☐ Generate Mongo Schema
   ☐ Read preferences
   ☐ $type operator -> a bit contradictory to the ODM principle
