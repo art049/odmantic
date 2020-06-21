@@ -2,19 +2,13 @@
 
 # ODMantic
 
-<!---
-
-[![codecov](https://codecov.io/gh/.../........)](https://codecov.io/gh/.....)
-[![Maintainability](https://api.codeclimate.com/v1/badges/......)](https://codeclimate.com/repos/....)
--->
-
 [![Build status](https://github.com/art049/odmantic/workflows/build/badge.svg)](https://github.com/art049/odmantic/actions?query=workflow%3A%22build%22+branch%3Amaster)
 ![Docs status](https://github.com/art049/odmantic/workflows/docs/badge.svg)
+[![codecov](https://codecov.io/gh/art049/odmantic/branch/master/graph/badge.svg?token=3NYZK14STZ)](https://codecov.io/gh/art049/odmantic)
 ![Python: 3.8](https://img.shields.io/badge/python-3.8-informational.svg)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
 [![mypy: checked](https://img.shields.io/badge/mypy-checked-informational.svg)](http://mypy-lang.org/)
-[![Manager: pipenv](https://img.shields.io/badge/manager-pipenv-blueviolet.svg)](https://github.com/pypa/pipenv)
 
 </div>
 
