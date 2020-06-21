@@ -3,7 +3,7 @@
   Support Embedded Documents
   ☐ Query document based on embedded document content
   ☐ Support Reference Documents
-  ☐ Reuse pydantic Field constructor
+  Reuse pydantic Field constructor
   ☐ truncate microseconds on validation
   ☐ check that datetime is naive on validation
   |,& and other common expressions operators
