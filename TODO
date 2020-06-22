@@ -14,6 +14,7 @@
   ☐ Fix repr/ str ?
   ☐ Smart instance update
   ☐ Read/Write concern
+  ☐ Write timeout
   Duplicate key error
   ☐ Upsert
   ☐ Array queries $elemMatch $all $size
