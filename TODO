@@ -29,7 +29,7 @@ Further Improvements:
   ☐ Enable usage of document not matching the schema
   ☐ Custom field types
   ☐ Generate Mongo Schema
-  ☐ Read preferences
+  ☐ $text operator for search
   ☐ $type operator -> a bit contradictory to the ODM principle
   ☐ Retrieve only certain fields
   ☐ Custom indexes
