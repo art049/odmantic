@@ -1,10 +1,36 @@
-"""
-Query operators
-"""
+from __future__ import annotations
 
-from typing import Any, Sequence
+from typing import TYPE_CHECKING, Any, Dict, Sequence
 
-from .fields import ODMField
+if TYPE_CHECKING:
+    from .fields import ODMField
+
+
+class QueryExpression(Dict[str, Any]):
+    @staticmethod
+    def or_(*expressions: QueryExpression):
+        return QueryExpression({"$or": expressions})
+
+    def __or__(self, other: QueryExpression):
+        return QueryExpression.or_(self, other)
+
+    @staticmethod
+    def and_(*expressions: QueryExpression):
+        return QueryExpression({"$and": expressions})
+
+    def __and__(self, other: QueryExpression):
+        return QueryExpression.and_(self, other)
+
+    @staticmethod
+    def not_(expression: QueryExpression):
+        return QueryExpression({"$not": expression})
+
+    def __invert__(self):
+        return QueryExpression.not_(self)
+
+    @staticmethod
+    def nor_(*expressions: QueryExpression):
+        return QueryExpression({"$nor": expressions})
 
 
 def not_(element):

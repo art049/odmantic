@@ -21,7 +21,8 @@ from pydantic.fields import Undefined
 from pydantic.types import PyObject
 from pydantic.typing import resolve_annotations
 
-from odmantic.fields import ODMField, ODMFieldInfo
+from odmantic.fields import ODMBaseField, ODMField, ODMFieldInfo
+from odmantic.reference import ODMReference, ODMReferenceInfo
 
 from .types import objectId
 
@@ -37,7 +38,7 @@ def to_snake_case(s: str) -> str:
     return re.sub("([a-z0-9])([A-Z])", r"\1_\2", tmp).lower()
 
 
-def are_key_names_uniques(fields: Sequence[ODMField]) -> Optional[str]:
+def find_duplicate_key(fields: Sequence[ODMField]) -> Optional[str]:
     seen: Set[str] = set()
     for f in fields:
         if f.key_name in seen:
@@ -61,7 +62,7 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
                 namespace.get("__annotations__", {}), namespace.get("__module__")
             )
             primary_field: Optional[str] = None
-            odm_fields: Dict[str, ODMField] = {}
+            odm_fields: Dict[str, ODMBaseField] = {}
             # TODO handle class vars
             for (field_name, field_type) in annotations.items():
                 if not is_valid_odm_field(field_name) or (
@@ -85,14 +86,30 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
                         primary_field=value.primary_field, key_name=key_name
                     )
                     namespace[field_name] = value.pydantic_field_info
+
+                elif isinstance(value, ODMReferenceInfo):
+                    if not issubclass(field_type, Model):
+                        raise TypeError(
+                            f"cannot define a reference {field_name} (in {name}) on "
+                            "a model not created with odmantic.Model"
+                        )
+                    key_name = (
+                        value.key_name if value.key_name is not None else field_name
+                    )
+                    odm_fields[field_name] = ODMReference(
+                        model=field_type, key_name=key_name
+                    )
+
                 elif value is Undefined:
                     odm_fields[field_name] = ODMField(
                         primary_field=False, key_name=field_name
                     )
+
                 elif value is PDFieldInfo:
                     raise TypeError(
                         "please use odmantic.Field instead of pydantic.Field"
                     )
+
                 else:
                     raise TypeError(f"Unhandled field definition {name}:{value}")
 
@@ -111,7 +128,7 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
                 odm_fields["id"] = ODMField(primary_field=True, key_name="_id")
                 namespace["id"] = PDField(default_factory=objectId)
 
-            duplicate_key = are_key_names_uniques(odm_fields.values())
+            duplicate_key = find_duplicate_key(odm_fields.values())
             if duplicate_key is not None:
                 raise TypeError(f"Duplicate key_name: {duplicate_key} in {name}")
 
@@ -135,7 +152,7 @@ class Model(pydantic.BaseModel, metaclass=ModelMetaclass):
     if TYPE_CHECKING:
         __collection__: ClassVar[str] = ""
         __primary_key__: ClassVar[str] = ""
-        __odm_fields__: ClassVar[Dict[str, ODMField]] = {}
+        __odm_fields__: ClassVar[Dict[str, ODMBaseField]] = {}
 
     __slots__ = ()
 

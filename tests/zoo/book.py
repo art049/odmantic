@@ -1,5 +1,5 @@
-from odmantic.fields import Reference
 from odmantic.model import Model
+from odmantic.reference import Reference
 
 
 class Publisher(Model):

@@ -1,38 +1,14 @@
 from __future__ import annotations
 
-from typing import Any, Dict, Optional, Pattern, Sequence
+import abc
+from typing import Any, Optional, Pattern, Sequence
 
 from pydantic.fields import Field as PDField
 from pydantic.fields import FieldInfo, Undefined
 
+from odmantic.query import QueryExpression
+
 from .typing import NoArgAnyCallable
-
-
-class QueryExpression(Dict[str, Any]):
-    @staticmethod
-    def or_(*expressions: QueryExpression):
-        return QueryExpression({"$or": expressions})
-
-    def __or__(self, other: QueryExpression):
-        return QueryExpression.or_(self, other)
-
-    @staticmethod
-    def and_(*expressions: QueryExpression):
-        return QueryExpression({"$and": expressions})
-
-    def __and__(self, other: QueryExpression):
-        return QueryExpression.and_(self, other)
-
-    @staticmethod
-    def not_(expression: QueryExpression):
-        return QueryExpression({"$not": expression})
-
-    def __invert__(self):
-        return QueryExpression.not_(self)
-
-    @staticmethod
-    def nor_(*expressions: QueryExpression):
-        return QueryExpression({"$nor": expressions})
 
 
 def Field(
@@ -148,14 +124,22 @@ class ODMFieldInfo:
         self.key_name = key_name
 
 
-class ODMField:
+class ODMBaseField(metaclass=abc.ABCMeta):
+
+    __slots__ = ("key_name",)
+
+    def __init__(self, key_name: str):
+        self.key_name = key_name
+
+
+class ODMField(ODMBaseField):
     """Used to interact with the ODM model class"""
 
-    __slots__ = ("primary_field", "key_name")
+    __slots__ = ("primary_field",)
 
     def __init__(self, *, primary_field: bool, key_name: str):
+        super().__init__(key_name)
         self.primary_field = primary_field
-        self.key_name = key_name  # actual field name in mongo
 
     def __pos__(self):
         return self.key_name
@@ -215,7 +199,3 @@ class ODMField:
         # FIXME might create incompatibilities
         # https://docs.mongodb.com/manual/reference/operator/query/regex/#regex-and-not
         return QueryExpression({self.key_name: pattern})
-
-
-def Reference() -> Any:
-    ...
