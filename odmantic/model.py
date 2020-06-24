@@ -5,9 +5,11 @@ from typing import (
     Any,
     ClassVar,
     Dict,
+    List,
     Optional,
     Sequence,
     Set,
+    Tuple,
     Type,
     TypeVar,
     cast,
@@ -63,6 +65,7 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
             )
             primary_field: Optional[str] = None
             odm_fields: Dict[str, ODMBaseField] = {}
+            references: List[str] = []
             # TODO handle class vars
             for (field_name, field_type) in annotations.items():
                 if not is_valid_odm_field(field_name) or (
@@ -99,7 +102,7 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
                     odm_fields[field_name] = ODMReference(
                         model=field_type, key_name=key_name
                     )
-
+                    references.append(field_name)
                 elif value is Undefined:
                     odm_fields[field_name] = ODMField(
                         primary_field=False, key_name=field_name
@@ -114,6 +117,7 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
                     raise TypeError(f"Unhandled field definition {name}:{value}")
 
             for field_name, value in namespace.items():
+                # TODO check referecnes defined without type
                 if (
                     field_name in annotations
                     or not is_valid_odm_field(field_name)
@@ -133,6 +137,7 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
                 raise TypeError(f"Duplicate key_name: {duplicate_key} in {name}")
 
             namespace["__odm_fields__"] = odm_fields
+            namespace["__references__"] = tuple(references)
             namespace["__primary_key__"] = primary_field
 
             if "__collection__" not in namespace:
@@ -153,6 +158,8 @@ class Model(pydantic.BaseModel, metaclass=ModelMetaclass):
         __collection__: ClassVar[str] = ""
         __primary_key__: ClassVar[str] = ""
         __odm_fields__: ClassVar[Dict[str, ODMBaseField]] = {}
+        __references__: ClassVar[Tuple[str, ...]] = ()
+        id: objectId
 
     __slots__ = ()
 
@@ -164,14 +171,20 @@ class Model(pydantic.BaseModel, metaclass=ModelMetaclass):
     def parse_doc(cls: Type[T], raw_doc: Dict) -> T:
         doc: Dict[str, Any] = {}
         for field_name, field in cls.__odm_fields__.items():
-            doc[field_name] = raw_doc[field.key_name]
+            if isinstance(field, ODMReference):
+                doc[field_name] = field.model.parse_doc(raw_doc[field.key_name])
+            else:
+                doc[field_name] = raw_doc[field.key_name]
         return cast(T, cls.parse_obj(doc))
 
     def doc(self) -> Dict[str, Any]:
         raw_doc = self.dict()
         doc: Dict[str, Any] = {}
         for field_name, field in self.__odm_fields__.items():
-            doc[field.key_name] = raw_doc[field_name]
+            if isinstance(field, ODMReference):
+                doc[field.key_name] = raw_doc[field_name]["id"]
+            else:
+                doc[field.key_name] = raw_doc[field_name]
         return doc
 
 

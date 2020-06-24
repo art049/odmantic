@@ -21,6 +21,7 @@
   ☐ Document usage outside odm (aggregation example)
   ☐ Support Documents/EmbeddedDocuments inheritance
   ☐ Validate key_name argument
+  ☐ Async iterator
 
 
 Further Improvements:

@@ -1,10 +1,11 @@
 import asyncio
-from typing import Dict, List, Optional, Sequence, Type, TypeVar, Union
+from typing import Dict, List, Optional, Sequence, Type, TypeVar, Union, cast
 
 from motor.motor_asyncio import AsyncIOMotorClient
 from pymongo.errors import DuplicateKeyError as PyMongoDuplicateKeyError
 
 from odmantic.exceptions import DuplicatePrimaryKeyError
+from odmantic.reference import ODMReference
 
 from .model import Model
 
@@ -23,14 +24,35 @@ class AIOEngine:
     async def find(
         self,
         model: Type[ModelType],
-        query: Union[Dict, bool] = {},  # bool: allow using binary operators
+        query: Union[Dict, bool] = {},  # bool: allow using binary operators with mypy
         *,
         limit: int = 0,
         skip: int = 0
     ) -> List[ModelType]:
         collection = self._get_collection(model)
-        cursor = collection.find(query)
-        cursor = cursor.limit(limit).skip(skip)
+        pipeline: List[Dict] = [{"$match": query}]
+        if limit > 0:
+            pipeline.append({"$limit": limit})
+        if skip > 0:
+            pipeline.append({"$skip": skip})
+        if len(model.__references__) > 0:
+            for ref_field_name in model.__references__:
+                odm_reference = cast(ODMReference, model.__odm_fields__[ref_field_name])
+                pipeline.append(
+                    {
+                        "$lookup": {
+                            "from": odm_reference.model.__collection__,
+                            "localField": odm_reference.key_name,
+                            "foreignField": "_id",
+                            "as": ref_field_name,
+                            # FIXME if ref field name is an existing key_name ?
+                        }
+                    }
+                )
+                pipeline.append({"$unwind": ref_field_name})
+                # TODO handle nested references
+
+        cursor = collection.aggregate(pipeline)
         raw_docs = await cursor.to_list(length=None)
         instances = []
         for raw_doc in raw_docs:
@@ -55,7 +77,17 @@ class AIOEngine:
 
         doc = instance.doc()
         try:
-            await collection.insert_one(doc, bypass_document_validation=True)
+            async with await self.client.start_session() as s:
+                async with s.start_transaction():
+                    for ref_field_name in instance.__references__:
+                        sub_instance = cast(Model, getattr(instance, ref_field_name))
+                        sub_doc = sub_instance.doc()
+                        sub_collection = self._get_collection(type(sub_instance))
+                        await sub_collection.insert_one(
+                            sub_doc, bypass_document_validation=True
+                        )
+
+                    await collection.insert_one(doc, bypass_document_validation=True)
         except PyMongoDuplicateKeyError as e:
             if "_id" in e.details["keyPattern"]:
                 raise DuplicatePrimaryKeyError(instance)
@@ -68,9 +100,8 @@ class AIOEngine:
         return added_instances
 
     async def delete(self, instance: ModelType) -> int:
+        # TODO handle cascade deletion
         collection = self.database[instance.__collection__]
         pk_name = instance.__primary_key__
-        if pk_name in instance.__odm_name_mapping__:
-            pk_name = instance.__odm_name_mapping__[pk_name]
-        result = await collection.delete_many({pk_name: getattr(instance, pk_name)})
+        result = await collection.delete_many({"_id": getattr(instance, pk_name)})
         return int(result.deleted_count)
