@@ -2,8 +2,9 @@
 0.0.1:
   Support Embedded Documents
   ☐ Query document based on embedded document content
-  ☐ Support Reference Documents
+  ☐ Support Reference Documents (nested)
   Reuse pydantic Field constructor
+  ☐ Doc custom bson serializable fields
   ☐ truncate microseconds on validation
   ☐ check that datetime is naive on validation
   |,& and other common expressions operators
