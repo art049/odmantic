@@ -5,6 +5,7 @@ from typing import (
     Any,
     ClassVar,
     Dict,
+    FrozenSet,
     List,
     Optional,
     Sequence,
@@ -26,7 +27,7 @@ from pydantic.typing import resolve_annotations
 from odmantic.fields import ODMBaseField, ODMField, ODMFieldInfo
 from odmantic.reference import ODMReference, ODMReferenceInfo
 
-from .types import _SUBSTITUTION_TYPES, _objectId
+from .types import _SUBSTITUTION_TYPES, BSONSerializedField, _objectId
 
 UNTOUCHED_TYPES = FunctionType, property, classmethod, staticmethod
 
@@ -66,6 +67,8 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
             primary_field: Optional[str] = None
             odm_fields: Dict[str, ODMBaseField] = {}
             references: List[str] = []
+            bson_serialized_fields: Set[str] = set()
+
             # TODO handle class vars
             # Substitute bson types
             for k, v in annotations.items():
@@ -79,6 +82,8 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
                     isinstance(field_type, UNTOUCHED_TYPES) and field_type != PyObject
                 ):
                     continue
+                if BSONSerializedField in getattr(field_type, "__bases__", ()):
+                    bson_serialized_fields.add(field_name)
                 value = namespace.get(field_name, Undefined)
                 if isinstance(value, ODMFieldInfo):
                     if value.primary_field:
@@ -147,7 +152,7 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
             namespace["__odm_fields__"] = odm_fields
             namespace["__references__"] = tuple(references)
             namespace["__primary_key__"] = primary_field
-
+            namespace["__bson_serialized_fields__"] = frozenset(bson_serialized_fields)
             if "__collection__" not in namespace:
                 cls_name = name
                 if cls_name.endswith("Model"):
@@ -166,6 +171,7 @@ class Model(pydantic.BaseModel, metaclass=ModelMetaclass):
         __collection__: ClassVar[str] = ""
         __primary_key__: ClassVar[str] = ""
         __odm_fields__: ClassVar[Dict[str, ODMBaseField]] = {}
+        __bson_serialized_fields__: ClassVar[FrozenSet[str]] = frozenset()
         __references__: ClassVar[Tuple[str, ...]] = ()
         id: _objectId
 
@@ -192,7 +198,13 @@ class Model(pydantic.BaseModel, metaclass=ModelMetaclass):
             if isinstance(field, ODMReference):
                 doc[field.key_name] = raw_doc[field_name]["id"]
             else:
-                doc[field.key_name] = raw_doc[field_name]
+                print(self.__bson_serialized_fields__)
+                if field_name in self.__bson_serialized_fields__:
+                    doc[field.key_name] = self.__fields__[field_name].type_.to_bson(
+                        raw_doc[field_name]
+                    )
+                else:
+                    doc[field.key_name] = raw_doc[field_name]
         return doc
 
 

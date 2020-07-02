@@ -10,6 +10,7 @@ from motor.motor_asyncio import AsyncIOMotorDatabase
 
 from odmantic.engine import AIOEngine
 from odmantic.model import Model
+from odmantic.types import BSONSerializedField
 
 pytestmark = pytest.mark.asyncio
 
@@ -43,6 +44,10 @@ type_test_data = [
     TypeTestCase(Int64, "long", Int64(13)),
     TypeTestCase(str, "string", "foo"),
     TypeTestCase(float, "double", 3.14),
+    TypeTestCase(Decimal, "decimal", Decimal("3.14159265359")),
+    TypeTestCase(
+        Decimal, "decimal", "3.14159265359"
+    ),  # TODO split tests for  odmantic type inference
     TypeTestCase(Decimal128, "decimal", Decimal128(Decimal("3.14159265359"))),
     TypeTestCase(Dict, "object", {"foo": "bar", "fizz": {"foo": "bar"}}),
     TypeTestCase(bool, "bool", False),
@@ -82,4 +87,36 @@ async def test_bson_type_inference(
     )
     print(document, str(document["field"]))
     recovered_instance = ModelWithTypedField(field=document["field"])
+    assert recovered_instance.field == instance.field
+
+
+async def test_custom_bson_serializable(
+    motor_database: AsyncIOMotorDatabase, engine: AIOEngine
+):
+    class FancyFloat(BSONSerializedField):
+        @classmethod
+        def __get_validators__(cls):
+            yield cls.validate
+
+        @classmethod
+        def validate(cls, v):
+            return float(v)
+
+        @classmethod
+        def to_bson(cls, v):
+            # We store the float as a string in the DB
+            return str(v)
+
+    class ModelWithCustomField(Model):
+        field: FancyFloat
+
+    instance = await engine.add(ModelWithCustomField(field=3.14))
+    document = await motor_database[ModelWithCustomField.__collection__].find_one(
+        {
+            +ModelWithCustomField.id: instance.id,  # type: ignore
+            +ModelWithCustomField.field: {"$type": "string"},
+        }
+    )
+    assert document is not None, "Couldn't retrieve the document with it's string value"
+    recovered_instance = ModelWithCustomField.parse_doc(document)
     assert recovered_instance.field == instance.field

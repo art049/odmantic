@@ -1,4 +1,6 @@
 import re
+from abc import ABCMeta, abstractmethod
+from decimal import Decimal
 from typing import Pattern
 
 from bson import ObjectId as BsonObjectId
@@ -15,6 +17,7 @@ from pydantic.validators import (
 
 
 class _objectId(BsonObjectId):
+    # TODO fix this behavior different from others subst
     @classmethod
     def __get_validators__(cls):
         yield cls.validate
@@ -97,7 +100,37 @@ class _Pattern:
             return re.compile(v.pattern, flags=v.flags)
 
         a = pattern_validator(v)  # Todo change error behavior
-        return re.compile(a)
+        return a
+
+
+class BSONSerializedField(metaclass=ABCMeta):
+    @abstractmethod
+    def to_bson(cls, v):
+        """This should be overriden with a class method"""
+
+    def __pos__(self):
+        """Only here to help mypy"""
+        # TODO: handle this in a plugin
+
+
+class _Decimal(BSONSerializedField):
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate
+
+    @classmethod
+    def validate(cls, v):
+        if isinstance(v, Decimal):
+            return v
+        elif isinstance(v, BsonDecimal):
+            return v.to_decimal()
+
+        a = decimal_validator(v)  # Todo change error behavior
+        return a
+
+    @classmethod
+    def to_bson(cls, v):
+        return BsonDecimal(v)
 
 
 _SUBSTITUTION_TYPES = {
@@ -107,4 +140,5 @@ _SUBSTITUTION_TYPES = {
     BsonBinary: _binary,
     BsonRegex: _regex,
     Pattern: _Pattern,
+    Decimal: _Decimal,
 }
