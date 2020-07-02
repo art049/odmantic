@@ -1,7 +1,8 @@
 import dataclasses
+import re
 from datetime import datetime
 from decimal import Decimal
-from typing import Dict, Generic, List, Tuple, Type, TypeVar
+from typing import Dict, Generic, List, Pattern, Tuple, Type, TypeVar
 
 import pytest
 from bson import Binary, Decimal128, Int64, ObjectId, Regex
@@ -45,9 +46,11 @@ type_test_data = [
     TypeTestCase(Decimal128, "decimal", Decimal128(Decimal("3.14159265359"))),
     TypeTestCase(Dict, "object", {"foo": "bar", "fizz": {"foo": "bar"}}),
     TypeTestCase(bool, "bool", False),
-    # TypeTestCase(
-    #    Pattern, "regex", r"^.*$"
-    # ),  # FIXME: Will be fixed with builtin bson type handling
+    TypeTestCase(Pattern, "regex", re.compile(r"^.*$")),
+    TypeTestCase(Pattern, "regex", re.compile(r"^.*$", flags=re.IGNORECASE)),
+    TypeTestCase(
+        Pattern, "regex", re.compile(r"^.*$", flags=re.IGNORECASE | re.MULTILINE)
+    ),
     TypeTestCase(Regex, "regex", Regex(r"^.*$", flags=32)),
     TypeTestCase(ObjectId, "objectId", ObjectId()),
     TypeTestCase(bytes, "binData", b"\xf0\xf1\xf2"),
@@ -59,7 +62,7 @@ type_test_data = [
 
 
 @pytest.mark.parametrize("case", type_test_data)
-async def test_type_inference(
+async def test_bson_type_inference(
     motor_database: AsyncIOMotorDatabase, engine: AIOEngine, case: TypeTestCase
 ):
     class ModelWithTypedField(Model):
@@ -79,4 +82,4 @@ async def test_type_inference(
     )
     print(document, str(document["field"]))
     recovered_instance = ModelWithTypedField(field=document["field"])
-    assert recovered_instance.field == case.sample_value
+    assert recovered_instance.field == instance.field

@@ -1,3 +1,6 @@
+import re
+from typing import Pattern
+
 from bson import ObjectId as BsonObjectId
 from bson.binary import Binary as BsonBinary
 from bson.decimal128 import Decimal128 as BsonDecimal
@@ -81,10 +84,27 @@ class _regex:
         return BsonRegex(a)
 
 
+class _Pattern:
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate
+
+    @classmethod
+    def validate(cls, v):
+        if isinstance(v, Pattern):
+            return v
+        elif isinstance(v, BsonRegex):
+            return re.compile(v.pattern, flags=v.flags)
+
+        a = pattern_validator(v)  # Todo change error behavior
+        return re.compile(a)
+
+
 _SUBSTITUTION_TYPES = {
     BsonObjectId: _objectId,
     BsonLong: _long,
     BsonDecimal: _decimal,
     BsonBinary: _binary,
     BsonRegex: _regex,
+    Pattern: _Pattern,
 }
