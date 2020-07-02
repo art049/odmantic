@@ -11,7 +11,7 @@ from pydantic.validators import (
 )
 
 
-class objectId(BsonObjectId):
+class _objectId(BsonObjectId):
     @classmethod
     def __get_validators__(cls):
         yield cls.validate
@@ -29,53 +29,62 @@ class objectId(BsonObjectId):
         field_schema.update(type="ObjectId")
 
 
-class long(BsonLong):
+class _long:
     @classmethod
     def __get_validators__(cls):
         yield cls.validate
 
     @classmethod
     def validate(cls, v):
-        if isinstance(v, (BsonLong, cls)):
+        if isinstance(v, BsonLong):
             return v
         a = int_validator(v)  # Todo change error behavior
-        return cls(a)
+        return BsonLong(a)
 
 
-class decimal(BsonDecimal):
+class _decimal:
     @classmethod
     def __get_validators__(cls):
         yield cls.validate
 
     @classmethod
     def validate(cls, v):
-        if isinstance(v, (BsonLong, cls)):
+        if isinstance(v, BsonDecimal):
             return v
         a = decimal_validator(v)  # Todo change error behavior
-        return cls(a)
+        return BsonDecimal(a)
 
 
-class binary(BsonBinary):
+class _binary:
     @classmethod
     def __get_validators__(cls):
         yield cls.validate
 
     @classmethod
     def validate(cls, v):
-        if isinstance(v, (BsonBinary, cls)):
+        if isinstance(v, BsonBinary):
             return v
         a = bytes_validator(v)  # Todo change error behavior
-        return cls(a)
+        return BsonBinary(a)
 
 
-class regex(BsonRegex):
+class _regex:
     @classmethod
     def __get_validators__(cls):
         yield cls.validate
 
     @classmethod
     def validate(cls, v):
-        if isinstance(v, (BsonRegex, cls)):
+        if isinstance(v, BsonRegex):
             return v
         a = pattern_validator(v)  # Todo change error behavior
-        return cls(a)
+        return BsonRegex(a)
+
+
+_SUBSTITUTION_TYPES = {
+    BsonObjectId: _objectId,
+    BsonLong: _long,
+    BsonDecimal: _decimal,
+    BsonBinary: _binary,
+    BsonRegex: _regex,
+}

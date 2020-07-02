@@ -63,11 +63,9 @@ class AIOEngine:
     async def find_one(
         self,
         model: Type[ModelType],
-        query: Union[Dict, bool] = {},  # bool: allow using binary operators
+        query: Union[Dict, bool] = {},  # bool: allow using binary operators w/o plugin
     ) -> Optional[ModelType]:
-        results = await self.find(
-            model, query, limit=1
-        )  # TODO: check if mongo find_one method is faster
+        results = await self.find(model, query, limit=1)
         if len(results) == 0:
             return None
         return results[0]

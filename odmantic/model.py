@@ -26,7 +26,7 @@ from pydantic.typing import resolve_annotations
 from odmantic.fields import ODMBaseField, ODMField, ODMFieldInfo
 from odmantic.reference import ODMReference, ODMReferenceInfo
 
-from .types import objectId
+from .types import _SUBSTITUTION_TYPES, _objectId
 
 UNTOUCHED_TYPES = FunctionType, property, classmethod, staticmethod
 
@@ -67,6 +67,13 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
             odm_fields: Dict[str, ODMBaseField] = {}
             references: List[str] = []
             # TODO handle class vars
+            # Substitute bson types
+            for k, v in annotations.items():
+                subst_type = _SUBSTITUTION_TYPES.get(v)
+                if subst_type is not None:
+                    print(f"Subst: {v} -> {subst_type}")
+                    annotations[k] = subst_type
+            namespace["__annotations__"] = annotations
             for (field_name, field_type) in annotations.items():
                 if not is_valid_odm_field(field_name) or (
                     isinstance(field_type, UNTOUCHED_TYPES) and field_type != PyObject
@@ -118,6 +125,7 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
 
             for field_name, value in namespace.items():
                 # TODO check referecnes defined without type
+                # TODO find out what to do with those fields
                 if (
                     field_name in annotations
                     or not is_valid_odm_field(field_name)
@@ -130,7 +138,7 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
             if primary_field is None:
                 primary_field = "id"
                 odm_fields["id"] = ODMField(primary_field=True, key_name="_id")
-                namespace["id"] = PDField(default_factory=objectId)
+                namespace["id"] = PDField(default_factory=_objectId)
 
             duplicate_key = find_duplicate_key(odm_fields.values())
             if duplicate_key is not None:
@@ -159,7 +167,7 @@ class Model(pydantic.BaseModel, metaclass=ModelMetaclass):
         __primary_key__: ClassVar[str] = ""
         __odm_fields__: ClassVar[Dict[str, ODMBaseField]] = {}
         __references__: ClassVar[Tuple[str, ...]] = ()
-        id: objectId
+        id: _objectId
 
     __slots__ = ()
 

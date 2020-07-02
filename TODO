@@ -7,7 +7,7 @@
   ☐ truncate microseconds on validation
   ☐ check that datetime is naive on validation
   |,& and other common expressions operators
-  ☐ Use directly bson types (same way pydantic builtin validators are defined)
+  Use directly bson types (same way pydantic builtin validators are defined)
   ☐ Doc enum fields
   None / Undefined / Null -> Undefined is deprecated None <-> Null
   ☐ Define policy for optional fields default set to null ?

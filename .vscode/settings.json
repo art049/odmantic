@@ -16,9 +16,9 @@
     ".pytest_cache/": true,
     ".mypy_cache/": true
   },
-  "python.languageServer": "Microsoft",
   "python.linting.mypyArgs": [
     "--config-file=${workspaceFolder}/mypy.ini",
     "--no-pretty"
-  ]
+  ],
+  "python.analysis.extraPaths": ["odmantic"]
 }

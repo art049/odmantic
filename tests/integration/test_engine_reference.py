@@ -17,4 +17,6 @@ async def test_add_with_references(engine: AIOEngine):
     assert fetched_subinstance == publisher
 
 
+# TODO Handle the case where the referenced object already exists
+
 # TODO test add with duplicated reference id

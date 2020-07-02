@@ -4,11 +4,11 @@ from decimal import Decimal
 from typing import Dict, Generic, List, Tuple, Type, TypeVar
 
 import pytest
+from bson import Binary, Decimal128, Int64, ObjectId, Regex
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
 from odmantic.engine import AIOEngine
 from odmantic.model import Model
-from odmantic.types import binary, decimal, long, objectId, regex
 
 pytestmark = pytest.mark.asyncio
 
@@ -38,20 +38,20 @@ type_test_data = [
     TypeTestCase(int, "int", MAX_INT32),
     TypeTestCase(int, "long", UNDER_INT32_VALUE),
     TypeTestCase(int, "long", OVER_INT32_VALUE),
-    TypeTestCase(long, "long", 13),
-    TypeTestCase(long, "long", long(13)),
+    TypeTestCase(Int64, "long", 13),
+    TypeTestCase(Int64, "long", Int64(13)),
     TypeTestCase(str, "string", "foo"),
     TypeTestCase(float, "double", 3.14),
-    TypeTestCase(decimal, "decimal", decimal(Decimal("3.14159265359"))),
+    TypeTestCase(Decimal128, "decimal", Decimal128(Decimal("3.14159265359"))),
     TypeTestCase(Dict, "object", {"foo": "bar", "fizz": {"foo": "bar"}}),
     TypeTestCase(bool, "bool", False),
     # TypeTestCase(
     #    Pattern, "regex", r"^.*$"
     # ),  # FIXME: Will be fixed with builtin bson type handling
-    TypeTestCase(regex, "regex", regex(r"^.*$", flags=32)),
-    TypeTestCase(objectId, "objectId", objectId()),
+    TypeTestCase(Regex, "regex", Regex(r"^.*$", flags=32)),
+    TypeTestCase(ObjectId, "objectId", ObjectId()),
     TypeTestCase(bytes, "binData", b"\xf0\xf1\xf2"),
-    TypeTestCase(binary, "binData", binary(b"\xf0\xf1\xf2")),
+    TypeTestCase(Binary, "binData", Binary(b"\xf0\xf1\xf2")),
     TypeTestCase(datetime, "date", sample_datetime),
     TypeTestCase(List, "array", ["one"]),
     TypeTestCase(Tuple[str, ...], "array", ("one",)),
