@@ -32,7 +32,7 @@ jobs:
       matrix:
         python-version:
           #- 3.6
-          #- 3.7
+          - 3.7
           - 3.8
         mongo-version:
           #- 3.0
