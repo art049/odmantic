@@ -1,5 +1,6 @@
 import re
 from abc import ABCMeta, abstractmethod
+from datetime import datetime
 from decimal import Decimal
 from typing import Pattern
 
@@ -8,6 +9,7 @@ from bson.binary import Binary as BsonBinary
 from bson.decimal128 import Decimal128 as BsonDecimal
 from bson.int64 import Int64 as BsonLong
 from bson.regex import Regex as BsonRegex
+from pydantic.datetime_parse import parse_datetime
 from pydantic.validators import (
     bytes_validator,
     decimal_validator,
@@ -103,6 +105,22 @@ class _Pattern:
         return a
 
 
+class _datetime:
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate
+
+    @classmethod
+    def validate(cls, v):
+        if isinstance(v, datetime):
+            d = v
+        else:
+            d = parse_datetime(v)  # Todo change error behavior
+        # Round microseconds to the nearest millisecond to comply with Mongo behavior
+        microsecs = round(d.microsecond / 1000) * 1000
+        return d.replace(microsecond=microsecs)
+
+
 class BSONSerializedField(metaclass=ABCMeta):
     @abstractmethod
     def to_bson(cls, v):
@@ -141,4 +159,5 @@ _SUBSTITUTION_TYPES = {
     BsonRegex: _regex,
     Pattern: _Pattern,
     Decimal: _Decimal,
+    datetime: _datetime,
 }

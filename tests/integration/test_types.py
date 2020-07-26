@@ -31,9 +31,8 @@ OVER_INT32_VALUE = MAX_INT32 + 1
 
 sample_datetime = datetime.now()
 sample_datetime = sample_datetime.replace(
-    microsecond=round(sample_datetime.microsecond / 1000) * 1000
-)  # MongoDB rounds to the nearest millisecond
-
+    microsecond=10001
+)  # Ensure we have some micro seconds that will be truncated
 type_test_data = [
     TypeTestCase(int, "int", 15),
     TypeTestCase(int, "int", MIN_INT32),
