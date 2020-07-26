@@ -20,17 +20,16 @@
   ☐ Upsert
   ☐ Array queries $elemMatch $all $size
   ☐ Document usage outside odm (aggregation example)
-  ☐ Support Documents/EmbeddedDocuments inheritance
   ☐ Validate key_name argument
   ☐ Async iterator
 
 
-Further Improvements:
-
+  Further Improvements:
+  ☐ Support Documents/EmbeddedDocuments inheritance
   ☐ Use bson.son for embedded documents https://docs.mongodb.com/manual/tutorial/query-array-of-documents/
   ☐ Querying on embedded documents
   ☐ Enable usage of document not matching the schema
-  ☐ Custom field types
+  Custom field types
   ☐ Generate Mongo Schema
   ☐ $text operator for search
   ☐ $type operator -> a bit contradictory to the ODM principle
