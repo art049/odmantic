@@ -10,6 +10,7 @@ from odmantic.reference import ODMReference
 from .model import Model
 
 ModelType = TypeVar("ModelType", bound=Model)
+ProjectionType = TypeVar("ProjectionType", bound=Model)
 
 
 class AIOEngine:
@@ -20,6 +21,33 @@ class AIOEngine:
 
     def _get_collection(self, model: Type[ModelType]):
         return self.database[model.__collection__]
+
+    async def find_projection(
+        self,
+        model: Type[ModelType],
+        query: Union[Dict, bool] = {},  # bool: allow using binary operators with mypy
+        *,
+        projection: Type[ProjectionType],
+        limit: int = 0,
+        skip: int = 0
+    ) -> List[ProjectionType]:
+        collection = self._get_collection(model)
+        pipeline: List[Dict] = [{"$match": query}]
+        if limit > 0:
+            pipeline.append({"$limit": limit})
+        if skip > 0:
+            pipeline.append({"$skip": skip})
+        projected_fields = projection.__annotations__.keys()
+        pipeline.append({"$project": {fname: 1 for fname in projected_fields}})
+
+        cursor = collection.aggregate(pipeline)
+        raw_docs = await cursor.to_list(length=None)
+        instances = []
+        for raw_doc in raw_docs:
+            instance = projection.parse_doc(raw_doc)
+            instances.append(instance)
+
+        return instances
 
     async def find(
         self,
