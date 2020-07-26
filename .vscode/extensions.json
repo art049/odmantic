@@ -3,6 +3,7 @@
     "njpwerner.autodocstring",
     "ryanluker.vscode-coverage-gutters",
     "ms-python.python",
+    "ms-python.vscode-pylance",
     "littlefoxteam.vscode-python-test-adapter",
     "hbenl.vscode-test-explorer"
   ]
