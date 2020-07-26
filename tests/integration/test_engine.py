@@ -2,6 +2,7 @@ import pytest
 
 from odmantic.engine import AIOEngine
 from odmantic.exceptions import DuplicatePrimaryKeyError
+from odmantic.model import Model
 from odmantic.types import _objectId
 
 from ..zoo.person import PersonModel
@@ -75,3 +76,19 @@ async def test_add_multiple_time_same_document(engine: AIOEngine):
         assert exc.duplicated_instance == instance
         assert exc.duplicated_field == "id"
         assert exc.duplicated_value == fixed_id
+
+
+async def test_find_projection(engine: AIOEngine):
+    initial_instance = PersonModel(first_name="Jean-Pierre", last_name="Pernaud")
+    await engine.add(initial_instance)
+
+    class ProjectedPersonModel(Model):
+        first_name: str
+
+    found_instances = await engine.find_projection(
+        PersonModel, projection=ProjectedPersonModel
+    )
+    assert len(found_instances) == 1
+    assert found_instances[0].first_name == initial_instance.first_name
+    with pytest.raises(AttributeError):
+        found_instances[0].last_name  # type: ignore
