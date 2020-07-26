@@ -103,3 +103,10 @@ class AIOEngine:
         pk_name = instance.__primary_key__
         result = await collection.delete_many({"_id": getattr(instance, pk_name)})
         return int(result.deleted_count)
+
+    async def count(
+        self, instance: Type[ModelType], query: Union[Dict, bool] = {}
+    ) -> int:
+        collection = self.database[instance.__collection__]
+        count = await collection.count_documents(query)
+        return int(count)
