@@ -144,6 +144,7 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
                 primary_field = "id"
                 odm_fields["id"] = ODMField(primary_field=True, key_name="_id")
                 namespace["id"] = PDField(default_factory=_objectId)
+                namespace["__annotations__"]["id"] = _objectId
 
             duplicate_key = find_duplicate_key(odm_fields.values())
             if duplicate_key is not None:
