@@ -56,7 +56,7 @@ class Player(Model):
     name: str
 
 leeroy = Player(name="Leeroy Jenkins")
-engine.save(leeroy)
+await engine.save(leeroy)
 print(leeroy)
 #> Player(id=ObjectId('5ed50fcad11d1975aa3d7a28'), name="Leeroy Jenkins")
 ```
@@ -74,7 +74,7 @@ class Player(Model):
     name: str = field(primary_key=True)
 
 leeroy = Player(name="Leeroy Jenkins")
-engine.save(leeroy)
+await engine.save(leeroy)
 print(leeroy)
 #> Player(name="Leeroy Jenkins")
 
