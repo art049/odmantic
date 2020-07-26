@@ -5,8 +5,8 @@
   ☐ Support Reference Documents (nested)
   Reuse pydantic Field constructor
   ☐ Doc custom bson serializable fields
-  ☐ truncate microseconds on validation
-  ☐ check that datetime is naive on validation
+  truncate microseconds on validation
+  check that datetime is naive on validation
   |,& and other common expressions operators
   Use directly bson types (same way pydantic builtin validators are defined)
   ☐ Doc enum fields
@@ -20,12 +20,12 @@
   ☐ Upsert
   ☐ Array queries $elemMatch $all $size
   ☐ Document usage outside odm (aggregation example)
+  ☐ Support Documents/EmbeddedDocuments inheritance
   ☐ Validate key_name argument
   ☐ Async iterator
 
 
   Further Improvements:
-  ☐ Support Documents/EmbeddedDocuments inheritance
   ☐ Use bson.son for embedded documents https://docs.mongodb.com/manual/tutorial/query-array-of-documents/
   ☐ Querying on embedded documents
   ☐ Enable usage of document not matching the schema
