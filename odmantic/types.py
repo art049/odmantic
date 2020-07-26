@@ -116,6 +116,10 @@ class _datetime:
             d = v
         else:
             d = parse_datetime(v)  # Todo change error behavior
+        # MongoDB does not store timezone info
+        # https://docs.python.org/3/library/datetime.html#determining-if-an-object-is-aware-or-naive
+        if d.tzinfo is not None and d.tzinfo.utcoffset(d) is not None:
+            raise ValueError("datetime objects must be naive (no timeone info)")
         # Round microseconds to the nearest millisecond to comply with Mongo behavior
         microsecs = round(d.microsecond / 1000) * 1000
         return d.replace(microsecond=microsecs)

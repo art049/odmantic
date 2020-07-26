@@ -20,6 +20,7 @@ pytest-asyncio = "*"
 mkdocs-material = "*"
 pipenv-setup = "*"
 odmantic = {editable = true,path = "."}
+pytz = "*"
 
 [packages]
 pydantic = "~=1.5"

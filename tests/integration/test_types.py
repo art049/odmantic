@@ -30,9 +30,7 @@ MAX_INT32 = 2 ** 31 - 1
 OVER_INT32_VALUE = MAX_INT32 + 1
 
 sample_datetime = datetime.now()
-sample_datetime = sample_datetime.replace(
-    microsecond=10001
-)  # Ensure we have some micro seconds that will be truncated
+
 type_test_data = [
     TypeTestCase(int, "int", 15),
     TypeTestCase(int, "int", MIN_INT32),
