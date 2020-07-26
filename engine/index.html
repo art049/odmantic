@@ -17,7 +17,7 @@
     
     
       
-        <title>Data types - ODMantic</title>
+        <title>Engine - ODMantic</title>
       
     
     
@@ -60,7 +60,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#data-types" class="md-skip">
+        <a href="#engine" class="md-skip">
           Skip to content
         </a>
       
@@ -88,7 +88,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              Data types
+              Engine
             
           </span>
         </div>
@@ -184,67 +184,11 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Data types
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
-        </span>
-      </label>
-    
-    <a href="./" title="Data types" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../types/" title="Data types" class="md-nav__link">
       Data types
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-      </span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#supported-bson-types" class="md-nav__link">
-    Supported BSON types
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#unsupported-types" class="md-nav__link">
-    Unsupported types
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#python-to-bson-type-mapping" class="md-nav__link">
-    Python to BSON type mapping
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
     
@@ -264,11 +208,67 @@
       
       
 
+  
 
-  <li class="md-nav__item">
-    <a href="../engine/" title="Engine" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Engine
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
+        </span>
+      </label>
+    
+    <a href="./" title="Engine" class="md-nav__link md-nav__link--active">
       Engine
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#creating-the-engine" class="md-nav__link">
+    Creating the engine
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-documents" class="md-nav__link">
+    Create documents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#count-documents" class="md-nav__link">
+    Count documents
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
     
@@ -310,22 +310,22 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#supported-bson-types" class="md-nav__link">
-    Supported BSON types
+  <a href="#creating-the-engine" class="md-nav__link">
+    Creating the engine
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#unsupported-types" class="md-nav__link">
-    Unsupported types
+  <a href="#create-documents" class="md-nav__link">
+    Create documents
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#python-to-bson-type-mapping" class="md-nav__link">
-    Python to BSON type mapping
+  <a href="#count-documents" class="md-nav__link">
+    Count documents
   </a>
   
 </li>
@@ -346,110 +346,40 @@
                   
                 
                 
-                <h1 id="data-types">Data types</h1>
-<h2 id="supported-bson-types">Supported BSON types</h2>
-<ul>
-<li>Int64 (long)</li>
-<li>ObjectId (objectId)</li>
-<li>Decimal128 (decimal)</li>
-</ul>
-<p>Additionnaly, most of the types supported by pydantic are supported. See <a href="https://pydantic-docs.helpmanual.io/usage/types">pydantic: Field Types</a> for more details.</p>
-<h2 id="unsupported-types">Unsupported types</h2>
-<ul>
-<li>typing.Set / set</li>
-</ul>
-<h2 id="python-to-bson-type-mapping">Python to BSON type mapping</h2>
-<table>
-<thead>
-<tr>
-<th>Python type</th>
-<th align="center">BSON type</th>
-<th>Comment</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>bson.ObjectId</td>
-<td align="center">objectId</td>
-<td></td>
-</tr>
-<tr>
-<td>bool</td>
-<td align="center">bool</td>
-<td></td>
-</tr>
-<tr>
-<td>int</td>
-<td align="center">int</td>
-<td>value between -2^31 and 2^31 - 1</td>
-</tr>
-<tr>
-<td>int</td>
-<td align="center">long</td>
-<td>value not between -2^31 and 2^31 - 1</td>
-</tr>
-<tr>
-<td>bson.int64.Int64</td>
-<td align="center">long</td>
-<td></td>
-</tr>
-<tr>
-<td>float</td>
-<td align="center">double</td>
-<td></td>
-</tr>
-<tr>
-<td>bson.decimal128.Decimal128</td>
-<td align="center">decimal</td>
-<td>decimal.Decimal is not supported yet</td>
-</tr>
-<tr>
-<td>str</td>
-<td align="center">string</td>
-<td></td>
-</tr>
-<tr>
-<td>typing.Pattern</td>
-<td align="center">regex</td>
-<td></td>
-</tr>
-<tr>
-<td>bytes</td>
-<td align="center">binData</td>
-<td></td>
-</tr>
-<tr>
-<td>bson.binary.Binary</td>
-<td align="center">binData</td>
-<td></td>
-</tr>
-<tr>
-<td>datetime.datetime</td>
-<td align="center">date</td>
-<td>microseconds are truncated, only naive datetimes are allowed</td>
-</tr>
-<tr>
-<td>typing.Dict</td>
-<td align="center">object</td>
-<td></td>
-</tr>
-<tr>
-<td>typing.List</td>
-<td align="center">array</td>
-<td></td>
-</tr>
-<tr>
-<td>typing.Sequence</td>
-<td align="center">array</td>
-<td></td>
-</tr>
-<tr>
-<td>typing.Tuple[T, ...]</td>
-<td align="center">array</td>
-<td></td>
-</tr>
-</tbody>
-</table>
+                <h1 id="engine">Engine</h1>
+<h2 id="creating-the-engine">Creating the engine</h2>
+<div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">AsyncIO</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">motor.motor_asyncio</span> <span class="kn">import</span> <span class="n">AsyncIOMotorClient</span>
+<span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">AsyncIOMotorClient</span><span class="p">(</span><span class="s2">&quot;mongodb://localhost:27017/&quot;</span><span class="p">)</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">(</span><span class="n">motor_client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span> <span class="n">db_name</span><span class="o">=</span><span class="s2">&quot;example_db&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+</div>
+<h2 id="create-documents">Create documents</h2>
+<div class="tabbed-set" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">AsyncIO</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+
+<span class="n">leeroy</span> <span class="o">=</span> <span class="n">Player</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Leeroy Jenkins&quot;</span><span class="p">)</span>
+<span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">leeroy</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">leeroy</span><span class="p">)</span>
+<span class="c1">#&gt; Player(name=&quot;Leeroy Jenkins&quot;)</span>
+</code></pre></div>
+
+</div>
+</div>
+<h2 id="count-documents">Count documents</h2>
+<div class="tabbed-set" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">AsyncIO</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="n">count</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">Player</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+<span class="c1">#&gt; 3</span>
+</code></pre></div>
+
+</div>
+</div>
                 
               
               
@@ -468,7 +398,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../modeling/" title="Modeling" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../fields/" title="Fields" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -477,25 +407,11 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Modeling
-              </div>
-            </div>
-          </a>
-        
-        
-          <a href="../fields/" title="Fields" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
-            <div class="md-footer-nav__title">
-              <div class="md-ellipsis">
-                <span class="md-footer-nav__direction">
-                  Next
-                </span>
                 Fields
               </div>
             </div>
-            <div class="md-footer-nav__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
-            </div>
           </a>
+        
         
       </nav>
     </div>
