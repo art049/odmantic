@@ -75,3 +75,21 @@ async def test_add_multiple_time_same_document(engine: AIOEngine):
         assert exc.duplicated_instance == instance
         assert exc.duplicated_field == "id"
         assert exc.duplicated_value == fixed_id
+
+
+async def test_count(engine: AIOEngine):
+    initial_instances = [
+        PersonModel(first_name="Jean-Pierre", last_name="Pernaud"),
+        PersonModel(first_name="Jean-Pierre", last_name="Castaldi"),
+        PersonModel(first_name="Michel", last_name="Drucker"),
+    ]
+    await engine.add_all(initial_instances)
+
+    count = await engine.count(PersonModel)
+    assert count == 3
+
+    count = await engine.count(PersonModel, PersonModel.first_name == "Michel")
+    assert count == 1
+
+    count = await engine.count(PersonModel, PersonModel.first_name == "Gérard")
+    assert count == 0
