@@ -32,6 +32,7 @@ OVER_INT32_VALUE = MAX_INT32 + 1
 sample_datetime = datetime.now()
 
 type_test_data = [
+    # Simple types
     TypeTestCase(int, "int", 15),
     TypeTestCase(int, "int", MIN_INT32),
     TypeTestCase(int, "int", MAX_INT32),
@@ -59,7 +60,9 @@ type_test_data = [
     TypeTestCase(Binary, "binData", Binary(b"\xf0\xf1\xf2")),
     TypeTestCase(datetime, "date", sample_datetime),
     TypeTestCase(List, "array", ["one"]),
+    # Compound Types
     TypeTestCase(Tuple[str, ...], "array", ("one",)),
+    TypeTestCase(List[ObjectId], "array", [ObjectId() for _ in range(5)]),
 ]
 
 
