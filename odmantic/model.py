@@ -193,6 +193,9 @@ class Model(pydantic.BaseModel, metaclass=ModelMetaclass):
         return cast(T, cls.parse_obj(doc))
 
     def doc(self) -> Dict[str, Any]:
+        """
+        Generate a document representation of the instance (as a dictionary)
+        """
         raw_doc = self.dict()
         doc: Dict[str, Any] = {}
         for field_name, field in self.__odm_fields__.items():
