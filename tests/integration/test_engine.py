@@ -1,4 +1,5 @@
 import pytest
+from model import EmbeddedModel
 
 from odmantic.engine import AIOEngine
 from odmantic.exceptions import DuplicatePrimaryKeyError
@@ -93,3 +94,20 @@ async def test_count(engine: AIOEngine):
 
     count = await engine.count(PersonModel, PersonModel.first_name == "Gérard")
     assert count == 0
+
+
+async def test_find_on_embedded(engine: AIOEngine):
+    class BadModel(EmbeddedModel):
+        field: int
+
+    with pytest.raises(TypeError):
+        await engine.find(BadModel, BadModel.field == 3)
+
+
+async def test_add_on_embedded(engine: AIOEngine):
+    class BadModel(EmbeddedModel):
+        field: int
+
+    instance = BadModel(field=12)
+    with pytest.raises(TypeError):
+        await engine.add(instance)
