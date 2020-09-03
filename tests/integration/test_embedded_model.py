@@ -1,7 +1,7 @@
 import pytest
-from model import EmbeddedModel, Model
 
 from odmantic.engine import AIOEngine
+from odmantic.model import EmbeddedModel, Model
 
 from ..zoo.book_embedded import Book, Publisher
 from ..zoo.patron_embedded import Address, Patron

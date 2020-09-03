@@ -66,3 +66,32 @@ def test_unknown_model_field():
 
         class M(Model):
             a: int = U()
+
+
+@pytest.mark.skip("Not implemented")
+def test_overload_id_field():
+    class M(Model):
+        id: str
+
+    instance = M(id="hello world")
+    assert instance.id == "hello world"
+
+
+@pytest.mark.skip("Not implemented")
+def test_overload_id_with_another_primary_key():
+    with pytest.raises(TypeError):
+
+        class M(Model):
+            id: int
+            number: int = Field(primary_key=True)
+
+
+def test_repr_model():
+    class M(Model):
+        a: int
+
+    instance = M(a=5)
+    assert repr(instance) in [
+        f"M(id={repr(instance.id)}, a=5)",
+        f"M(a=5, id={repr(instance.id)})",
+    ]
