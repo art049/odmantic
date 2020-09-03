@@ -128,6 +128,7 @@ async def test_count(engine: AIOEngine):
     assert count == 0
 
 
+@pytest.mark.skip("Not implemented")
 async def test_find_on_embedded(engine: AIOEngine):
     class BadModel(EmbeddedModel):
         field: int
@@ -136,6 +137,7 @@ async def test_find_on_embedded(engine: AIOEngine):
         await engine.find(BadModel, BadModel.field == 3)
 
 
+@pytest.mark.skip("Not implemented")
 async def test_add_on_embedded(engine: AIOEngine):
     class BadModel(EmbeddedModel):
         field: int
