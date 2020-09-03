@@ -1,7 +1,8 @@
-from typing import Any
+from typing import Any, Callable
 
 import pytest
 from pydantic import Field as PDField
+from pydantic.main import BaseModel
 
 from odmantic.fields import Field
 from odmantic.model import Model
@@ -86,12 +87,13 @@ def test_overload_id_with_another_primary_key():
             number: int = Field(primary_key=True)
 
 
-def test_repr_model():
+@pytest.mark.parametrize("method", (repr, str))
+def test_repr_model(method):
     class M(Model):
         a: int
 
     instance = M(a=5)
-    assert repr(instance) in [
+    assert method(instance) in [
         f"M(id={repr(instance.id)}, a=5)",
         f"M(a=5, id={repr(instance.id)})",
     ]

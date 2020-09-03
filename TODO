@@ -12,10 +12,8 @@
   ☐ Doc enum fields
   None / Undefined / Null -> Undefined is deprecated None <-> Null
   ☐ Define policy for optional fields default set to null ?
-  ☐ Fix repr/ str ?
+  Fix repr/ str ?
   ☐ Smart instance update
-  ☐ Read/Write concern
-  ☐ Write timeout
   Duplicate key error
   ☐ Upsert
   ☐ Array queries $elemMatch $all $size
@@ -26,6 +24,8 @@
 
 
   Further Improvements:
+  ☐ Write timeout
+  ☐ Read/Write concern
   ☐ Use bson.son for embedded documents https://docs.mongodb.com/manual/tutorial/query-array-of-documents/
   ☐ Querying on embedded documents
   ☐ Enable usage of document not matching the schema

@@ -182,6 +182,10 @@ class Model(pydantic.BaseModel, metaclass=ModelMetaclass):
         for name, field in cls.__odm_fields__.items():
             setattr(cls, name, field)
 
+    # FIXME: maybe directly PR to Pydantic
+    def __str__(self):
+        return repr(self)
+
     @classmethod
     def parse_doc(cls: Type[T], raw_doc: Dict) -> T:
         doc: Dict[str, Any] = {}
