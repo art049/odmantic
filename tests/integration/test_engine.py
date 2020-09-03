@@ -1,8 +1,8 @@
 import pytest
-from model import EmbeddedModel
 
 from odmantic.engine import AIOEngine
 from odmantic.exceptions import DuplicatePrimaryKeyError
+from odmantic.model import EmbeddedModel
 from odmantic.types import _objectId
 
 from ..zoo.person import PersonModel
@@ -63,6 +63,38 @@ async def test_add_multiple_simple_find_find_one(engine: AIOEngine):
 
     assert single_retrieved is not None
     assert single_retrieved in initial_instances
+
+
+async def test_find_sync_iteration(engine: AIOEngine):
+    instances = [
+        PersonModel(first_name="Jean-Pierre", last_name="Pernaud"),
+        PersonModel(first_name="Jean-Pierre", last_name="Castaldi"),
+        PersonModel(first_name="Michel", last_name="Drucker"),
+    ]
+    await engine.add_all(instances)
+
+    fetched = set()
+    for inst in await engine.find(PersonModel):
+        fetched.add(inst.id)
+
+    assert set(i.id for i in instances) == fetched
+
+
+@pytest.mark.skip("Not implemented yet")
+async def test_find_async_iteration(engine: AIOEngine):
+    instances = [
+        PersonModel(first_name="Jean-Pierre", last_name="Pernaud"),
+        PersonModel(first_name="Jean-Pierre", last_name="Castaldi"),
+        PersonModel(first_name="Michel", last_name="Drucker"),
+    ]
+    await engine.add_all(instances)
+
+    fetched = set()
+    # TODO Restore the type checking
+    async for inst in engine.find(PersonModel):  # type:ignore
+        fetched.add(inst.id)
+
+    assert set(i.id for i in instances) == fetched
 
 
 async def test_add_multiple_time_same_document(engine: AIOEngine):
