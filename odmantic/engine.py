@@ -2,6 +2,7 @@ import asyncio
 from typing import Dict, List, Optional, Sequence, Type, TypeVar, Union, cast
 
 from motor.motor_asyncio import AsyncIOMotorClient
+from pydantic.utils import lenient_issubclass
 from pymongo.errors import DuplicateKeyError as PyMongoDuplicateKeyError
 
 from odmantic.exceptions import DuplicatePrimaryKeyError
@@ -29,6 +30,9 @@ class AIOEngine:
         limit: int = 0,
         skip: int = 0
     ) -> List[ModelType]:
+        if not lenient_issubclass(model, Model):
+            raise TypeError("Can only call find with a Model class")
+
         collection = self._get_collection(model)
         pipeline: List[Dict] = [{"$match": query}]
         if limit > 0:
@@ -65,6 +69,8 @@ class AIOEngine:
         model: Type[ModelType],
         query: Union[Dict, bool] = {},  # bool: allow using binary operators w/o plugin
     ) -> Optional[ModelType]:
+        if not lenient_issubclass(model, Model):
+            raise TypeError("Can only call find_one with a Model class")
         results = await self.find(model, query, limit=1)
         if len(results) == 0:
             return None
@@ -104,9 +110,9 @@ class AIOEngine:
         result = await collection.delete_many({"_id": getattr(instance, pk_name)})
         return int(result.deleted_count)
 
-    async def count(
-        self, instance: Type[ModelType], query: Union[Dict, bool] = {}
-    ) -> int:
-        collection = self.database[instance.__collection__]
+    async def count(self, model: Type[ModelType], query: Union[Dict, bool] = {}) -> int:
+        if not lenient_issubclass(model, Model):
+            raise TypeError("Can only call count with a Model class")
+        collection = self.database[model.__collection__]
         count = await collection.count_documents(query)
         return int(count)
