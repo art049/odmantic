@@ -70,7 +70,7 @@ class AIOEngine:
             return None
         return results[0]
 
-    async def add(self, instance: ModelType) -> ModelType:
+    async def save(self, instance: ModelType, upsert: bool = False) -> ModelType:
         collection = self._get_collection(type(instance))
 
         doc = instance.doc()
@@ -91,9 +91,9 @@ class AIOEngine:
                 raise DuplicatePrimaryKeyError(instance)
         return instance
 
-    async def add_all(self, instances: Sequence[ModelType]) -> List[ModelType]:
+    async def save_all(self, instances: Sequence[ModelType]) -> List[ModelType]:
         added_instances = await asyncio.gather(
-            *[self.add(instance) for instance in instances]
+            *[self.save(instance) for instance in instances]
         )
         return added_instances
 

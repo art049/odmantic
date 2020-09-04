@@ -11,7 +11,7 @@ pytestmark = pytest.mark.asyncio
 
 
 async def test_add(engine: AIOEngine):
-    instance = await engine.add(
+    instance = await engine.save(
         PersonModel(first_name="Jean-Pierre", last_name="Pernaud")
     )
     assert isinstance(instance.id, _objectId)
@@ -19,7 +19,7 @@ async def test_add(engine: AIOEngine):
 
 async def test_add_find_find_one(engine: AIOEngine):
     initial_instance = PersonModel(first_name="Jean-Pierre", last_name="Pernaud")
-    await engine.add(initial_instance)
+    await engine.save(initial_instance)
     found_instances = await engine.find(PersonModel)
     assert len(found_instances) == 1
     assert found_instances[0].first_name == initial_instance.first_name
@@ -44,7 +44,7 @@ async def test_add_multiple_simple_find_find_one(engine: AIOEngine):
         PersonModel(first_name="Jean-Pierre", last_name="Castaldi"),
         PersonModel(first_name="Michel", last_name="Drucker"),
     ]
-    await engine.add_all(initial_instances)
+    await engine.save_all(initial_instances)
 
     found_instances = await engine.find(PersonModel, PersonModel.first_name == "Michel")
     assert len(found_instances) == 1
@@ -71,7 +71,7 @@ async def test_find_sync_iteration(engine: AIOEngine):
         PersonModel(first_name="Jean-Pierre", last_name="Castaldi"),
         PersonModel(first_name="Michel", last_name="Drucker"),
     ]
-    await engine.add_all(instances)
+    await engine.save_all(instances)
 
     fetched = set()
     for inst in await engine.find(PersonModel):
@@ -87,7 +87,7 @@ async def test_find_async_iteration(engine: AIOEngine):
         PersonModel(first_name="Jean-Pierre", last_name="Castaldi"),
         PersonModel(first_name="Michel", last_name="Drucker"),
     ]
-    await engine.add_all(instances)
+    await engine.save_all(instances)
 
     fetched = set()
     # TODO Restore the type checking
@@ -101,9 +101,9 @@ async def test_add_multiple_time_same_document(engine: AIOEngine):
     fixed_id = _objectId()
     instance = PersonModel(first_name="Jean-Pierre", last_name="Pernaud", id=fixed_id)
 
-    await engine.add(instance)
+    await engine.save(instance)
     with pytest.raises(DuplicatePrimaryKeyError) as exc:
-        await engine.add(instance)
+        await engine.save(instance)
         assert exc.model is PersonModel
         assert exc.duplicated_instance == instance
         assert exc.duplicated_field == "id"
@@ -116,7 +116,7 @@ async def test_count(engine: AIOEngine):
         PersonModel(first_name="Jean-Pierre", last_name="Castaldi"),
         PersonModel(first_name="Michel", last_name="Drucker"),
     ]
-    await engine.add_all(initial_instances)
+    await engine.save_all(initial_instances)
 
     count = await engine.count(PersonModel)
     assert count == 3
@@ -144,4 +144,4 @@ async def test_add_on_embedded(engine: AIOEngine):
 
     instance = BadModel(field=12)
     with pytest.raises(TypeError):
-        await engine.add(instance)
+        await engine.save(instance)

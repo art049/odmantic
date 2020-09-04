@@ -12,7 +12,7 @@ pytestmark = pytest.mark.asyncio
 async def test_add_fetch_single(engine: AIOEngine):
     publisher = Publisher(name="O'Reilly Media", founded=1980, location="CA")
     book = Book(title="MongoDB: The Definitive Guide", pages=216, publisher=publisher)
-    instance = await engine.add(book)
+    instance = await engine.save(book)
     assert instance.id is not None
     assert isinstance(instance.publisher, Publisher)
     assert instance.publisher == publisher
@@ -30,7 +30,7 @@ async def test_add_multiple(engine: AIOEngine):
         ),
     ]
     patron = Patron(name="The Princess Royal", addresses=addresses)
-    instance = await engine.add(patron)
+    instance = await engine.save(patron)
     assert instance.id is not None
     assert isinstance(instance.addresses, list)
     assert instance.addresses == addresses
@@ -48,7 +48,7 @@ async def test_query_filter_on_embedded_doc(engine: AIOEngine):
     )
     publisher_2 = Publisher(name="O'Reilly Media", founded=2020, location="EU")
     book_2 = Book(title="MySQL: The Definitive Guide", pages=516, publisher=publisher_2)
-    instance_1, instance_2 = await engine.add_all([book_1, book_2])
+    instance_1, instance_2 = await engine.save_all([book_1, book_2])
     fetched_instances = await engine.find(Book, Book.publisher == publisher_2)
     assert len(fetched_instances) == 1
     assert fetched_instances[0] == book_2
@@ -62,7 +62,7 @@ async def test_query_filter_on_embedded_field(engine: AIOEngine):
     )
     publisher_2 = Publisher(name="O'Reilly Media", founded=2020, location="EU")
     book_2 = Book(title="MySQL: The Definitive Guide", pages=516, publisher=publisher_2)
-    instance_1, instance_2 = await engine.add_all([book_1, book_2])
+    instance_1, instance_2 = await engine.save_all([book_1, book_2])
     fetched_instances = await engine.find(Book, Book.publisher.location == "EU")
     assert len(fetched_instances) == 1
     assert fetched_instances[0] == book_2
@@ -81,7 +81,7 @@ async def test_query_filter_on_embedded_nested(engine: AIOEngine):
 
     instance_0 = TopModel(nested_0=SecondaryModel(nested_1=ThirdModel(field=12)))
     instance_1 = TopModel(nested_0=SecondaryModel(nested_1=ThirdModel(field=0)))
-    await engine.add_all([instance_0, instance_1])
+    await engine.save_all([instance_0, instance_1])
 
     fetched_instances = await engine.find(
         TopModel, TopModel.nested_0.nested_1.field == 12

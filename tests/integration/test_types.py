@@ -74,7 +74,7 @@ async def test_bson_type_inference(
         field: case.python_type  # type: ignore
 
     # TODO: Fix objectid optional (type: ignore)
-    instance = await engine.add(ModelWithTypedField(field=case.sample_value))
+    instance = await engine.save(ModelWithTypedField(field=case.sample_value))
     document = await motor_database[ModelWithTypedField.__collection__].find_one(
         {
             +ModelWithTypedField.id: instance.id,  # type: ignore
@@ -110,7 +110,7 @@ async def test_custom_bson_serializable(
     class ModelWithCustomField(Model):
         field: FancyFloat
 
-    instance = await engine.add(ModelWithCustomField(field=3.14))
+    instance = await engine.save(ModelWithCustomField(field=3.14))
     document = await motor_database[ModelWithCustomField.__collection__].find_one(
         {
             +ModelWithCustomField.id: instance.id,  # type: ignore
