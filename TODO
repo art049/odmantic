@@ -21,7 +21,7 @@
   ☐ Support Documents/EmbeddedDocuments inheritance
   ☐ Validate key_name argument
   ☐ Async iterator
-
+  ☐ Connection timeout
 
   Further Improvements:
   ☐ Write timeout
