@@ -124,6 +124,10 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
                     raise TypeError(
                         "please use odmantic.Field instead of pydantic.Field"
                     )
+                elif isinstance(value, field_type):
+                    odm_fields[field_name] = ODMField(
+                        primary_field=False, key_name=field_name
+                    )
 
                 else:
                     raise TypeError(f"Unhandled field definition {name}:{value}")

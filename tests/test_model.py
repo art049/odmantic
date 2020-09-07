@@ -69,6 +69,20 @@ def test_unknown_model_field():
             a: int = U()
 
 
+def test_model_default_simple():
+    class M(Model):
+        f: int = 3
+
+    instance = M()
+    assert instance.f == 3
+
+
+def test_model_default_with_field():
+    class M(Model):
+        f: int = Field(default=3)
+
+    instance = M()
+    assert instance.f == 3
 @pytest.mark.skip("Not implemented")
 def test_overload_id_field():
     class M(Model):
