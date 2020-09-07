@@ -1,8 +1,7 @@
-from typing import Any, Callable
+from typing import Any
 
 import pytest
 from pydantic import Field as PDField
-from pydantic.main import BaseModel
 
 from odmantic.fields import Field
 from odmantic.model import Model
@@ -83,6 +82,8 @@ def test_model_default_with_field():
 
     instance = M()
     assert instance.f == 3
+
+
 @pytest.mark.skip("Not implemented")
 def test_overload_id_field():
     class M(Model):
@@ -111,3 +112,37 @@ def test_repr_model(method):
         f"M(id={repr(instance.id)}, a=5)",
         f"M(a=5, id={repr(instance.id)})",
     ]
+
+
+def test_fields_modified_no_modification():
+    class M(Model):
+        f: int
+
+    instance = M(f=0)
+    assert len(instance.__fields_modified__) == 0
+
+
+def test_fields_modified_one_update():
+    class M(Model):
+        f: int
+
+    instance = M(f=0)
+    instance.f = 1
+    assert instance.__fields_modified__ == set(["f"])
+
+
+def test_fields_modified_with_default():
+    class M(Model):
+        f: int = 5
+
+    instance = M(f=0)
+    assert len(instance.__fields_modified__) == 0
+
+
+def test_fields_modified_with_default_and_update():
+    class M(Model):
+        f: int = 5
+
+    instance = M(f=0)
+    instance.f = 6
+    assert instance.__fields_modified__ == set(["f"])

@@ -178,9 +178,20 @@ class Model(pydantic.BaseModel, metaclass=ModelMetaclass):
         __odm_fields__: ClassVar[Dict[str, ODMBaseField]] = {}
         __bson_serialized_fields__: ClassVar[FrozenSet[str]] = frozenset()
         __references__: ClassVar[Tuple[str, ...]] = ()
-        id: _objectId
 
-    __slots__ = ()
+        __fields_modified__: Set[str]
+
+        # id: _objectId # TODO fix basic id field typing
+
+    __slots__ = ("__fields_modified__",)
+
+    def __init__(self, **data):
+        super().__init__(**data)
+        object.__setattr__(self, "__fields_modified__", set())
+
+    def __setattr__(self, name, value):
+        super().__setattr__(name, value)
+        self.__fields_modified__.add(name)
 
     def __init_subclass__(cls):
         for name, field in cls.__odm_fields__.items():
