@@ -76,7 +76,7 @@ class AIOEngine:
             return None
         return results[0]
 
-    async def save(self, instance: ModelType, upsert: bool = False) -> ModelType:
+    async def save(self, instance: ModelType) -> ModelType:
         collection = self._get_collection(type(instance))
 
         doc = instance.doc()
@@ -87,14 +87,23 @@ class AIOEngine:
                         sub_instance = cast(Model, getattr(instance, ref_field_name))
                         sub_doc = sub_instance.doc()
                         sub_collection = self._get_collection(type(sub_instance))
-                        await sub_collection.insert_one(
-                            sub_doc, bypass_document_validation=True
+                        await sub_collection.update_one(
+                            {"_id": sub_doc["_id"]},
+                            {"$set": sub_doc},
+                            upsert=True,
+                            bypass_document_validation=True,
                         )
 
-                    await collection.insert_one(doc, bypass_document_validation=True)
+                    await collection.update_one(
+                        {"_id": doc["_id"]},
+                        {"$set": doc},
+                        upsert=True,
+                        bypass_document_validation=True,
+                    )
         except PyMongoDuplicateKeyError as e:
             if "_id" in e.details["keyPattern"]:
                 raise DuplicatePrimaryKeyError(instance)
+            raise
         return instance
 
     async def save_all(self, instances: Sequence[ModelType]) -> List[ModelType]:

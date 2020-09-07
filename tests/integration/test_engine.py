@@ -10,14 +10,14 @@ from ..zoo.person import PersonModel
 pytestmark = pytest.mark.asyncio
 
 
-async def test_add(engine: AIOEngine):
+async def test_save(engine: AIOEngine):
     instance = await engine.save(
         PersonModel(first_name="Jean-Pierre", last_name="Pernaud")
     )
     assert isinstance(instance.id, _objectId)
 
 
-async def test_add_find_find_one(engine: AIOEngine):
+async def test_save_find_find_one(engine: AIOEngine):
     initial_instance = PersonModel(first_name="Jean-Pierre", last_name="Pernaud")
     await engine.save(initial_instance)
     found_instances = await engine.find(PersonModel)
@@ -38,7 +38,7 @@ async def test_find_one_not_existing(engine: AIOEngine):
     assert fetched is None
 
 
-async def test_add_multiple_simple_find_find_one(engine: AIOEngine):
+async def test_save_multiple_simple_find_find_one(engine: AIOEngine):
     initial_instances = [
         PersonModel(first_name="Jean-Pierre", last_name="Pernaud"),
         PersonModel(first_name="Jean-Pierre", last_name="Castaldi"),
@@ -97,17 +97,29 @@ async def test_find_async_iteration(engine: AIOEngine):
     assert set(i.id for i in instances) == fetched
 
 
-async def test_add_multiple_time_same_document(engine: AIOEngine):
+async def test_save_multiple_time_same_document(engine: AIOEngine):
+    fixed_id = _objectId()
+
+    instance = PersonModel(first_name="Jean-Pierre", last_name="Pernaud", id=fixed_id)
+    await engine.save(instance)
+
+    instance = PersonModel(first_name="Jean-Pierre", last_name="Pernaud", id=fixed_id)
+    await engine.save(instance)
+
+    assert await engine.count(PersonModel, PersonModel.id == fixed_id) == 1
+
+
+@pytest.mark.skip("Not supported yet")
+async def test_insert_multiple_time_same_document(engine: AIOEngine):
     fixed_id = _objectId()
     instance = PersonModel(first_name="Jean-Pierre", last_name="Pernaud", id=fixed_id)
-
-    await engine.save(instance)
+    await engine.insert(instance)  # type: ignore
     with pytest.raises(DuplicatePrimaryKeyError) as exc:
-        await engine.save(instance)
-        assert exc.model is PersonModel
-        assert exc.duplicated_instance == instance
-        assert exc.duplicated_field == "id"
-        assert exc.duplicated_value == fixed_id
+        await engine.insert(instance)  # type: ignore
+    assert exc.value.model is PersonModel
+    assert exc.value.duplicated_instance == instance
+    assert exc.value.duplicated_field == "id"
+    assert exc.value.duplicated_value == fixed_id
 
 
 async def test_count(engine: AIOEngine):

@@ -8,7 +8,7 @@
       "name": "Debug Tests",
       "type": "python",
       "request": "test",
-      "console": "integratedTerminal",
+      "console": "internalConsole",
       "justMyCode": false
     }
   ]
