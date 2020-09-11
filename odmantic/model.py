@@ -31,7 +31,12 @@ from odmantic.reference import ODMReference, ODMReferenceInfo
 from .types import _SUBSTITUTION_TYPES, BSONSerializedField, _objectId
 
 if TYPE_CHECKING:
-    from pydantic.typing import ReprArgs
+    from pydantic.typing import (
+        ReprArgs,
+        AbstractSetIntStr,
+        MappingIntStrAny,
+        DictStrAny,
+    )
 
 UNTOUCHED_TYPES = FunctionType, property, classmethod, staticmethod
 
@@ -224,6 +229,27 @@ class Model(pydantic.BaseModel, metaclass=ModelMetaclass):
         args.remove(id_arg)
         args = [id_arg] + args
         return args
+
+    def __getstate__(self) -> Dict[Any, Any]:
+        return {
+            **super().__getstate__(),
+            "__fields_modified__": self.__fields_modified__,
+        }
+
+    def __setstate__(self, state: Dict[Any, Any]) -> None:
+        super().__setstate__(state)
+        object.__setattr__(self, "__fields_modified__", state["__fields_modified__"])
+
+    def copy(
+        self: T,
+        *,
+        include: Union[AbstractSetIntStr, MappingIntStrAny] = None,
+        exclude: Union[AbstractSetIntStr, MappingIntStrAny] = None,
+        update: "DictStrAny" = None,
+        deep: bool = False,
+    ) -> T:
+        # TODO implement
+        raise NotImplementedError
 
     @classmethod
     def parse_doc(cls: Type[T], raw_doc: Dict) -> T:
