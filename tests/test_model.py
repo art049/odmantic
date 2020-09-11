@@ -1,10 +1,12 @@
 from typing import Any
 
 import pytest
+from bson.objectid import ObjectId
 from pydantic import Field as PDField
 
 from odmantic.fields import Field
 from odmantic.model import Model
+from tests.zoo.person import PersonModel
 
 
 class TheClassName(Model):
@@ -142,3 +144,33 @@ def test_fields_modified_with_default_and_update():
     instance = M(f=0)
     instance.f = 6
     assert instance.__fields_modified__ == set(["f"])
+
+
+def test_validate_does_not_copy():
+    instance = PersonModel(first_name="Jean", last_name="Pierre")
+    assert PersonModel.validate(instance) is instance
+
+
+def test_validate_from_dict():
+    instance = PersonModel.validate({"first_name": "Jean", "last_name": "Pierre"})
+    assert isinstance(instance, PersonModel)
+    assert instance.first_name == "Jean" and instance.last_name == "Pierre"
+
+
+def test_fields_modified_on_construction():
+    instance = PersonModel(first_name="Jean", last_name="Pierre")
+    assert instance.__fields_modified__ == set(["first_name", "last_name", "id"])
+
+
+def test_fields_modified_on_document_parsing():
+    instance = PersonModel.parse_doc(
+        {"_id": ObjectId(), "first_name": "Jackie", "last_name": "Chan"}
+    )
+    assert instance.__fields_modified__ == set(["first_name", "last_name", "id"])
+
+
+def test_fields_modified_on_object_parsing():
+    instance = PersonModel.parse_obj(
+        {"_id": ObjectId(), "first_name": "Jackie", "last_name": "Chan"}
+    )
+    assert instance.__fields_modified__ == set(["first_name", "last_name", "id"])

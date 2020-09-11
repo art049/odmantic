@@ -33,7 +33,6 @@ from .types import _SUBSTITUTION_TYPES, BSONSerializedField, _objectId
 if TYPE_CHECKING:
     from pydantic.typing import ReprArgs
 
-
 UNTOUCHED_TYPES = FunctionType, property, classmethod, staticmethod
 
 
@@ -184,19 +183,33 @@ class Model(pydantic.BaseModel, metaclass=ModelMetaclass):
         __bson_serialized_fields__: ClassVar[FrozenSet[str]] = frozenset()
         __references__: ClassVar[Tuple[str, ...]] = ()
 
-        __fields_modified__: Set[str]
+        __fields_modified__: Set[str] = set()
 
         id: Union[_objectId, Any]  # TODO fix basic id field typing
 
     __slots__ = ("__fields_modified__",)
 
-    def __init__(self, **data):
+    def __init__(__odmantic_self__, **data):
         super().__init__(**data)
-        object.__setattr__(self, "__fields_modified__", set())
+        # Uses something other than `self` the first arg to allow "self" as a settable
+        # attribute
+        object.__setattr__(
+            __odmantic_self__,
+            "__fields_modified__",
+            set(__odmantic_self__.__odm_fields__.keys()),
+        )
 
     def __setattr__(self, name, value):
         super().__setattr__(name, value)
         self.__fields_modified__.add(name)
+
+    @classmethod
+    def validate(cls: Type[T], value: Any) -> T:
+        if isinstance(value, cls):
+            # Do not copy the object as done in pydantic
+            # This enable to keep the same python object
+            return value
+        return cast(T, super().validate(value))
 
     def __init_subclass__(cls):
         for name, field in cls.__odm_fields__.items():
@@ -220,7 +233,8 @@ class Model(pydantic.BaseModel, metaclass=ModelMetaclass):
                 doc[field_name] = field.model.parse_doc(raw_doc[field.key_name])
             else:
                 doc[field_name] = raw_doc[field.key_name]
-        return cast(T, cls.parse_obj(doc))
+        instance = cls.parse_obj(doc)
+        return cast(T, instance)
 
     def doc(self) -> Dict[str, Any]:
         """

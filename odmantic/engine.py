@@ -62,6 +62,7 @@ class AIOEngine:
         instances = []
         for raw_doc in raw_docs:
             instance = model.parse_doc(raw_doc)
+            object.__setattr__(instance, "__fields_modified__", set())
             instances.append(instance)
         return instances
 
@@ -99,6 +100,7 @@ class AIOEngine:
             async with await self.client.start_session() as s:
                 async with s.start_transaction():
                     await self._save(instance, s)
+            object.__setattr__(instance, "__fields_modified__", set())
         except PyMongoDuplicateKeyError as e:
             if "_id" in e.details["keyPattern"]:
                 raise DuplicatePrimaryKeyError(instance)

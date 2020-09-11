@@ -145,7 +145,7 @@ async def test_find_on_embedded(engine: AIOEngine):
         field: int
 
     with pytest.raises(TypeError):
-        await engine.find(BadModel)
+        await engine.find(BadModel)  # type: ignore
 
 
 @pytest.mark.skip("Not implemented")
@@ -166,3 +166,32 @@ async def test_save_update(engine: AIOEngine):
     await engine.save(instance)
     assert await engine.count(PersonModel, PersonModel.last_name == "Pernaud") == 0
     assert await engine.count(PersonModel, PersonModel.last_name == "Dupuis") == 1
+
+
+@pytest.fixture()
+async def one_person_in_database(engine: AIOEngine):
+    await engine.save(PersonModel(first_name="Jean-Pierre", last_name="Pernaud"))
+
+
+@pytest.mark.usefixtures("one_person_in_database")
+async def test_modified_fields_on_find(engine: AIOEngine):
+    instance = await engine.find_one(PersonModel)
+    assert instance is not None
+    assert len(instance.__fields_modified__) == 0
+
+
+@pytest.mark.usefixtures("one_person_in_database")
+async def test_modified_fields_on_document_change(engine: AIOEngine):
+    instance = await engine.find_one(PersonModel)
+    assert instance is not None
+    instance.first_name = "Jackie"
+    assert len(instance.__fields_modified__) == 1
+    instance.last_name = "Chan"
+    assert len(instance.__fields_modified__) == 2
+
+
+async def test_modified_fields_cleared_on_document_saved(engine: AIOEngine):
+    instance = PersonModel(first_name="Jean-Pierre", last_name="Pernaud")
+    assert len(instance.__fields_modified__) > 0
+    await engine.save(instance)
+    assert len(instance.__fields_modified__) == 0
