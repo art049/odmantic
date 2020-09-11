@@ -102,16 +102,12 @@ def test_overload_id_with_another_primary_key():
             number: int = Field(primary_key=True)
 
 
-@pytest.mark.parametrize("method", (repr, str))
-def test_repr_model(method):
+def test_repr_model():
     class M(Model):
         a: int
 
     instance = M(a=5)
-    assert method(instance) in [
-        f"M(id={repr(instance.id)}, a=5)",
-        f"M(a=5, id={repr(instance.id)})",
-    ]
+    assert repr(instance) == f"M(id={repr(instance.id)}, a=5)"
 
 
 def test_fields_modified_no_modification():

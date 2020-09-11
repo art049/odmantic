@@ -13,6 +13,7 @@ from typing import (
     Tuple,
     Type,
     TypeVar,
+    Union,
     cast,
     no_type_check,
 )
@@ -28,6 +29,10 @@ from odmantic.fields import ODMBaseField, ODMField, ODMFieldInfo
 from odmantic.reference import ODMReference, ODMReferenceInfo
 
 from .types import _SUBSTITUTION_TYPES, BSONSerializedField, _objectId
+
+if TYPE_CHECKING:
+    from pydantic.typing import ReprArgs
+
 
 UNTOUCHED_TYPES = FunctionType, property, classmethod, staticmethod
 
@@ -181,7 +186,7 @@ class Model(pydantic.BaseModel, metaclass=ModelMetaclass):
 
         __fields_modified__: Set[str]
 
-        # id: _objectId # TODO fix basic id field typing
+        id: Union[_objectId, Any]  # TODO fix basic id field typing
 
     __slots__ = ("__fields_modified__",)
 
@@ -197,9 +202,15 @@ class Model(pydantic.BaseModel, metaclass=ModelMetaclass):
         for name, field in cls.__odm_fields__.items():
             setattr(cls, name, field)
 
-    # FIXME: maybe directly PR to Pydantic
-    def __str__(self):
-        return repr(self)
+    def __repr_args__(self) -> "ReprArgs":
+        # Place the id field first in the repr string
+        args = list(super().__repr_args__())
+        id_arg = next((arg for arg in args if arg[0] == "id"), None)
+        if id_arg is None:
+            return args
+        args.remove(id_arg)
+        args = [id_arg] + args
+        return args
 
     @classmethod
     def parse_doc(cls: Type[T], raw_doc: Dict) -> T:
