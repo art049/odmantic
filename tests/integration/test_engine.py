@@ -149,10 +149,20 @@ async def test_find_on_embedded(engine: AIOEngine):
 
 
 @pytest.mark.skip("Not implemented")
-async def test_add_on_embedded(engine: AIOEngine):
+async def test_save_on_embedded(engine: AIOEngine):
     class BadModel(EmbeddedModel):
         field: int
 
     instance = BadModel(field=12)
     with pytest.raises(TypeError):
-        await engine.save(instance)
+        await engine.save(instance)  # type: ignore
+
+
+async def test_save_update(engine: AIOEngine):
+    instance = PersonModel(first_name="Jean-Pierre", last_name="Pernaud")
+    await engine.save(instance)
+    assert await engine.count(PersonModel, PersonModel.last_name == "Pernaud") == 1
+    instance.last_name = "Dupuis"
+    await engine.save(instance)
+    assert await engine.count(PersonModel, PersonModel.last_name == "Pernaud") == 0
+    assert await engine.count(PersonModel, PersonModel.last_name == "Dupuis") == 1
