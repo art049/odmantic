@@ -168,19 +168,26 @@ async def test_save_update(engine: AIOEngine):
     assert await engine.count(PersonModel, PersonModel.last_name == "Dupuis") == 1
 
 
+async def test_modified_fields_cleared_on_document_saved(engine: AIOEngine):
+    instance = PersonModel(first_name="Jean-Pierre", last_name="Pernaud")
+    assert len(instance.__fields_modified__) > 0
+    await engine.save(instance)
+    assert len(instance.__fields_modified__) == 0
+
+
 @pytest.fixture()
-async def one_person_in_database(engine: AIOEngine):
+async def engine_one_person(engine: AIOEngine):
     await engine.save(PersonModel(first_name="Jean-Pierre", last_name="Pernaud"))
 
 
-@pytest.mark.usefixtures("one_person_in_database")
+@pytest.mark.usefixtures("engine_one_person")
 async def test_modified_fields_on_find(engine: AIOEngine):
     instance = await engine.find_one(PersonModel)
     assert instance is not None
     assert len(instance.__fields_modified__) == 0
 
 
-@pytest.mark.usefixtures("one_person_in_database")
+@pytest.mark.usefixtures("engine_one_person")
 async def test_modified_fields_on_document_change(engine: AIOEngine):
     instance = await engine.find_one(PersonModel)
     assert instance is not None
@@ -190,8 +197,24 @@ async def test_modified_fields_on_document_change(engine: AIOEngine):
     assert len(instance.__fields_modified__) == 2
 
 
-async def test_modified_fields_cleared_on_document_saved(engine: AIOEngine):
-    instance = PersonModel(first_name="Jean-Pierre", last_name="Pernaud")
-    assert len(instance.__fields_modified__) > 0
+@pytest.mark.usefixtures("engine_one_person")
+async def test_no_set_on_save_fetched_document(engine: AIOEngine, mock_collection):
+    instance = await engine.find_one(PersonModel)
+    assert instance is not None
+
+    collection = mock_collection()
     await engine.save(instance)
-    assert len(instance.__fields_modified__) == 0
+    collection.update_one.assert_not_awaited()
+
+
+@pytest.mark.usefixtures("engine_one_person")
+async def test_only_modified_set_on_save(engine: AIOEngine, mock_collection):
+    instance = await engine.find_one(PersonModel)
+    assert instance is not None
+
+    instance.first_name = "John"
+    collection = mock_collection()
+    await engine.save(instance)
+    collection.update_one.assert_awaited_once()
+    (_, set_arg), _ = collection.update_one.await_args
+    assert set_arg == {"$set": {"first_name": "John"}}

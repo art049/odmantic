@@ -7,9 +7,7 @@ verify_ssl = true
 black = "*"
 isort = {extras = ["pipfile"],version = "~=4.3"}
 pytest = "~=6.0"
-flake8 = "*"
-python-githooks = "*"
-pytest-pythonpath = "*"
+flake8 = "==3.8.3"
 mypy = "*"
 ptvsd = "*"
 coverage = "*"

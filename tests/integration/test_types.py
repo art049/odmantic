@@ -61,7 +61,7 @@ type_test_data = [
     TypeTestCase(datetime, "date", sample_datetime),
     TypeTestCase(List, "array", ["one"]),
     # Compound Types
-    TypeTestCase(Tuple[str, ...], "array", ("one",)),
+    TypeTestCase(Tuple[str, ...], "array", ("one",)),  # type: ignore
     # TODO UNSKIP
     # TypeTestCase(List[ObjectId], "array", [ObjectId() for _ in range(5)]),
 ]

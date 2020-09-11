@@ -117,7 +117,15 @@ def test_fields_modified_no_modification():
         f: int
 
     instance = M(f=0)
-    assert len(instance.__fields_modified__) == 0
+    assert instance.__fields_modified__ == set(["f", "id"])
+
+
+def test_fields_modified_with_default():
+    class M(Model):
+        f: int = 5
+
+    instance = M(f=0)
+    assert instance.__fields_modified__ == set(["f", "id"])
 
 
 def test_fields_modified_one_update():
@@ -126,24 +134,7 @@ def test_fields_modified_one_update():
 
     instance = M(f=0)
     instance.f = 1
-    assert instance.__fields_modified__ == set(["f"])
-
-
-def test_fields_modified_with_default():
-    class M(Model):
-        f: int = 5
-
-    instance = M(f=0)
-    assert len(instance.__fields_modified__) == 0
-
-
-def test_fields_modified_with_default_and_update():
-    class M(Model):
-        f: int = 5
-
-    instance = M(f=0)
-    instance.f = 6
-    assert instance.__fields_modified__ == set(["f"])
+    assert instance.__fields_modified__ == set(["f", "id"])
 
 
 def test_validate_does_not_copy():

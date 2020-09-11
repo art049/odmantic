@@ -1,5 +1,6 @@
 import asyncio
 import os
+from unittest.mock import AsyncMock, Mock
 from uuid import uuid4
 
 import pytest
@@ -40,3 +41,14 @@ async def engine(motor_client, database_name):
 @pytest.fixture(scope="function")
 def motor_database(database_name, motor_client):
     return motor_client[database_name]
+
+
+@pytest.fixture(scope="function")
+def mock_collection(engine: AIOEngine, monkeypatch):
+    def f():
+        collection = Mock()
+        collection.update_one = AsyncMock()
+        monkeypatch.setattr(engine, "_get_collection", lambda _: collection)
+        return collection
+
+    return f

@@ -79,7 +79,6 @@ class AIOEngine:
         return results[0]
 
     async def _save(self, instance: ModelType, session) -> None:
-        doc = instance.doc()
         save_tasks = []
         for ref_field_name in instance.__references__:
             sub_instance = cast(Model, getattr(instance, ref_field_name))
@@ -87,13 +86,17 @@ class AIOEngine:
 
         await gather(*save_tasks)
 
-        collection = self._get_collection(type(instance))
-        await collection.update_one(
-            {"_id": doc["_id"]},
-            {"$set": doc},
-            upsert=True,
-            bypass_document_validation=True,
-        )
+        if len(instance.__fields_modified__):
+            doc = instance.doc(
+                include=(instance.__fields_modified__ - set([instance.__primary_key__]))
+            )
+            collection = self._get_collection(type(instance))
+            await collection.update_one(
+                {"_id": instance.id},
+                {"$set": doc},
+                upsert=True,
+                bypass_document_validation=True,
+            )
 
     async def save(self, instance: ModelType) -> ModelType:
         try:

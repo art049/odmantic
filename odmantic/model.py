@@ -31,6 +31,7 @@ from odmantic.reference import ODMReference, ODMReferenceInfo
 from .types import _SUBSTITUTION_TYPES, BSONSerializedField, _objectId
 
 if TYPE_CHECKING:
+
     from pydantic.typing import (
         ReprArgs,
         AbstractSetIntStr,
@@ -205,6 +206,11 @@ class Model(pydantic.BaseModel, metaclass=ModelMetaclass):
         )
 
     def __setattr__(self, name, value):
+        if name == self.__primary_key__:
+            # TODO implement
+            raise NotImplementedError(
+                "Reassigning a new primary key is not supported yet"
+            )
         super().__setattr__(name, value)
         self.__fields_modified__.add(name)
 
@@ -243,8 +249,8 @@ class Model(pydantic.BaseModel, metaclass=ModelMetaclass):
     def copy(
         self: T,
         *,
-        include: Union[AbstractSetIntStr, MappingIntStrAny] = None,
-        exclude: Union[AbstractSetIntStr, MappingIntStrAny] = None,
+        include: Union["AbstractSetIntStr", "MappingIntStrAny"] = None,
+        exclude: Union["AbstractSetIntStr", "MappingIntStrAny"] = None,
         update: "DictStrAny" = None,
         deep: bool = False,
     ) -> T:
@@ -262,13 +268,15 @@ class Model(pydantic.BaseModel, metaclass=ModelMetaclass):
         instance = cls.parse_obj(doc)
         return cast(T, instance)
 
-    def doc(self) -> Dict[str, Any]:
+    def doc(self, include: Optional["AbstractSetIntStr"] = None) -> Dict[str, Any]:
         """
         Generate a document representation of the instance (as a dictionary)
         """
         raw_doc = self.dict()
         doc: Dict[str, Any] = {}
         for field_name, field in self.__odm_fields__.items():
+            if include is not None and field_name not in include:
+                continue
             if isinstance(field, ODMReference):
                 doc[field.key_name] = raw_doc[field_name]["id"]
             else:
