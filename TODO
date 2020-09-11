@@ -2,7 +2,7 @@
 0.0.1:
   Support Embedded Documents
   ☐ Query document based on embedded document content
-  ☐ Support Reference Documents (nested)
+  ☐ Support find Reference Documents (nested)
   Reuse pydantic Field constructor
   ☐ Doc custom bson serializable fields
   truncate microseconds on validation
@@ -13,17 +13,18 @@
   None / Undefined / Null -> Undefined is deprecated None <-> Null
   ☐ Define policy for optional fields default set to null ?
   Fix repr/ str ?
-  ☐ Smart instance update
+  Smart instance update
   Duplicate key error
-  ☐ Upsert
-  ☐ Array queries $elemMatch $all $size
+  Upsert
   ☐ Document usage outside odm (aggregation example)
   ☐ Support Documents/EmbeddedDocuments inheritance
   ☐ Validate key_name argument
   ☐ Async iterator
-  ☐ Connection timeout
 
   Further Improvements:
+  ☐ Enable primary key change
+  ☐ Array queries $elemMatch $all $size
+  ☐ Additional pydantic fields
   ☐ Write timeout
   ☐ Read/Write concern
   ☐ Use bson.son for embedded documents https://docs.mongodb.com/manual/tutorial/query-array-of-documents/
