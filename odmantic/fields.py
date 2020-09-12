@@ -6,7 +6,19 @@ from typing import Any, Optional, Pattern, Sequence
 from pydantic.fields import Field as PDField
 from pydantic.fields import FieldInfo, Undefined
 
-from odmantic.query import QueryExpression
+from odmantic.query import (
+    QueryExpression,
+    eq,
+    exists,
+    gt,
+    gte,
+    in_,
+    le,
+    lte,
+    ne,
+    not_exists,
+    not_in,
+)
 
 from .typing import NoArgAnyCallable
 
@@ -144,56 +156,53 @@ class ODMField(ODMBaseField):
     def __pos__(self):
         return self.key_name
 
-    def __cmp_expression__(self, op: str, value: Any) -> QueryExpression:
-        return QueryExpression({self.key_name: {op: value}})
-
     def __eq__(self, value):
         return self.eq(value)
 
     def eq(self, value) -> QueryExpression:
-        return self.__cmp_expression__("$eq", value)
+        return eq(self, value)
 
     def __ne__(self, value):
         return self.ne(value)
 
     def ne(self, value) -> QueryExpression:
-        return self.__cmp_expression__("$ne", value)
+        return ne(self, value)
 
     def __gt__(self, value):
         return self.gt(value)
 
     def gt(self, value) -> QueryExpression:
-        return self.__cmp_expression__("$gt", value)
+        return gt(self, value)
 
     def __ge__(self, value):
         return self.gte(value)
 
     def gte(self, value) -> QueryExpression:
-        return self.__cmp_expression__("$gte", value)
+        return gte(self, value)
 
     def __le__(self, value):
         return self.le(value)
 
     def le(self, value) -> QueryExpression:
-        return self.__cmp_expression__("$le", value)
+        return le(self, value)
 
     def __lt__(self, value):
         return self.lte(value)
 
     def lte(self, value) -> QueryExpression:
-        return self.__cmp_expression__("$lte", value)
+        return lte(self, value)
 
     def in_(self, value: Sequence) -> QueryExpression:
-        return self.__cmp_expression__("$in", value)
+        return in_(self, value)
 
     def not_in(self, value: Sequence) -> QueryExpression:
-        return self.__cmp_expression__("$nin", value)
+        return not_in(self, value)
 
     def exists(self) -> QueryExpression:
-        return self.__cmp_expression__("$exists", True)
+        return exists(self)
 
     def not_exists(self) -> QueryExpression:
-        return self.__cmp_expression__("$exists", False)
+        return not_exists(self)
 
     def match(self, pattern: Pattern):
         # FIXME might create incompatibilities
