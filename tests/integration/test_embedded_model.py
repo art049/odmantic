@@ -1,3 +1,5 @@
+from typing import Tuple
+
 import pytest
 
 from odmantic.engine import AIOEngine
@@ -40,29 +42,31 @@ async def test_add_multiple(engine: AIOEngine):
     assert fetched_instance.addresses == addresses
 
 
-@pytest.mark.skip("Not supported yet")
-async def test_query_filter_on_embedded_doc(engine: AIOEngine):
+@pytest.fixture
+async def books_with_embedded_publisher(engine: AIOEngine):
     publisher_1 = Publisher(name="O'Reilly Media", founded=1980, location="CA")
     book_1 = Book(
         title="MongoDB: The Definitive Guide", pages=216, publisher=publisher_1
     )
     publisher_2 = Publisher(name="O'Reilly Media", founded=2020, location="EU")
     book_2 = Book(title="MySQL: The Definitive Guide", pages=516, publisher=publisher_2)
-    instance_1, instance_2 = await engine.save_all([book_1, book_2])
-    fetched_instances = await engine.find(Book, Book.publisher == publisher_2)
+    return await engine.save_all([book_1, book_2])
+
+
+async def test_query_filter_on_embedded_doc(
+    engine: AIOEngine, books_with_embedded_publisher: Tuple[Book, Book]
+):
+    _, book_2 = books_with_embedded_publisher
+    fetched_instances = await engine.find(Book, Book.publisher == book_2.publisher)
     assert len(fetched_instances) == 1
     assert fetched_instances[0] == book_2
 
 
 @pytest.mark.skip("Not supported yet")
-async def test_query_filter_on_embedded_field(engine: AIOEngine):
-    publisher_1 = Publisher(name="O'Reilly Media", founded=1980, location="CA")
-    book_1 = Book(
-        title="MongoDB: The Definitive Guide", pages=216, publisher=publisher_1
-    )
-    publisher_2 = Publisher(name="O'Reilly Media", founded=2020, location="EU")
-    book_2 = Book(title="MySQL: The Definitive Guide", pages=516, publisher=publisher_2)
-    instance_1, instance_2 = await engine.save_all([book_1, book_2])
+async def test_query_filter_on_embedded_field(
+    engine: AIOEngine, books_with_embedded_publisher: Tuple[Book, Book]
+):
+    _, book_2 = books_with_embedded_publisher
     fetched_instances = await engine.find(Book, Book.publisher.location == "EU")
     assert len(fetched_instances) == 1
     assert fetched_instances[0] == book_2

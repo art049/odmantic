@@ -68,21 +68,16 @@ def find_duplicate_key(fields: Sequence[ODMField]) -> Optional[str]:
     return None
 
 
-class ModelMetaclass(pydantic.main.ModelMetaclass):
+class BaseModelMetaclass(ABCMeta):
     @no_type_check
     def __new__(cls, name, bases, namespace, **kwargs):  # noqa C901
         if (namespace.get("__module__"), namespace.get("__qualname__")) != (
             "odmantic.model",
             "Model",
         ):
-            print(cls)
-            print(name)
-            print(bases)
-            print(namespace)
             annotations = resolve_annotations(
                 namespace.get("__annotations__", {}), namespace.get("__module__")
             )
-            primary_field: Optional[str] = None
             odm_fields: Dict[str, ODMBaseField] = {}
             references: List[str] = []
             bson_serialized_fields: Set[str] = set()
@@ -104,14 +99,6 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
                     bson_serialized_fields.add(field_name)
                 value = namespace.get(field_name, Undefined)
                 if isinstance(value, ODMFieldInfo):
-                    if value.primary_field:
-                        # TODO handle inheritance with primary keys
-                        if primary_field is not None:
-                            raise TypeError(
-                                f"cannot define multiple primary keys on model {name}"
-                            )
-                        primary_field = field_name
-
                     key_name = (
                         value.key_name if value.key_name is not None else field_name
                     )
@@ -153,7 +140,7 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
                     raise TypeError(f"Unhandled field definition {name}:{value}")
 
             for field_name, value in namespace.items():
-                # TODO check referecnes defined without type
+                # TODO check references defined without type
                 # TODO find out what to do with those fields
                 if (
                     field_name in annotations
@@ -164,11 +151,6 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
                 odm_fields[field_name] = ODMField(
                     primary_field=False, key_name=field_name
                 )
-            if primary_field is None:
-                primary_field = "id"
-                odm_fields["id"] = ODMField(primary_field=True, key_name="_id")
-                namespace["id"] = PDField(default_factory=_objectId)
-                namespace["__annotations__"]["id"] = _objectId
 
             duplicate_key = find_duplicate_key(odm_fields.values())
             if duplicate_key is not None:
@@ -176,8 +158,40 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
 
             namespace["__odm_fields__"] = odm_fields
             namespace["__references__"] = tuple(references)
-            namespace["__primary_key__"] = primary_field
             namespace["__bson_serialized_fields__"] = frozenset(bson_serialized_fields)
+
+        return cls
+
+
+class ModelMetaclass(BaseModelMetaclass, pydantic.main.ModelMetaclass):
+    @no_type_check
+    def __new__(cls, name, bases, namespace, **kwargs):  # noqa C901
+        BaseModelMetaclass.__new__(cls, name, bases, namespace, **kwargs)
+
+        if (namespace.get("__module__"), namespace.get("__qualname__")) != (
+            "odmantic.model",
+            "Model",
+        ):
+            primary_field = None
+            odm_fields: Dict[str, ODMBaseField] = namespace["__odm_fields__"]
+
+            for field in odm_fields:
+                if isinstance(field, ODMField) and field.primary_field:
+                    # TODO handle inheritance with primary keys
+                    if primary_field is not None:
+                        raise TypeError(
+                            f"cannot define multiple primary keys on model {name}"
+                        )
+                    primary_field = field.key_name
+
+            if primary_field is None:
+                primary_field = "id"
+                odm_fields["id"] = ODMField(primary_field=True, key_name="_id")
+                namespace["id"] = PDField(default_factory=_objectId)
+                namespace["__annotations__"]["id"] = _objectId
+
+            namespace["__primary_key__"] = primary_field
+
             if "__collection__" not in namespace:
                 cls_name = name
                 if cls_name.endswith("Model"):
@@ -185,13 +199,46 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
                     cls_name = cls_name[:-5]  # Strip Model in the class name
                 namespace["__collection__"] = to_snake_case(cls_name)
 
-        return super().__new__(cls, name, bases, namespace, **kwargs)
+        return pydantic.main.ModelMetaclass.__new__(
+            cls, name, bases, namespace, **kwargs
+        )
+
+
+class EmbeddedModelMetaclass(BaseModelMetaclass, pydantic.main.ModelMetaclass):
+    @no_type_check
+    def __new__(cls, name, bases, namespace, **kwargs):  # noqa C901
+        BaseModelMetaclass.__new__(cls, name, bases, namespace, **kwargs)
+
+        if (namespace.get("__module__"), namespace.get("__qualname__")) != (
+            "odmantic.model",
+            "Model",
+        ):
+            odm_fields: Dict[str, ODMBaseField] = namespace["__odm_fields__"]
+
+            for field in odm_fields:
+                if isinstance(field, ODMField) and field.primary_field:
+                    raise TypeError(
+                        f"cannot define a primary field in {name} embedded document"
+                    )
+
+        return pydantic.main.ModelMetaclass.__new__(
+            cls, name, bases, namespace, **kwargs
+        )
 
 
 TBase = TypeVar("TBase", bound="_BaseODMModel")
 
 
 class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
+    if TYPE_CHECKING:
+        __odm_fields__: ClassVar[Dict[str, ODMBaseField]] = {}
+        __bson_serialized_fields__: ClassVar[FrozenSet[str]] = frozenset()
+        __references__: ClassVar[Tuple[str, ...]] = ()
+
+        __fields_modified__: Set[str] = set()
+
+    __slots__ = ("__fields_modified__",)
+
     @classmethod
     def validate(cls: Type[TBase], value: Any) -> TBase:
         if isinstance(value, cls):
@@ -231,6 +278,27 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         super().__setstate__(state)
         object.__setattr__(self, "__fields_modified__", state["__fields_modified__"])
 
+    def doc(self, include: Optional["AbstractSetIntStr"] = None) -> Dict[str, Any]:
+        """
+        Generate a document representation of the instance (as a dictionary)
+        """
+        raw_doc = self.dict()
+        doc: Dict[str, Any] = {}
+        for field_name, field in self.__odm_fields__.items():
+            if include is not None and field_name not in include:
+                continue
+            if isinstance(field, ODMReference):
+                doc[field.key_name] = raw_doc[field_name]["id"]
+            else:
+                print(self.__bson_serialized_fields__)
+                if field_name in self.__bson_serialized_fields__:
+                    doc[field.key_name] = self.__fields__[field_name].type_.to_bson(
+                        raw_doc[field_name]
+                    )
+                else:
+                    doc[field.key_name] = raw_doc[field_name]
+        return doc
+
 
 T = TypeVar("T", bound="Model")
 
@@ -239,15 +307,8 @@ class Model(_BaseODMModel, metaclass=ModelMetaclass):
     if TYPE_CHECKING:
         __collection__: ClassVar[str] = ""
         __primary_key__: ClassVar[str] = ""
-        __odm_fields__: ClassVar[Dict[str, ODMBaseField]] = {}
-        __bson_serialized_fields__: ClassVar[FrozenSet[str]] = frozenset()
-        __references__: ClassVar[Tuple[str, ...]] = ()
-
-        __fields_modified__: Set[str] = set()
 
         id: Union[_objectId, Any]  # TODO fix basic id field typing
-
-    __slots__ = ("__fields_modified__",)
 
     def __init__(__odmantic_self__, **data):
         super().__init__(**data)
@@ -283,27 +344,6 @@ class Model(_BaseODMModel, metaclass=ModelMetaclass):
         instance = cls.parse_obj(doc)
         return cast(T, instance)
 
-    def doc(self, include: Optional["AbstractSetIntStr"] = None) -> Dict[str, Any]:
-        """
-        Generate a document representation of the instance (as a dictionary)
-        """
-        raw_doc = self.dict()
-        doc: Dict[str, Any] = {}
-        for field_name, field in self.__odm_fields__.items():
-            if include is not None and field_name not in include:
-                continue
-            if isinstance(field, ODMReference):
-                doc[field.key_name] = raw_doc[field_name]["id"]
-            else:
-                print(self.__bson_serialized_fields__)
-                if field_name in self.__bson_serialized_fields__:
-                    doc[field.key_name] = self.__fields__[field_name].type_.to_bson(
-                        raw_doc[field_name]
-                    )
-                else:
-                    doc[field.key_name] = raw_doc[field_name]
-        return doc
 
-
-class EmbeddedModel(_BaseODMModel):
+class EmbeddedModel(_BaseODMModel, metaclass=EmbeddedModelMetaclass):
     ...
