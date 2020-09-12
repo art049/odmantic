@@ -19,10 +19,10 @@
   ☐ Document usage outside odm (aggregation example)
   ☐ Support Documents/EmbeddedDocuments inheritance
   ☐ Validate key_name argument
-  ☐ Async iterator
+  Async iterator
 
 Further Improvements:
-  ☐ Enable primary key change
+  ☐ Enable primary key change (what about instances referencing the current one ?&)
   ☐ Array queries $elemMatch $all $size
   ☐ Support one to many references
   ☐ Additional pydantic fields

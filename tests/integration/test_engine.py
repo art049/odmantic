@@ -80,7 +80,6 @@ async def test_find_sync_iteration(engine: AIOEngine):
     assert set(i.id for i in instances) == fetched
 
 
-@pytest.mark.skip("Not implemented yet")
 async def test_find_async_iteration(engine: AIOEngine):
     instances = [
         PersonModel(first_name="Jean-Pierre", last_name="Pernaud"),

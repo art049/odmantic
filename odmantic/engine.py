@@ -1,8 +1,21 @@
 import asyncio
 from asyncio.tasks import gather
-from typing import Dict, List, Optional, Sequence, Type, TypeVar, Union, cast
+from typing import (
+    AsyncIterable,
+    Awaitable,
+    Dict,
+    Generator,
+    Generic,
+    List,
+    Optional,
+    Sequence,
+    Type,
+    TypeVar,
+    Union,
+    cast,
+)
 
-from motor.motor_asyncio import AsyncIOMotorClient
+from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorCursor
 from pydantic.utils import lenient_issubclass
 from pymongo.errors import DuplicateKeyError as PyMongoDuplicateKeyError
 
@@ -12,6 +25,43 @@ from odmantic.reference import ODMReference
 from .model import Model
 
 ModelType = TypeVar("ModelType", bound=Model)
+
+
+class AIOCursor(
+    Generic[ModelType], AsyncIterable[ModelType], Awaitable[List[ModelType]]
+):
+    def __init__(self, model: Type[ModelType], motor_cursor: AsyncIOMotorCursor):
+        self._model = model
+        self._motor_cursor = motor_cursor
+        self._results: Optional[List[ModelType]] = None
+
+    def _parse_document(self, raw_doc: Dict) -> ModelType:
+        instance = self._model.parse_doc(raw_doc)
+        object.__setattr__(instance, "__fields_modified__", set())
+        return instance
+
+    def __await__(self) -> Generator[None, None, List[ModelType]]:
+        if self._results is not None:
+            return self._results
+        raw_docs = yield from self._motor_cursor.to_list(length=None).__await__()
+        instances = []
+        for raw_doc in raw_docs:
+            instances.append(self._parse_document(raw_doc))
+            yield
+        self._results = instances
+        return instances
+
+    async def __aiter__(self):
+        if self._results is not None:
+            for res in self._results:
+                yield res
+            return
+        results = []
+        async for raw_doc in self._motor_cursor:
+            instance = self._parse_document(raw_doc)
+            results.append(instance)
+            yield instance
+        self._results = results
 
 
 class AIOEngine:
@@ -50,14 +100,14 @@ class AIOEngine:
             pipeline.append({"$unwind": f"${ref_field_name}"})
         return pipeline
 
-    async def find(
+    def find(
         self,
         model: Type[ModelType],
         query: Union[Dict, bool] = {},  # bool: allow using binary operators with mypy
         *,
         limit: int = 0,
         skip: int = 0,
-    ) -> List[ModelType]:
+    ) -> AIOCursor[ModelType]:
         if not lenient_issubclass(model, Model):
             raise TypeError("Can only call find with a Model class")
 
@@ -68,14 +118,8 @@ class AIOEngine:
         if skip > 0:
             pipeline.append({"$skip": skip})
         pipeline.extend(AIOEngine._cascade_find_pipeline(model))
-        cursor = collection.aggregate(pipeline)
-        raw_docs = await cursor.to_list(length=None)
-        instances = []
-        for raw_doc in raw_docs:
-            instance = model.parse_doc(raw_doc)
-            object.__setattr__(instance, "__fields_modified__", set())
-            instances.append(instance)
-        return instances
+        motor_cursor = collection.aggregate(pipeline)
+        return AIOCursor(model, motor_cursor)
 
     async def find_one(
         self,
