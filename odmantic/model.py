@@ -1,4 +1,5 @@
 import re
+from abc import ABCMeta
 from types import FunctionType
 from typing import (
     TYPE_CHECKING,
@@ -178,10 +179,54 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
         return super().__new__(cls, name, bases, namespace, **kwargs)
 
 
+TBase = TypeVar("TBase", bound="_BaseODMModel")
+
+
+class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
+    @classmethod
+    def validate(cls: Type[TBase], value: Any) -> TBase:
+        if isinstance(value, cls):
+            # Do not copy the object as done in pydantic
+            # This enable to keep the same python object
+            return value
+        return cast(TBase, super().validate(value))
+
+    def __repr_args__(self) -> "ReprArgs":
+        # Place the id field first in the repr string
+        args = list(super().__repr_args__())
+        id_arg = next((arg for arg in args if arg[0] == "id"), None)
+        if id_arg is None:
+            return args
+        args.remove(id_arg)
+        args = [id_arg] + args
+        return args
+
+    def copy(
+        self: TBase,
+        *,
+        include: Union["AbstractSetIntStr", "MappingIntStrAny"] = None,
+        exclude: Union["AbstractSetIntStr", "MappingIntStrAny"] = None,
+        update: "DictStrAny" = None,
+        deep: bool = False,
+    ) -> TBase:
+        # TODO implement
+        raise NotImplementedError
+
+    def __getstate__(self) -> Dict[Any, Any]:
+        return {
+            **super().__getstate__(),
+            "__fields_modified__": self.__fields_modified__,
+        }
+
+    def __setstate__(self, state: Dict[Any, Any]) -> None:
+        super().__setstate__(state)
+        object.__setattr__(self, "__fields_modified__", state["__fields_modified__"])
+
+
 T = TypeVar("T", bound="Model")
 
 
-class Model(pydantic.BaseModel, metaclass=ModelMetaclass):
+class Model(_BaseODMModel, metaclass=ModelMetaclass):
     if TYPE_CHECKING:
         __collection__: ClassVar[str] = ""
         __primary_key__: ClassVar[str] = ""
@@ -214,48 +259,9 @@ class Model(pydantic.BaseModel, metaclass=ModelMetaclass):
         super().__setattr__(name, value)
         self.__fields_modified__.add(name)
 
-    @classmethod
-    def validate(cls: Type[T], value: Any) -> T:
-        if isinstance(value, cls):
-            # Do not copy the object as done in pydantic
-            # This enable to keep the same python object
-            return value
-        return cast(T, super().validate(value))
-
     def __init_subclass__(cls):
         for name, field in cls.__odm_fields__.items():
             setattr(cls, name, field)
-
-    def __repr_args__(self) -> "ReprArgs":
-        # Place the id field first in the repr string
-        args = list(super().__repr_args__())
-        id_arg = next((arg for arg in args if arg[0] == "id"), None)
-        if id_arg is None:
-            return args
-        args.remove(id_arg)
-        args = [id_arg] + args
-        return args
-
-    def __getstate__(self) -> Dict[Any, Any]:
-        return {
-            **super().__getstate__(),
-            "__fields_modified__": self.__fields_modified__,
-        }
-
-    def __setstate__(self, state: Dict[Any, Any]) -> None:
-        super().__setstate__(state)
-        object.__setattr__(self, "__fields_modified__", state["__fields_modified__"])
-
-    def copy(
-        self: T,
-        *,
-        include: Union["AbstractSetIntStr", "MappingIntStrAny"] = None,
-        exclude: Union["AbstractSetIntStr", "MappingIntStrAny"] = None,
-        update: "DictStrAny" = None,
-        deep: bool = False,
-    ) -> T:
-        # TODO implement
-        raise NotImplementedError
 
     @classmethod
     def parse_doc(cls: Type[T], raw_doc: Dict) -> T:
@@ -290,5 +296,5 @@ class Model(pydantic.BaseModel, metaclass=ModelMetaclass):
         return doc
 
 
-class EmbeddedModel(pydantic.BaseModel):
+class EmbeddedModel(_BaseODMModel):
     ...
