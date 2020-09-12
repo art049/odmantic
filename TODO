@@ -2,7 +2,6 @@
 0.0.1:
   ☐ Support Documents/EmbeddedDocuments inheritance
   ☐ Query document based on embedded document content
-  ☐ Validate key_name argument
   ☐ Document usage outside odm (aggregation example)
   ☐ Doc custom bson serializable fields
   ☐ Doc enum fields
@@ -20,6 +19,7 @@
   Duplicate key error
   Upsert
   Async iterator
+  Validate key_name argument
 
 Further Improvements:
   ☐ Enable primary key change (what about instances referencing the current one ?&)

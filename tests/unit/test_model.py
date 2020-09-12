@@ -6,6 +6,7 @@ from pydantic import Field as PDField
 
 from odmantic.fields import Field
 from odmantic.model import Model
+from odmantic.reference import Reference
 from tests.zoo.person import PersonModel
 
 
@@ -48,6 +49,44 @@ def test_duplicated_key_name():
         class M(Model):
             a: int
             b: int = Field(key_name="a")
+
+
+def test_duplicated_key_name_in_reference():
+    class Referenced(Model):
+        a: int
+
+    with pytest.raises(TypeError):
+
+        class Base(Model):
+            a: int = Field(key_name="referenced")
+            referenced: Referenced = Reference()
+
+
+def test_duplicate_key_name_definition():
+    with pytest.raises(TypeError):
+
+        class Base(Model):
+            a: int = Field(key_name="referenced")
+            b: int = Field(key_name="referenced")
+
+
+def test_key_name_containing_dollar_sign():
+    class Base(Model):
+        a: int = Field(key_name="a$b")
+
+
+def test_key_starting_with_dollar_sign():
+    with pytest.raises(TypeError):
+
+        class Base(Model):
+            a: int = Field(key_name="$a")
+
+
+def test_key_containing_dot():
+    with pytest.raises(TypeError):
+
+        class Base(Model):
+            b: int = Field(key_name="a.b")
 
 
 def test_wrong_model_field():

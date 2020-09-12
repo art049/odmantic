@@ -47,6 +47,13 @@ def is_valid_odm_field(name: str) -> bool:
     return not name.startswith("__") and not name.endswith("__")
 
 
+def raise_on_invalid_key_name(name: str) -> None:
+    if name.startswith("$"):
+        raise TypeError("key_name cannot start with the dollar sign ($) character")
+    if "." in name:
+        raise TypeError("key_name cannot contain the dot (.) character")
+
+
 def to_snake_case(s: str) -> str:
     tmp = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", s)
     return re.sub("([a-z0-9])([A-Z])", r"\1_\2", tmp).lower()
@@ -108,6 +115,7 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
                     key_name = (
                         value.key_name if value.key_name is not None else field_name
                     )
+                    raise_on_invalid_key_name(key_name)
                     odm_fields[field_name] = ODMField(
                         primary_field=value.primary_field, key_name=key_name
                     )
@@ -122,6 +130,7 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
                     key_name = (
                         value.key_name if value.key_name is not None else field_name
                     )
+                    raise_on_invalid_key_name(key_name)
                     odm_fields[field_name] = ODMReference(
                         model=field_type, key_name=key_name
                     )
