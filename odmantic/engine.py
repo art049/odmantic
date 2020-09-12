@@ -23,13 +23,40 @@ class AIOEngine:
     def _get_collection(self, model: Type[ModelType]):
         return self.database[model.__collection__]
 
+    @staticmethod
+    def _cascade_find_pipeline(
+        model: Type[ModelType], doc_namespace: str = ""
+    ) -> List[Dict]:
+        pipeline: List[Dict] = []
+        for ref_field_name in model.__references__:
+            odm_reference = cast(ODMReference, model.__odm_fields__[ref_field_name])
+            pipeline.append(
+                {
+                    "$lookup": {
+                        "from": odm_reference.model.__collection__,
+                        "let": {"foreign_id": f"${odm_reference.key_name}"},
+                        "pipeline": [
+                            {"$match": {"$expr": {"$eq": ["$_id", "$$foreign_id"]}}},
+                            *AIOEngine._cascade_find_pipeline(
+                                odm_reference.model,
+                                doc_namespace=f"{doc_namespace}{ref_field_name}.",
+                            ),
+                        ],
+                        "as": ref_field_name
+                        # FIXME if ref field name is an existing key_name ?
+                    }
+                }
+            )
+            pipeline.append({"$unwind": f"${ref_field_name}"})
+        return pipeline
+
     async def find(
         self,
         model: Type[ModelType],
         query: Union[Dict, bool] = {},  # bool: allow using binary operators with mypy
         *,
         limit: int = 0,
-        skip: int = 0
+        skip: int = 0,
     ) -> List[ModelType]:
         if not lenient_issubclass(model, Model):
             raise TypeError("Can only call find with a Model class")
@@ -40,23 +67,7 @@ class AIOEngine:
             pipeline.append({"$limit": limit})
         if skip > 0:
             pipeline.append({"$skip": skip})
-        if len(model.__references__) > 0:
-            for ref_field_name in model.__references__:
-                odm_reference = cast(ODMReference, model.__odm_fields__[ref_field_name])
-                pipeline.append(
-                    {
-                        "$lookup": {
-                            "from": odm_reference.model.__collection__,
-                            "localField": odm_reference.key_name,
-                            "foreignField": "_id",
-                            "as": ref_field_name,
-                            # FIXME if ref field name is an existing key_name ?
-                        }
-                    }
-                )
-                pipeline.append({"$unwind": ref_field_name})
-                # TODO handle nested references
-
+        pipeline.extend(AIOEngine._cascade_find_pipeline(model))
         cursor = collection.aggregate(pipeline)
         raw_docs = await cursor.to_list(length=None)
         instances = []

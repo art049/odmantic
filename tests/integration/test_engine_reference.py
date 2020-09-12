@@ -32,11 +32,33 @@ async def test_save_deeply_nested(engine: AIOEngine):
 
 
 async def test_update_deeply_nested(engine: AIOEngine):
-    inst3 = NestedLevel3(field=0)
+    inst3 = NestedLevel3(
+        field=0
+    )  # Isolate inst3 to make sure it's not internaly copied
     instance = NestedLevel1(next_=NestedLevel2(next_=inst3))
     await engine.save(instance)
     assert await engine.count(NestedLevel3, NestedLevel3.field == 42) == 0
-    # instance.next_.next_.field = 42
     inst3.field = 42
     await engine.save(instance)
     assert await engine.count(NestedLevel3, NestedLevel3.field == 42) == 1
+
+
+async def test_save_deeply_nested_and_fetch(engine: AIOEngine):
+    instance = NestedLevel1(next_=NestedLevel2(next_=NestedLevel3(field=0)))
+    await engine.save(instance)
+
+    fetched = await engine.find_one(NestedLevel1)
+    assert fetched == instance
+
+
+async def test_multiple_save_deeply_nested_and_fetch(engine: AIOEngine):
+    instances = [
+        NestedLevel1(field=1, next_=NestedLevel2(field=2, next_=NestedLevel3(field=3))),
+        NestedLevel1(field=4, next_=NestedLevel2(field=5, next_=NestedLevel3(field=6))),
+    ]
+    await engine.save_all(instances)
+
+    fetched = await engine.find(NestedLevel1)
+    assert len(fetched) == 2
+    assert fetched[0] in instances
+    assert fetched[1] in instances

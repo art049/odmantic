@@ -2,7 +2,7 @@
 0.0.1:
   Support Embedded Documents
   ☐ Query document based on embedded document content
-  ☐ Support find Reference Documents (nested)
+  Support find Reference Documents (nested)
   Reuse pydantic Field constructor
   ☐ Doc custom bson serializable fields
   truncate microseconds on validation
@@ -21,9 +21,10 @@
   ☐ Validate key_name argument
   ☐ Async iterator
 
-  Further Improvements:
+Further Improvements:
   ☐ Enable primary key change
   ☐ Array queries $elemMatch $all $size
+  ☐ Support one to many references
   ☐ Additional pydantic fields
   ☐ Write timeout
   ☐ Read/Write concern
