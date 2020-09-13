@@ -285,6 +285,10 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         # TODO implement
         raise NotImplementedError
 
+    def __setattr__(self, name, value):
+        super().__setattr__(name, value)
+        self.__fields_modified__.add(name)
+
     def __getstate__(self) -> Dict[Any, Any]:
         return {
             **super().__getstate__(),
@@ -355,7 +359,6 @@ class Model(_BaseODMModel, metaclass=ModelMetaclass):
                 "Reassigning a new primary key is not supported yet"
             )
         super().__setattr__(name, value)
-        self.__fields_modified__.add(name)
 
     def __init_subclass__(cls):
         for name, field in cls.__odm_fields__.items():
