@@ -316,6 +316,17 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
                     doc[field.key_name] = raw_doc[field_name]
         return doc
 
+    @classmethod
+    def parse_doc(cls: Type[TBase], raw_doc: Dict) -> TBase:
+        doc: Dict[str, Any] = {}
+        for field_name, field in cls.__odm_fields__.items():
+            if isinstance(field, ODMReference):
+                doc[field_name] = field.model.parse_doc(raw_doc[field.key_name])
+            else:
+                doc[field_name] = raw_doc[field.key_name]
+        instance = cls.parse_obj(doc)
+        return cast(TBase, instance)
+
 
 T = TypeVar("T", bound="Model")
 
@@ -349,17 +360,6 @@ class Model(_BaseODMModel, metaclass=ModelMetaclass):
     def __init_subclass__(cls):
         for name, field in cls.__odm_fields__.items():
             setattr(cls, name, field)
-
-    @classmethod
-    def parse_doc(cls: Type[T], raw_doc: Dict) -> T:
-        doc: Dict[str, Any] = {}
-        for field_name, field in cls.__odm_fields__.items():
-            if isinstance(field, ODMReference):
-                doc[field_name] = field.model.parse_doc(raw_doc[field.key_name])
-            else:
-                doc[field_name] = raw_doc[field.key_name]
-        instance = cls.parse_obj(doc)
-        return cast(T, instance)
 
 
 class EmbeddedModel(_BaseODMModel, metaclass=EmbeddedModelMetaclass):
