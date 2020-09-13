@@ -192,7 +192,23 @@ class ModelMetaclass(BaseModelMetaclass, pydantic.main.ModelMetaclass):
 
             namespace["__primary_key__"] = primary_field
 
-            if "__collection__" not in namespace:
+            if "__collection__" in namespace:
+                collection_name = namespace["__collection__"]
+                # https://docs.mongodb.com/manual/reference/limits/#Restriction-on-Collection-Names
+                if "$" in collection_name:
+                    raise TypeError(
+                        f"Invalid collection name for {name}: cannot contain '$'"
+                    )
+                if collection_name == "":
+                    raise TypeError(
+                        f"Invalid collection name for {name}: cannot be empty"
+                    )
+                if collection_name.startswith("system."):
+                    raise TypeError(
+                        f"Invalid collection name for {name}:"
+                        " cannot start with 'system.'"
+                    )
+            else:
                 cls_name = name
                 if cls_name.endswith("Model"):
                     # TODO document this
