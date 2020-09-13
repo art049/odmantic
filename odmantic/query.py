@@ -2,63 +2,47 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, Dict, Sequence, cast
 
-from pydantic.utils import lenient_issubclass
-
 if TYPE_CHECKING:
-    from .fields import ODMField
+    from odmantic.fields import FieldProxy
 
 
 class QueryExpression(Dict[str, Any]):
-    @staticmethod
-    def or_(*expressions: QueryExpression):
-        return QueryExpression({"$or": expressions})
-
     def __or__(self, other: QueryExpression):
-        return QueryExpression.or_(self, other)
-
-    @staticmethod
-    def and_(*expressions: QueryExpression):
-        return QueryExpression({"$and": expressions})
+        return or_(self, other)
 
     def __and__(self, other: QueryExpression):
-        return QueryExpression.and_(self, other)
-
-    @staticmethod
-    def not_(expression: QueryExpression):
-        return QueryExpression({"$not": expression})
+        return and_(self, other)
 
     def __invert__(self):
-        return QueryExpression.not_(self)
-
-    @staticmethod
-    def nor_(*expressions: QueryExpression):
-        return QueryExpression({"$nor": expressions})
+        return not_(self)
 
 
-def not_(element):
-    return {"$not": element}
+def not_(element: QueryExpression) -> QueryExpression:
+    return QueryExpression({"$not": element})
 
 
-def and_(*elements):
-    return {"$and": elements}
+def and_(*elements: QueryExpression) -> QueryExpression:
+    return QueryExpression({"$and": elements})
 
 
-def or_(*elements):
-    return {"$or": elements}
+def or_(*elements: QueryExpression) -> QueryExpression:
+    return QueryExpression({"$or": elements})
 
 
-def nor_(*elements):
-    return {"$nor": elements}
+def nor_(*elements: QueryExpression) -> QueryExpression:
+    return QueryExpression({"$nor": elements})
 
 
-def _cmp_expression(f: ODMField, op: str, value: Any) -> QueryExpression:
+def _cmp_expression(f: "FieldProxy", op: str, value: Any) -> QueryExpression:
+
     # FIXME 🤮🤮🤮🤮🤮🤮🤮🤮🤮🤮🤮🤮🤮🤮🤮🤮
     from odmantic.model import EmbeddedModel
 
-    if lenient_issubclass(type(value), EmbeddedModel):
+    if isinstance(value, EmbeddedModel):
         cast_value = cast(EmbeddedModel, value)
         value = cast_value.doc()
-    return QueryExpression({f.key_name: {op: value}})
+
+    return QueryExpression({+f: {op: value}})
 
 
 def eq(field, value) -> QueryExpression:

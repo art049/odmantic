@@ -62,7 +62,6 @@ async def test_query_filter_on_embedded_doc(
     assert fetched_instances[0] == book_2
 
 
-@pytest.mark.skip("Not supported yet")
 async def test_query_filter_on_embedded_field(
     engine: AIOEngine, books_with_embedded_publisher: Tuple[Book, Book]
 ):
@@ -72,7 +71,6 @@ async def test_query_filter_on_embedded_field(
     assert fetched_instances[0] == book_2
 
 
-@pytest.mark.skip("Not supported yet")
 async def test_query_filter_on_embedded_nested(engine: AIOEngine):
     class ThirdModel(EmbeddedModel):
         field: int

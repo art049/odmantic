@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import abc
-from typing import TYPE_CHECKING, Any, Optional, Pattern, Sequence, Type
+from typing import TYPE_CHECKING, Any, Optional, Pattern, Sequence, Set, Type
 
 from pydantic.fields import Field as PDField
 from pydantic.fields import FieldInfo, Undefined
@@ -50,7 +50,7 @@ def Field(
 ) -> Any:
     """
     Used to provide extra information about a field, either for the model schema or
-    complex valiation. Some arguments apply only to number fields (``int``, ``float``,
+    complex validation. Some arguments apply only to number fields (``int``, ``float``,
      ``Decimal``) and some apply only to ``str``.
 
     :param default: since this is replacing the field’s default, its first argument is
@@ -142,6 +142,7 @@ class ODMFieldInfo:
 class ODMBaseField(metaclass=abc.ABCMeta):
 
     __slots__ = ("key_name",)
+    __allowed_operators__: Set[str]
 
     def __init__(self, key_name: str):
         self.key_name = key_name
@@ -151,71 +152,32 @@ class ODMField(ODMBaseField):
     """Used to interact with the ODM model class"""
 
     __slots__ = ("primary_field",)
+    __allowed_operators__ = set(
+        (
+            "eq",
+            "ne",
+            "in_",
+            "not_in",
+            "exists",
+            "not_exists",
+            "le",
+            "lte",
+            "gt",
+            "gte",
+            "match",
+        )
+    )
 
     def __init__(self, *, primary_field: bool, key_name: str):
         super().__init__(key_name)
         self.primary_field = primary_field
 
-    def __pos__(self):
-        return self.key_name
-
-    def __eq__(self, value):
-        return self.eq(value)
-
-    def eq(self, value) -> QueryExpression:
-        return eq(self, value)
-
-    def __ne__(self, value):
-        return self.ne(value)
-
-    def ne(self, value) -> QueryExpression:
-        return ne(self, value)
-
-    def __gt__(self, value):
-        return self.gt(value)
-
-    def gt(self, value) -> QueryExpression:
-        return gt(self, value)
-
-    def __ge__(self, value):
-        return self.gte(value)
-
-    def gte(self, value) -> QueryExpression:
-        return gte(self, value)
-
-    def __le__(self, value):
-        return self.le(value)
-
-    def le(self, value) -> QueryExpression:
-        return le(self, value)
-
-    def __lt__(self, value):
-        return self.lte(value)
-
-    def lte(self, value) -> QueryExpression:
-        return lte(self, value)
-
-    def in_(self, value: Sequence) -> QueryExpression:
-        return in_(self, value)
-
-    def not_in(self, value: Sequence) -> QueryExpression:
-        return not_in(self, value)
-
-    def exists(self) -> QueryExpression:
-        return exists(self)
-
-    def not_exists(self) -> QueryExpression:
-        return not_exists(self)
-
-    def match(self, pattern: Pattern):
-        # FIXME might create incompatibilities
-        # https://docs.mongodb.com/manual/reference/operator/query/regex/#regex-and-not
-        return QueryExpression({self.key_name: pattern})
-
 
 class ODMReference(ODMBaseField):
+    """Field pointing"""
 
     __slots__ = ("model",)
+    __allowed_operators__ = set(("eq", "ne", "in_", "not_in", "exists", "not_exists"))
 
     def __init__(self, key_name: str, model: Type["Model"]):
         super().__init__(key_name)
@@ -225,9 +187,111 @@ class ODMReference(ODMBaseField):
 class ODMEmbedded(ODMBaseField):
 
     __slots__ = ("model",)
+    __allowed_operators__ = set(("eq", "ne", "in_", "not_in", "exists", "not_exists"))
 
     def __init__(self, key_name: str, model: Type["EmbeddedModel"]):
         super().__init__(key_name)
         self.model = model
 
 
+class FieldProxy:
+    __slots__ = ("parent", "field")
+
+    def __init__(self, parent: Optional[FieldProxy], field: ODMBaseField) -> None:
+        self.parent = parent
+        self.field = field
+
+    def _get_key_name(self):
+        parent: Optional[FieldProxy] = object.__getattribute__(self, "parent")
+        field: ODMBaseField = object.__getattribute__(self, "field")
+
+        if parent is None:
+            return field.key_name
+
+        parent_name: str = object.__getattribute__(parent, "_get_key_name")()
+        return f"{parent_name}.{field.key_name}"
+
+    def __getattribute__(self, name: str) -> Any:
+        field: ODMBaseField = object.__getattribute__(self, "field")
+        if isinstance(field, ODMReference):
+            try:
+                return super().__getattribute__(name)
+            except AttributeError:
+                if name in field.model.__odm_fields__:
+                    raise NotImplementedError(
+                        "filtering across references is not supported"
+                    )
+                raise
+        elif isinstance(field, ODMEmbedded):
+            embedded_field = field.model.__odm_fields__.get(name)
+            if embedded_field is None:
+                try:
+                    return super().__getattribute__(name)
+                except AttributeError:
+                    raise AttributeError(
+                        f"attribute {name} not found in {field.model.__name__}"
+                    )
+            return FieldProxy(parent=self, field=embedded_field)
+
+        if name not in field.__allowed_operators__:
+            raise AttributeError(
+                f"operator {name} not allowed for {type(field).__name__}"
+            )
+        return super().__getattribute__(name)
+
+    def __pos__(self):
+        return object.__getattribute__(self, "_get_key_name")()
+
+    def __gt__(self, value):
+        return self.gt(value)
+
+    def gt(self, value) -> QueryExpression:
+        return gt(self, value)
+
+    def gte(self, value) -> QueryExpression:
+        return gte(self, value)
+
+    def __ge__(self, value):
+        return self.gte(value)
+
+    def le(self, value) -> QueryExpression:
+        return le(self, value)
+
+    def __le__(self, value):
+        return self.le(value)
+
+    def lte(self, value) -> QueryExpression:
+        return lte(self, value)
+
+    def __lt__(self, value):
+        return self.lte(value)
+
+    def eq(self, value) -> QueryExpression:
+        return eq(self, value)
+
+    def __eq__(self, value):
+        return self.eq(value)
+
+    def ne(self, value) -> QueryExpression:
+        return ne(self, value)
+
+    def __ne__(self, value):
+        return self.ne(value)
+
+    def in_(self, value: Sequence) -> QueryExpression:
+        return in_(self, value)
+
+    def not_in(self, value: Sequence) -> QueryExpression:
+        return not_in(self, value)
+
+    def exists(self) -> QueryExpression:
+        # TODO handle None/null ?
+        return exists(self)
+
+    def not_exists(self) -> QueryExpression:
+        return not_exists(self)
+
+    def match(self, pattern: Pattern):
+        # FIXME might create incompatibilities
+        # https://docs.mongodb.com/manual/reference/operator/query/regex/#regex-and-not
+        return QueryExpression({self.key_name: pattern})

@@ -28,6 +28,7 @@ from pydantic.typing import resolve_annotations
 from pydantic.utils import lenient_issubclass
 
 from odmantic.fields import (
+    FieldProxy,
     ODMBaseField,
     ODMEmbedded,
     ODMField,
@@ -244,7 +245,7 @@ class EmbeddedModelMetaclass(BaseModelMetaclass, pydantic.main.ModelMetaclass):
 
         if (namespace.get("__module__"), namespace.get("__qualname__")) != (
             "odmantic.model",
-            "Model",
+            "EmbeddedModel",
         ):
             odm_fields: Dict[str, ODMBaseField] = namespace["__odm_fields__"]
 
@@ -271,6 +272,12 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         __fields_modified__: Set[str] = set()
 
     __slots__ = ("__fields_modified__",)
+
+    def __init_subclass__(cls):
+        # FIXME move this into the metaclass ?
+        if cls.__name__ not in ("Model", "EmbeddedModel"):
+            for name, field in cls.__odm_fields__.items():
+                setattr(cls, name, FieldProxy(parent=None, field=field))
 
     @classmethod
     def validate(cls: Type[TBase], value: Any) -> TBase:
@@ -375,10 +382,6 @@ class Model(_BaseODMModel, metaclass=ModelMetaclass):
                 "Reassigning a new primary key is not supported yet"
             )
         super().__setattr__(name, value)
-
-    def __init_subclass__(cls):
-        for name, field in cls.__odm_fields__.items():
-            setattr(cls, name, field)
 
 
 class EmbeddedModel(_BaseODMModel, metaclass=EmbeddedModelMetaclass):

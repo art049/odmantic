@@ -1,27 +1,28 @@
 
 0.0.1:
-  ☐ Support Documents/EmbeddedDocuments inheritance
-  ☐ Query document based on embedded document content
-  ☐ Document usage outside odm (aggregation example)
-  ☐ Doc custom bson serializable fields
-  ☐ Doc enum fields
-  ☐ Define policy for optional fields default set to null ?
-  Support Embedded Documents
-  Support find Reference Documents (nested)
-  Reuse pydantic Field constructor
-  truncate microseconds on validation
-  check that datetime is naive on validation
-  |,& and other common expressions operators
-  Use directly bson types (same way pydantic builtin validators are defined)
-  None / Undefined / Null -> Undefined is deprecated None <-> Null
-  Fix repr/ str ?
-  Smart instance update
-  Duplicate key error
-  Upsert
-  Async iterator
-  Validate key_name argument
+☐ Document usage outside odm (aggregation example)
+☐ Doc custom bson serializable fields
+☐ Doc enum fields
+☐ Define policy for optional fields default set to null ?
+Query document based on embedded document content
+Support Embedded Documents
+Support find Reference Documents (nested)
+Reuse pydantic Field constructor
+truncate microseconds on validation
+check that datetime is naive on validation
+|,& and other common expressions operators
+Use directly bson types (same way pydantic builtin validators are defined)
+None / Undefined / Null -> Undefined is deprecated None <-> Null
+Fix repr/ str ?
+Smart instance update
+Duplicate key error
+Upsert
+Async iterator
+Validate key_name argument
 
 Further Improvements:
+  ☐ Self referencing model ?
+  ☐ Support Documents/EmbeddedDocuments inheritance
   ☐ Enable primary key change (what about instances referencing the current one ?&)
   ☐ Array queries $elemMatch $all $size
   ☐ Support one to many references
