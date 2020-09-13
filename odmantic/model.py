@@ -25,9 +25,16 @@ from pydantic.fields import FieldInfo as PDFieldInfo
 from pydantic.fields import Undefined
 from pydantic.types import PyObject
 from pydantic.typing import resolve_annotations
+from pydantic.utils import lenient_issubclass
 
-from odmantic.fields import ODMBaseField, ODMField, ODMFieldInfo
-from odmantic.reference import ODMReference, ODMReferenceInfo
+from odmantic.fields import (
+    ODMBaseField,
+    ODMEmbedded,
+    ODMField,
+    ODMFieldInfo,
+    ODMReference,
+)
+from odmantic.reference import ODMReferenceInfo
 
 from .types import _SUBSTITUTION_TYPES, BSONSerializedField, _objectId
 
@@ -91,13 +98,16 @@ class BaseModelMetaclass(ABCMeta):
                     print(f"Subst: {v} -> {subst_type}")
                     annotations[k] = subst_type
             namespace["__annotations__"] = annotations
+
             for (field_name, field_type) in annotations.items():
                 if not is_valid_odm_field(field_name) or (
                     isinstance(field_type, UNTOUCHED_TYPES) and field_type != PyObject
                 ):
                     continue
+
                 if BSONSerializedField in getattr(field_type, "__bases__", ()):
                     bson_serialized_fields.add(field_name)
+
                 value = namespace.get(field_name, Undefined)
                 if isinstance(value, ODMFieldInfo):
                     key_name = (
@@ -123,6 +133,12 @@ class BaseModelMetaclass(ABCMeta):
                         model=field_type, key_name=key_name
                     )
                     references.append(field_name)
+
+                elif lenient_issubclass(field_type, EmbeddedModel):
+                    odm_fields[field_name] = ODMEmbedded(
+                        model=field_type, key_name=field_name
+                    )
+
                 elif value is Undefined:
                     odm_fields[field_name] = ODMField(
                         primary_field=False, key_name=field_name

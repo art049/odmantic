@@ -20,9 +20,8 @@ from pydantic.utils import lenient_issubclass
 from pymongo.errors import DuplicateKeyError as PyMongoDuplicateKeyError
 
 from odmantic.exceptions import DuplicatePrimaryKeyError
-from odmantic.reference import ODMReference
-
-from .model import Model
+from odmantic.fields import ODMReference
+from odmantic.model import Model
 
 ModelType = TypeVar("ModelType", bound=Model)
 

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import abc
-from typing import Any, Optional, Pattern, Sequence
+from typing import TYPE_CHECKING, Any, Optional, Pattern, Sequence, Type
 
 from pydantic.fields import Field as PDField
 from pydantic.fields import FieldInfo, Undefined
@@ -21,6 +21,9 @@ from odmantic.query import (
 )
 
 from .typing import NoArgAnyCallable
+
+if TYPE_CHECKING:
+    from odmantic.model import Model, EmbeddedModel  # noqa: F401
 
 
 def Field(
@@ -208,3 +211,23 @@ class ODMField(ODMBaseField):
         # FIXME might create incompatibilities
         # https://docs.mongodb.com/manual/reference/operator/query/regex/#regex-and-not
         return QueryExpression({self.key_name: pattern})
+
+
+class ODMReference(ODMBaseField):
+
+    __slots__ = ("model",)
+
+    def __init__(self, key_name: str, model: Type["Model"]):
+        super().__init__(key_name)
+        self.model = model
+
+
+class ODMEmbedded(ODMBaseField):
+
+    __slots__ = ("model",)
+
+    def __init__(self, key_name: str, model: Type["EmbeddedModel"]):
+        super().__init__(key_name)
+        self.model = model
+
+
