@@ -48,6 +48,7 @@ def is_valid_odm_field(name: str) -> bool:
 
 
 def raise_on_invalid_key_name(name: str) -> None:
+    # https://docs.mongodb.com/manual/reference/limits/#Restrictions-on-Field-Names
     if name.startswith("$"):
         raise TypeError("key_name cannot start with the dollar sign ($) character")
     if "." in name:
