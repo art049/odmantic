@@ -345,6 +345,15 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
 
     @classmethod
     def parse_doc(cls: Type[TBase], raw_doc: Dict) -> TBase:
+        """Parse a BSON document into an instance of the Model
+
+        Args:
+            cls (Type[TBase]): [description]
+            raw_doc (Dict): [description]
+
+        Returns:
+            TBase: [description]
+        """
         doc: Dict[str, Any] = {}
         for field_name, field in cls.__odm_fields__.items():
             if isinstance(field, ODMReference):

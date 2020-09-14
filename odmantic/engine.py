@@ -19,6 +19,7 @@ from motor.motor_asyncio import (
     AsyncIOMotorClient,
     AsyncIOMotorClientSession,
     AsyncIOMotorCursor,
+    AsyncIOMotorCollection
 )
 from pydantic.utils import lenient_issubclass
 
@@ -36,7 +37,7 @@ class AIOCursor(
     """
     This object has to be built from the [odmantic.engine.AIOEngine.find][] method.
 
-    The AIOCursor support multiple async operations:
+    An AIOCursor object support multiple async operations:
 
       - **async for**: asynchronously iterate over the query results
       - **await** : when awaited it will return a list of the fetched models
@@ -82,17 +83,22 @@ class AIOEngine:
     an asynchronous way using motor.
     """
 
-    def __init__(self, motor_client: AsyncIOMotorClient, db_name: str):
+    def __init__(self, motor_client: AsyncIOMotorClient = None, database: str = "test"):
         """
         Args:
-            motor_client: instance of an AsyncIO motor client
-            db_name: name of the database to use
-        """
-        self.client = motor_client
-        self.db_name = db_name
-        self.database = motor_client[self.db_name]
+            motor_client: instance of an AsyncIO motor client. If None, a default one
+            will be created
 
-    def _get_collection(self, model: Type[ModelType]):
+            database: name of the database to use
+
+        """
+        if motor_client is None:
+            motor_client = AsyncIOMotorClient()
+        self.client = motor_client
+        self.database = database
+        self.database = motor_client[self.database]
+
+    def _get_collection(self, model: Type[ModelType]) -> AsyncIOMotorCollection:
         return self.database[model.__collection__]
 
     @staticmethod
@@ -221,14 +227,14 @@ class AIOEngine:
         All the other models referenced by this instance will be saved as well.
 
         Args:
-            instance (ModelType): [description]
+            instance: instance to persist
 
         Returns:
             the saved instance
 
         NOTE:
-            the save operation actually modify the instance argument in place. The
-            instance is still returned for convenience.
+            The save operation actually modify the instance argument in place. However,
+            the instance is still returned for convenience.
         """
         if not isinstance(instance, Model):
             raise TypeError("Can only call find_one with a Model class")
@@ -250,13 +256,13 @@ class AIOEngine:
         well.
 
         Args:
-            instances (Sequence[ModelType]): [description]
+            instances: instances to persist
 
         Returns:
             the saved instances
 
         NOTE:
-            the save_all operation actually modify the arguments in place. The
+            The save_all operation actually modify the arguments in place. However, the
             instances are still returned for convenience.
         """
         async with await self.client.start_session() as s:
@@ -287,7 +293,7 @@ class AIOEngine:
     async def count(
         self, model: Type[ModelType], query: Union[QueryExpression, Dict, bool] = {}
     ) -> int:
-        """Get the count of document matching a query
+        """Get the count of documents matching a query
 
         Args:
             model: model to perform the operation on

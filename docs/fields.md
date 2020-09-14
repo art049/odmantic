@@ -21,9 +21,9 @@ print(p)
 
 ```python hl_lines="2"
 class Player(Model):
-    name: str = field(mongo_name="nickname")
+    name: str = Field(key_name="nickname")
 
-engine.save(Player(name="Jack"))
+await engine.save(Player(name="Jack"))
 ```
 
 Resulting document:
@@ -41,15 +41,15 @@ Resulting document:
     ``` python hl_lines="3"
     class Player(Model):
         name: str
-        level: int = field(default=0, mongo_name="lvl")
+        level: int = field(default=0, key_name="lvl")
     ```
 
 ## Primary key definition
 
 ### Implicit
 
-If not explicitly declared, an `id` primary key will be added to each model (corresponding to the `_id` key in Mongo documents).
-This key will be populated when the instances are saved or fetched.
+If not explicitly declared, an `id` primary key will be added to each model. It will be mapped to the `_id` key generated automatically by MongoDB).
+This `id` field will be generated on instance creation, before saving the instance to the database.
 
 ```python
 class Player(Model):
@@ -71,7 +71,7 @@ If you want to use a field as the primary key
 
 ```python hl_lines="2"
 class Player(Model):
-    name: str = field(primary_key=True)
+    name: str = Field(primary_field=True)
 
 leeroy = Player(name="Leeroy Jenkins")
 await engine.save(leeroy)

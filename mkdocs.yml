@@ -1,5 +1,7 @@
 site_name: ODMantic
 site_description: AsyncIO MongoDB ODM (Object Document Mapper) using python type hinting
+repo_name: art049/odmantic
+repo_url: https://github.com/art049/odmantic
 theme:
   name: material
   palette:
@@ -16,10 +18,32 @@ markdown_extensions:
   - pymdownx.tabbed
   - pymdownx.superfences
 
+plugins:
+  - search
+  - mkdocstrings:
+      custom_templates: docs/api_reference/templates
+      default_handler: python
+      handlers:
+        python:
+          rendering:
+            show_source: true
+            show_root_heading: true
+      watch:
+        - odmantic/
+
 nav:
-  - index.md
-  - modeling.md
-  - types.md
+  - Overview: index.md
+  - quickstart.md
   - fields.md
   - engine.md
-  - API Reference: ...
+  - modeling.md
+  - filtering.md
+  - types.md
+  - hate.md
+  - API Reference:
+      - ./api_reference/model.md
+      - ./api_reference/engine.md
+      - ./api_reference/field.md
+      - ./api_reference/reference.md
+      - ./api_reference/exceptions.md
+  - changelog.md
