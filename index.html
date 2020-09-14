@@ -88,7 +88,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              Getting started
+              Home
             
           </span>
         </div>
@@ -167,23 +167,19 @@
     
     <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
-      
-    
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Getting started
+        Home
         <span class="md-nav__icon md-icon"></span>
       </label>
     
-    <a href="." title="Getting started" class="md-nav__link md-nav__link--active">
-      Getting started
+    <a href="." title="Home" class="md-nav__link md-nav__link--active">
+      Home
     </a>
     
       
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
-  
-    
   
   
     <label class="md-nav__title" for="__toc">
@@ -193,50 +189,29 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#defining-a-model" class="md-nav__link">
-    Defining a model
+  <a href="#getting-started" class="md-nav__link">
+    Getting Started
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#creating-an-instance" class="md-nav__link">
-    Creating an instance
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#saving-a-created-instance" class="md-nav__link">
-    Saving a created instance
-  </a>
-  
-    <nav class="md-nav" aria-label="Saving a created instance">
+    <nav class="md-nav" aria-label="Getting Started">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#creating-a-session" class="md-nav__link">
-    Creating a session
+  <a href="#hammer-installation" class="md-nav__link">
+    :hammer: Installation
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#persisting-an-instance" class="md-nav__link">
-    Persisting an instance
+  <a href="#bulb-useful-pipenv-commands" class="md-nav__link">
+    :bulb: Useful pipenv commands
   </a>
   
 </li>
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#querying-instances" class="md-nav__link">
-    Querying instances
-  </a>
   
 </li>
       
@@ -321,8 +296,6 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -331,50 +304,29 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#defining-a-model" class="md-nav__link">
-    Defining a model
+  <a href="#getting-started" class="md-nav__link">
+    Getting Started
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#creating-an-instance" class="md-nav__link">
-    Creating an instance
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#saving-a-created-instance" class="md-nav__link">
-    Saving a created instance
-  </a>
-  
-    <nav class="md-nav" aria-label="Saving a created instance">
+    <nav class="md-nav" aria-label="Getting Started">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#creating-a-session" class="md-nav__link">
-    Creating a session
+  <a href="#hammer-installation" class="md-nav__link">
+    :hammer: Installation
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#persisting-an-instance" class="md-nav__link">
-    Persisting an instance
+  <a href="#bulb-useful-pipenv-commands" class="md-nav__link">
+    :bulb: Useful pipenv commands
   </a>
   
 </li>
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#querying-instances" class="md-nav__link">
-    Querying instances
-  </a>
   
 </li>
       
@@ -394,71 +346,39 @@
                   
                 
                 
-                <h1 id="getting-started">Getting started</h1>
-<h2 id="defining-a-model">Defining a model</h2>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">Model</span>
+                  <h1>Home</h1>
+                
+                <div align="center">
 
+# ODMantic
 
-<span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">first_name</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">last_name</span><span class="p">:</span> <span class="nb">str</span>
-</code></pre></div>
-
-<h2 id="creating-an-instance">Creating an instance</h2>
-<div class="highlight"><pre><span></span><code><span class="n">person_instance</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="n">first_name</span><span class="o">=</span><span class="s2">&quot;Robert&quot;</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="s2">&quot;Miles&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">person_instance</span><span class="p">)</span>
-<span class="c1">#&gt; Person(first_name=&quot;Robert&quot;, last_name=&quot;Miles&quot;)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">person_instance</span><span class="o">.</span><span class="n">first_name</span><span class="p">)</span>
-<span class="c1">#&gt; Robert</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">person_instance</span><span class="o">.</span><span class="n">last_name</span><span class="p">)</span>
-<span class="c1">#&gt; Miles</span>
-</code></pre></div>
-
-<h2 id="saving-a-created-instance">Saving a created instance</h2>
-<h3 id="creating-a-session">Creating a session</h3>
-<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">AsyncIO</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">motor.motor_asyncio</span> <span class="kn">import</span> <span class="n">AsyncIOMotorClient</span>
-<span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span>
-
-<span class="n">client</span> <span class="o">=</span> <span class="n">AsyncIOMotorClient</span><span class="p">(</span><span class="s2">&quot;mongodb://localhost:27017/&quot;</span><span class="p">)</span>
-<span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">(</span><span class="n">motor_client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span> <span class="n">db_name</span><span class="o">=</span><span class="s2">&quot;example_db&quot;</span><span class="p">)</span>
-</code></pre></div>
+[![Build status](https://github.com/art049/odmantic/workflows/build/badge.svg)](https://github.com/art049/odmantic/actions?query=workflow%3A%22build%22+branch%3Amaster)
+![Docs status](https://github.com/art049/odmantic/workflows/docs/badge.svg)
+[![codecov](https://codecov.io/gh/art049/odmantic/branch/master/graph/badge.svg?token=3NYZK14STZ)](https://codecov.io/gh/art049/odmantic)
+![Python: 3.8](https://img.shields.io/badge/python-3.8-informational.svg)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
+[![mypy: checked](https://img.shields.io/badge/mypy-checked-informational.svg)](http://mypy-lang.org/)
 
 </div>
-<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Sync</label><div class="tabbed-content"></div>
-</div>
-<h3 id="persisting-an-instance">Persisting an instance</h3>
-<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">AsyncIO</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">person_instance</span><span class="p">)</span>
-</code></pre></div>
 
-</div>
-<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Sync</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="n">engine</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">person_instance</span><span class="p">)</span>
-</code></pre></div>
-
-</div>
-</div>
-<h2 id="querying-instances">Querying instances</h2>
-<div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">AsyncIO</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="n">freddies</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">Person</span><span class="p">,</span> <span class="n">Person</span><span class="o">.</span><span class="n">first_name</span> <span class="o">==</span> <span class="s2">&quot;Freddie&quot;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">fred</span> <span class="ow">in</span> <span class="n">freddies</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">fred</span><span class="p">)</span>
-<span class="c1">#&gt; Person(first_name=&quot;Freddie&quot;, last_name=&quot;Mercury&quot;)</span>
-<span class="c1">#&gt; Person(first_name=&quot;Freddie&quot;, last_name=&quot;Highmore&quot;)</span>
-</code></pre></div>
-
-</div>
-<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Sync</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="n">freddies</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">Person</span><span class="p">,</span> <span class="n">Person</span><span class="o">.</span><span class="n">first_name</span> <span class="o">==</span> <span class="s2">&quot;Freddie&quot;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">fred</span> <span class="ow">in</span> <span class="n">freddies</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">fred</span><span class="p">)</span>
-<span class="c1">#&gt; Person(first_name=&quot;Freddie&quot;, last_name=&quot;Mercury&quot;)</span>
-<span class="c1">#&gt; Person(first_name=&quot;Freddie&quot;, last_name=&quot;Highmore&quot;)</span>
-</code></pre></div>
-
-</div>
-</div>
+<h2 id="getting-started">Getting Started</h2>
+<h3 id="hammer-installation">:hammer: Installation</h3>
+<ul>
+<li>Make sure Python 3.7 is available on your system</li>
+<li>Install pipenv on your system : <code>pip install pipenv</code> or <code>curl https://raw.githubusercontent.com/kennethreitz/pipenv/master/get-pipenv.py | python</code></li>
+<li>Setup the environment <code>pipenv run setup</code></li>
+</ul>
+<h3 id="bulb-useful-pipenv-commands">:bulb: Useful <code>pipenv</code> commands</h3>
+<ul>
+<li>Format the code <code>pipenv run format</code></li>
+<li>Manually run the linter <code>pipenv run lint</code></li>
+<li>Manually run the tests <code>pipenv run test</code></li>
+<li>Add a development package <code>pipenv install --dev &lt;my-package&gt;</code></li>
+<li>Add a production package <code>pipenv install &lt;my-package&gt;</code></li>
+<li>Jump into the virtualenv to run commands in the environment <code>pipenv shell</code></li>
+</ul>
+<hr />
                 
               
               
