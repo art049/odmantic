@@ -15,13 +15,18 @@ from typing import (
     cast,
 )
 
-from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorCursor
+from motor.motor_asyncio import (
+    AsyncIOMotorClient,
+    AsyncIOMotorClientSession,
+    AsyncIOMotorCursor,
+)
 from pydantic.utils import lenient_issubclass
 from pymongo.errors import DuplicateKeyError as PyMongoDuplicateKeyError
 
 from odmantic.exceptions import DocumentNotFoundError, DuplicatePrimaryKeyError
 from odmantic.fields import ODMReference
 from odmantic.model import Model
+from odmantic.query import QueryExpression
 
 ModelType = TypeVar("ModelType", bound=Model)
 
@@ -102,13 +107,19 @@ class AIOEngine:
     def find(
         self,
         model: Type[ModelType],
-        query: Union[Dict, bool] = {},  # bool: allow using binary operators with mypy
+        query: Union[
+            QueryExpression, Dict, bool
+        ] = QueryExpression(),  # bool: allow using binary operators with mypy
         *,
-        limit: int = 0,
+        limit: Optional[int] = None,
         skip: int = 0,
     ) -> AIOCursor[ModelType]:
         if not lenient_issubclass(model, Model):
             raise TypeError("Can only call find with a Model class")
+        if limit is not None and limit <= 0:
+            raise ValueError("limit has to be a strict positive value or None")
+        if skip < 0:
+            raise ValueError("skip has to be a positive integer")
 
         collection = self._get_collection(model)
         pipeline: List[Dict] = [{"$match": query}]
@@ -132,7 +143,9 @@ class AIOEngine:
             return None
         return results[0]
 
-    async def _save(self, instance: ModelType, session) -> None:
+    async def _save(
+        self, instance: ModelType, session: AsyncIOMotorClientSession
+    ) -> ModelType:
         save_tasks = []
         for ref_field_name in instance.__references__:
             sub_instance = cast(Model, getattr(instance, ref_field_name))
@@ -151,6 +164,7 @@ class AIOEngine:
                 upsert=True,
                 bypass_document_validation=True,
             )
+        return instance
 
     async def save(self, instance: ModelType) -> ModelType:
         try:
@@ -165,9 +179,11 @@ class AIOEngine:
         return instance
 
     async def save_all(self, instances: Sequence[ModelType]) -> List[ModelType]:
-        added_instances = await asyncio.gather(
-            *[self.save(instance) for instance in instances]
-        )
+        async with await self.client.start_session() as s:
+            async with s.start_transaction():
+                added_instances = await asyncio.gather(
+                    *[self._save(instance, s) for instance in instances]
+                )
         return added_instances
 
     async def delete(self, instance: ModelType) -> None:
