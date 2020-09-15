@@ -24,6 +24,17 @@ python-versions = "*"
 version = "0.1.0"
 
 [[package]]
+category = "main"
+description = "Extension to the standard mock framework to support support async"
+name = "asyncmock"
+optional = false
+python-versions = ">=3.6"
+version = "0.4.2"
+
+[package.dependencies]
+mock = "*"
+
+[[package]]
 category = "dev"
 description = "Atomic file writes."
 marker = "sys_platform == \"win32\""
@@ -499,6 +510,19 @@ version = "1.0"
 mkdocs-material = ">=5.0.0"
 
 [[package]]
+category = "main"
+description = "Rolling backport of unittest.mock for all Pythons"
+name = "mock"
+optional = false
+python-versions = ">=3.6"
+version = "4.0.2"
+
+[package.extras]
+build = ["twine", "wheel", "blurb"]
+docs = ["sphinx"]
+test = ["pytest", "pytest-cov"]
+
+[[package]]
 category = "dev"
 description = "More routines for operating on iterables, beyond itertools"
 name = "more-itertools"
@@ -971,7 +995,7 @@ version = "2.8.1"
 six = ">=1.5"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "World timezone definitions, modern and historical"
 name = "pytz"
 optional = false
@@ -1232,7 +1256,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "8dc3aa60c650c7bc2c083c9f7b0b73b786f5b66adf5a742b86bb19ffd10f19ad"
+content-hash = "1745f109d3d9d5c6c04944d7226435285abb5d57f140a9799636b84aa0b1ca29"
 lock-version = "1.0"
 python-versions = ">=3.6 <3.9"
 
@@ -1248,6 +1272,10 @@ appdirs = [
 appnope = [
     {file = "appnope-0.1.0-py2.py3-none-any.whl", hash = "sha256:5b26757dc6f79a3b7dc9fab95359328d5747fcb2409d331ea66d0272b90ab2a0"},
     {file = "appnope-0.1.0.tar.gz", hash = "sha256:8b995ffe925347a2138d7ac0fe77155e4311a0ea6d6da4f5128fe4b3cbe5ed71"},
+]
+asyncmock = [
+    {file = "asyncmock-0.4.2-py3-none-any.whl", hash = "sha256:fd8bc4e7813251a8959d1140924ccba3adbbc7af885dba7047c67f73c0b664b1"},
+    {file = "asyncmock-0.4.2.tar.gz", hash = "sha256:c251889d542e98fe5f7ece2b5b8643b7d62b50a5657d34a4cbce8a1d5170d750"},
 ]
 atomicwrites = [
     {file = "atomicwrites-1.4.0-py2.py3-none-any.whl", hash = "sha256:6d1784dea7c0c8d4a5172b6c620f40b6e4cbfdf96d783691f2e1302a7b88e197"},
@@ -1463,6 +1491,10 @@ mkdocs-material = [
 mkdocs-material-extensions = [
     {file = "mkdocs-material-extensions-1.0.tar.gz", hash = "sha256:17d7491e189af75700310b7ec33c6c48a22060b8b445001deca040cb60471cde"},
     {file = "mkdocs_material_extensions-1.0-py3-none-any.whl", hash = "sha256:09569c3694b5acc1e8334c9730e52b4bcde65fc9d613cc20e49af131ef1a9ca0"},
+]
+mock = [
+    {file = "mock-4.0.2-py3-none-any.whl", hash = "sha256:3f9b2c0196c60d21838f307f5825a7b86b678cedc58ab9e50a8988187b4d81e0"},
+    {file = "mock-4.0.2.tar.gz", hash = "sha256:dd33eb70232b6118298d516bbcecd26704689c386594f0f3c4f13867b2c56f72"},
 ]
 more-itertools = [
     {file = "more-itertools-8.5.0.tar.gz", hash = "sha256:6f83822ae94818eae2612063a5101a7311e68ae8002005b5e05f03fd74a86a20"},

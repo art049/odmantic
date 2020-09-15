@@ -54,6 +54,7 @@ mypy = "^0.782"
 coverage = "^5.3"
 pytest-xdist = "^2.1.0"
 pytz = "^2020.1"
+asyncmock = "^0.4.2"
 
 [build-system]
 requires = ["poetry>=0.12"]

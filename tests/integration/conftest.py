@@ -1,12 +1,17 @@
 import asyncio
 import os
-from unittest.mock import AsyncMock, Mock
+from unittest.mock import Mock
 from uuid import uuid4
 
 import pytest
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from odmantic.engine import AIOEngine
+
+try:
+    from unittest.mock import AsyncMock
+except ImportError:
+    from mock import AsyncMock
 
 
 @pytest.fixture(scope="session")
