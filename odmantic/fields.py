@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import abc
 from typing import TYPE_CHECKING, Any, Optional, Pattern, Sequence, Set, Type
 
@@ -197,7 +195,7 @@ class ODMEmbedded(ODMBaseField):
 class FieldProxy:
     __slots__ = ("parent", "field")
 
-    def __init__(self, parent: Optional[FieldProxy], field: ODMBaseField) -> None:
+    def __init__(self, parent: Optional["FieldProxy"], field: ODMBaseField) -> None:
         self.parent = parent
         self.field = field
 

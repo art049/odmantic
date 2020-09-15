@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from typing import TYPE_CHECKING, Any, Dict, Sequence, cast
 
 if TYPE_CHECKING:
@@ -13,10 +11,10 @@ class QueryExpression(Dict[str, Any]):
             parent_repr = ""
         return f"QueryExpression({parent_repr})"
 
-    def __or__(self, other: QueryExpression):
+    def __or__(self, other: "QueryExpression"):
         return or_(self, other)
 
-    def __and__(self, other: QueryExpression):
+    def __and__(self, other: "QueryExpression"):
         return and_(self, other)
 
     def __invert__(self):
