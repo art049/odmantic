@@ -34,6 +34,15 @@ ModelType = TypeVar("ModelType", bound=Model)
 class AIOCursor(
     Generic[ModelType], AsyncIterable[ModelType], Awaitable[List[ModelType]]
 ):
+    """
+    This object has to be built from the [odmantic.engine.AIOEngine.find][] method.
+
+    The AIOCursor support multiple async operations:
+
+      - **async for**: asynchronously iterate over the query results
+      - **await** : when awaited it will return a list of the fetched models
+    """
+
     def __init__(self, model: Type[ModelType], motor_cursor: AsyncIOMotorCursor):
         self._model = model
         self._motor_cursor = motor_cursor
@@ -69,7 +78,17 @@ class AIOCursor(
 
 
 class AIOEngine:
+    """
+    The AIOEngine object is responsible for handling database operations with MongoDB in
+    an asynchronous way using motor.
+    """
+
     def __init__(self, motor_client: AsyncIOMotorClient, db_name: str):
+        """
+        Args:
+            motor_client: instance of an AsyncIO motor client
+            db_name: name of the database to use
+        """
         self.client = motor_client
         self.db_name = db_name
         self.database = motor_client[self.db_name]
@@ -81,6 +100,7 @@ class AIOEngine:
     def _cascade_find_pipeline(
         model: Type[ModelType], doc_namespace: str = ""
     ) -> List[Dict]:
+        """Recursively build the find pipeline for model"""
         pipeline: List[Dict] = []
         for ref_field_name in model.__references__:
             odm_reference = cast(ODMReference, model.__odm_fields__[ref_field_name])
@@ -114,6 +134,18 @@ class AIOEngine:
         limit: Optional[int] = None,
         skip: int = 0,
     ) -> AIOCursor[ModelType]:
+        """Search for Model instances matching the query filter provided
+
+        Args:
+            model: model to perform the operation on
+            query: query filter to apply
+            limit: maximum number of instance fetched
+            skip: number of document to skip
+
+
+        Returns:
+            [odmantic.engine.AIOCursor][] of the query
+        """
         if not lenient_issubclass(model, Model):
             raise TypeError("Can only call find with a Model class")
         if limit is not None and limit <= 0:
@@ -123,7 +155,7 @@ class AIOEngine:
 
         collection = self._get_collection(model)
         pipeline: List[Dict] = [{"$match": query}]
-        if limit > 0:
+        if limit is not None and limit > 0:
             pipeline.append({"$limit": limit})
         if skip > 0:
             pipeline.append({"$skip": skip})
@@ -134,8 +166,19 @@ class AIOEngine:
     async def find_one(
         self,
         model: Type[ModelType],
-        query: Union[Dict, bool] = {},  # bool: allow using binary operators w/o plugin
+        query: Union[
+            QueryExpression, Dict, bool
+        ] = QueryExpression(),  # bool: allow using binary operators w/o plugin
     ) -> Optional[ModelType]:
+        """Search for a Model instance matching the query filter provided
+
+        Args:
+            model: model to perform the operation on
+            query: query filter to apply
+
+        Returns:
+            the fetched instance if found otherwise None
+        """
         if not lenient_issubclass(model, Model):
             raise TypeError("Can only call find_one with a Model class")
         results = await self.find(model, query, limit=1)
@@ -146,6 +189,9 @@ class AIOEngine:
     async def _save(
         self, instance: ModelType, session: AsyncIOMotorClientSession
     ) -> ModelType:
+        """
+        Perform an atomic save operation in the specified session
+        """
         save_tasks = []
         for ref_field_name in instance.__references__:
             sub_instance = cast(Model, getattr(instance, ref_field_name))
@@ -167,6 +213,24 @@ class AIOEngine:
         return instance
 
     async def save(self, instance: ModelType) -> ModelType:
+        """
+        Persist an instance to the database
+
+        This method behaves as an 'upsert' operation. If a document already exists
+        with the same primary key, it will be overwritten.
+
+        All the other models referenced by this instance will be saved as well.
+
+        Args:
+            instance (ModelType): [description]
+
+        Returns:
+            the saved instance
+
+        NOTE:
+            the save operation actually modify the instance argument in place. The
+            instance is still returned for convenience.
+        """
         try:
             async with await self.client.start_session() as s:
                 async with s.start_transaction():
@@ -179,6 +243,25 @@ class AIOEngine:
         return instance
 
     async def save_all(self, instances: Sequence[ModelType]) -> List[ModelType]:
+        """
+        Persist instances to the database
+
+        This method behaves as multiple 'upsert' operations. If one of the document
+        already exists with the same primary key, it will be overwritten.
+
+        All the other models referenced by this instance will be recursively saved as
+        well.
+
+        Args:
+            instances (Sequence[ModelType]): [description]
+
+        Returns:
+            the saved instances
+
+        NOTE:
+            the save_all operation actually modify the arguments in place. The
+            instances are still returned for convenience.
+        """
         async with await self.client.start_session() as s:
             async with s.start_transaction():
                 added_instances = await asyncio.gather(
@@ -187,6 +270,15 @@ class AIOEngine:
         return added_instances
 
     async def delete(self, instance: ModelType) -> None:
+        """Delete an instance from the database
+
+        Args:
+            instance: the instance to delete
+
+        Raises:
+            DocumentNotFoundError: the instance has not been persisted to the database
+
+        """
         # TODO handle cascade deletion
         collection = self.database[instance.__collection__]
         pk_name = instance.__primary_key__
@@ -195,7 +287,18 @@ class AIOEngine:
         if count == 0:
             raise DocumentNotFoundError(instance)
 
-    async def count(self, model: Type[ModelType], query: Union[Dict, bool] = {}) -> int:
+    async def count(
+        self, model: Type[ModelType], query: Union[QueryExpression, Dict, bool] = {}
+    ) -> int:
+        """Get the count of document matching a query
+
+        Args:
+            model: model to perform the operation on
+            query: query filter to apply
+
+        Returns:
+            number of document matching the query
+        """
         if not lenient_issubclass(model, Model):
             raise TypeError("Can only call count with a Model class")
         collection = self.database[model.__collection__]

@@ -7,6 +7,12 @@ if TYPE_CHECKING:
 
 
 class QueryExpression(Dict[str, Any]):
+    def __repr__(self):
+        parent_repr = super().__repr__()
+        if parent_repr == "{}":
+            parent_repr = ""
+        return f"QueryExpression({parent_repr})"
+
     def __or__(self, other: QueryExpression):
         return or_(self, other)
 
