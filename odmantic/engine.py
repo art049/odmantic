@@ -19,7 +19,7 @@ from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorCursor
 from pydantic.utils import lenient_issubclass
 from pymongo.errors import DuplicateKeyError as PyMongoDuplicateKeyError
 
-from odmantic.exceptions import DuplicatePrimaryKeyError
+from odmantic.exceptions import DocumentNotFoundError, DuplicatePrimaryKeyError
 from odmantic.fields import ODMReference
 from odmantic.model import Model
 
@@ -170,12 +170,14 @@ class AIOEngine:
         )
         return added_instances
 
-    async def delete(self, instance: ModelType) -> int:
+    async def delete(self, instance: ModelType) -> None:
         # TODO handle cascade deletion
         collection = self.database[instance.__collection__]
         pk_name = instance.__primary_key__
         result = await collection.delete_many({"_id": getattr(instance, pk_name)})
-        return int(result.deleted_count)
+        count = int(result.deleted_count)
+        if count == 0:
+            raise DocumentNotFoundError(instance)
 
     async def count(self, model: Type[ModelType], query: Union[Dict, bool] = {}) -> int:
         if not lenient_issubclass(model, Model):
