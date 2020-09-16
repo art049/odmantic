@@ -21,9 +21,8 @@ from motor.motor_asyncio import (
     AsyncIOMotorCursor,
 )
 from pydantic.utils import lenient_issubclass
-from pymongo.errors import DuplicateKeyError as PyMongoDuplicateKeyError
 
-from odmantic.exceptions import DocumentNotFoundError, DuplicatePrimaryKeyError
+from odmantic.exceptions import DocumentNotFoundError
 from odmantic.fields import ODMReference
 from odmantic.model import Model
 from odmantic.query import QueryExpression
@@ -234,15 +233,10 @@ class AIOEngine:
         if not isinstance(instance, Model):
             raise TypeError("Can only call find_one with a Model class")
 
-        try:
-            async with await self.client.start_session() as s:
-                async with s.start_transaction():
-                    await self._save(instance, s)
-            object.__setattr__(instance, "__fields_modified__", set())
-        except PyMongoDuplicateKeyError as e:
-            if "_id" in e.details["keyPattern"]:
-                raise DuplicatePrimaryKeyError(instance)
-            raise
+        async with await self.client.start_session() as s:
+            async with s.start_transaction():
+                await self._save(instance, s)
+        object.__setattr__(instance, "__fields_modified__", set())
         return instance
 
     async def save_all(self, instances: Sequence[ModelType]) -> List[ModelType]:

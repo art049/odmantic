@@ -14,18 +14,6 @@ class BaseEngineException(Exception, metaclass=ABCMeta):
         super().__init__(message)
 
 
-class DuplicatePrimaryKeyError(BaseEngineException):
-    def __init__(self, duplicated_instance: Model):
-        self.duplicated_instance = duplicated_instance
-        self.duplicated_field = self.model.__primary_key__
-        self.duplicated_value = getattr(duplicated_instance, self.duplicated_field)
-        super().__init__(
-            f"Duplicate primary key error model: {self.model.__name__} primary_key:"
-            f"{self.duplicated_field} duplicated_value: {self.duplicated_value}",
-            type(duplicated_instance),
-        )
-
-
 class DocumentNotFoundError(BaseEngineException):
     """The targetted document has not been found by the engine
 

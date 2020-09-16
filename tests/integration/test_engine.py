@@ -3,7 +3,7 @@ from typing import List
 import pytest
 
 from odmantic.engine import AIOEngine
-from odmantic.exceptions import DocumentNotFoundError, DuplicatePrimaryKeyError
+from odmantic.exceptions import DocumentNotFoundError
 from odmantic.model import EmbeddedModel
 from odmantic.types import _objectId
 from tests.integration.conftest import mock_collection
@@ -149,19 +149,6 @@ async def test_save_multiple_time_same_document(engine: AIOEngine):
     assert await engine.count(PersonModel, PersonModel.id == fixed_id) == 1
 
 
-@pytest.mark.skip("Not supported yet")
-async def test_insert_multiple_time_same_document(engine: AIOEngine):
-    fixed_id = _objectId()
-    instance = PersonModel(first_name="Jean-Pierre", last_name="Pernaud", id=fixed_id)
-    await engine.insert(instance)  # type: ignore
-    with pytest.raises(DuplicatePrimaryKeyError) as exc:
-        await engine.insert(instance)  # type: ignore
-    assert exc.value.model is PersonModel
-    assert exc.value.duplicated_instance == instance
-    assert exc.value.duplicated_field == "id"
-    assert exc.value.duplicated_value == fixed_id
-
-
 @pytest.mark.usefixtures("person_persisted")
 async def test_count(engine: AIOEngine):
     count = await engine.count(PersonModel)
@@ -173,12 +160,14 @@ async def test_count(engine: AIOEngine):
     count = await engine.count(PersonModel, PersonModel.first_name == "Gérard")
     assert count == 0
 
+
 async def test_count_on_non_model_fails(engine: AIOEngine):
     class BadModel:
         pass
 
     with pytest.raises(TypeError):
         await engine.count(BadModel)  # type: ignore
+
 
 async def test_find_on_embedded_raises(engine: AIOEngine):
     class BadModel(EmbeddedModel):
