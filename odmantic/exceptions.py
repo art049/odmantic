@@ -10,8 +10,8 @@ class BaseEngineException(Exception, metaclass=ABCMeta):
     """Base Exception raised by the engine while operating on a model"""
 
     def __init__(self, message: str, model: Type[Model]):
-        super().__init__(message)
         self.model: Type[Model] = model
+        super().__init__(message)
 
 
 class DuplicatePrimaryKeyError(BaseEngineException):
@@ -36,7 +36,7 @@ class DocumentNotFoundError(BaseEngineException):
     def __init__(self, instance: Model):
         self.instance: Model = instance
         super().__init__(
-            f"Document not found for : {self.model.__name__}. "
+            f"Document not found for : {type(instance).__name__}. "
             f"Instance: {self.instance}",
             type(instance),
         )

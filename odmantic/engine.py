@@ -231,6 +231,9 @@ class AIOEngine:
             the save operation actually modify the instance argument in place. The
             instance is still returned for convenience.
         """
+        if not isinstance(instance, Model):
+            raise TypeError("Can only call find_one with a Model class")
+
         try:
             async with await self.client.start_session() as s:
                 async with s.start_transaction():
