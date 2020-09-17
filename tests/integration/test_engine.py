@@ -6,7 +6,6 @@ from odmantic.engine import AIOEngine
 from odmantic.exceptions import DocumentNotFoundError
 from odmantic.model import EmbeddedModel
 from odmantic.types import _objectId
-from tests.integration.conftest import mock_collection
 
 from ..zoo.person import PersonModel
 

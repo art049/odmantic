@@ -11,7 +11,7 @@ from odmantic.query import (
     gt,
     gte,
     in_,
-    le,
+    lt,
     lte,
     ne,
     not_exists,
@@ -158,7 +158,7 @@ class ODMField(ODMBaseField):
             "not_in",
             "exists",
             "not_exists",
-            "le",
+            "lt",
             "lte",
             "gt",
             "gte",
@@ -252,16 +252,16 @@ class FieldProxy:
     def __ge__(self, value):
         return self.gte(value)
 
-    def le(self, value) -> QueryExpression:
-        return le(self, value)
+    def lt(self, value) -> QueryExpression:
+        return lt(self, value)
 
-    def __le__(self, value):
-        return self.le(value)
+    def __lt__(self, value):
+        return self.lt(value)
 
     def lte(self, value) -> QueryExpression:
         return lte(self, value)
 
-    def __lt__(self, value):
+    def __le__(self, value):
         return self.lte(value)
 
     def eq(self, value) -> QueryExpression:

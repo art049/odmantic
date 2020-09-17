@@ -1,15 +1,15 @@
-from typing import TYPE_CHECKING, Any, Dict, Sequence, cast
+from typing import TYPE_CHECKING, Any, Dict, Sequence, Union, cast
 
 if TYPE_CHECKING:
     from odmantic.fields import FieldProxy
 
 
 class QueryExpression(Dict[str, Any]):
-    def __repr__(self):
-        parent_repr = super().__repr__()
-        if parent_repr == "{}":
-            parent_repr = ""
-        return f"QueryExpression({parent_repr})"
+    # def __repr__(self):
+    #     parent_repr = super().__repr__()
+    #     if parent_repr == "{}":
+    #         parent_repr = ""
+    #     return f"QueryExpression({parent_repr})"
 
     def __or__(self, other: "QueryExpression"):
         return or_(self, other)
@@ -21,20 +21,21 @@ class QueryExpression(Dict[str, Any]):
         return not_(self)
 
 
-def not_(element: QueryExpression) -> QueryExpression:
-    return QueryExpression({"$not": element})
-
-
-def and_(*elements: QueryExpression) -> QueryExpression:
+def and_(*elements: Union[QueryExpression, bool]) -> QueryExpression:
     return QueryExpression({"$and": elements})
 
 
-def or_(*elements: QueryExpression) -> QueryExpression:
+def or_(*elements: Union[QueryExpression, bool]) -> QueryExpression:
     return QueryExpression({"$or": elements})
 
 
-def nor_(*elements: QueryExpression) -> QueryExpression:
+def nor_(*elements: Union[QueryExpression, bool]) -> QueryExpression:
     return QueryExpression({"$nor": elements})
+
+
+def not_(element: Union[QueryExpression, bool]) -> QueryExpression:
+    # TODO clarify usage and test
+    return QueryExpression({"$not": element})
 
 
 def _cmp_expression(f: "FieldProxy", op: str, value: Any) -> QueryExpression:
@@ -65,8 +66,8 @@ def gte(field, value) -> QueryExpression:
     return _cmp_expression(field, "$gte", value)
 
 
-def le(field, value) -> QueryExpression:
-    return _cmp_expression(field, "$le", value)
+def lt(field, value) -> QueryExpression:
+    return _cmp_expression(field, "$lt", value)
 
 
 def lte(field, value) -> QueryExpression:
