@@ -56,6 +56,7 @@ pytest-xdist = "^2.1.0"
 pytz = "^2020.1"
 asyncmock = "^0.4.2"
 mkdocstrings = "^0.13.2"
+markdown-include = "^0.6.0"
 
 [build-system]
 requires = ["poetry>=0.12"]
