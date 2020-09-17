@@ -6,11 +6,11 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="AsyncIO MongoDB ODM (Object Document Mapper) using python type hinting" name="description"/>
-<link href="../assets/images/favicon.png" rel="shortcut icon"/>
+<link href="../../assets/images/favicon.png" rel="shortcut icon"/>
 <meta content="mkdocs-1.1.2, mkdocs-material-5.5.12" name="generator"/>
-<title>Data types - ODMantic</title>
-<link href="../assets/stylesheets/main.4dd2dd8d.min.css" rel="stylesheet"/>
-<link href="../assets/stylesheets/palette.6a5ad368.min.css" rel="stylesheet"/>
+<title>Field - ODMantic</title>
+<link href="../../assets/stylesheets/main.4dd2dd8d.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.6a5ad368.min.css" rel="stylesheet"/>
 <meta content="#8bc34b" name="theme-color"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
@@ -21,15 +21,12 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#data-types">
-          Skip to content
-        </a>
 </div>
 <div data-md-component="announce">
 </div>
 <header class="md-header" data-md-component="header">
 <nav aria-label="Header" class="md-header-nav md-grid">
-<a aria-label="ODMantic" class="md-header-nav__button md-logo" href=".." title="ODMantic">
+<a aria-label="ODMantic" class="md-header-nav__button md-logo" href="../.." title="ODMantic">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
 </a>
 <label class="md-header-nav__button md-icon" for="__drawer">
@@ -42,7 +39,7 @@
           </span>
 <span class="md-header-nav__topic md-ellipsis">
             
-              Data types
+              Field
             
           </span>
 </div>
@@ -95,7 +92,7 @@
 <div class="md-sidebar__inner">
 <nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
 <label class="md-nav__title" for="__drawer">
-<a aria-label="ODMantic" class="md-nav__button md-logo" href=".." title="ODMantic">
+<a aria-label="ODMantic" class="md-nav__button md-logo" href="../.." title="ODMantic">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
 </a>
     ODMantic
@@ -112,75 +109,47 @@
 </div>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href=".." title="Overview">
+<a class="md-nav__link" href="../.." title="Overview">
       Overview
     </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../quickstart/" title="Quickstart">
+<a class="md-nav__link" href="../../quickstart/" title="Quickstart">
       Quickstart
     </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../fields/" title="Fields">
+<a class="md-nav__link" href="../../fields/" title="Fields">
       Fields
     </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../engine/" title="Engine">
+<a class="md-nav__link" href="../../engine/" title="Engine">
       Engine
     </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../modeling/" title="Modeling">
+<a class="md-nav__link" href="../../modeling/" title="Modeling">
       Modeling
     </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../filtering/" title="Filtering">
+<a class="md-nav__link" href="../../filtering/" title="Filtering">
       Filtering
     </a>
 </li>
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
-        Data types
-        <span class="md-nav__icon md-icon"></span>
-</label>
-<a class="md-nav__link md-nav__link--active" href="./" title="Data types">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../types/" title="Data types">
       Data types
     </a>
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#supported-bson-types-bson-package">
-    Supported BSON types (bson package)
-  </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#unsupported-types">
-    Unsupported types
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#python-to-bson-type-mapping">
-    Python to BSON type mapping
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../hate/" title="I hate ORMs/ODMs">
+<a class="md-nav__link" href="../../hate/" title="I hate ORMs/ODMs">
       I hate ORMs/ODMs
     </a>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="nav-9" id="nav-9" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="nav-9" id="nav-9" type="checkbox"/>
 <label class="md-nav__link" for="nav-9">
       API Reference
       <span class="md-nav__icon md-icon"></span>
@@ -192,27 +161,28 @@
       </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../api_reference/model/" title="Model">
+<a class="md-nav__link" href="../model/" title="Model">
       Model
     </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../api_reference/engine/" title="Engine">
+<a class="md-nav__link" href="../engine/" title="Engine">
       Engine
     </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../api_reference/field/" title="Field">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<a class="md-nav__link md-nav__link--active" href="./" title="Field">
       Field
     </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../api_reference/reference/" title="Reference">
+<a class="md-nav__link" href="../reference/" title="Reference">
       Reference
     </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../api_reference/exceptions/" title="Exceptions">
+<a class="md-nav__link" href="../exceptions/" title="Exceptions">
       Exceptions
     </a>
 </li>
@@ -220,7 +190,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../changelog/" title="Changelog">
+<a class="md-nav__link" href="../../changelog/" title="Changelog">
       Changelog
     </a>
 </li>
@@ -229,149 +199,12 @@
 </div>
 </div>
 </div>
-<div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
-<div class="md-sidebar__scrollwrap">
-<div class="md-sidebar__inner">
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#supported-bson-types-bson-package">
-    Supported BSON types (bson package)
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#unsupported-types">
-    Unsupported types
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#python-to-bson-type-mapping">
-    Python to BSON type mapping
-  </a>
-</li>
-</ul>
-</nav>
-</div>
-</div>
-</div>
 <div class="md-content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/art049/odmantic/edit/master/docs/types.md" title="Edit this page">
+<a class="md-content__button md-icon" href="https://github.com/art049/odmantic/edit/master/docs/api_reference/field.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1 id="data-types">Data types</h1>
-<h2 id="supported-bson-types-bson-package">Supported BSON types (<code>bson</code> package)</h2>
-<ul>
-<li>Int64 (long)</li>
-<li>ObjectId (objectId)</li>
-<li>Decimal128 (decimal)</li>
-</ul>
-<p>Additionnaly, most of the types supported by pydantic are supported. See <a href="https://pydantic-docs.helpmanual.io/usage/types">pydantic: Field Types</a> for more details.</p>
-<h2 id="unsupported-types">Unsupported types</h2>
-<ul>
-<li>typing.Set / set</li>
-</ul>
-<h2 id="python-to-bson-type-mapping">Python to BSON type mapping</h2>
-<table>
-<thead>
-<tr>
-<th>Python type</th>
-<th align="center">BSON type</th>
-<th>Comment</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>bson.ObjectId</code></td>
-<td align="center"><code>objectId</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>bool</code></td>
-<td align="center"><code>bool</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>int</code></td>
-<td align="center"><code>int</code></td>
-<td>value between -2^31 and 2^31 - 1</td>
-</tr>
-<tr>
-<td><code>int</code></td>
-<td align="center"><code>long</code></td>
-<td>value not between -2^31 and 2^31 - 1</td>
-</tr>
-<tr>
-<td><code>bson.Int64</code></td>
-<td align="center"><code>long</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>float</code></td>
-<td align="center"><code>double</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>bson.Decimal128</code></td>
-<td align="center"><code>decimal</code></td>
-<td>decimal.Decimal is not supported yet</td>
-</tr>
-<tr>
-<td><code>str</code></td>
-<td align="center"><code>string</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>typing.Pattern</code></td>
-<td align="center"><code>regex</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>bson.Regex</code></td>
-<td align="center"><code>regex</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>bytes</code></td>
-<td align="center"><code>binData</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>bson.Binary</code></td>
-<td align="center"><code>binData</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>datetime.datetime</code></td>
-<td align="center"><code>date</code></td>
-<td>microseconds are truncated, only naive datetimes are allowed</td>
-</tr>
-<tr>
-<td><code>typing.Dict</code></td>
-<td align="center"><code>object</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>typing.List</code></td>
-<td align="center"><code>array</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>typing.Sequence</code></td>
-<td align="center"><code>array</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>typing.Tuple[T, ...]</code></td>
-<td align="center"><code>array</code></td>
-<td></td>
-</tr>
-</tbody>
-</table>
+<h1>Field</h1>
 </article>
 </div>
 </div>
@@ -379,7 +212,7 @@
 <footer class="md-footer">
 <div class="md-footer-nav">
 <nav aria-label="Footer" class="md-footer-nav__inner md-grid">
-<a class="md-footer-nav__link md-footer-nav__link--prev" href="../filtering/" rel="prev" title="Filtering">
+<a class="md-footer-nav__link md-footer-nav__link--prev" href="../engine/" rel="prev" title="Engine">
 <div class="md-footer-nav__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
 </div>
@@ -388,17 +221,17 @@
 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Filtering
+                Engine
               </div>
 </div>
 </a>
-<a class="md-footer-nav__link md-footer-nav__link--next" href="../hate/" rel="next" title="I hate ORMs/ODMs">
+<a class="md-footer-nav__link md-footer-nav__link--next" href="../reference/" rel="next" title="Reference">
 <div class="md-footer-nav__title">
 <div class="md-ellipsis">
 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                I hate ORMs/ODMs
+                Reference
               </div>
 </div>
 <div class="md-footer-nav__button md-icon">
@@ -420,14 +253,14 @@
 </div>
 </footer>
 </div>
-<script src="../assets/javascripts/vendor.3636a4ec.min.js"></script>
-<script src="../assets/javascripts/bundle.e9fe3281.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+<script src="../../assets/javascripts/vendor.3636a4ec.min.js"></script>
+<script src="../../assets/javascripts/bundle.e9fe3281.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
 <script>
         app = initialize({
-          base: "..",
+          base: "../..",
           features: ["instant"],
           search: Object.assign({
-            worker: "../assets/javascripts/worker/search.5eca75d3.min.js"
+            worker: "../../assets/javascripts/worker/search.5eca75d3.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>
