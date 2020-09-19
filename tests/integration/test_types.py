@@ -86,7 +86,6 @@ async def test_bson_type_inference(
         f"Type inference error: {case.python_type} -> {case.bson_type}"
         f" ({case.sample_value})"
     )
-    print(document, str(document["field"]))
     recovered_instance = ModelWithTypedField(field=document["field"])
     assert recovered_instance.field == instance.field
 
