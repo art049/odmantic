@@ -18,8 +18,8 @@ from typing import (
 from motor.motor_asyncio import (
     AsyncIOMotorClient,
     AsyncIOMotorClientSession,
+    AsyncIOMotorCollection,
     AsyncIOMotorCursor,
-    AsyncIOMotorCollection
 )
 from pydantic.utils import lenient_issubclass
 
@@ -95,8 +95,8 @@ class AIOEngine:
         if motor_client is None:
             motor_client = AsyncIOMotorClient()
         self.client = motor_client
-        self.database = database
-        self.database = motor_client[self.database]
+        self.database_name = database
+        self.database = motor_client[self.database_name]
 
     def _get_collection(self, model: Type[ModelType]) -> AsyncIOMotorCollection:
         return self.database[model.__collection__]
