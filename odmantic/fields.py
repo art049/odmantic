@@ -52,10 +52,12 @@ def Field(
      ``Decimal``) and some apply only to ``str``.
 
     :param default: since this is replacing the field’s default, its first argument is
-      used to set the default, use ellipsis (``...``) to indicate the field is required
+      used to set the default, use ellipsis (``...``) to indicate the field has no
+      default value
     :param key_name: the name to use in the the document structure
     :param primary_field: this field should be considered as a primary key.
       Can't be used along with `key_name` since the key_name will be set to `_id`
+
     :param default_factory: callable that will be called when a default value is needed
       for this field.
       If both `default` and `default_factory` are set, an error is raised.
@@ -101,7 +103,7 @@ def Field(
         **extra,
     )
     if primary_field:
-        if key_name != "_id":
+        if key_name is not None and key_name != "_id":
             raise ValueError(
                 "cannot specify a primary field with a custom key_name,"
                 "key_name='_id' enforced"
