@@ -20,10 +20,11 @@ from typing import (
 )
 
 import pydantic
+from pydantic.error_wrappers import ValidationError
 from pydantic.fields import Field as PDField
 from pydantic.fields import FieldInfo as PDFieldInfo
 from pydantic.fields import Undefined
-from pydantic.types import PyObject
+from pydantic.tools import parse_obj_as
 from pydantic.typing import resolve_annotations
 from pydantic.utils import lenient_issubclass
 
@@ -78,8 +79,8 @@ def find_duplicate_key(fields: Sequence[ODMField]) -> Optional[str]:
 
 
 class BaseModelMetaclass(ABCMeta):
-    @no_type_check
-    def __new__(cls, name, bases, namespace, **kwargs):  # noqa C901
+    @no_type_check  # noqa C901
+    def __new__(cls, name, bases, namespace, **kwargs):
         if (namespace.get("__module__"), namespace.get("__qualname__")) != (
             "odmantic.model",
             "Model",
@@ -91,40 +92,56 @@ class BaseModelMetaclass(ABCMeta):
             references: List[str] = []
             bson_serialized_fields: Set[str] = set()
 
+            # Make sure all fields are defined with type annotation
+            for field_name, value in namespace.items():
+                if (
+                    not isinstance(value, UNTOUCHED_TYPES)
+                    and is_valid_odm_field(field_name)
+                    and field_name not in annotations
+                ):
+                    raise TypeError(
+                        f"field {field_name} is defined without type annotation"
+                    )
+
             # TODO handle class vars
             # Substitute bson types
             for k, v in annotations.items():
                 subst_type = _SUBSTITUTION_TYPES.get(v)
                 if subst_type is not None:
-                    print(f"Subst: {v} -> {subst_type}")
                     annotations[k] = subst_type
-            namespace["__annotations__"] = annotations
 
+            # Handle special BSON serialized types
             for (field_name, field_type) in annotations.items():
-                if not is_valid_odm_field(field_name) or (
-                    isinstance(field_type, UNTOUCHED_TYPES) and field_type != PyObject
+                if (
+                    is_valid_odm_field(field_name)
+                    and not isinstance(field_type, UNTOUCHED_TYPES)
+                    and lenient_issubclass(field_type, BSONSerializedField)
+                ):
+                    bson_serialized_fields.add(field_name)
+
+            # Validate fields
+            for (field_name, field_type) in annotations.items():
+                if not is_valid_odm_field(field_name) or isinstance(
+                    field_type, UNTOUCHED_TYPES
                 ):
                     continue
 
-                if BSONSerializedField in getattr(field_type, "__bases__", ()):
-                    bson_serialized_fields.add(field_name)
-
                 value = namespace.get(field_name, Undefined)
-                if isinstance(value, ODMFieldInfo):
-                    key_name = (
-                        value.key_name if value.key_name is not None else field_name
-                    )
-                    raise_on_invalid_key_name(key_name)
-                    odm_fields[field_name] = ODMField(
-                        primary_field=value.primary_field, key_name=key_name
-                    )
-                    namespace[field_name] = value.pydantic_field_info
 
-                elif isinstance(value, ODMReferenceInfo):
-                    if not issubclass(field_type, Model):
+                if isinstance(value, PDFieldInfo):
+                    raise TypeError(
+                        "please use odmantic.Field instead of pydantic.Field"
+                    )
+
+                if lenient_issubclass(field_type, EmbeddedModel):
+                    odm_fields[field_name] = ODMEmbedded(
+                        model=field_type, key_name=field_name
+                    )
+                elif lenient_issubclass(field_type, Model):
+                    if not isinstance(value, ODMReferenceInfo):
                         raise TypeError(
-                            f"cannot define a reference {field_name} (in {name}) on "
-                            "a model not created with odmantic.Model"
+                            "cannot define a reference {field_name} (in {name}) without"
+                            " a Reference assigned to it"
                         )
                     key_name = (
                         value.key_name if value.key_name is not None else field_name
@@ -134,46 +151,40 @@ class BaseModelMetaclass(ABCMeta):
                         model=field_type, key_name=key_name
                     )
                     references.append(field_name)
-
-                elif lenient_issubclass(field_type, EmbeddedModel):
-                    odm_fields[field_name] = ODMEmbedded(
-                        model=field_type, key_name=field_name
-                    )
-
-                elif value is Undefined:
-                    odm_fields[field_name] = ODMField(
-                        primary_field=False, key_name=field_name
-                    )
-
-                elif value is PDFieldInfo:
-                    raise TypeError(
-                        "please use odmantic.Field instead of pydantic.Field"
-                    )
-                elif isinstance(value, field_type):
-                    odm_fields[field_name] = ODMField(
-                        primary_field=False, key_name=field_name
-                    )
-
                 else:
-                    raise TypeError(f"Unhandled field definition {name}:{value}")
+                    if isinstance(value, ODMFieldInfo):
+                        key_name = (
+                            value.key_name if value.key_name is not None else field_name
+                        )
+                        raise_on_invalid_key_name(key_name)
+                        odm_fields[field_name] = ODMField(
+                            primary_field=value.primary_field, key_name=key_name
+                        )
+                        namespace[field_name] = value.pydantic_field_info
 
-            for field_name, value in namespace.items():
-                # TODO check references defined without type
-                # TODO find out what to do with those fields
-                if (
-                    field_name in annotations
-                    or not is_valid_odm_field(field_name)
-                    or isinstance(value, UNTOUCHED_TYPES)
-                ):
-                    continue
-                odm_fields[field_name] = ODMField(
-                    primary_field=False, key_name=field_name
-                )
+                    elif value is Undefined:
+                        odm_fields[field_name] = ODMField(
+                            primary_field=False, key_name=field_name
+                        )
+
+                    else:
+                        try:
+                            parse_obj_as(field_type, value)
+                        except ValidationError:
+                            raise TypeError(
+                                f"Unhandled field definition {name}: {repr(field_type)}"
+                                f" = {repr(value)}"
+                            )
+                        odm_fields[field_name] = ODMField(
+                            primary_field=False, key_name=field_name
+                        )
 
             duplicate_key = find_duplicate_key(odm_fields.values())
             if duplicate_key is not None:
-                raise TypeError(f"Duplicate key_name: {duplicate_key} in {name}")
-
+                raise TypeError(f"Duplicated key_name: {duplicate_key} in {name}")
+            # NOTE: Duplicate key detection make sur that at most one primary key is
+            # defined
+            namespace["__annotations__"] = annotations
             namespace["__odm_fields__"] = odm_fields
             namespace["__references__"] = tuple(references)
             namespace["__bson_serialized_fields__"] = frozenset(bson_serialized_fields)
@@ -182,27 +193,28 @@ class BaseModelMetaclass(ABCMeta):
 
 
 class ModelMetaclass(BaseModelMetaclass, pydantic.main.ModelMetaclass):
-    @no_type_check
-    def __new__(cls, name, bases, namespace, **kwargs):  # noqa C901
+    @no_type_check  # noqa C901
+    def __new__(cls, name, bases, namespace, **kwargs):
         BaseModelMetaclass.__new__(cls, name, bases, namespace, **kwargs)
 
         if (namespace.get("__module__"), namespace.get("__qualname__")) != (
             "odmantic.model",
             "Model",
         ):
-            primary_field = None
+            primary_field: Optional[str] = None
             odm_fields: Dict[str, ODMBaseField] = namespace["__odm_fields__"]
 
-            for field in odm_fields:
+            for field in odm_fields.values():
                 if isinstance(field, ODMField) and field.primary_field:
-                    # TODO handle inheritance with primary keys
-                    if primary_field is not None:
-                        raise TypeError(
-                            f"cannot define multiple primary keys on model {name}"
-                        )
                     primary_field = field.key_name
+                    break
 
             if primary_field is None:
+                if "id" in odm_fields:
+                    raise TypeError(
+                        "can't automatically generate a primary field since an 'id' "
+                        "field already exists"
+                    )
                 primary_field = "id"
                 odm_fields["id"] = ODMField(primary_field=True, key_name="_id")
                 namespace["id"] = PDField(default_factory=_objectId)
@@ -212,26 +224,27 @@ class ModelMetaclass(BaseModelMetaclass, pydantic.main.ModelMetaclass):
 
             if "__collection__" in namespace:
                 collection_name = namespace["__collection__"]
-                # https://docs.mongodb.com/manual/reference/limits/#Restriction-on-Collection-Names
-                if "$" in collection_name:
-                    raise TypeError(
-                        f"Invalid collection name for {name}: cannot contain '$'"
-                    )
-                if collection_name == "":
-                    raise TypeError(
-                        f"Invalid collection name for {name}: cannot be empty"
-                    )
-                if collection_name.startswith("system."):
-                    raise TypeError(
-                        f"Invalid collection name for {name}:"
-                        " cannot start with 'system.'"
-                    )
             else:
                 cls_name = name
                 if cls_name.endswith("Model"):
                     # TODO document this
                     cls_name = cls_name[:-5]  # Strip Model in the class name
-                namespace["__collection__"] = to_snake_case(cls_name)
+                collection_name = to_snake_case(cls_name)
+                namespace["__collection__"] = collection_name
+
+            # Validate the collection name
+            # https://docs.mongodb.com/manual/reference/limits/#Restriction-on-Collection-Names
+            if "$" in collection_name:
+                raise TypeError(
+                    f"Invalid collection name for {name}: cannot contain '$'"
+                )
+            if collection_name == "":
+                raise TypeError(f"Invalid collection name for {name}: cannot be empty")
+            if collection_name.startswith("system."):
+                raise TypeError(
+                    f"Invalid collection name for {name}:"
+                    " cannot start with 'system.'"
+                )
 
         return pydantic.main.ModelMetaclass.__new__(
             cls, name, bases, namespace, **kwargs
@@ -249,7 +262,7 @@ class EmbeddedModelMetaclass(BaseModelMetaclass, pydantic.main.ModelMetaclass):
         ):
             odm_fields: Dict[str, ODMBaseField] = namespace["__odm_fields__"]
 
-            for field in odm_fields:
+            for field in odm_fields.values():
                 if isinstance(field, ODMField) and field.primary_field:
                     raise TypeError(
                         f"cannot define a primary field in {name} embedded document"
@@ -272,6 +285,10 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         __fields_modified__: Set[str] = set()
 
     __slots__ = ("__fields_modified__",)
+
+    class Config:
+        validate_all = True
+        validate_assignment = True
 
     def __init_subclass__(cls):
         # FIXME move this into the metaclass ?
@@ -305,6 +322,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         update: "DictStrAny" = None,
         deep: bool = False,
     ) -> TBase:
+        """WARNING: Not Implemented"""
         # TODO implement
         raise NotImplementedError
 
