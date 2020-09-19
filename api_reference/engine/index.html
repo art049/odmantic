@@ -399,8 +399,8 @@ zzz['special']aaa <span class="doc doc-properties">
     <span class="k">if</span> <span class="n">motor_client</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">motor_client</span> <span class="o">=</span> <span class="n">AsyncIOMotorClient</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">motor_client</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">database</span> <span class="o">=</span> <span class="n">motor_client</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">database_name</span> <span class="o">=</span> <span class="n">database</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">database</span> <span class="o">=</span> <span class="n">motor_client</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">database_name</span><span class="p">]</span>
 </code></pre>
 </div>
 </details>
