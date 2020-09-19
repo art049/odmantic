@@ -128,7 +128,7 @@ class _datetime:
 class BSONSerializedField(metaclass=ABCMeta):
     @abstractmethod
     def to_bson(cls, v):
-        """This should be overriden with a class method"""
+        """This should be overridden with a class method"""
 
     def __pos__(self):
         """Only here to help mypy"""
