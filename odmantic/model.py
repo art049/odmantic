@@ -312,16 +312,6 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         super().__setattr__(name, value)
         self.__fields_modified__.add(name)
 
-    def __getstate__(self) -> Dict[Any, Any]:
-        return {
-            **super().__getstate__(),
-            "__fields_modified__": self.__fields_modified__,
-        }
-
-    def __setstate__(self, state: Dict[Any, Any]) -> None:
-        super().__setstate__(state)
-        object.__setattr__(self, "__fields_modified__", state["__fields_modified__"])
-
     def doc(self, include: Optional["AbstractSetIntStr"] = None) -> Dict[str, Any]:
         """
         Generate a document representation of the instance (as a dictionary)
@@ -334,7 +324,6 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
             if isinstance(field, ODMReference):
                 doc[field.key_name] = raw_doc[field_name]["id"]
             else:
-                print(self.__bson_serialized_fields__)
                 if field_name in self.__bson_serialized_fields__:
                     doc[field.key_name] = self.__fields__[field_name].type_.to_bson(
                         raw_doc[field_name]
