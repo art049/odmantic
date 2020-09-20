@@ -15,8 +15,10 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
 <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+<link href="css/extra.css" rel="stylesheet"/>
 </head>
-<body data-md-color-accent="light-green" data-md-color-primary="light-green" data-md-color-scheme="slate" dir="ltr">
+<body data-md-color-accent="light-green" data-md-color-primary="light-green" data-md-color-scheme="preference" dir="ltr">
+<script>matchMedia("(prefers-color-scheme: dark)").matches&&document.body.setAttribute("data-md-color-scheme","slate")</script>
 <input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
@@ -30,7 +32,7 @@
 <header class="md-header" data-md-component="header">
 <nav aria-label="Header" class="md-header-nav md-grid">
 <a aria-label="ODMantic" class="md-header-nav__button md-logo" href="." title="ODMantic">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 9.63c-.19-2.79-1.32-5.51-3.44-7.63A12.253 12.253 0 008.5 9.63c1.29.68 2.47 1.56 3.5 2.63a14.22 14.22 0 013.5-2.63M12 15.45C9.85 12.17 6.18 10 2 10c0 10 9.32 11.89 10 12 .68-.12 10-2 10-12-4.18 0-7.85 2.17-10 5.45z"></path></svg>
 </a>
 <label class="md-header-nav__button md-icon" for="__drawer">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
@@ -96,7 +98,7 @@
 <nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
 <label class="md-nav__title" for="__drawer">
 <a aria-label="ODMantic" class="md-nav__button md-logo" href="." title="ODMantic">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 9.63c-.19-2.79-1.32-5.51-3.44-7.63A12.253 12.253 0 008.5 9.63c1.29.68 2.47 1.56 3.5 2.63a14.22 14.22 0 013.5-2.63M12 15.45C9.85 12.17 6.18 10 2 10c0 10 9.32 11.89 10 12 .68-.12 10-2 10-12-4.18 0-7.85 2.17-10 5.45z"></path></svg>
 </a>
     ODMantic
   </label>
@@ -158,13 +160,13 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#find-instances-matching-specific-criteria">
-    Find instances matching specific criteria
+<a class="md-nav__link" href="#find-instances-matching-a-criteria">
+    Find instances matching a criteria
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#update-an-instance">
-    Update an instance
+<a class="md-nav__link" href="#modify-an-instance">
+    Modify an instance
   </a>
 </li>
 </ul>
@@ -304,13 +306,13 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#find-instances-matching-specific-criteria">
-    Find instances matching specific criteria
+<a class="md-nav__link" href="#find-instances-matching-a-criteria">
+    Find instances matching a criteria
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#update-an-instance">
-    Update an instance
+<a class="md-nav__link" href="#modify-an-instance">
+    Modify an instance
   </a>
 </li>
 </ul>
@@ -352,7 +354,7 @@
 <hr/>
 <p>ODMantic is an Object Document Mapper (a kind of ORM but for NoSQL databases) for
 MongoDB based on standard python type hints. It's built on top of
-<a href="https://pydantic-docs.helpmanual.io/">pydantic</a> for model definition and validation.</p>
+<a href="https://pydantic-docs.helpmanual.io/" target="_blank">pydantic</a> for model definition and validation.</p>
 <p>Core features:</p>
 <ul>
 <li>
@@ -366,9 +368,7 @@ MongoDB based on standard python type hints. It's built on top of
 <p><strong>Fully typed</strong>: leverage static analysis to reduce runtime issues</p>
 </li>
 <li>
-<p><strong>AsyncIO</strong>: works well with ASGI frameworks
-  (<a href="https://github.com/tiangolo/fastapi">FastAPI</a>,
-  <a href="https://github.com/encode/starlette">Starlette</a>, ...)</p>
+<p><strong>AsyncIO</strong>: works well with ASGI frameworks (<a href="https://fastapi.tiangolo.com/" target="_blank">FastAPI</a>, <a href="https://www.starlette.io/" target="_blank">Starlette</a>, ...)</p>
 </li>
 </ul>
 <h2 id="requirements">Requirements</h2>
@@ -377,60 +377,189 @@ MongoDB based on standard python type hints. It's built on top of
 <p>Two direct dependencies:</p>
 <ul>
 <li>
-<p><a href="https://pydantic-docs.helpmanual.io/">pydantic</a>: makes data validation and schema
-  definition both handy and elegant.</p>
+<p><a href="https://pydantic-docs.helpmanual.io/" target="_blank">pydantic</a>: makes
+  data validation and schema definition both handy and elegant.</p>
 </li>
 <li>
-<p><a href="https://motor.readthedocs.io/en/stable/">motor</a>: an asyncio MongoDB driver officially
-  developed by the MongoDB team.</p>
+<p><a href="https://motor.readthedocs.io/en/stable/" target="_blank">motor</a>: an
+  asyncio MongoDB driver officially developed by the MongoDB team.</p>
 </li>
 </ul>
 <h2 id="installation">Installation</h2>
 <div class="highlight"><pre><span></span><code>pip install odmantic
 </code></pre></div>
 <h2 id="example">Example</h2>
+<blockquote>
+<p>To enjoy an async context without any code boilerplate, it's strongly advised
+to run the following steps with
+<a href="https://ipython.readthedocs.io/en/stable/install/index.html" target="_blank">IPython</a>.</p>
+</blockquote>
 <h3 id="define-your-first-model">Define your first model</h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">Field</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">Field</span><span class="p">,</span> <span class="n">Model</span>
+
 
 <span class="k">class</span> <span class="nc">Publisher</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">founded</span><span class="p">:</span> <span class="nb">int</span>
-    <span class="n">location</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">founded</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">gte</span><span class="o">=</span><span class="mi">1440</span><span class="p">)</span>
+    <span class="n">location</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 </code></pre></div>
+<p>By defining the <code>Publisher</code> class, we've just created an ODMantic model 🎉. In this
+example, the model will represent book publishers.</p>
+<p>This model contains three fields:</p>
+<ul>
+<li>
+<p><code>name</code>: This is the name of the Publisher. This is a simple string field without any
+  specific validation but it will be required to build a new Publisher.</p>
+</li>
+<li>
+<p><code>founded</code>: This is the year of foundation of the Publisher. Since the printing press
+  has been invented in 1440, it would be handy to allow only values above 1440. The
+  <code>gte</code> keyword argument passed to the Field is exactly doing this. The model will
+  require a founded value greater or equal than 1440.</p>
+</li>
+<li>
+<p><code>location</code>: This field will contain the country code of the Publisher. Defining this
+  field as <code>Optional</code> with a <code>None</code> default value makes it a non required field that
+  will be set automatically when not specified.</p>
+</li>
+</ul>
+<p>The collection name has been defined by ODMantic as well. In this case it will be
+<code>publisher</code>.</p>
 <h3 id="create-some-instances">Create some instances</h3>
 <div class="highlight"><pre><span></span><code><span class="n">instances</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">Publisher</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"HarperCollins"</span><span class="p">,</span> <span class="n">founded</span><span class="o">=</span><span class="mi">1989</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s2">"US),</span>
+    <span class="n">Publisher</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"HarperCollins"</span><span class="p">,</span> <span class="n">founded</span><span class="o">=</span><span class="mi">1989</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s2">"US"</span><span class="p">),</span>
     <span class="n">Publisher</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"Hachette Livre"</span><span class="p">,</span> <span class="n">founded</span><span class="o">=</span><span class="mi">1826</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s2">"FR"</span><span class="p">),</span>
     <span class="n">Publisher</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"Lulu"</span><span class="p">,</span> <span class="n">founded</span><span class="o">=</span><span class="mi">2002</span><span class="p">)</span>
 <span class="p">]</span>
 </code></pre></div>
+<p>We defined three instances of the Publisher model. They all have a <code>name</code> property as it
+was required. All the foundations years are later than 1440. The last publisher has no
+location specified so by default this field is set to <code>None</code> (it will be stored as
+<code>null</code> in the database).</p>
+<p>For now, those instances only exists locally. We will persist them in a database in the
+next step.</p>
 <h3 id="populate-the-database-with-your-instances">Populate the database with your instances</h3>
+<blockquote>
+<p>For the next steps, you'll need to start a local MongoDB server.The easiest way is
+to use docker. Simply run the next command in a terminal (closing the terminal will
+terminate the MongoDB instance and remove the container).</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code>docker run --rm --net<span class="o">=</span>host mongo
+</code></pre></div>
+<p>First, let's connect to the database using the engine. In ODMantic, every database
+operation is performed using the engine object.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span>
 
 <span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">()</span>
-<span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save_all</span><span class="p">(</span><span class="n">instances</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="find-instances-matching-specific-criteria">Find instances matching specific criteria</h3>
+<p>By default, the <code>AIOEngine</code> (for AsyncIOEngine) automatically tries to connect to a
+MongoDB instance running locally (on port 27017). Since we didn't provide any database name, it will use
+the database named <code>test</code> by default.</p>
+<p>The next step is to persist the instances we created before. We can perform this
+operation using the <code>AIOEngine.save_all</code> method.</p>
+<div class="highlight"><pre><span></span><code><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save_all</span><span class="p">(</span><span class="n">instances</span><span class="p">)</span>
+</code></pre></div>
+<p>Most of the engine I/O methods are asynchronous, hence the <code>await</code> keyword used here.
+Once the operation is complete, we should be able to see our created documents in the
+database. You can use <a href="https://www.mongodb.com/products/compass" target="_blank">Compass</a> or <a href="https://robomongo.org/" target="_blank">RoboMongo</a> if you'd like to have a graphical interface.</p>
+<p>Another possibility is to use <code>mongo</code> cli directly:</p>
+<div class="highlight"><pre><span></span><code>mongo --eval <span class="s2">"db.publisher.find({})"</span>
+</code></pre></div>
+<p>Output:</p>
+<div class="highlight"><pre><span></span><code><span class="err">connecting</span> <span class="err">to:</span> <span class="err">mongodb://</span><span class="mf">127.0</span><span class="err">.</span><span class="mf">0.1</span><span class="err">:</span><span class="mi">27017</span>
+<span class="p">{</span>
+  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f67b331514d6855bc5c54c9"</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">"founded"</span><span class="p">:</span> <span class="mi">1989</span><span class="p">,</span>
+  <span class="nt">"location"</span><span class="p">:</span> <span class="s2">"US"</span><span class="p">,</span>
+  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"HarperCollins"</span>
+<span class="p">}</span><span class="err">,</span>
+<span class="p">{</span>
+  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f67b331514d6855bc5c54ca"</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">"founded"</span><span class="p">:</span><span class="mi">1826</span><span class="p">,</span>
+  <span class="nt">"location"</span><span class="p">:</span> <span class="s2">"FR"</span><span class="p">,</span>
+  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Hachette Livre"</span>
+<span class="p">}</span><span class="err">,</span>
+<span class="p">{</span>
+  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f67b331514d6855bc5c54cb"</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">"founded"</span><span class="p">:</span> <span class="mi">2002</span><span class="p">,</span>
+  <span class="nt">"location"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Lulu"</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The created instances are stored in the <code>test</code> database under the <code>publisher</code> collection.</p>
+<p>We can see that an <code>_id</code> field has been added to each document. MongoDB need this field
+to act as a primary key. Actually, this field is added by ODMantic and you can access it
+under the name <code>id</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">instances</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+<span class="c1">#&gt; ObjectId("5f67b331514d6855bc5c54c9")</span>
+</code></pre></div>
+<h3 id="find-instances-matching-a-criteria">Find instances matching a criteria</h3>
+<p>Since we now have some documents in the database, we can start building some queries.</p>
+<p>First, let's find publishers created before the 2000s:</p>
 <div class="highlight"><pre><span></span><code><span class="n">early_publishers</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">Publisher</span><span class="p">,</span> <span class="n">Publisher</span><span class="o">.</span><span class="n">founded</span> <span class="o">&lt;=</span> <span class="mi">2000</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">early_publishers</span><span class="p">)</span>
 <span class="c1">#&gt; [Publisher(name="HarperCollins", founded=1989, location="US),</span>
 <span class="c1">#&gt;  Publisher(name="Hachette Livre", founded=1826, location="FR")]</span>
-<span class="n">ca_publisher</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">Publisher</span><span class="p">,</span> <span class="n">Publisher</span><span class="o">.</span><span class="n">location</span> <span class="o">==</span> <span class="s2">"CA"</span><span class="p">)</span>
+</code></pre></div>
+<p>Here, we called the <code>engine.find</code> method. The first argument we need to specify is the
+Model class we want to query on (in our case <code>Publisher</code>). The second argument is the
+actual query. Similarly to <a href="https://www.sqlalchemy.org/" target="_blank">SQLAlchemy</a>, you can build ODMantic queries using the regular python
+operators.</p>
+<p>When awaited, the <code>engine.find</code> method will return the list of matching instances stored
+in the database.</p>
+<p>Another possibility is to query for at most one instance. For example, if we want to
+retrieve a publisher from Canada (CA):</p>
+<div class="highlight"><pre><span></span><code><span class="n">ca_publisher</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">Publisher</span><span class="p">,</span> <span class="n">Publisher</span><span class="o">.</span><span class="n">location</span> <span class="o">==</span> <span class="s2">"CA"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">ca_publisher</span><span class="p">)</span>
 <span class="c1">#&gt; None</span>
 </code></pre></div>
-<h3 id="update-an-instance">Update an instance</h3>
+<p>Here the result is <code>None</code> because no matching instances have been found in the database.
+The <code>engine.find_one</code> method returns an instance if one exists in the database
+otherwise, it will return <code>None</code>.</p>
+<h3 id="modify-an-instance">Modify an instance</h3>
+<p>Finally, let's edit some instances. For example, we can set the <code>location</code> for the
+publisher named <code>Lulu</code>.
+First, we need to gather the instance from the database:</p>
 <div class="highlight"><pre><span></span><code><span class="n">lulu</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">Publisher</span><span class="p">,</span> <span class="n">Publisher</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">"Lulu"</span><span class="p">)</span>
-<span class="n">lulu</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="s2">"US"</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">lulu</span><span class="p">)</span>
+<span class="c1">#&gt; Publisher(name="Lulu", founded=2002, location=None)</span>
+</code></pre></div>
+<p>We still have the same instance, with no location set. We can change this field:</p>
+<div class="highlight"><pre><span></span><code><span class="n">lulu</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="s2">"US"</span>
 <span class="c1">#&gt; Publisher(name="Lulu", founded=2002, location="US)</span>
-<span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">lulu</span><span class="p">)</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="n">lulu</span><span class="o">.</span><span class="n">founded</span> <span class="o">=</span> <span class="mi">1439</span>
-<span class="c1">#&gt; ValidationError exception raised</span>
+<p>The location has been changed locally but the last step to persist this change is to
+save the document:</p>
+<div class="highlight"><pre><span></span><code><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">lulu</span><span class="p">)</span>
 </code></pre></div>
+<p>We can now check the database state:</p>
+<div class="highlight"><pre><span></span><code>mongo --eval <span class="s2">"db.publisher.find({name: 'Lulu'})"</span>
+</code></pre></div>
+<p>Output:</p>
+<div class="highlight"><pre><span></span><code><span class="err">connecting</span> <span class="err">to:</span> <span class="err">mongodb://</span><span class="mf">127.0</span><span class="err">.</span><span class="mf">0.1</span><span class="err">:</span><span class="mi">27017</span>
+<span class="p">{</span>
+  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f67b331514d6855bc5c54cb"</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">"founded"</span><span class="p">:</span> <span class="mi">2002</span><span class="p">,</span>
+<span class="hll">  <span class="nt">"location"</span><span class="p">:</span> <span class="s2">"US"</span><span class="p">,</span>
+</span>  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Lulu"</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The document have been successfully updated !</p>
+<p>Now, what if we would like to change the foundation date with an invalid one (before 1440) ?</p>
+<div class="highlight"><pre><span></span><code><span class="n">lulu</span><span class="o">.</span><span class="n">founded</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="c1">#&gt; ValidationError: 1 validation error for Publisher</span>
+<span class="c1">#&gt; founded</span>
+<span class="c1">#&gt;   ensure this value is greater than 1440</span>
+<span class="c1">#&gt;   (type=value_error.number.not_gt; limit_value=1440)</span>
+</code></pre></div>
+<p>This will raise an exception as it's not matching the model definition. The raised
+exception is actually a <code>ValidationError</code> created by from <a href="https://pydantic-docs.helpmanual.io/usage/models/#error-handling" target="_blank">pydantic</a>.</p>
+<p>To get started on more advanced practices like relations and building more advanced
+queries, you can go to the <a href="./quickstart">Quickstart section</a>.</p>
 <h2 id="license">License</h2>
-<p>This project is licensed under the terms of the <a href="https://en.wikipedia.org/wiki/ISC_license">ISC license</a>.</p>
+<p>This project is licensed under the terms of the <a href="https://en.wikipedia.org/wiki/ISC_license" target="_blank">ISC license</a>.</p>
 </article>
 </div>
 </div>
