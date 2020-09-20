@@ -1,4 +1,5 @@
-from typing import TYPE_CHECKING, Any, Dict, Sequence, Union
+import re
+from typing import TYPE_CHECKING, Any, Dict, Pattern, Sequence, Union
 
 if TYPE_CHECKING:
     from odmantic.fields import FieldProxy
@@ -91,3 +92,13 @@ def exists(field: FieldProxyAny) -> QueryExpression:
 
 def not_exists(field: FieldProxyAny) -> QueryExpression:
     return _cmp_expression(field, "$exists", False)
+
+
+def match(field: FieldProxyAny, pattern: Union[Pattern, str]) -> QueryExpression:
+    # FIXME might create incompatibilities
+    # https://docs.mongodb.com/manual/reference/operator/query/regex/#regex-and-not
+    if isinstance(pattern, str):
+        r = re.compile(pattern)
+    else:
+        r = pattern
+    return QueryExpression({+field: r})

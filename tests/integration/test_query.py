@@ -1,3 +1,4 @@
+import re
 from typing import cast
 
 import pytest
@@ -13,6 +14,7 @@ from odmantic.query import (
     in_,
     lt,
     lte,
+    match,
     ne,
     nor_,
     not_in,
@@ -149,4 +151,23 @@ async def test_lte(engine: AIOEngine):
     assert query == AgedPerson.age.lte(40)  # type: ignore
     assert query == lte(AgedPerson.age, 40)
     count = await engine.count(AgedPerson, query)
+    assert count == 2
+
+
+@pytest.mark.usefixtures("person_persisted")
+async def test_match_pattern_string(engine: AIOEngine):
+    # TODO allow this with a mypy plugin
+    query = PersonModel.first_name.match(r"^Jean-.*")  # type: ignore
+    assert query == match(PersonModel.first_name, "^Jean-.*")
+    count = await engine.count(PersonModel, query)
+    assert count == 2
+
+
+@pytest.mark.usefixtures("person_persisted")
+async def test_match_pattern_compiled(engine: AIOEngine):
+    # TODO allow this with a mypy plugin
+    r = re.compile(r"^Jean-.*")
+    query = PersonModel.first_name.match(r)  # type: ignore
+    assert query == match(PersonModel.first_name, r)
+    count = await engine.count(PersonModel, query)
     assert count == 2

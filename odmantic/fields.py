@@ -1,5 +1,15 @@
 import abc
-from typing import TYPE_CHECKING, Any, Optional, Pattern, Sequence, Set, Type, cast
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Optional,
+    Pattern,
+    Sequence,
+    Set,
+    Type,
+    Union,
+    cast,
+)
 
 from pydantic.fields import Field as PDField
 from pydantic.fields import FieldInfo, Undefined
@@ -13,6 +23,7 @@ from odmantic.query import (
     in_,
     lt,
     lte,
+    match,
     ne,
     not_exists,
     not_in,
@@ -295,7 +306,5 @@ class FieldProxy:
     def not_exists(self) -> QueryExpression:
         return not_exists(self)
 
-    def match(self, pattern: Pattern) -> QueryExpression:
-        # FIXME might create incompatibilities
-        # https://docs.mongodb.com/manual/reference/operator/query/regex/#regex-and-not
-        return QueryExpression({self.key_name: pattern})
+    def match(self, pattern: Union[Pattern, str]) -> QueryExpression:
+        return match(self, pattern)
