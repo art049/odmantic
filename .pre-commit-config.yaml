@@ -12,6 +12,7 @@ repos:
     rev: 1.19.1
     hooks:
       - id: prettier
+        exclude: "^docs/.*"
   - repo: https://github.com/psf/black
     rev: 19.3b0
     hooks:
