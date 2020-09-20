@@ -22,7 +22,8 @@ Additionnaly, most of the types supported by pydantic are supported. See [pydant
 | `int`                  |   `long`   | value not between -2^31 and 2^31 - 1                         |
 | `bson.Int64`           |   `long`   |
 | `float`                |  `double`  |
-| `bson.Decimal128`      | `decimal`  | decimal.Decimal is not supported yet                         |
+| `bson.Decimal128`      | `decimal`  |                         |
+| `decimal.Decimal`      | `decimal`  |
 | `str`                  |  `string`  |
 | `typing.Pattern`       |  `regex`   |
 | `bson.Regex`           |  `regex`   |
