@@ -3,7 +3,7 @@ name = "ODMantic"
 version = "0.0.0b0"
 description = "ODMantic, an AsyncIO MongoDB Object Document Mapper for Python using type hints "
 authors = ["Arthur Pastel <arthur.pastel@gmail.com>"]
-license = "ISC"
+license = "ISC License"
 readme = "README.md"
 repository = "https://github.com/art049/odmantic"
 documentation = "https://art049.github.io/odmantic"
@@ -36,7 +36,8 @@ classifiers = [
 include = ["LICENSE"]
 
 [tool.poetry.dependencies]
-python = ">=3.6 <3.9"
+python = ">=3.6 <4.0"
+importlib-metadata = {version = "^1.0", python = "<3.8"}
 pydantic = "~=1.6.0"
 motor = "~=2.2.0"
 
