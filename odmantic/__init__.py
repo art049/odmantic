@@ -1,7 +1,9 @@
 from .engine import AIOEngine
+from .fields import Field
 from .model import EmbeddedModel, Model
+from .reference import Reference
 
-__all__ = ["AIOEngine", "Model", "EmbeddedModel"]
+__all__ = ["AIOEngine", "Model", "EmbeddedModel", "Field", "Reference"]
 
 # Cleanest way to handle version changes with poetry while not hardcoding the version
 # https://github.com/python-poetry/poetry/pull/2366#issuecomment-652418094
