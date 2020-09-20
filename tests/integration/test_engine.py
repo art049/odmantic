@@ -1,6 +1,7 @@
 from typing import List
 
 import pytest
+from motor.motor_asyncio import AsyncIOMotorClient
 
 from odmantic.engine import AIOEngine
 from odmantic.exceptions import DocumentNotFoundError
@@ -10,6 +11,11 @@ from odmantic.types import _objectId
 from ..zoo.person import PersonModel
 
 pytestmark = pytest.mark.asyncio
+
+
+async def test_default_motor_client_creation():
+    engine = AIOEngine()
+    assert isinstance(engine.client, AsyncIOMotorClient)
 
 
 async def test_save(engine: AIOEngine):
