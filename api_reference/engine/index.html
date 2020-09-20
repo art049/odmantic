@@ -396,6 +396,14 @@ zzz['special']aaa <span class="doc doc-properties">
 <span class="sd">        database: name of the database to use</span>
 
 <span class="sd">    """</span>
+    <span class="c1"># https://docs.mongodb.com/manual/reference/limits/#naming-restrictions</span>
+    <span class="n">forbidden_name_characters</span> <span class="o">=</span> <span class="nb">set</span><span class="p">((</span><span class="s2">"/"</span><span class="p">,</span> <span class="s2">"</span><span class="se">\\</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"."</span><span class="p">,</span> <span class="s1">'"'</span><span class="p">,</span> <span class="s2">"$"</span><span class="p">))</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span>
+        <span class="nb">set</span><span class="p">(</span><span class="n">database</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">forbidden_name_characters</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"database name cannot contain: </span><span class="si">{</span><span class="s1">' '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">forbidden_name_characters</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
+        <span class="p">)</span>
     <span class="k">if</span> <span class="n">motor_client</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">motor_client</span> <span class="o">=</span> <span class="n">AsyncIOMotorClient</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">motor_client</span>
