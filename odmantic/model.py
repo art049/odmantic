@@ -84,10 +84,9 @@ class BaseModelMetaclass(ABCMeta):
         namespace: Dict[str, Any],
         **kwargs: Any,
     ) -> "BaseModelMetaclass":
-        if (namespace.get("__module__"), namespace.get("__qualname__")) != (
-            "odmantic.model",
-            "Model",
-        ):
+        if namespace.get("__module__") != "odmantic.model" and namespace.get(
+            "__qualname__"
+        ) not in ("Model", "EmbeddedModel"):
             annotations = resolve_annotations(
                 namespace.get("__annotations__", {}), namespace.get("__module__")
             )
@@ -124,12 +123,14 @@ class BaseModelMetaclass(ABCMeta):
 
             # Validate fields
             for (field_name, field_type) in annotations.items():
-                if not is_valid_odm_field(field_name) or lenient_issubclass(
-                    field_type, UNTOUCHED_TYPES
+                value = namespace.get(field_name, Undefined)
+
+                if (
+                    not is_valid_odm_field(field_name)
+                    or lenient_issubclass(field_type, UNTOUCHED_TYPES)
+                    or isinstance(value, UNTOUCHED_TYPES)
                 ):
                     continue
-
-                value = namespace.get(field_name, Undefined)
 
                 if isinstance(value, PDFieldInfo):
                     raise TypeError(

@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any, Callable, Optional
 
 import pytest
 from pydantic import Field as PDField
@@ -285,3 +285,13 @@ def test_embedded_model_as_primary_field():
         field: E = Field(primary_field=True)
 
     assert M(field=E(f=1)).doc() == {"_id": {"f": 1}}
+
+
+def test_untouched_types_function():
+    def id_str(self) -> str:
+        return str(self.id)
+
+    class M(Model):
+        id_: Callable = id_str
+
+    assert "id_" not in M.__odm_fields__.keys()
