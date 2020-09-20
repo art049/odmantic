@@ -7,11 +7,16 @@ theme:
   palette:
     primary: light green
     accent: light green
-    scheme: slate
+    scheme: preference
+  icon:
+    logo: material/spa
   features:
     - instant
+extra_css:
+  - css/extra.css
 markdown_extensions:
   - admonition
+  - attr_list
   - codehilite:
       linenums: false
       guess_lang: false
