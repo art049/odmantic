@@ -20,6 +20,5 @@
     "--config-file=${workspaceFolder}/mypy.ini",
     "--no-pretty"
   ],
-  "python.analysis.extraPaths": ["odmantic"],
   "python.languageServer": "Pylance"
 }
