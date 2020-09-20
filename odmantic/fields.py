@@ -1,5 +1,5 @@
 import abc
-from typing import TYPE_CHECKING, Any, Optional, Pattern, Sequence, Set, Type
+from typing import TYPE_CHECKING, Any, Optional, Pattern, Sequence, Set, Type, cast
 
 from pydantic.fields import Field as PDField
 from pydantic.fields import FieldInfo, Undefined
@@ -27,23 +27,23 @@ if TYPE_CHECKING:
 def Field(
     default: Any = Undefined,
     *,
-    key_name: str = None,
+    key_name: Optional[str] = None,
     primary_field: bool = False,
     default_factory: Optional[NoArgAnyCallable] = None,
     # alias: str = None, not supported yet
-    title: str = None,
-    description: str = None,
-    const: bool = None,
-    gt: float = None,
-    ge: float = None,
-    lt: float = None,
-    le: float = None,
-    multiple_of: float = None,
-    min_items: int = None,
-    max_items: int = None,
-    min_length: int = None,
-    max_length: int = None,
-    regex: str = None,
+    title: Optional[str] = None,
+    description: Optional[str] = None,
+    const: Optional[bool] = None,
+    gt: Optional[float] = None,
+    ge: Optional[float] = None,
+    lt: Optional[float] = None,
+    le: Optional[float] = None,
+    multiple_of: Optional[float] = None,
+    min_items: Optional[int] = None,
+    max_items: Optional[int] = None,
+    min_length: Optional[int] = None,
+    max_length: Optional[int] = None,
+    regex: Optional[str] = None,
     **extra: Any,
 ) -> Any:
     """
@@ -83,23 +83,25 @@ def Field(
       expression pattern string. The schema will have a ``pattern`` validation keyword
     :param **extra: any additional keyword arguments will be added as is to the schema
     """
+    # Perform casts on optional fields to avoid incompatibility due to the strict
+    # optional mypy setting
     pydantic_field = PDField(
         default,
         default_factory=default_factory,
         # alias=alias,  # FIXME check aliases compatibility
-        title=title,
-        description=description,
-        const=const,
-        gt=gt,
-        ge=ge,
-        lt=lt,
-        le=le,
-        multiple_of=multiple_of,
-        min_items=min_items,
-        max_items=max_items,
-        min_length=min_length,
-        max_length=max_length,
-        regex=regex,
+        title=cast(str, title),
+        description=cast(str, description),
+        const=cast(bool, const),
+        gt=cast(float, gt),
+        ge=cast(float, ge),
+        lt=cast(float, lt),
+        le=cast(float, le),
+        multiple_of=cast(float, multiple_of),
+        min_items=cast(int, min_items),
+        max_items=cast(int, max_items),
+        min_length=cast(int, min_length),
+        max_length=cast(int, max_length),
+        regex=cast(str, regex),
         **extra,
     )
     if primary_field:
@@ -203,7 +205,7 @@ class FieldProxy:
         self.parent = parent
         self.field = field
 
-    def _get_key_name(self):
+    def _get_key_name(self) -> str:
         parent: Optional[FieldProxy] = object.__getattribute__(self, "parent")
         field: ODMBaseField = object.__getattribute__(self, "field")
 
@@ -241,43 +243,43 @@ class FieldProxy:
             )
         return super().__getattribute__(name)
 
-    def __pos__(self):
-        return object.__getattribute__(self, "_get_key_name")()
+    def __pos__(self) -> str:
+        return cast(str, object.__getattribute__(self, "_get_key_name")())
 
-    def __gt__(self, value):
+    def __gt__(self, value: Any) -> QueryExpression:
         return self.gt(value)
 
-    def gt(self, value) -> QueryExpression:
+    def gt(self, value: Any) -> QueryExpression:
         return gt(self, value)
 
-    def gte(self, value) -> QueryExpression:
+    def gte(self, value: Any) -> QueryExpression:
         return gte(self, value)
 
-    def __ge__(self, value):
+    def __ge__(self, value: Any) -> QueryExpression:
         return self.gte(value)
 
-    def lt(self, value) -> QueryExpression:
+    def lt(self, value: Any) -> QueryExpression:
         return lt(self, value)
 
-    def __lt__(self, value):
+    def __lt__(self, value: Any) -> QueryExpression:
         return self.lt(value)
 
-    def lte(self, value) -> QueryExpression:
+    def lte(self, value: Any) -> QueryExpression:
         return lte(self, value)
 
-    def __le__(self, value):
+    def __le__(self, value: Any) -> QueryExpression:
         return self.lte(value)
 
-    def eq(self, value) -> QueryExpression:
+    def eq(self, value: Any) -> QueryExpression:
         return eq(self, value)
 
-    def __eq__(self, value):
+    def __eq__(self, value: Any) -> QueryExpression:  # type: ignore
         return self.eq(value)
 
-    def ne(self, value) -> QueryExpression:
+    def ne(self, value: Any) -> QueryExpression:
         return ne(self, value)
 
-    def __ne__(self, value):
+    def __ne__(self, value: Any) -> QueryExpression:  # type: ignore
         return self.ne(value)
 
     def in_(self, value: Sequence) -> QueryExpression:
@@ -293,7 +295,7 @@ class FieldProxy:
     def not_exists(self) -> QueryExpression:
         return not_exists(self)
 
-    def match(self, pattern: Pattern):
+    def match(self, pattern: Pattern) -> QueryExpression:
         # FIXME might create incompatibilities
         # https://docs.mongodb.com/manual/reference/operator/query/regex/#regex-and-not
         return QueryExpression({self.key_name: pattern})

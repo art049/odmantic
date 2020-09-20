@@ -1,8 +1,8 @@
 import re
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta
 from datetime import datetime
 from decimal import Decimal
-from typing import Pattern
+from typing import Any, Pattern, cast
 
 from bson import ObjectId as BsonObjectId
 from bson.binary import Binary as BsonBinary
@@ -17,15 +17,17 @@ from pydantic.validators import (
     pattern_validator,
 )
 
+from odmantic.typing import BSON_TYPE
+
 
 class _objectId(BsonObjectId):
     # TODO fix this behavior different from others subst
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls):  # type: ignore
         yield cls.validate
 
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v: Any) -> BsonObjectId:
         if isinstance(v, (BsonObjectId, cls)):
             return v
         if isinstance(v, str) and BsonObjectId.is_valid(v):
@@ -33,17 +35,17 @@ class _objectId(BsonObjectId):
         raise TypeError("ObjectId required")  # Todo change error behavior
 
     @classmethod
-    def __modify_schema__(cls, field_schema):
+    def __modify_schema__(cls, field_schema):  # type: ignore
         field_schema.update(type="ObjectId")
 
 
 class _long:
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls):  # type: ignore
         yield cls.validate
 
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v: Any) -> BsonLong:
         if isinstance(v, BsonLong):
             return v
         a = int_validator(v)  # Todo change error behavior
@@ -52,11 +54,11 @@ class _long:
 
 class _decimal:
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls):  # type: ignore
         yield cls.validate
 
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v: Any) -> BsonDecimal:
         if isinstance(v, BsonDecimal):
             return v
         a = decimal_validator(v)  # Todo change error behavior
@@ -65,11 +67,11 @@ class _decimal:
 
 class _binary:
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls):  # type: ignore
         yield cls.validate
 
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v: Any) -> BsonBinary:
         if isinstance(v, BsonBinary):
             return v
         a = bytes_validator(v)  # Todo change error behavior
@@ -78,11 +80,11 @@ class _binary:
 
 class _regex:
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls):  # type: ignore
         yield cls.validate
 
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v: Any) -> BsonRegex:
         if isinstance(v, BsonRegex):
             return v
         a = pattern_validator(v)  # Todo change error behavior
@@ -91,11 +93,11 @@ class _regex:
 
 class _Pattern:
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls):  # type: ignore
         yield cls.validate
 
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v: Any) -> Pattern:
         if isinstance(v, Pattern):
             return v
         elif isinstance(v, BsonRegex):
@@ -107,11 +109,11 @@ class _Pattern:
 
 class _datetime:
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls):  # type: ignore
         yield cls.validate
 
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v: Any) -> datetime:
         if isinstance(v, datetime):
             d = v
         else:
@@ -126,32 +128,34 @@ class _datetime:
 
 
 class BSONSerializedField(metaclass=ABCMeta):
-    @abstractmethod
-    def to_bson(cls, v):
-        """This should be overridden with a class method"""
+    """Field types with a custom BSON serialization"""
 
-    def __pos__(self):
-        """Only here to help mypy"""
-        # TODO: handle this in a plugin
+    @classmethod
+    def to_bson(cls, v: Any) -> BSON_TYPE:
+        """This should be overridden as a class method"""
+
+    def __pos__(self) -> None:
+        """Only here to help type checkers"""
+        raise RuntimeError("__pos__ method should be called on the FieldProxy object")
 
 
 class _Decimal(BSONSerializedField):
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls):  # type: ignore
         yield cls.validate
 
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v: Any) -> Decimal:
         if isinstance(v, Decimal):
             return v
         elif isinstance(v, BsonDecimal):
-            return v.to_decimal()
+            return cast(Decimal, v.to_decimal())
 
         a = decimal_validator(v)  # Todo change error behavior
         return a
 
     @classmethod
-    def to_bson(cls, v):
+    def to_bson(cls, v: Any) -> BsonDecimal:
         return BsonDecimal(v)
 
 

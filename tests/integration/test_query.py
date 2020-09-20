@@ -1,8 +1,23 @@
+from typing import cast
+
 import pytest
 
 from odmantic import Model
 from odmantic.engine import AIOEngine
-from odmantic.query import and_, eq, gt, gte, in_, lt, lte, ne, nor_, not_in, or_
+from odmantic.query import (
+    QueryExpression,
+    and_,
+    eq,
+    gt,
+    gte,
+    in_,
+    lt,
+    lte,
+    ne,
+    nor_,
+    not_in,
+    or_,
+)
 
 from ..zoo.person import PersonModel
 
@@ -50,7 +65,7 @@ async def test_nor(engine: AIOEngine):
 
 @pytest.mark.usefixtures("person_persisted")
 async def test_eq(engine: AIOEngine):
-    query = PersonModel.first_name == "Michel"
+    query = cast(QueryExpression, PersonModel.first_name == "Michel")
     assert query == eq(PersonModel.first_name, "Michel")
     count = await engine.count(PersonModel, query)
     assert count == 1

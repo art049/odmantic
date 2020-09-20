@@ -1,7 +1,7 @@
 from typing import Any, Optional
 
 
-def Reference(*, key_name: str = None) -> Any:
+def Reference(*, key_name: Optional[str] = None) -> Any:
     return ODMReferenceInfo(key_name=key_name)
 
 

@@ -8,9 +8,9 @@ import pytest
 from bson import Binary, Decimal128, Int64, ObjectId, Regex
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
+from odmantic.bson_fields import BSONSerializedField
 from odmantic.engine import AIOEngine
 from odmantic.model import Model
-from odmantic.types import BSONSerializedField
 
 pytestmark = pytest.mark.asyncio
 
@@ -78,7 +78,7 @@ async def test_bson_type_inference(
     instance = await engine.save(ModelWithTypedField(field=case.sample_value))
     document = await motor_database[ModelWithTypedField.__collection__].find_one(
         {
-            +ModelWithTypedField.id: instance.id,  # type: ignore
+            +ModelWithTypedField.id: instance.id,
             +ModelWithTypedField.field: {"$type": case.bson_type},
         }
     )
@@ -113,7 +113,7 @@ async def test_custom_bson_serializable(
     instance = await engine.save(ModelWithCustomField(field=3.14))
     document = await motor_database[ModelWithCustomField.__collection__].find_one(
         {
-            +ModelWithCustomField.id: instance.id,  # type: ignore
+            +ModelWithCustomField.id: instance.id,
             +ModelWithCustomField.field: {"$type": "string"},
         }
     )

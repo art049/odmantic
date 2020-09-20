@@ -3,10 +3,10 @@ from typing import List
 import pytest
 from motor.motor_asyncio import AsyncIOMotorClient
 
+from odmantic.bson_fields import _objectId
 from odmantic.engine import AIOEngine
 from odmantic.exceptions import DocumentNotFoundError
 from odmantic.model import EmbeddedModel
-from odmantic.types import _objectId
 
 from ..zoo.person import PersonModel
 

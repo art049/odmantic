@@ -1,6 +1,7 @@
 import asyncio
 from asyncio.tasks import gather
 from typing import (
+    AsyncGenerator,
     AsyncIterable,
     Awaitable,
     Dict,
@@ -64,7 +65,7 @@ class AIOCursor(
         self._results = instances
         return instances
 
-    async def __aiter__(self):
+    async def __aiter__(self) -> AsyncGenerator[ModelType, None]:
         if self._results is not None:
             for res in self._results:
                 yield res

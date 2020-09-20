@@ -7,16 +7,15 @@ from typing import (
     ClassVar,
     Dict,
     FrozenSet,
+    Iterable,
     List,
     Optional,
-    Sequence,
     Set,
     Tuple,
     Type,
     TypeVar,
     Union,
     cast,
-    no_type_check,
 )
 
 import pydantic
@@ -28,6 +27,7 @@ from pydantic.tools import parse_obj_as
 from pydantic.typing import resolve_annotations
 from pydantic.utils import lenient_issubclass
 
+from odmantic.bson_fields import _SUBSTITUTION_TYPES, BSONSerializedField, _objectId
 from odmantic.fields import (
     FieldProxy,
     ODMBaseField,
@@ -37,8 +37,6 @@ from odmantic.fields import (
     ODMReference,
 )
 from odmantic.reference import ODMReferenceInfo
-
-from .types import _SUBSTITUTION_TYPES, BSONSerializedField, _objectId
 
 if TYPE_CHECKING:
 
@@ -69,7 +67,7 @@ def to_snake_case(s: str) -> str:
     return re.sub("([a-z0-9])([A-Z])", r"\1_\2", tmp).lower()
 
 
-def find_duplicate_key(fields: Sequence[ODMField]) -> Optional[str]:
+def find_duplicate_key(fields: Iterable[ODMBaseField]) -> Optional[str]:
     seen: Set[str] = set()
     for f in fields:
         if f.key_name in seen:
@@ -79,8 +77,13 @@ def find_duplicate_key(fields: Sequence[ODMField]) -> Optional[str]:
 
 
 class BaseModelMetaclass(ABCMeta):
-    @no_type_check  # noqa C901
-    def __new__(cls, name, bases, namespace, **kwargs):
+    def __new__(  # noqa C901
+        cls,
+        name: str,
+        bases: Tuple[type, ...],
+        namespace: Dict[str, Any],
+        **kwargs: Any,
+    ) -> "BaseModelMetaclass":
         if (namespace.get("__module__"), namespace.get("__qualname__")) != (
             "odmantic.model",
             "Model",
@@ -114,14 +117,14 @@ class BaseModelMetaclass(ABCMeta):
             for (field_name, field_type) in annotations.items():
                 if (
                     is_valid_odm_field(field_name)
-                    and not isinstance(field_type, UNTOUCHED_TYPES)
+                    and not lenient_issubclass(field_type, UNTOUCHED_TYPES)
                     and lenient_issubclass(field_type, BSONSerializedField)
                 ):
                     bson_serialized_fields.add(field_name)
 
             # Validate fields
             for (field_name, field_type) in annotations.items():
-                if not is_valid_odm_field(field_name) or isinstance(
+                if not is_valid_odm_field(field_name) or lenient_issubclass(
                     field_type, UNTOUCHED_TYPES
                 ):
                     continue
@@ -199,13 +202,18 @@ class BaseModelMetaclass(ABCMeta):
             namespace["__references__"] = tuple(references)
             namespace["__bson_serialized_fields__"] = frozenset(bson_serialized_fields)
 
-        return cls
+        return cast("BaseModelMetaclass", super().__new__(cls, name, bases, namespace))
 
 
 class ModelMetaclass(BaseModelMetaclass, pydantic.main.ModelMetaclass):
-    @no_type_check  # noqa C901
-    def __new__(cls, name, bases, namespace, **kwargs):
-        BaseModelMetaclass.__new__(cls, name, bases, namespace, **kwargs)
+    def __new__(  # noqa C901
+        cls,
+        name: str,
+        bases: Tuple[type, ...],
+        namespace: Dict[str, Any],
+        **kwargs: Any,
+    ) -> "ModelMetaclass":
+        super().__new__(cls, name, bases, namespace, **kwargs)
 
         if (namespace.get("__module__"), namespace.get("__qualname__")) != (
             "odmantic.model",
@@ -256,15 +264,21 @@ class ModelMetaclass(BaseModelMetaclass, pydantic.main.ModelMetaclass):
                     " cannot start with 'system.'"
                 )
 
-        return pydantic.main.ModelMetaclass.__new__(
-            cls, name, bases, namespace, **kwargs
+        return cast(
+            "ModelMetaclass",
+            pydantic.main.ModelMetaclass.__new__(cls, name, bases, namespace, **kwargs),
         )
 
 
 class EmbeddedModelMetaclass(BaseModelMetaclass, pydantic.main.ModelMetaclass):
-    @no_type_check
-    def __new__(cls, name, bases, namespace, **kwargs):  # noqa C901
-        BaseModelMetaclass.__new__(cls, name, bases, namespace, **kwargs)
+    def __new__(  # noqa C901
+        cls,
+        name: str,
+        bases: Tuple[type, ...],
+        namespace: Dict[str, Any],
+        **kwargs: Any,
+    ) -> "EmbeddedModelMetaclass":
+        super().__new__(cls, name, bases, namespace, **kwargs)
 
         if (namespace.get("__module__"), namespace.get("__qualname__")) != (
             "odmantic.model",
@@ -278,8 +292,9 @@ class EmbeddedModelMetaclass(BaseModelMetaclass, pydantic.main.ModelMetaclass):
                         f"cannot define a primary field in {name} embedded document"
                     )
 
-        return pydantic.main.ModelMetaclass.__new__(
-            cls, name, bases, namespace, **kwargs
+        return cast(
+            "EmbeddedModelMetaclass",
+            pydantic.main.ModelMetaclass.__new__(cls, name, bases, namespace, **kwargs),
         )
 
 
@@ -300,7 +315,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         validate_all = True
         validate_assignment = True
 
-    def __init_subclass__(cls):
+    def __init_subclass__(cls) -> None:
         # FIXME move this into the metaclass ?
         if cls.__name__ not in ("Model", "EmbeddedModel"):
             for name, field in cls.__odm_fields__.items():
@@ -312,7 +327,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
             # Do not copy the object as done in pydantic
             # This enable to keep the same python object
             return value
-        return cast(TBase, super().validate(value))
+        return super().validate(value)
 
     def __repr_args__(self) -> "ReprArgs":
         # Place the id field first in the repr string
@@ -327,16 +342,16 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
     def copy(
         self: TBase,
         *,
-        include: Union["AbstractSetIntStr", "MappingIntStrAny"] = None,
-        exclude: Union["AbstractSetIntStr", "MappingIntStrAny"] = None,
-        update: "DictStrAny" = None,
+        include: Union[None, "AbstractSetIntStr", "MappingIntStrAny"] = None,
+        exclude: Union[None, "AbstractSetIntStr", "MappingIntStrAny"] = None,
+        update: Optional["DictStrAny"] = None,
         deep: bool = False,
     ) -> TBase:
         """WARNING: Not Implemented"""
         # TODO implement
         raise NotImplementedError
 
-    def __setattr__(self, name, value):
+    def __setattr__(self, name: str, value: Any) -> None:
         super().__setattr__(name, value)
         self.__fields_modified__.add(name)
 
@@ -378,10 +393,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
             else:
                 doc[field_name] = raw_doc[field.key_name]
         instance = cls.parse_obj(doc)
-        return cast(TBase, instance)
-
-
-T = TypeVar("T", bound="Model")
+        return instance
 
 
 class Model(_BaseODMModel, metaclass=ModelMetaclass):
@@ -391,7 +403,7 @@ class Model(_BaseODMModel, metaclass=ModelMetaclass):
 
         id: Union[_objectId, Any]  # TODO fix basic id field typing
 
-    def __init__(__odmantic_self__, **data):
+    def __init__(__odmantic_self__, **data: Any):
         super().__init__(**data)
         # Uses something other than `self` the first arg to allow "self" as a settable
         # attribute
@@ -401,7 +413,7 @@ class Model(_BaseODMModel, metaclass=ModelMetaclass):
             set(__odmantic_self__.__odm_fields__.keys()),
         )
 
-    def __setattr__(self, name, value):
+    def __setattr__(self, name: str, value: Any) -> None:
         if name == self.__primary_key__:
             # TODO implement
             raise NotImplementedError(

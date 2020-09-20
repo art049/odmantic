@@ -1,5 +1,7 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
+default_language_version:
+  python: python3.8
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v2.4.0
@@ -29,6 +31,8 @@ repos:
     rev: v0.782
     hooks:
       - id: mypy
+        additional_dependencies:
+          - pydantic
         args: [--no-pretty]
   - repo: https://gitlab.com/pycqa/flake8.git
     rev: "3.8.3"

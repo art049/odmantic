@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, Sequence, Union, cast
+from typing import TYPE_CHECKING, Any, Dict, Sequence, Union
 
 if TYPE_CHECKING:
     from odmantic.fields import FieldProxy
@@ -11,13 +11,13 @@ class QueryExpression(Dict[str, Any]):
     #         parent_repr = ""
     #     return f"QueryExpression({parent_repr})"
 
-    def __or__(self, other: "QueryExpression"):
+    def __or__(self, other: "QueryExpression") -> "QueryExpression":
         return or_(self, other)
 
-    def __and__(self, other: "QueryExpression"):
+    def __and__(self, other: "QueryExpression") -> "QueryExpression":
         return and_(self, other)
 
-    def __invert__(self):
+    def __invert__(self) -> "QueryExpression":
         return not_(self)
 
 
@@ -38,53 +38,56 @@ def not_(element: Union[QueryExpression, bool]) -> QueryExpression:
     return QueryExpression({"$not": element})
 
 
-def _cmp_expression(f: "FieldProxy", op: str, value: Any) -> QueryExpression:
+def _cmp_expression(f: "FieldProxy", op: str, cmp_value: Any) -> QueryExpression:
 
     # FIXME 🤮🤮🤮🤮🤮🤮🤮🤮🤮🤮🤮🤮🤮🤮🤮🤮
     from odmantic.model import EmbeddedModel
 
-    if isinstance(value, EmbeddedModel):
-        cast_value = cast(EmbeddedModel, value)
-        value = cast_value.doc()
-
+    if isinstance(cmp_value, EmbeddedModel):
+        value = cmp_value.doc()
+    else:
+        value = cmp_value
     return QueryExpression({+f: {op: value}})
 
 
-def eq(field, value) -> QueryExpression:
+FieldProxyAny = Union["FieldProxy", Any]
+
+
+def eq(field: FieldProxyAny, value: Any) -> QueryExpression:
     return _cmp_expression(field, "$eq", value)
 
 
-def ne(field, value) -> QueryExpression:
+def ne(field: FieldProxyAny, value: Any) -> QueryExpression:
     return _cmp_expression(field, "$ne", value)
 
 
-def gt(field, value) -> QueryExpression:
+def gt(field: FieldProxyAny, value: Any) -> QueryExpression:
     return _cmp_expression(field, "$gt", value)
 
 
-def gte(field, value) -> QueryExpression:
+def gte(field: FieldProxyAny, value: Any) -> QueryExpression:
     return _cmp_expression(field, "$gte", value)
 
 
-def lt(field, value) -> QueryExpression:
+def lt(field: FieldProxyAny, value: Any) -> QueryExpression:
     return _cmp_expression(field, "$lt", value)
 
 
-def lte(field, value) -> QueryExpression:
+def lte(field: FieldProxyAny, value: Any) -> QueryExpression:
     return _cmp_expression(field, "$lte", value)
 
 
-def in_(field, value: Sequence) -> QueryExpression:
+def in_(field: FieldProxyAny, value: Sequence) -> QueryExpression:
     return _cmp_expression(field, "$in", value)
 
 
-def not_in(field, value: Sequence) -> QueryExpression:
+def not_in(field: FieldProxyAny, value: Sequence) -> QueryExpression:
     return _cmp_expression(field, "$nin", value)
 
 
-def exists(field) -> QueryExpression:
+def exists(field: FieldProxyAny) -> QueryExpression:
     return _cmp_expression(field, "$exists", True)
 
 
-def not_exists(field) -> QueryExpression:
+def not_exists(field: FieldProxyAny) -> QueryExpression:
     return _cmp_expression(field, "$exists", False)
