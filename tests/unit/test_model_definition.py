@@ -265,8 +265,23 @@ def test_invalid_collection_name_contain_system_dot():
             __collection__ = "system.hi"
 
 
-def test_untouched_fields():
-    class A(Model):
-        __random_private_thing__: int = 3
+def test_embedded_model_key_name():
+    class E(EmbeddedModel):
+        f: int = 3
 
-    assert "my_prop" not in A.__odm_fields__
+    class M(Model):
+        field: E = Field(E(), key_name="hello")
+
+    doc = M().doc()
+    assert "hello" in doc
+    assert doc["hello"] == {"f": 3}
+
+
+def test_embedded_model_as_primary_field():
+    class E(EmbeddedModel):
+        f: int
+
+    class M(Model):
+        field: E = Field(primary_field=True)
+
+    assert M(field=E(f=1)).doc() == {"_id": {"f": 1}}

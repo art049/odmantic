@@ -134,8 +134,18 @@ class BaseModelMetaclass(ABCMeta):
                     )
 
                 if lenient_issubclass(field_type, EmbeddedModel):
+                    if isinstance(value, ODMFieldInfo):
+                        namespace[field_name] = value.pydantic_field_info
+                        key_name = (
+                            value.key_name if value.key_name is not None else field_name
+                        )
+                        primary_field = value.primary_field
+                    else:
+                        key_name = field_name
+                        primary_field = False
+
                     odm_fields[field_name] = ODMEmbedded(
-                        model=field_type, key_name=field_name
+                        primary_field=primary_field, model=field_type, key_name=key_name
                     )
                 elif lenient_issubclass(field_type, Model):
                     if not isinstance(value, ODMReferenceInfo):

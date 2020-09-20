@@ -184,13 +184,15 @@ class ODMReference(ODMBaseField):
         self.model = model
 
 
-class ODMEmbedded(ODMBaseField):
+class ODMEmbedded(ODMField):
 
-    __slots__ = ("model",)
+    __slots__ = "model"
     __allowed_operators__ = set(("eq", "ne", "in_", "not_in", "exists", "not_exists"))
 
-    def __init__(self, key_name: str, model: Type["EmbeddedModel"]):
-        super().__init__(key_name)
+    def __init__(
+        self, primary_field: bool, key_name: str, model: Type["EmbeddedModel"]
+    ):
+        super().__init__(primary_field=primary_field, key_name=key_name)
         self.model = model
 
 
