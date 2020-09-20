@@ -22,6 +22,7 @@ Validate key_name argument
 
 Further Improvements:
   ☐ Self referencing model ?
+  ☐ Support exists not_exists and not query operators
   ☐ Support Documents/EmbeddedDocuments inheritance
   ☐ Enable primary key change (what about instances referencing the current one ?&)
   ☐ Array queries $elemMatch $all $size

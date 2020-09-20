@@ -14,20 +14,7 @@ from typing import (
 from pydantic.fields import Field as PDField
 from pydantic.fields import FieldInfo, Undefined
 
-from odmantic.query import (
-    QueryExpression,
-    eq,
-    exists,
-    gt,
-    gte,
-    in_,
-    lt,
-    lte,
-    match,
-    ne,
-    not_exists,
-    not_in,
-)
+from odmantic.query import QueryExpression, eq, gt, gte, in_, lt, lte, match, ne, not_in
 
 from .typing import NoArgAnyCallable
 
@@ -166,19 +153,7 @@ class ODMField(ODMBaseField):
 
     __slots__ = ("primary_field",)
     __allowed_operators__ = set(
-        (
-            "eq",
-            "ne",
-            "in_",
-            "not_in",
-            "exists",
-            "not_exists",
-            "lt",
-            "lte",
-            "gt",
-            "gte",
-            "match",
-        )
+        ("eq", "ne", "in_", "not_in", "lt", "lte", "gt", "gte", "match")
     )
 
     def __init__(self, *, primary_field: bool, key_name: str):
@@ -190,7 +165,7 @@ class ODMReference(ODMBaseField):
     """Field pointing"""
 
     __slots__ = ("model",)
-    __allowed_operators__ = set(("eq", "ne", "in_", "not_in", "exists", "not_exists"))
+    __allowed_operators__ = set(("eq", "ne", "in_", "not_in"))
 
     def __init__(self, key_name: str, model: Type["Model"]):
         super().__init__(key_name)
@@ -200,7 +175,7 @@ class ODMReference(ODMBaseField):
 class ODMEmbedded(ODMField):
 
     __slots__ = "model"
-    __allowed_operators__ = set(("eq", "ne", "in_", "not_in", "exists", "not_exists"))
+    __allowed_operators__ = set(("eq", "ne", "in_", "not_in"))
 
     def __init__(
         self, primary_field: bool, key_name: str, model: Type["EmbeddedModel"]
@@ -298,13 +273,6 @@ class FieldProxy:
 
     def not_in(self, value: Sequence) -> QueryExpression:
         return not_in(self, value)
-
-    def exists(self) -> QueryExpression:
-        # TODO handle None/null ?
-        return exists(self)
-
-    def not_exists(self) -> QueryExpression:
-        return not_exists(self)
 
     def match(self, pattern: Union[Pattern, str]) -> QueryExpression:
         return match(self, pattern)

@@ -18,9 +18,6 @@ class QueryExpression(Dict[str, Any]):
     def __and__(self, other: "QueryExpression") -> "QueryExpression":
         return and_(self, other)
 
-    def __invert__(self) -> "QueryExpression":
-        return not_(self)
-
 
 def and_(*elements: Union[QueryExpression, bool]) -> QueryExpression:
     return QueryExpression({"$and": elements})
@@ -32,11 +29,6 @@ def or_(*elements: Union[QueryExpression, bool]) -> QueryExpression:
 
 def nor_(*elements: Union[QueryExpression, bool]) -> QueryExpression:
     return QueryExpression({"$nor": elements})
-
-
-def not_(element: Union[QueryExpression, bool]) -> QueryExpression:
-    # TODO clarify usage and test
-    return QueryExpression({"$not": element})
 
 
 def _cmp_expression(f: "FieldProxy", op: str, cmp_value: Any) -> QueryExpression:
@@ -84,14 +76,6 @@ def in_(field: FieldProxyAny, value: Sequence) -> QueryExpression:
 
 def not_in(field: FieldProxyAny, value: Sequence) -> QueryExpression:
     return _cmp_expression(field, "$nin", value)
-
-
-def exists(field: FieldProxyAny) -> QueryExpression:
-    return _cmp_expression(field, "$exists", True)
-
-
-def not_exists(field: FieldProxyAny) -> QueryExpression:
-    return _cmp_expression(field, "$exists", False)
 
 
 def match(field: FieldProxyAny, pattern: Union[Pattern, str]) -> QueryExpression:
