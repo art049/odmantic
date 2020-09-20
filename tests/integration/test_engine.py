@@ -18,6 +18,12 @@ async def test_default_motor_client_creation():
     assert isinstance(engine.client, AsyncIOMotorClient)
 
 
+@pytest.mark.parametrize("illegal_character", ("/", "\\", ".", '"', "$"))
+def test_invalid_database_name(illegal_character: str):
+    with pytest.raises(ValueError, match="database name cannot contain"):
+        AIOEngine(database=f"prefix{illegal_character}suffix")
+
+
 async def test_save(engine: AIOEngine):
     instance = await engine.save(
         PersonModel(first_name="Jean-Pierre", last_name="Pernaud")

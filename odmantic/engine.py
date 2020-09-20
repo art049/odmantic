@@ -78,6 +78,9 @@ class AIOCursor(
         self._results = results
 
 
+_FORBIDDEN_DATABASE_CHARACTERS = set(("/", "\\", ".", '"', "$"))
+
+
 class AIOEngine:
     """
     The AIOEngine object is responsible for handling database operations with MongoDB in
@@ -93,6 +96,14 @@ class AIOEngine:
             database: name of the database to use
 
         """
+        # https://docs.mongodb.com/manual/reference/limits/#naming-restrictions
+        forbidden_characters = _FORBIDDEN_DATABASE_CHARACTERS.intersection(
+            set(database)
+        )
+        if len(forbidden_characters) > 0:
+            raise ValueError(
+                f"database name cannot contain: {' '.join(forbidden_characters)}"
+            )
         if motor_client is None:
             motor_client = AsyncIOMotorClient()
         self.client = motor_client
