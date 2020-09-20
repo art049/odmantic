@@ -445,9 +445,9 @@ next step.</p>
 <p>For the next steps, you'll need to start a local MongoDB server.The easiest way is
 to use docker. Simply run the next command in a terminal (closing the terminal will
 terminate the MongoDB instance and remove the container).</p>
-</blockquote>
 <div class="highlight"><pre><span></span><code>docker run --rm --net<span class="o">=</span>host mongo
 </code></pre></div>
+</blockquote>
 <p>First, let's connect to the database using the engine. In ODMantic, every database
 operation is performed using the engine object.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span>
