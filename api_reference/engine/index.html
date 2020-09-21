@@ -389,6 +389,7 @@ __init__<span class="p">(</span><span class="bp">self</span><span class="p">,</s
 </tr>
 </tbody>
 </table>
+<br/>
 <details class="quote">
 <summary>Source code in <code>odmantic/engine.py</code></summary>
 <div class="highlight">
@@ -400,6 +401,9 @@ __init__<span class="p">(</span><span class="bp">self</span><span class="p">,</s
 <span class="sd">                will be created</span>
 <span class="sd">        database: name of the database to use</span>
 
+<span class="sd">    &lt;!---</span>
+<span class="sd">    #noqa: DAR401 ValueError</span>
+<span class="sd">    --&gt;</span>
 <span class="sd">    """</span>
     <span class="c1"># https://docs.mongodb.com/manual/reference/limits/#naming-restrictions</span>
     <span class="n">forbidden_characters</span> <span class="o">=</span> <span class="n">_FORBIDDEN_DATABASE_CHARACTERS</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span>
@@ -477,6 +481,7 @@ count<span class="p">(</span><span class="bp">self</span><span class="p">,</span
 </tr>
 </tbody>
 </table>
+<br/>
 <details class="quote">
 <summary>Source code in <code>odmantic/engine.py</code></summary>
 <div class="highlight">
@@ -491,6 +496,10 @@ count<span class="p">(</span><span class="bp">self</span><span class="p">,</span
 
 <span class="sd">    Returns:</span>
 <span class="sd">        number of document matching the query</span>
+
+<span class="sd">    &lt;!---</span>
+<span class="sd">    #noqa: DAR401 TypeError</span>
+<span class="sd">    --&gt;</span>
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">lenient_issubclass</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">Model</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Can only call count with a Model class"</span><span class="p">)</span>
@@ -646,6 +655,7 @@ find<span class="p">(</span><span class="bp">self</span><span class="p">,</span>
 </tr>
 </tbody>
 </table>
+<br/>
 <details class="quote">
 <summary>Source code in <code>odmantic/engine.py</code></summary>
 <div class="highlight">
@@ -670,6 +680,11 @@ find<span class="p">(</span><span class="bp">self</span><span class="p">,</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        [odmantic.engine.AIOCursor][] of the query</span>
+
+<span class="sd">    &lt;!---</span>
+<span class="sd">    #noqa: DAR401 ValueError</span>
+<span class="sd">    #noqa: DAR401 TypeError</span>
+<span class="sd">    --&gt;</span>
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">lenient_issubclass</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">Model</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Can only call find with a Model class"</span><span class="p">)</span>
@@ -750,6 +765,7 @@ find_one<span class="p">(</span><span class="bp">self</span><span class="p">,</s
 </tr>
 </tbody>
 </table>
+<br/>
 <details class="quote">
 <summary>Source code in <code>odmantic/engine.py</code></summary>
 <div class="highlight">
@@ -768,6 +784,10 @@ find_one<span class="p">(</span><span class="bp">self</span><span class="p">,</s
 
 <span class="sd">    Returns:</span>
 <span class="sd">        the fetched instance if found otherwise None</span>
+
+<span class="sd">    &lt;!---</span>
+<span class="sd">    #noqa: DAR401 TypeError</span>
+<span class="sd">    --&gt;</span>
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">lenient_issubclass</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">Model</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Can only call find_one with a Model class"</span><span class="p">)</span>
@@ -858,6 +878,10 @@ the instance is still returned for convenience.</p>
 <span class="sd">    NOTE:</span>
 <span class="sd">        The save operation actually modify the instance argument in place. However,</span>
 <span class="sd">        the instance is still returned for convenience.</span>
+
+<span class="sd">    &lt;!---</span>
+<span class="sd">    #noqa: DAR401 TypeError</span>
+<span class="sd">    --&gt;</span>
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">Model</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Can only call find_one with a Model class"</span><span class="p">)</span>
