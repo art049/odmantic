@@ -357,9 +357,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         self.__fields_modified__.add(name)
 
     def doc(self, include: Optional["AbstractSetIntStr"] = None) -> Dict[str, Any]:
-        """
-        Generate a document representation of the instance (as a dictionary)
-        """
+        """Generate a document representation of the instance (as a dictionary)."""
         raw_doc = self.dict()
         doc: Dict[str, Any] = {}
         for field_name, field in self.__odm_fields__.items():
@@ -381,8 +379,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         """Parse a BSON document into an instance of the Model
 
         Args:
-            cls (Type[TBase]): [description]
-            raw_doc (Dict): [description]
+            raw_doc: document to parse (as Dict)
 
         Returns:
             TBase: [description]

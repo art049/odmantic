@@ -4,3 +4,8 @@ max-complexity = 10
 ignore =
     E203, # See https://github.com/PyCQA/pycodestyle/issues/373
     W503
+
+# darglint
+# Allow one line docstrings without arg spec
+strictness=short
+docstring_style=google

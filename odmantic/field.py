@@ -44,8 +44,7 @@ def Field(
     regex: Optional[str] = None,
     **extra: Any,
 ) -> Any:
-    """
-    Used to provide extra information about a field, either for the model schema or
+    """Used to provide extra information about a field, either for the model schema or
     complex validation. Some arguments apply only to number fields (``int``, ``float``,
      ``Decimal``) and some apply only to ``str``.
 
@@ -80,6 +79,13 @@ def Field(
     :param regex: only applies to strings, requires the field match agains a regular
       expression pattern string. The schema will have a ``pattern`` validation keyword
     :param **extra: any additional keyword arguments will be added as is to the schema
+
+
+    <!---
+    # noqa: DAR101
+    # noqa: DAR201
+    # noqa: DAR401
+    -->
     """
     # Perform casts on optional fields to avoid incompatibility due to the strict
     # optional mypy setting
@@ -123,7 +129,7 @@ def Field(
 
 
 class ODMFieldInfo:
-    """Extra data for an ODM field"""
+    """Extra data for an ODM field."""
 
     __slots__ = ("pydantic_field_info", "primary_field", "key_name")
 
@@ -149,7 +155,7 @@ class ODMBaseField(metaclass=abc.ABCMeta):
 
 
 class ODMField(ODMBaseField):
-    """Used to interact with the ODM model class"""
+    """Used to interact with the ODM model class."""
 
     __slots__ = ("primary_field",)
     __allowed_operators__ = set(
@@ -162,7 +168,7 @@ class ODMField(ODMBaseField):
 
 
 class ODMReference(ODMBaseField):
-    """Field pointing"""
+    """Field pointing on a referenced model."""
 
     __slots__ = ("model",)
     __allowed_operators__ = set(("eq", "ne", "in_", "not_in"))

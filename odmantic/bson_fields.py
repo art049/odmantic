@@ -135,9 +135,9 @@ class BSONSerializedField(metaclass=ABCMeta):
 
 
 class _Decimal(BSONSerializedField):
-    """
-    This specific BSON substitution field helps to handle the support of standard python
-     Decimal objects
+    """This specific BSON substitution field helps to handle the support of standard
+    python Decimal objects
+
     https://api.mongodb.com/python/current/faq.html?highlight=decimal#how-can-i-store-decimal-decimal-instances
     """
 

@@ -7,7 +7,7 @@ ModelType = TypeVar("ModelType")
 
 
 class BaseEngineException(Exception, metaclass=ABCMeta):
-    """Base Exception raised by the engine while operating on a model"""
+    """Base Exception raised by the engine while operating on a model."""
 
     def __init__(self, message: str, model: Type[Model]):
         self.model: Type[Model] = model
@@ -15,7 +15,7 @@ class BaseEngineException(Exception, metaclass=ABCMeta):
 
 
 class DocumentNotFoundError(BaseEngineException):
-    """The targetted document has not been found by the engine
+    """The targetted document has not been found by the engine.
 
     Attributes:
       instance: the instance that has not been found

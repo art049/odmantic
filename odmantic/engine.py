@@ -35,8 +35,7 @@ ModelType = TypeVar("ModelType", bound=Model)
 class AIOCursor(
     Generic[ModelType], AsyncIterable[ModelType], Awaitable[List[ModelType]]
 ):
-    """
-    This object has to be built from the [odmantic.engine.AIOEngine.find][] method.
+    """This object has to be built from the [odmantic.engine.AIOEngine.find][] method.
 
     An AIOCursor object support multiple async operations:
 
@@ -82,19 +81,21 @@ _FORBIDDEN_DATABASE_CHARACTERS = set(("/", "\\", ".", '"', "$"))
 
 
 class AIOEngine:
-    """
-    The AIOEngine object is responsible for handling database operations with MongoDB in
-    an asynchronous way using motor.
+    """The AIOEngine object is responsible for handling database operations with MongoDB
+    in an asynchronous way using motor.
     """
 
     def __init__(self, motor_client: AsyncIOMotorClient = None, database: str = "test"):
-        """
-        Args:
+        """Engine constructor.
 
+        Args:
             motor_client: instance of an AsyncIO motor client. If None, a default one
                     will be created
             database: name of the database to use
 
+        <!---
+        #noqa: DAR401 ValueError
+        -->
         """
         # https://docs.mongodb.com/manual/reference/limits/#naming-restrictions
         forbidden_characters = _FORBIDDEN_DATABASE_CHARACTERS.intersection(
@@ -117,7 +118,7 @@ class AIOEngine:
     def _cascade_find_pipeline(
         model: Type[ModelType], doc_namespace: str = ""
     ) -> List[Dict]:
-        """Recursively build the find pipeline for model"""
+        """Recursively build the find pipeline for model."""
         pipeline: List[Dict] = []
         for ref_field_name in model.__references__:
             odm_reference = cast(ODMReference, model.__odm_fields__[ref_field_name])
@@ -162,6 +163,11 @@ class AIOEngine:
 
         Returns:
             [odmantic.engine.AIOCursor][] of the query
+
+        <!---
+        #noqa: DAR401 ValueError
+        #noqa: DAR401 TypeError
+        -->
         """
         if not lenient_issubclass(model, Model):
             raise TypeError("Can only call find with a Model class")
@@ -195,6 +201,10 @@ class AIOEngine:
 
         Returns:
             the fetched instance if found otherwise None
+
+        <!---
+        #noqa: DAR401 TypeError
+        -->
         """
         if not lenient_issubclass(model, Model):
             raise TypeError("Can only call find_one with a Model class")
@@ -206,9 +216,7 @@ class AIOEngine:
     async def _save(
         self, instance: ModelType, session: AsyncIOMotorClientSession
     ) -> ModelType:
-        """
-        Perform an atomic save operation in the specified session
-        """
+        """Perform an atomic save operation in the specified session"""
         save_tasks = []
         for ref_field_name in instance.__references__:
             sub_instance = cast(Model, getattr(instance, ref_field_name))
@@ -230,8 +238,7 @@ class AIOEngine:
         return instance
 
     async def save(self, instance: ModelType) -> ModelType:
-        """
-        Persist an instance to the database
+        """Persist an instance to the database
 
         This method behaves as an 'upsert' operation. If a document already exists
         with the same primary key, it will be overwritten.
@@ -247,6 +254,10 @@ class AIOEngine:
         NOTE:
             The save operation actually modify the instance argument in place. However,
             the instance is still returned for convenience.
+
+        <!---
+        #noqa: DAR401 TypeError
+        -->
         """
         if not isinstance(instance, Model):
             raise TypeError("Can only call find_one with a Model class")
@@ -258,8 +269,7 @@ class AIOEngine:
         return instance
 
     async def save_all(self, instances: Sequence[ModelType]) -> List[ModelType]:
-        """
-        Persist instances to the database
+        """Persist instances to the database
 
         This method behaves as multiple 'upsert' operations. If one of the document
         already exists with the same primary key, it will be overwritten.
@@ -313,6 +323,10 @@ class AIOEngine:
 
         Returns:
             number of document matching the query
+
+        <!---
+        #noqa: DAR401 TypeError
+        -->
         """
         if not lenient_issubclass(model, Model):
             raise TypeError("Can only call count with a Model class")

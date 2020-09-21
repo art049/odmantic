@@ -6,7 +6,7 @@ def Reference(*, key_name: Optional[str] = None) -> Any:
 
 
 class ODMReferenceInfo:
-    """Extra data for an ODM reference"""
+    """Extra data for an ODM reference."""
 
     __slots__ = ("key_name",)
 
