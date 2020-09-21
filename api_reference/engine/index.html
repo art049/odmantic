@@ -344,8 +344,8 @@
 <code>odmantic.engine.AIOEngine</code>
 <a class="headerlink" href="#odmantic.engine.AIOEngine" title="Permanent link">¶</a></h2>
 <div class="doc doc-contents first">
-<p>The AIOEngine object is responsible for handling database operations with MongoDB in
-an asynchronous way using motor.</p>
+<p>The AIOEngine object is responsible for handling database operations with MongoDB
+in an asynchronous way using motor.</p>
 <div class="doc doc-children">
 <div class="doc doc-object doc-method">
 <h3 class="doc doc-heading" id="odmantic.engine.AIOEngine.__init__">
@@ -358,6 +358,7 @@ __init__<span class="p">(</span><span class="bp">self</span><span class="p">,</s
 </span>
 <a class="headerlink" href="#odmantic.engine.AIOEngine.__init__" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
+<p>Engine constructor.</p>
 <p><strong>Parameters:</strong></p>
 <table>
 <thead>
@@ -392,9 +393,9 @@ __init__<span class="p">(</span><span class="bp">self</span><span class="p">,</s
 <summary>Source code in <code>odmantic/engine.py</code></summary>
 <div class="highlight">
 <pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">motor_client</span><span class="p">:</span> <span class="n">AsyncIOMotorClient</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">database</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"test"</span><span class="p">):</span>
-    <span class="sd">"""</span>
-<span class="sd">    Args:</span>
+    <span class="sd">"""Engine constructor.</span>
 
+<span class="sd">    Args:</span>
 <span class="sd">        motor_client: instance of an AsyncIO motor client. If None, a default one</span>
 <span class="sd">                will be created</span>
 <span class="sd">        database: name of the database to use</span>
@@ -841,8 +842,7 @@ the instance is still returned for convenience.</p>
 <summary>Source code in <code>odmantic/engine.py</code></summary>
 <div class="highlight">
 <pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">:</span> <span class="n">ModelType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModelType</span><span class="p">:</span>
-    <span class="sd">"""</span>
-<span class="sd">    Persist an instance to the database</span>
+    <span class="sd">"""Persist an instance to the database</span>
 
 <span class="sd">    This method behaves as an 'upsert' operation. If a document already exists</span>
 <span class="sd">    with the same primary key, it will be overwritten.</span>
@@ -935,8 +935,7 @@ instances are still returned for convenience.</p>
 <summary>Source code in <code>odmantic/engine.py</code></summary>
 <div class="highlight">
 <pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">save_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instances</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">ModelType</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ModelType</span><span class="p">]:</span>
-    <span class="sd">"""</span>
-<span class="sd">    Persist instances to the database</span>
+    <span class="sd">"""Persist instances to the database</span>
 
 <span class="sd">    This method behaves as multiple 'upsert' operations. If one of the document</span>
 <span class="sd">    already exists with the same primary key, it will be overwritten.</span>
