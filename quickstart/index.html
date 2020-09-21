@@ -336,17 +336,30 @@
 <h3 id="persisting-an-instance">Persisting an instance<a class="headerlink" href="#persisting-an-instance" title="Permanent link">¶</a></h3>
 <div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><label for="__tabbed_1_1">save</label><div class="tabbed-content"></div>
 </input></div>
-<p><code>python await engine.save(Person(first_name="Freddie", last_name="Mercury")) await engine.save(Person(first_name="Robert", last_name="Miles"))</code></p>
+<div class="highlight"><pre><span></span><code><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">Person</span><span class="p">(</span><span class="n">first_name</span><span class="o">=</span><span class="s2">"Freddie"</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="s2">"Mercury"</span><span class="p">))</span>
+<span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">Person</span><span class="p">(</span><span class="n">first_name</span><span class="o">=</span><span class="s2">"Robert"</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="s2">"Miles"</span><span class="p">))</span><span class="err">`</span>
+</code></pre></div>
 <div class="tabbed-set" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><label for="__tabbed_2_1">save_all</label><div class="tabbed-content"></div>
 </input></div>
-<p><code>python await engine.save_all([ Person(first_name="Freddie", last_name="Mercury"), Person(first_name="Robert", last_name="Miles") ])</code></p>
+<div class="highlight"><pre><span></span><code><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save_all</span><span class="p">([</span>
+    <span class="n">Person</span><span class="p">(</span><span class="n">first_name</span><span class="o">=</span><span class="s2">"Freddie"</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="s2">"Mercury"</span><span class="p">),</span>
+    <span class="n">Person</span><span class="p">(</span><span class="n">first_name</span><span class="o">=</span><span class="s2">"Robert"</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="s2">"Miles"</span><span class="p">)</span>
+<span class="p">])</span>
+</code></pre></div>
 <h2 id="querying-instances">Querying instances<a class="headerlink" href="#querying-instances" title="Permanent link">¶</a></h2>
 <div class="tabbed-set" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><label for="__tabbed_3_1">async for</label><div class="tabbed-content"></div>
 </input></div>
-<p><code>python cursor = engine.find(Person, Person.first_name == "Freddie") async for freddie in cursor: print(freddie) #&gt; Person(first_name="Freddie", last_name="Mercury")</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">cursor</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">Person</span><span class="p">,</span> <span class="n">Person</span><span class="o">.</span><span class="n">first_name</span> <span class="o">==</span> <span class="s2">"Freddie"</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">for</span> <span class="n">freddie</span> <span class="ow">in</span> <span class="n">cursor</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">freddie</span><span class="p">)</span>
+<span class="c1">#&gt; Person(first_name="Freddie", last_name="Mercury")`</span>
+</code></pre></div>
 <div class="tabbed-set" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio"><label for="__tabbed_4_1">await</label><div class="tabbed-content"></div>
 </input></div>
-<p><code>python freddies = await engine.find(Person, Person.first_name == "Freddie") print(freddies) #&gt; [Person(first_name="Freddie", last_name="Mercury")]</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">freddies</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">Person</span><span class="p">,</span> <span class="n">Person</span><span class="o">.</span><span class="n">first_name</span> <span class="o">==</span> <span class="s2">"Freddie"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">freddies</span><span class="p">)</span>
+<span class="c1">#&gt; [Person(first_name="Freddie", last_name="Mercury")]`</span>
+</code></pre></div>
 </article>
 </div>
 </div>
