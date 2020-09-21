@@ -1,13 +1,9 @@
-zzz{{ properties }}aaa {% if properties or async %}
+{% if properties %}
 <span class="doc doc-properties">
-  {% for property in properties %}
+  {% for property in properties %} {% if property != "pydantic-model" %}
   <small class="doc doc-property doc-property-{{ property }}">
     <code>{{ property }}</code>
   </small>
-  {% endfor %} {% if async %}
-  <small class="doc doc-property doc-property-async">
-    <code>async</code>
-  </small>
-  {% endif %}
+  {% endif %} {% endfor %}
 </span>
 {% endif %}

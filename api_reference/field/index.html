@@ -23,6 +23,9 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
+<a class="md-skip" href="#odmantic.field.Field">
+          Skip to content
+        </a>
 </div>
 <div data-md-component="announce">
 </div>
@@ -172,11 +175,33 @@
       Engine
     </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../query/" title="Query">
+      Query
+    </a>
+</li>
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+        Field
+        <span class="md-nav__icon md-icon"></span>
+</label>
 <a class="md-nav__link md-nav__link--active" href="./" title="Field">
       Field
     </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#odmantic.field.Field">
+    Field()
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../reference/" title="Reference">
@@ -201,12 +226,176 @@
 </div>
 </div>
 </div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#odmantic.field.Field">
+    Field()
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
 <div class="md-content">
 <article class="md-content__inner md-typeset">
 <a class="md-content__button md-icon" href="https://github.com/art049/odmantic/edit/master/docs/api_reference/field.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
 <h1>Field</h1>
+<div class="doc doc-object doc-function">
+<h2 class="doc doc-heading" id="odmantic.field.Field">
+<code class="highlight language-python">
+odmantic.field.Field<span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">PydanticUndefined</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">key_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">primary_field</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default_factory</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ge</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">le</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">multiple_of</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">min_items</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_items</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">min_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">extra</span><span class="p">)</span> </code>
+<a class="headerlink" href="#odmantic.field.Field" title="Permanent link">¶</a></h2>
+<div class="doc doc-contents first">
+<p>Used to provide extra information about a field, either for the model schema or
+complex validation. Some arguments apply only to number fields (<code>int</code>, <code>float</code>,
+ <code>Decimal</code>) and some apply only to <code>str</code>.</p>
+<p>:param default: since this is replacing the field’s default, its first argument is
+  used to set the default, use ellipsis (<code>...</code>) to indicate the field has no
+  default value
+:param key_name: the name to use in the the document structure
+:param primary_field: this field should be considered as a primary key.
+  Can't be used along with <code>key_name</code> since the key_name will be set to <code>_id</code></p>
+<p>:param default_factory: callable that will be called when a default value is needed
+  for this field.
+  If both <code>default</code> and <code>default_factory</code> are set, an error is raised.
+:param alias: Not supported by odmantic yet (the public name of the field)
+:param title: can be any string, used in the schema
+:param description: can be any string, used in the schema
+:param const: this field is required and <em>must</em> take it's default value
+:param gt: only applies to numbers, requires the field to be "greater than". The
+  schema will have an <code>exclusiveMinimum</code> validation keyword
+:param ge: only applies to numbers, requires the field to be "greater than or equal
+  to". The schema will have a <code>minimum</code> validation keyword
+:param lt: only applies to numbers, requires the field to be "less than". The schema
+  will have an <code>exclusiveMaximum</code> validation keyword
+:param le: only applies to numbers, requires the field to be "less than or equal to"
+  . The schema will have a <code>maximum</code> validation keyword
+:param multiple_of: only applies to numbers, requires the field to be "a multiple of
+  ". The schema will have a <code>multipleOf</code> validation keyword
+:param min_length: only applies to strings, requires the field to have a minimum
+  length. The schema will have a <code>maximum</code> validation keyword
+:param max_length: only applies to strings, requires the field to have a maximum
+  length. The schema will have a <code>maxLength</code> validation keyword
+:param regex: only applies to strings, requires the field match agains a regular
+  expression pattern string. The schema will have a <code>pattern</code> validation keyword
+:param **extra: any additional keyword arguments will be added as is to the schema</p>
+<details class="quote">
+<summary>Source code in <code>odmantic/field.py</code></summary>
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">Field</span><span class="p">(</span>
+    <span class="n">default</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="n">Undefined</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">key_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">primary_field</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">default_factory</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NoArgAnyCallable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="c1"># alias: str = None, not supported yet</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">const</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">gt</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">ge</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">lt</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">le</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">multiple_of</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">min_items</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">max_items</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">min_length</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">max_length</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">regex</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">extra</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="sd">"""</span>
+<span class="sd">    Used to provide extra information about a field, either for the model schema or</span>
+<span class="sd">    complex validation. Some arguments apply only to number fields (``int``, ``float``,</span>
+<span class="sd">     ``Decimal``) and some apply only to ``str``.</span>
+
+<span class="sd">    :param default: since this is replacing the field’s default, its first argument is</span>
+<span class="sd">      used to set the default, use ellipsis (``...``) to indicate the field has no</span>
+<span class="sd">      default value</span>
+<span class="sd">    :param key_name: the name to use in the the document structure</span>
+<span class="sd">    :param primary_field: this field should be considered as a primary key.</span>
+<span class="sd">      Can't be used along with `key_name` since the key_name will be set to `_id`</span>
+
+<span class="sd">    :param default_factory: callable that will be called when a default value is needed</span>
+<span class="sd">      for this field.</span>
+<span class="sd">      If both `default` and `default_factory` are set, an error is raised.</span>
+<span class="sd">    :param alias: Not supported by odmantic yet (the public name of the field)</span>
+<span class="sd">    :param title: can be any string, used in the schema</span>
+<span class="sd">    :param description: can be any string, used in the schema</span>
+<span class="sd">    :param const: this field is required and *must* take it's default value</span>
+<span class="sd">    :param gt: only applies to numbers, requires the field to be "greater than". The</span>
+<span class="sd">      schema will have an ``exclusiveMinimum`` validation keyword</span>
+<span class="sd">    :param ge: only applies to numbers, requires the field to be "greater than or equal</span>
+<span class="sd">      to". The schema will have a ``minimum`` validation keyword</span>
+<span class="sd">    :param lt: only applies to numbers, requires the field to be "less than". The schema</span>
+<span class="sd">      will have an ``exclusiveMaximum`` validation keyword</span>
+<span class="sd">    :param le: only applies to numbers, requires the field to be "less than or equal to"</span>
+<span class="sd">      . The schema will have a ``maximum`` validation keyword</span>
+<span class="sd">    :param multiple_of: only applies to numbers, requires the field to be "a multiple of</span>
+<span class="sd">      ". The schema will have a ``multipleOf`` validation keyword</span>
+<span class="sd">    :param min_length: only applies to strings, requires the field to have a minimum</span>
+<span class="sd">      length. The schema will have a ``maximum`` validation keyword</span>
+<span class="sd">    :param max_length: only applies to strings, requires the field to have a maximum</span>
+<span class="sd">      length. The schema will have a ``maxLength`` validation keyword</span>
+<span class="sd">    :param regex: only applies to strings, requires the field match agains a regular</span>
+<span class="sd">      expression pattern string. The schema will have a ``pattern`` validation keyword</span>
+<span class="sd">    :param **extra: any additional keyword arguments will be added as is to the schema</span>
+<span class="sd">    """</span>
+    <span class="c1"># Perform casts on optional fields to avoid incompatibility due to the strict</span>
+    <span class="c1"># optional mypy setting</span>
+    <span class="n">pydantic_field</span> <span class="o">=</span> <span class="n">PDField</span><span class="p">(</span>
+        <span class="n">default</span><span class="p">,</span>
+        <span class="n">default_factory</span><span class="o">=</span><span class="n">default_factory</span><span class="p">,</span>
+        <span class="c1"># alias=alias,  # FIXME check aliases compatibility</span>
+        <span class="n">title</span><span class="o">=</span><span class="n">cast</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">title</span><span class="p">),</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">cast</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">description</span><span class="p">),</span>
+        <span class="n">const</span><span class="o">=</span><span class="n">cast</span><span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="n">const</span><span class="p">),</span>
+        <span class="n">gt</span><span class="o">=</span><span class="n">cast</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">gt</span><span class="p">),</span>
+        <span class="n">ge</span><span class="o">=</span><span class="n">cast</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">ge</span><span class="p">),</span>
+        <span class="n">lt</span><span class="o">=</span><span class="n">cast</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">lt</span><span class="p">),</span>
+        <span class="n">le</span><span class="o">=</span><span class="n">cast</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">le</span><span class="p">),</span>
+        <span class="n">multiple_of</span><span class="o">=</span><span class="n">cast</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">multiple_of</span><span class="p">),</span>
+        <span class="n">min_items</span><span class="o">=</span><span class="n">cast</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">min_items</span><span class="p">),</span>
+        <span class="n">max_items</span><span class="o">=</span><span class="n">cast</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">max_items</span><span class="p">),</span>
+        <span class="n">min_length</span><span class="o">=</span><span class="n">cast</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">min_length</span><span class="p">),</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="n">cast</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">max_length</span><span class="p">),</span>
+        <span class="n">regex</span><span class="o">=</span><span class="n">cast</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">regex</span><span class="p">),</span>
+        <span class="o">**</span><span class="n">extra</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">primary_field</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">key_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">key_name</span> <span class="o">!=</span> <span class="s2">"_id"</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">"cannot specify a primary field with a custom key_name,"</span>
+                <span class="s2">"key_name='_id' enforced"</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">key_name</span> <span class="o">=</span> <span class="s2">"_id"</span>
+    <span class="k">elif</span> <span class="n">key_name</span> <span class="o">==</span> <span class="s2">"_id"</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">"cannot specify key_name='_id' without defining the field as primary"</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ODMFieldInfo</span><span class="p">(</span>
+        <span class="n">pydantic_field_info</span><span class="o">=</span><span class="n">pydantic_field</span><span class="p">,</span>
+        <span class="n">primary_field</span><span class="o">=</span><span class="n">primary_field</span><span class="p">,</span>
+        <span class="n">key_name</span><span class="o">=</span><span class="n">key_name</span><span class="p">,</span>
+    <span class="p">)</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
 </article>
 </div>
 </div>
@@ -214,7 +403,7 @@
 <footer class="md-footer">
 <div class="md-footer-nav">
 <nav aria-label="Footer" class="md-footer-nav__inner md-grid">
-<a class="md-footer-nav__link md-footer-nav__link--prev" href="../engine/" rel="prev" title="Engine">
+<a class="md-footer-nav__link md-footer-nav__link--prev" href="../query/" rel="prev" title="Query">
 <div class="md-footer-nav__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
 </div>
@@ -223,7 +412,7 @@
 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Engine
+                Query
               </div>
 </div>
 </a>

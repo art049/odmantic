@@ -238,6 +238,11 @@
 </nav>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="../query/" title="Query">
+      Query
+    </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="../field/" title="Field">
       Field
     </a>
@@ -337,9 +342,7 @@
 <div class="doc doc-object doc-class">
 <h2 class="doc doc-heading" id="odmantic.engine.AIOEngine">
 <code>odmantic.engine.AIOEngine</code>
-
-zzz[]aaa 
-      </h2>
+<a class="headerlink" href="#odmantic.engine.AIOEngine" title="Permanent link">¶</a></h2>
 <div class="doc doc-contents first">
 <p>The AIOEngine object is responsible for handling database operations with MongoDB in
 an asynchronous way using motor.</p>
@@ -347,15 +350,13 @@ an asynchronous way using motor.</p>
 <div class="doc doc-object doc-method">
 <h3 class="doc doc-heading" id="odmantic.engine.AIOEngine.__init__">
 <code class="highlight language-python">
-          
-__init__<span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">motor_client</span><span class="p">:</span><span class="n">AsyncIOMotorClient</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">database</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s1">'test'</span><span class="p">)</span> </code>
-        False
-zzz['special']aaa <span class="doc doc-properties">
+__init__<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">motor_client</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="s1">'test'</span><span class="p">)</span> </code>
+<span class="doc doc-properties">
 <small class="doc doc-property doc-property-special">
 <code>special</code>
 </small>
 </span>
-</h3>
+<a class="headerlink" href="#odmantic.engine.AIOEngine.__init__" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p><strong>Parameters:</strong></p>
 <table>
@@ -372,7 +373,8 @@ zzz['special']aaa <span class="doc doc-properties">
 <td><code>motor_client</code></td>
 <td><code>AsyncIOMotorClient</code></td>
 <td>
-<p>instance of an AsyncIO motor client. If None, a default one</p>
+<p>instance of an AsyncIO motor client. If None, a default one
+    will be created</p>
 </td>
 <td><code>None</code></td>
 </tr>
@@ -392,9 +394,9 @@ zzz['special']aaa <span class="doc doc-properties">
 <pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">motor_client</span><span class="p">:</span> <span class="n">AsyncIOMotorClient</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">database</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"test"</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Args:</span>
-<span class="sd">        motor_client: instance of an AsyncIO motor client. If None, a default one</span>
-<span class="sd">        will be created</span>
 
+<span class="sd">        motor_client: instance of an AsyncIO motor client. If None, a default one</span>
+<span class="sd">                will be created</span>
 <span class="sd">        database: name of the database to use</span>
 
 <span class="sd">    """</span>
@@ -419,11 +421,13 @@ zzz['special']aaa <span class="doc doc-properties">
 <div class="doc doc-object doc-method">
 <h3 class="doc doc-heading" id="odmantic.engine.AIOEngine.count">
 <code class="highlight language-python">
-          
-count<span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">model</span><span class="p">:</span><span class="n">Type</span><span class="p">[</span><span class="o">~</span><span class="n">ModelType</span><span class="p">],</span><span class="n">query</span><span class="p">:</span><span class="n">Union</span><span class="p">[</span><span class="n">odmantic</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">QueryExpression</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="p">{})</span> </code>
-        False
-zzz[]aaa 
-      </h3>
+count<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="p">{})</span> </code>
+<span class="doc doc-properties">
+<small class="doc doc-property doc-property-async">
+<code>async</code>
+</small>
+</span>
+<a class="headerlink" href="#odmantic.engine.AIOEngine.count" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Get the count of documents matching a query</p>
 <p><strong>Parameters:</strong></p>
@@ -500,11 +504,13 @@ zzz[]aaa
 <div class="doc doc-object doc-method">
 <h3 class="doc doc-heading" id="odmantic.engine.AIOEngine.delete">
 <code class="highlight language-python">
-          
-delete<span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">instance</span><span class="p">:</span><span class="o">~</span><span class="n">ModelType</span><span class="p">)</span> </code>
-        False
-zzz[]aaa 
-      </h3>
+delete<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">)</span> </code>
+<span class="doc doc-properties">
+<small class="doc doc-property doc-property-async">
+<code>async</code>
+</small>
+</span>
+<a class="headerlink" href="#odmantic.engine.AIOEngine.delete" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Delete an instance from the database</p>
 <p><strong>Parameters:</strong></p>
@@ -573,11 +579,8 @@ zzz[]aaa
 <div class="doc doc-object doc-method">
 <h3 class="doc doc-heading" id="odmantic.engine.AIOEngine.find">
 <code class="highlight language-python">
-          
-find<span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">model</span><span class="p">:</span><span class="n">Type</span><span class="p">[</span><span class="o">~</span><span class="n">ModelType</span><span class="p">],</span><span class="n">query</span><span class="p">:</span><span class="n">Union</span><span class="p">[</span><span class="n">odmantic</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">QueryExpression</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="p">{},</span> <span class="o">*</span><span class="p">,</span><span class="n">limit</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">skip</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> </code>
-        False
-zzz[]aaa 
-      </h3>
+find<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="p">{},</span> <span class="o">*</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> </code>
+<a class="headerlink" href="#odmantic.engine.AIOEngine.find" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Search for Model instances matching the query filter provided</p>
 <p><strong>Parameters:</strong></p>
@@ -691,11 +694,13 @@ zzz[]aaa
 <div class="doc doc-object doc-method">
 <h3 class="doc doc-heading" id="odmantic.engine.AIOEngine.find_one">
 <code class="highlight language-python">
-          
-find_one<span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">model</span><span class="p">:</span><span class="n">Type</span><span class="p">[</span><span class="o">~</span><span class="n">ModelType</span><span class="p">],</span><span class="n">query</span><span class="p">:</span><span class="n">Union</span><span class="p">[</span><span class="n">odmantic</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">QueryExpression</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span><span class="o">=</span><span class="p">{})</span> </code>
-        False
-zzz[]aaa 
-      </h3>
+find_one<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="p">{})</span> </code>
+<span class="doc doc-properties">
+<small class="doc doc-property doc-property-async">
+<code>async</code>
+</small>
+</span>
+<a class="headerlink" href="#odmantic.engine.AIOEngine.find_one" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Search for a Model instance matching the query filter provided</p>
 <p><strong>Parameters:</strong></p>
@@ -777,11 +782,13 @@ zzz[]aaa
 <div class="doc doc-object doc-method">
 <h3 class="doc doc-heading" id="odmantic.engine.AIOEngine.save">
 <code class="highlight language-python">
-          
-save<span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">instance</span><span class="p">:</span><span class="o">~</span><span class="n">ModelType</span><span class="p">)</span> </code>
-        False
-zzz[]aaa 
-      </h3>
+save<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">)</span> </code>
+<span class="doc doc-properties">
+<small class="doc doc-property doc-property-async">
+<code>async</code>
+</small>
+</span>
+<a class="headerlink" href="#odmantic.engine.AIOEngine.save" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Persist an instance to the database</p>
 <p>This method behaves as an 'upsert' operation. If a document already exists
@@ -868,11 +875,13 @@ the instance is still returned for convenience.</p>
 <div class="doc doc-object doc-method">
 <h3 class="doc doc-heading" id="odmantic.engine.AIOEngine.save_all">
 <code class="highlight language-python">
-          
-save_all<span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">instances</span><span class="p">:</span><span class="n">Sequence</span><span class="p">[</span><span class="o">~</span><span class="n">ModelType</span><span class="p">])</span> </code>
-        False
-zzz[]aaa 
-      </h3>
+save_all<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instances</span><span class="p">)</span> </code>
+<span class="doc doc-properties">
+<small class="doc doc-property doc-property-async">
+<code>async</code>
+</small>
+</span>
+<a class="headerlink" href="#odmantic.engine.AIOEngine.save_all" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Persist instances to the database</p>
 <p>This method behaves as multiple 'upsert' operations. If one of the document
@@ -962,9 +971,7 @@ instances are still returned for convenience.</p>
 <div class="doc doc-object doc-class">
 <h2 class="doc doc-heading" id="odmantic.engine.AIOCursor">
 <code>odmantic.engine.AIOCursor</code>
-
-zzz[]aaa 
-      </h2>
+<a class="headerlink" href="#odmantic.engine.AIOCursor" title="Permanent link">¶</a></h2>
 <div class="doc doc-contents first">
 <p>This object has to be built from the <a href="#odmantic.engine.AIOEngine.find">odmantic.engine.AIOEngine.find</a> method.</p>
 <p>An AIOCursor object support multiple async operations:</p>
@@ -996,13 +1003,13 @@ zzz[]aaa
               </div>
 </div>
 </a>
-<a class="md-footer-nav__link md-footer-nav__link--next" href="../field/" rel="next" title="Field">
+<a class="md-footer-nav__link md-footer-nav__link--next" href="../query/" rel="next" title="Query">
 <div class="md-footer-nav__title">
 <div class="md-ellipsis">
 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Field
+                Query
               </div>
 </div>
 <div class="md-footer-nav__button md-icon">

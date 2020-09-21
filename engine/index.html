@@ -204,6 +204,11 @@
     </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="../api_reference/query/" title="Query">
+      Query
+    </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="../api_reference/field/" title="Field">
       Field
     </a>
@@ -265,8 +270,8 @@
 <a class="md-content__button md-icon" href="https://github.com/art049/odmantic/edit/master/docs/engine.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1 id="engine">Engine</h1>
-<h2 id="creating-the-engine">Creating the engine</h2>
+<h1 id="engine">Engine<a class="headerlink" href="#engine" title="Permanent link">¶</a></h1>
+<h2 id="creating-the-engine">Creating the engine<a class="headerlink" href="#creating-the-engine" title="Permanent link">¶</a></h2>
 <div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><label for="__tabbed_1_1">AsyncIO</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">motor.motor_asyncio</span> <span class="kn">import</span> <span class="n">AsyncIOMotorClient</span>
 <span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span>
@@ -276,7 +281,7 @@
 </code></pre></div>
 </div>
 </input></div>
-<h2 id="create-documents">Create documents</h2>
+<h2 id="create-documents">Create documents<a class="headerlink" href="#create-documents" title="Permanent link">¶</a></h2>
 <div class="tabbed-set" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><label for="__tabbed_2_1">AsyncIO</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
@@ -288,7 +293,7 @@
 </code></pre></div>
 </div>
 </input></div>
-<h2 id="count-documents">Count documents</h2>
+<h2 id="count-documents">Count documents<a class="headerlink" href="#count-documents" title="Permanent link">¶</a></h2>
 <div class="tabbed-set" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><label for="__tabbed_3_1">AsyncIO</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="n">count</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">Player</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>

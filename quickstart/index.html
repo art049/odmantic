@@ -223,6 +223,11 @@
     </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="../api_reference/query/" title="Query">
+      Query
+    </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="../api_reference/field/" title="Field">
       Field
     </a>
@@ -303,8 +308,8 @@
 <a class="md-content__button md-icon" href="https://github.com/art049/odmantic/edit/master/docs/quickstart.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1 id="quickstart">Quickstart</h1>
-<h2 id="defining-a-model">Defining a model</h2>
+<h1 id="quickstart">Quickstart<a class="headerlink" href="#quickstart" title="Permanent link">¶</a></h1>
+<h2 id="defining-a-model">Defining a model<a class="headerlink" href="#defining-a-model" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">motor.motor_asyncio</span> <span class="kn">import</span> <span class="n">AsyncIOMotorClient</span>
 
 <span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span><span class="p">,</span> <span class="n">Model</span>
@@ -314,7 +319,7 @@
     <span class="n">first_name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">last_name</span><span class="p">:</span> <span class="nb">str</span>
 </code></pre></div>
-<h2 id="creating-an-instance">Creating an instance</h2>
+<h2 id="creating-an-instance">Creating an instance<a class="headerlink" href="#creating-an-instance" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code><span class="n">person_instance</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="n">first_name</span><span class="o">=</span><span class="s2">"Robert"</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="s2">"Miles"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">person_instance</span><span class="p">)</span>
 <span class="c1">#&gt; Person(first_name="Robert", last_name="Miles")</span>
@@ -323,19 +328,19 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">person_instance</span><span class="o">.</span><span class="n">last_name</span><span class="p">)</span>
 <span class="c1">#&gt; Miles</span>
 </code></pre></div>
-<h2 id="saving-a-created-instance">Saving a created instance</h2>
-<h3 id="creating-an-engine">Creating an engine</h3>
+<h2 id="saving-a-created-instance">Saving a created instance<a class="headerlink" href="#saving-a-created-instance" title="Permanent link">¶</a></h2>
+<h3 id="creating-an-engine">Creating an engine<a class="headerlink" href="#creating-an-engine" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="n">client</span> <span class="o">=</span> <span class="n">AsyncIOMotorClient</span><span class="p">(</span><span class="s2">"mongodb://localhost:27017/"</span><span class="p">)</span>
 <span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">(</span><span class="n">motor_client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span> <span class="n">db_name</span><span class="o">=</span><span class="s2">"example_db"</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="persisting-an-instance">Persisting an instance</h3>
+<h3 id="persisting-an-instance">Persisting an instance<a class="headerlink" href="#persisting-an-instance" title="Permanent link">¶</a></h3>
 <div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><label for="__tabbed_1_1">save</label><div class="tabbed-content"></div>
 </input></div>
 <p><code>python await engine.save(Person(first_name="Freddie", last_name="Mercury")) await engine.save(Person(first_name="Robert", last_name="Miles"))</code></p>
 <div class="tabbed-set" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><label for="__tabbed_2_1">save_all</label><div class="tabbed-content"></div>
 </input></div>
 <p><code>python await engine.save_all([ Person(first_name="Freddie", last_name="Mercury"), Person(first_name="Robert", last_name="Miles") ])</code></p>
-<h2 id="querying-instances">Querying instances</h2>
+<h2 id="querying-instances">Querying instances<a class="headerlink" href="#querying-instances" title="Permanent link">¶</a></h2>
 <div class="tabbed-set" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><label for="__tabbed_3_1">async for</label><div class="tabbed-content"></div>
 </input></div>
 <p><code>python cursor = engine.find(Person, Person.first_name == "Freddie") async for freddie in cursor: print(freddie) #&gt; Person(first_name="Freddie", last_name="Mercury")</code></p>
