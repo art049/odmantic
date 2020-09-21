@@ -17,6 +17,8 @@ extra_css:
 markdown_extensions:
   - admonition
   - attr_list
+  - toc:
+      permalink: true
   - codehilite:
       linenums: false
       guess_lang: false
@@ -50,6 +52,7 @@ nav:
   - API Reference:
       - ./api_reference/model.md
       - ./api_reference/engine.md
+      - ./api_reference/query.md
       - ./api_reference/field.md
       - ./api_reference/reference.md
       - ./api_reference/exceptions.md

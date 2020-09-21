@@ -1,4 +1,4 @@
-::: odmantic.model.\_BaseODMModel
+# Model
 
 ::: odmantic.model.Model
 

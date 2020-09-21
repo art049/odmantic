@@ -90,9 +90,9 @@ class AIOEngine:
     def __init__(self, motor_client: AsyncIOMotorClient = None, database: str = "test"):
         """
         Args:
-            motor_client: instance of an AsyncIO motor client. If None, a default one
-            will be created
 
+            motor_client: instance of an AsyncIO motor client. If None, a default one
+                    will be created
             database: name of the database to use
 
         """
