@@ -28,7 +28,7 @@ from pydantic.typing import resolve_annotations
 from pydantic.utils import lenient_issubclass
 
 from odmantic.bson_fields import _SUBSTITUTION_TYPES, BSONSerializedField, _objectId
-from odmantic.fields import (
+from odmantic.field import (
     FieldProxy,
     ODMBaseField,
     ODMEmbedded,

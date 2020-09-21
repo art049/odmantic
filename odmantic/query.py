@@ -2,7 +2,7 @@ import re
 from typing import TYPE_CHECKING, Any, Dict, Pattern, Sequence, Union
 
 if TYPE_CHECKING:
-    from odmantic.fields import FieldProxy
+    from odmantic.field import FieldProxy
 
 
 class QueryExpression(Dict[str, Any]):

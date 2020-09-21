@@ -1,5 +1,5 @@
 from .engine import AIOEngine
-from .fields import Field
+from .field import Field
 from .model import EmbeddedModel, Model
 from .reference import Reference
 

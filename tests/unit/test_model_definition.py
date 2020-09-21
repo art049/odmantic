@@ -4,7 +4,7 @@ import pytest
 from pydantic import Field as PDField
 from pydantic.error_wrappers import ValidationError
 
-from odmantic.fields import Field
+from odmantic.field import Field
 from odmantic.model import EmbeddedModel, Model
 from odmantic.reference import Reference
 

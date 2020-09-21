@@ -1,7 +1,7 @@
 import enum
 from typing import Dict, List
 
-from odmantic.fields import Field
+from odmantic.field import Field
 from odmantic.model import Model
 
 

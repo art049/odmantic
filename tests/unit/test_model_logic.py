@@ -2,7 +2,7 @@ import pytest
 from bson.objectid import ObjectId
 from pydantic.error_wrappers import ValidationError
 
-from odmantic.fields import Field
+from odmantic.field import Field
 from odmantic.model import EmbeddedModel, Model
 from tests.zoo.person import PersonModel
 

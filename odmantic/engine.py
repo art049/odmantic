@@ -25,7 +25,7 @@ from motor.motor_asyncio import (
 from pydantic.utils import lenient_issubclass
 
 from odmantic.exceptions import DocumentNotFoundError
-from odmantic.fields import ODMReference
+from odmantic.field import ODMReference
 from odmantic.model import Model
 from odmantic.query import QueryExpression
 

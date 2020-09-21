@@ -1,6 +1,6 @@
 import pytest
 
-from odmantic.fields import Field
+from odmantic.field import Field
 
 
 def test_field_defined_as_primary_key_and_custom_name():
