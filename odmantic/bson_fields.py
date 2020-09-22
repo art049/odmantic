@@ -160,7 +160,7 @@ class _Decimal(BSONSerializedField):
         return BsonDecimal(v)
 
 
-_SUBSTITUTION_TYPES = {
+_BSON_SUBSTITUTED_FIELDS = {
     BsonObjectId: _objectId,
     BsonLong: _long,
     BsonDecimal: _bson_decimal,

@@ -1,9 +1,12 @@
 import re
+import sys
 from abc import ABCMeta
+from collections.abc import Callable as abcCallable
 from types import FunctionType
 from typing import (
     TYPE_CHECKING,
     Any,
+    Callable,
     ClassVar,
     Dict,
     FrozenSet,
@@ -27,7 +30,11 @@ from pydantic.tools import parse_obj_as
 from pydantic.typing import resolve_annotations
 from pydantic.utils import lenient_issubclass
 
-from odmantic.bson_fields import _SUBSTITUTION_TYPES, BSONSerializedField, _objectId
+from odmantic.bson_fields import (
+    _BSON_SUBSTITUTED_FIELDS,
+    BSONSerializedField,
+    _objectId,
+)
 from odmantic.field import (
     FieldProxy,
     ODMBaseField,
@@ -41,16 +48,19 @@ from odmantic.reference import ODMReferenceInfo
 if TYPE_CHECKING:
 
     from pydantic.typing import (
-        ReprArgs,
         AbstractSetIntStr,
-        MappingIntStrAny,
         DictStrAny,
+        MappingIntStrAny,
+        ReprArgs,
     )
 
+USES_OLD_TYPING_INTERFACE = sys.version_info[:3] < (3, 7, 0)  # PEP 560
+if USES_OLD_TYPING_INTERFACE:
+    from typing import _subs_tree  # type: ignore  # noqa
 UNTOUCHED_TYPES = FunctionType, property, classmethod, staticmethod
 
 
-def is_valid_odm_field(name: str) -> bool:
+def is_valid_odm_field_name(name: str) -> bool:
     return not name.startswith("__") and not name.endswith("__")
 
 
@@ -76,6 +86,49 @@ def find_duplicate_key(fields: Iterable[ODMBaseField]) -> Optional[str]:
     return None
 
 
+def is_type_forbidden(t: Type) -> bool:
+    if t is Callable or t is abcCallable:
+        # Callable type require a special treatment since typing.Callable is not a class
+        return True
+    return False
+
+
+def validate_type(type_: Type) -> Type:
+    if lenient_issubclass(type_, UNTOUCHED_TYPES) or lenient_issubclass(
+        type_, (Model, EmbeddedModel)
+    ):
+        return type_
+    if is_type_forbidden(type_):
+        raise TypeError(f"{type_} fields are not supported")
+    subst_type = _BSON_SUBSTITUTED_FIELDS.get(type_)
+    if subst_type is not None:
+        return subst_type
+
+    # Typing replacement
+    # 3.7+:
+    # https://github.com/python/cpython/blob/e022bbc169ca1428dc3017187012de17ce6e0bc7/Lib/typing.py#L605
+    # 3.6:
+    # https://github.com/python/cpython/blob/aed26482c7baab078f39d5cd52216fb8ee9f276f/Lib/typing.py#L570
+    type_origin: Optional[Type] = getattr(type_, "__origin__", None)
+    if type_origin is not None:
+        type_args: Tuple[Type, ...] = getattr(type_, "__args__", ())
+        new_arg_types = tuple(validate_type(subtype) for subtype in type_args)
+        setattr(type_, "__args__", new_arg_types)
+        if USES_OLD_TYPING_INTERFACE:
+            # FIXME: there is probably a more elegant way of doing this
+            subs_tree = type_._subs_tree()
+            if type_origin is Union:
+                tree_hash = hash(
+                    frozenset(subs_tree) if isinstance(subs_tree, tuple) else subs_tree
+                )
+            else:
+                tree_hash = hash(
+                    subs_tree if isinstance(subs_tree, tuple) else frozenset(subs_tree)
+                )
+            setattr(type_, "__tree_hash__", tree_hash)
+    return type_
+
+
 class BaseModelMetaclass(ABCMeta):
     def __new__(  # noqa C901
         cls,
@@ -98,35 +151,31 @@ class BaseModelMetaclass(ABCMeta):
             for field_name, value in namespace.items():
                 if (
                     not isinstance(value, UNTOUCHED_TYPES)
-                    and is_valid_odm_field(field_name)
+                    and is_valid_odm_field_name(field_name)
                     and field_name not in annotations
                 ):
                     raise TypeError(
                         f"field {field_name} is defined without type annotation"
                     )
 
-            # TODO handle class vars
-            # Substitute bson types
-            for k, v in annotations.items():
-                subst_type = _SUBSTITUTION_TYPES.get(v)
-                if subst_type is not None:
-                    annotations[k] = subst_type
-
-            # Handle special BSON serialized types
+            # Validate fields types and substitute bson fields
             for (field_name, field_type) in annotations.items():
-                if (
-                    is_valid_odm_field(field_name)
-                    and not lenient_issubclass(field_type, UNTOUCHED_TYPES)
-                    and lenient_issubclass(field_type, BSONSerializedField)
+                if is_valid_odm_field_name(field_name) and not lenient_issubclass(
+                    field_type, UNTOUCHED_TYPES
                 ):
-                    bson_serialized_fields.add(field_name)
+                    substituted_type = validate_type(field_type)
+                    # Handle BSON serialized fields after substitution to allow some
+                    # builtin substitution
+                    if lenient_issubclass(substituted_type, BSONSerializedField):
+                        bson_serialized_fields.add(field_name)
+                    annotations[field_name] = substituted_type
 
             # Validate fields
             for (field_name, field_type) in annotations.items():
                 value = namespace.get(field_name, Undefined)
 
                 if (
-                    not is_valid_odm_field(field_name)
+                    not is_valid_odm_field_name(field_name)
                     or lenient_issubclass(field_type, UNTOUCHED_TYPES)
                     or isinstance(value, UNTOUCHED_TYPES)
                 ):

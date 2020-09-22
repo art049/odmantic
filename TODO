@@ -1,5 +1,7 @@
 
 0.0.1:
+☐ Handle JSON serialization
+☐ Handle Mutable fields with smart update
 ☐ Document usage outside odm (aggregation example)
 ☐ Doc custom bson serializable fields
 ☐ Doc enum fields

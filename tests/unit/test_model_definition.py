@@ -1,6 +1,21 @@
-from typing import Any, Callable, Optional
+from types import FunctionType
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    FrozenSet,
+    List,
+    Mapping,
+    Optional,
+    Tuple,
+    Type,
+    Union,
+)
 
 import pytest
+from bson import ObjectId
+from bson.decimal128 import Decimal128
+from bson.regex import Regex
 from pydantic import Field as PDField
 from pydantic.error_wrappers import ValidationError
 
@@ -292,6 +307,33 @@ def test_untouched_types_function():
         return str(self.id)
 
     class M(Model):
-        id_: Callable = id_str
+        id_: FunctionType = id_str  # type: ignore
 
     assert "id_" not in M.__odm_fields__.keys()
+
+
+@pytest.mark.parametrize(
+    "t",
+    [
+        Optional[ObjectId],
+        List[ObjectId],
+        List[Decimal128],
+        List[Regex],
+        FrozenSet[Regex],
+        Union[Regex, ObjectId],
+        Dict[ObjectId, str],
+        Dict[Tuple[ObjectId, ...], str],
+        Dict[Union[ObjectId, str], str],
+        Mapping[Union[ObjectId, str], str],
+    ],
+)
+def test_compound_bson_field(t: Type):
+    class M(Model):
+        children: t  # type: ignore
+
+
+def test_forbidden_field():
+    with pytest.raises(TypeError, match="fields are not supported"):
+
+        class M(Model):
+            children: Callable

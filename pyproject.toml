@@ -58,8 +58,6 @@ pytz = "^2020.1"
 asyncmock = "^0.4.2"
 mkdocstrings = "^0.13.2"
 markdown-include = "^0.6.0"
-# TODO: change this when a new version is released
-pytkdocs = {git = "https://github.com/pawamoy/pytkdocs", rev = "cff1d4c1652eb02c5e05421caf42b620e4c58396"}
 pydocstyle = "^5.1.1"
 darglint = "^1.5.4"
 

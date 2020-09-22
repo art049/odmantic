@@ -74,6 +74,16 @@ def test_validate_invalid_bson_objectid():
     assert "ObjectId required" in errors[0]["msg"]
 
 
+@pytest.mark.skip("Not supported yet")
+def test_object_id_json():
+    class MyModel(Model):
+        pass
+
+    oid = ObjectId()
+
+    assert MyModel(id=oid).json() == {"_id": str(oid)}
+
+
 def test_validate_decimal_valid_string():
     class MyModel(Model):
         field: Decimal

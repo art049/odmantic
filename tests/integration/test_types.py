@@ -2,7 +2,7 @@ import dataclasses
 import re
 from datetime import datetime
 from decimal import Decimal
-from typing import Dict, Generic, List, Pattern, Tuple, Type, TypeVar
+from typing import Dict, Generic, List, Pattern, Tuple, Type, TypeVar, Union
 
 import pytest
 from bson import Binary, Decimal128, Int64, ObjectId, Regex
@@ -62,8 +62,12 @@ type_test_data = [
     TypeTestCase(List, "array", ["one"]),
     # Compound Types
     TypeTestCase(Tuple[str, ...], "array", ("one",)),  # type: ignore
-    # TODO UNSKIP
-    # TypeTestCase(List[ObjectId], "array", [ObjectId() for _ in range(5)]),
+    TypeTestCase(List[ObjectId], "array", [ObjectId() for _ in range(5)]),
+    TypeTestCase(
+        Union[Tuple[ObjectId, ...], None],  # type: ignore
+        "array",
+        tuple(ObjectId() for _ in range(5)),
+    ),
 ]
 
 
