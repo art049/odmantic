@@ -1,11 +1,11 @@
 
 0.0.1:
-☐ Handle JSON serialization
-☐ Handle Mutable fields with smart update
-☐ Document usage outside odm (aggregation example)
-☐ Doc custom bson serializable fields
-☐ Doc enum fields
-☐ Define policy for optional fields default set to null ?
+  ☐ Handle Mutable fields with smart update
+  ☐ Document usage outside odm (aggregation example)
+  ☐ Doc custom bson serializable fields
+  ☐ Doc enum fields
+  ☐ Define policy for optional fields default set to null ?
+Handle JSON serialization
 Query document based on embedded document content
 Support Embedded Documents
 Support find Reference Documents (nested)

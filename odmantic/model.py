@@ -32,6 +32,7 @@ from pydantic.utils import lenient_issubclass
 
 from odmantic.bson_fields import (
     _BSON_SUBSTITUTED_FIELDS,
+    _BSON_TYPES_ENCODERS,
     BSONSerializedField,
     _objectId,
 )
@@ -364,6 +365,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
     class Config:
         validate_all = True
         validate_assignment = True
+        json_encoders = _BSON_TYPES_ENCODERS
 
     def __init_subclass__(cls) -> None:
         # FIXME move this into the metaclass ?

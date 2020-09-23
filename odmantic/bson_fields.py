@@ -4,10 +4,10 @@ from datetime import datetime
 from decimal import Decimal
 from typing import Any, Pattern, cast
 
-from bson import ObjectId as BsonObjectId
 from bson.binary import Binary as BsonBinary
 from bson.decimal128 import Decimal128 as BsonDecimal
 from bson.int64 import Int64 as BsonLong
+from bson.objectid import ObjectId as BsonObjectId
 from bson.regex import Regex as BsonRegex
 from pydantic.datetime_parse import parse_datetime
 from pydantic.validators import (
@@ -159,6 +159,12 @@ class _Decimal(BSONSerializedField):
     def to_bson(cls, v: Any) -> BsonDecimal:
         return BsonDecimal(v)
 
+
+_BSON_TYPES_ENCODERS = {
+    BsonObjectId: str,
+    BsonDecimal: lambda x: x.to_decimal(),  # Convertt to regular decimal
+    BsonRegex: lambda x: x.pattern,  # TODO: document no serialization of flags
+}
 
 _BSON_SUBSTITUTED_FIELDS = {
     BsonObjectId: _objectId,
