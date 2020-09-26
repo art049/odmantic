@@ -1,362 +1,625 @@
 
-<!DOCTYPE html>
 
-<html class="no-js" lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width,initial-scale=1" name="viewport"/>
-<meta content="AsyncIO MongoDB ODM (Object Document Mapper) using python type hinting" name="description"/>
-<link href="assets/images/favicon.png" rel="shortcut icon"/>
-<meta content="mkdocs-1.1.2, mkdocs-material-5.5.13" name="generator"/>
-<title>ODMantic</title>
-<link href="assets/stylesheets/main.077507d7.min.css" rel="stylesheet"/>
-<link href="assets/stylesheets/palette.ff0a5ce4.min.css" rel="stylesheet"/>
-<meta content="#8bc34b" name="theme-color"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
-<style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
-<link href="css/extra.css" rel="stylesheet"/>
-</head>
-<body data-md-color-accent="light-green" data-md-color-primary="light-green" data-md-color-scheme="preference" dir="ltr">
-<script>matchMedia("(prefers-color-scheme: dark)").matches&&document.body.setAttribute("data-md-color-scheme","slate")</script>
-<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
-<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
-<label class="md-overlay" for="__drawer"></label>
-<div data-md-component="skip">
-<a class="md-skip" href="#requirements">
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="AsyncIO MongoDB ODM (Object Document Mapper) using python type hinting">
+      
+      
+      
+      <link rel="shortcut icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.14">
+    
+    
+      
+        <title>ODMantic</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.d3202873.min.css">
+      
+        <link rel="stylesheet" href="assets/stylesheets/palette.ff0a5ce4.min.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#8bc34b">
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="css/extra.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="preference" data-md-color-primary="light-green" data-md-color-accent="light-green">
+  
+    
+      <script>matchMedia("(prefers-color-scheme: dark)").matches&&document.body.setAttribute("data-md-color-scheme","slate")</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#requirements" class="md-skip">
           Skip to content
         </a>
-</div>
-<div data-md-component="announce">
-</div>
-<header class="md-header" data-md-component="header">
-<nav aria-label="Header" class="md-header-nav md-grid">
-<a aria-label="ODMantic" class="md-header-nav__button md-logo" href="." title="ODMantic">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 9.63c-.19-2.79-1.32-5.51-3.44-7.63A12.253 12.253 0 008.5 9.63c1.29.68 2.47 1.56 3.5 2.63a14.22 14.22 0 013.5-2.63M12 15.45C9.85 12.17 6.18 10 2 10c0 10 9.32 11.89 10 12 .68-.12 10-2 10-12-4.18 0-7.85 2.17-10 5.45z"></path></svg>
-</a>
-<label class="md-header-nav__button md-icon" for="__drawer">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
-</label>
-<div class="md-header-nav__title" data-md-component="header-title">
-<div class="md-header-nav__ellipsis">
-<span class="md-header-nav__topic md-ellipsis">
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="." title="ODMantic" class="md-header-nav__button md-logo" aria-label="ODMantic">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 9.63c-.19-2.79-1.32-5.51-3.44-7.63A12.253 12.253 0 008.5 9.63c1.29.68 2.47 1.56 3.5 2.63a14.22 14.22 0 013.5-2.63M12 15.45C9.85 12.17 6.18 10 2 10c0 10 9.32 11.89 10 12 .68-.12 10-2 10-12-4.18 0-7.85 2.17-10 5.45z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
             ODMantic
           </span>
-<span class="md-header-nav__topic md-ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
             
               Overview
             
           </span>
-</div>
-</div>
-<label class="md-header-nav__button md-icon" for="__search">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
-</label>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
 <div class="md-search" data-md-component="search" role="dialog">
-<label class="md-search__overlay" for="__search"></label>
-<div class="md-search__inner" role="search">
-<form class="md-search__form" name="search">
-<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" data-md-state="active" name="query" placeholder="Search" spellcheck="false" type="text"/>
-<label class="md-search__icon md-icon" for="__search">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
-</label>
-<button aria-label="Clear" class="md-search__icon md-icon" data-md-component="search-reset" tabindex="-1" type="reset">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
-</button>
-</form>
-<div class="md-search__output">
-<div class="md-search__scrollwrap" data-md-scrollfix="">
-<div class="md-search-result" data-md-component="search-result">
-<div class="md-search-result__meta">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
             Initializing search
           </div>
-<ol class="md-search-result__list"></ol>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div class="md-header-nav__source">
-<a class="md-source" href="https://github.com/art049/odmantic/" title="Go to repository">
-<div class="md-source__icon md-icon">
-<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"></path></svg>
-</div>
-<div class="md-source__repository">
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/art049/odmantic/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
     art049/odmantic
   </div>
 </a>
-</div>
-</nav>
+      </div>
+    
+  </nav>
 </header>
-<div class="md-container" data-md-component="container">
-<main class="md-main" data-md-component="main">
-<div class="md-main__inner md-grid">
-<div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
-<div class="md-sidebar__scrollwrap">
-<div class="md-sidebar__inner">
-<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
-<label class="md-nav__title" for="__drawer">
-<a aria-label="ODMantic" class="md-nav__button md-logo" href="." title="ODMantic">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 9.63c-.19-2.79-1.32-5.51-3.44-7.63A12.253 12.253 0 008.5 9.63c1.29.68 2.47 1.56 3.5 2.63a14.22 14.22 0 013.5-2.63M12 15.45C9.85 12.17 6.18 10 2 10c0 10 9.32 11.89 10 12 .68-.12 10-2 10-12-4.18 0-7.85 2.17-10 5.45z"></path></svg>
-</a>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="ODMantic" class="md-nav__button md-logo" aria-label="ODMantic">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 9.63c-.19-2.79-1.32-5.51-3.44-7.63A12.253 12.253 0 008.5 9.63c1.29.68 2.47 1.56 3.5 2.63a14.22 14.22 0 013.5-2.63M12 15.45C9.85 12.17 6.18 10 2 10c0 10 9.32 11.89 10 12 .68-.12 10-2 10-12-4.18 0-7.85 2.17-10 5.45z"/></svg>
+
+    </a>
     ODMantic
   </label>
-<div class="md-nav__source">
-<a class="md-source" href="https://github.com/art049/odmantic/" title="Go to repository">
-<div class="md-source__icon md-icon">
-<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"></path></svg>
-</div>
-<div class="md-source__repository">
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/art049/odmantic/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
     art049/odmantic
   </div>
 </a>
-</div>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
         Overview
         <span class="md-nav__icon md-icon"></span>
-</label>
-<a class="md-nav__link md-nav__link--active" href="." title="Overview">
+      </label>
+    
+    <a href="." title="Overview" class="md-nav__link md-nav__link--active">
       Overview
     </a>
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#requirements">
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
     Requirements
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#installation">
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
     Installation
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#example">
+      
+        <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
     Example
   </a>
-<nav aria-label="Example" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#define-your-first-model">
+  
+    <nav class="md-nav" aria-label="Example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#define-your-first-model" class="md-nav__link">
     Define your first model
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#create-some-instances">
+        
+          <li class="md-nav__item">
+  <a href="#create-some-instances" class="md-nav__link">
     Create some instances
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#populate-the-database-with-your-instances">
+        
+          <li class="md-nav__item">
+  <a href="#populate-the-database-with-your-instances" class="md-nav__link">
     Populate the database with your instances
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#find-instances-matching-a-criteria">
+        
+          <li class="md-nav__item">
+  <a href="#find-instances-matching-a-criteria" class="md-nav__link">
     Find instances matching a criteria
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modify-an-instance">
+        
+          <li class="md-nav__item">
+  <a href="#modify-an-instance" class="md-nav__link">
     Modify an instance
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#license">
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
     License
   </a>
+  
 </li>
-</ul>
+      
+    </ul>
+  
 </nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="quickstart/" title="Quickstart">
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="quickstart/" title="Quickstart" class="md-nav__link">
       Quickstart
     </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="fields/" title="Fields">
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="fields/" title="Fields" class="md-nav__link">
       Fields
     </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="engine/" title="Engine">
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="engine/" title="Engine" class="md-nav__link">
       Engine
     </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="modeling/" title="Modeling">
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="modeling/" title="Modeling" class="md-nav__link">
       Modeling
     </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="filtering/" title="Filtering">
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="filtering/" title="Filtering" class="md-nav__link">
       Filtering
     </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="types/" title="Data types">
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="types/" title="Data types" class="md-nav__link">
       Data types
     </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="hate/" title="I hate ORMs/ODMs">
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="hate/" title="I hate ORMs/ODMs" class="md-nav__link">
       I hate ORMs/ODMs
     </a>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="nav-9" id="nav-9" type="checkbox"/>
-<label class="md-nav__link" for="nav-9">
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
+    
+    <label class="md-nav__link" for="nav-9">
       API Reference
       <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="API Reference" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="nav-9">
-<span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="API Reference" data-md-level="1">
+      <label class="md-nav__title" for="nav-9">
+        <span class="md-nav__icon md-icon"></span>
         API Reference
       </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="api_reference/model/" title="Model">
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="api_reference/model/" title="Model" class="md-nav__link">
       Model
     </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="api_reference/engine/" title="Engine">
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="api_reference/engine/" title="Engine" class="md-nav__link">
       Engine
     </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="api_reference/query/" title="Query">
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="api_reference/query/" title="Query" class="md-nav__link">
       Query
     </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="api_reference/field/" title="Field">
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="api_reference/field/" title="Field" class="md-nav__link">
       Field
     </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="api_reference/reference/" title="Reference">
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="api_reference/reference/" title="Reference" class="md-nav__link">
       Reference
     </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="api_reference/exceptions/" title="Exceptions">
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="api_reference/exceptions/" title="Exceptions" class="md-nav__link">
       Exceptions
     </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="changelog/" title="Changelog">
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="changelog/" title="Changelog" class="md-nav__link">
       Changelog
     </a>
-</li>
-</ul>
+  </li>
+
+    
+  </ul>
 </nav>
-</div>
-</div>
-</div>
-<div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
-<div class="md-sidebar__scrollwrap">
-<div class="md-sidebar__inner">
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#requirements">
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
     Requirements
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#installation">
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
     Installation
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#example">
+      
+        <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
     Example
   </a>
-<nav aria-label="Example" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#define-your-first-model">
+  
+    <nav class="md-nav" aria-label="Example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#define-your-first-model" class="md-nav__link">
     Define your first model
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#create-some-instances">
+        
+          <li class="md-nav__item">
+  <a href="#create-some-instances" class="md-nav__link">
     Create some instances
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#populate-the-database-with-your-instances">
+        
+          <li class="md-nav__item">
+  <a href="#populate-the-database-with-your-instances" class="md-nav__link">
     Populate the database with your instances
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#find-instances-matching-a-criteria">
+        
+          <li class="md-nav__item">
+  <a href="#find-instances-matching-a-criteria" class="md-nav__link">
     Find instances matching a criteria
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modify-an-instance">
+        
+          <li class="md-nav__item">
+  <a href="#modify-an-instance" class="md-nav__link">
     Modify an instance
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#license">
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
     License
   </a>
+  
 </li>
-</ul>
+      
+    </ul>
+  
 </nav>
-</div>
-</div>
-</div>
-<div class="md-content">
-<article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/art049/odmantic/edit/master/docs/index.md" title="Edit this page">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
-</a>
-<div align="center">
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/art049/odmantic/edit/master/docs/index.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                  
+                
+                
+                <div align="center">
 <h1>ODMantic</h1>
 <a href="https://github.com/art049/odmantic/actions?query=workflow%3A%22build%22+branch%3Amaster" target="_blank">
-<img alt="build" src="https://github.com/art049/odmantic/workflows/build/badge.svg"/>
+    <img src="https://github.com/art049/odmantic/workflows/build/badge.svg" alt="build">
 </a>
 <a href="https://art049.github.io/odmantic/" target="_blank">
-<img alt="docs" src="https://github.com/art049/odmantic/workflows/docs/badge.svg"/>
+    <img src="https://github.com/art049/odmantic/workflows/docs/badge.svg" alt="docs">
 </a>
 <a href="https://codecov.io/gh/art049/odmantic" target="_blank">
-<img alt="coverage" src="https://codecov.io/gh/art049/odmantic/branch/master/graph/badge.svg?token=3NYZK14STZ"/>
+    <img src="https://codecov.io/gh/art049/odmantic/branch/master/graph/badge.svg?token=3NYZK14STZ" alt="coverage">
 </a>
-<img alt="python-3.6-3.7-3.8" src="https://img.shields.io/badge/python-3.6%20|%203.7%20|%203.8-informational.svg"/>
+<img src="https://img.shields.io/badge/python-3.6%20|%203.7%20|%203.8-informational.svg" alt="python-3.6-3.7-3.8">
+
 <a href="https://pypi.org/project/odmantic" target="_blank">
-<img alt="Package version" src="https://img.shields.io/pypi/v/odmantic?color=%2334D058&amp;label=pypi"/>
+    <img src="https://img.shields.io/pypi/v/odmantic?color=%2334D058&label=pypi" alt="Package version">
 </a>
 </div>
-<hr/>
+
+<hr />
 <p><strong>Documentation</strong>: <a href="https://art049.github.io/odmantic/">https://art049.github.io/odmantic/</a></p>
-<hr/>
+<hr />
 <p>ODMantic is an Object Document Mapper (a kind of ORM but for NoSQL databases) for
 MongoDB based on standard python type hints. It's built on top of
 <a href="https://pydantic-docs.helpmanual.io/" target="_blank">pydantic</a> for model definition and validation.</p>
@@ -373,10 +636,12 @@ MongoDB based on standard python type hints. It's built on top of
 <p><strong>Fully typed</strong>: leverage static analysis to reduce runtime issues</p>
 </li>
 <li>
-<p><strong>AsyncIO</strong>: works well with ASGI frameworks (<a href="https://fastapi.tiangolo.com/" target="_blank">FastAPI</a>, <a href="https://www.starlette.io/" target="_blank">Starlette</a>, ...)</p>
+<p><strong>AsyncIO</strong>: works well with ASGI frameworks (<a href="https://fastapi.tiangolo.com/"
+  target="_blank">FastAPI</a>, <a href="https://www.starlette.io/"
+  target="_blank">Starlette</a>, ...)</p>
 </li>
 </ul>
-<h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">¶</a></h2>
+<h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h2>
 <p><strong>Python</strong>: 3.6 and later (tested against 3.6, 3.7 and 3.8)</p>
 <p><strong>MongoDB</strong>: 4.0 and later</p>
 <p>Two direct dependencies:</p>
@@ -390,16 +655,17 @@ MongoDB based on standard python type hints. It's built on top of
   asyncio MongoDB driver officially developed by the MongoDB team.</p>
 </li>
 </ul>
-<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">¶</a></h2>
+<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>pip install odmantic
 </code></pre></div>
-<h2 id="example">Example<a class="headerlink" href="#example" title="Permanent link">¶</a></h2>
+
+<h2 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h2>
 <blockquote>
 <p>To enjoy an async context without any code boilerplate, it's strongly advised
 to run the following steps with
 <a href="https://ipython.readthedocs.io/en/stable/install/index.html" target="_blank">IPython</a>.</p>
 </blockquote>
-<h3 id="define-your-first-model">Define your first model<a class="headerlink" href="#define-your-first-model" title="Permanent link">¶</a></h3>
+<h3 id="define-your-first-model">Define your first model<a class="headerlink" href="#define-your-first-model" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 
 <span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">Field</span><span class="p">,</span> <span class="n">Model</span>
@@ -410,6 +676,7 @@ to run the following steps with
     <span class="n">founded</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">gte</span><span class="o">=</span><span class="mi">1440</span><span class="p">)</span>
     <span class="n">location</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 </code></pre></div>
+
 <p>By defining the <code>Publisher</code> class, we've just created an ODMantic model 🎉. In this
 example, the model will represent book publishers.</p>
 <p>This model contains three fields:</p>
@@ -432,26 +699,28 @@ example, the model will represent book publishers.</p>
 </ul>
 <p>The collection name has been defined by ODMantic as well. In this case it will be
 <code>publisher</code>.</p>
-<h3 id="create-some-instances">Create some instances<a class="headerlink" href="#create-some-instances" title="Permanent link">¶</a></h3>
+<h3 id="create-some-instances">Create some instances<a class="headerlink" href="#create-some-instances" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="n">instances</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">Publisher</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"HarperCollins"</span><span class="p">,</span> <span class="n">founded</span><span class="o">=</span><span class="mi">1989</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s2">"US"</span><span class="p">),</span>
-    <span class="n">Publisher</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"Hachette Livre"</span><span class="p">,</span> <span class="n">founded</span><span class="o">=</span><span class="mi">1826</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s2">"FR"</span><span class="p">),</span>
-    <span class="n">Publisher</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"Lulu"</span><span class="p">,</span> <span class="n">founded</span><span class="o">=</span><span class="mi">2002</span><span class="p">)</span>
+    <span class="n">Publisher</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;HarperCollins&quot;</span><span class="p">,</span> <span class="n">founded</span><span class="o">=</span><span class="mi">1989</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s2">&quot;US&quot;</span><span class="p">),</span>
+    <span class="n">Publisher</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Hachette Livre&quot;</span><span class="p">,</span> <span class="n">founded</span><span class="o">=</span><span class="mi">1826</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s2">&quot;FR&quot;</span><span class="p">),</span>
+    <span class="n">Publisher</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Lulu&quot;</span><span class="p">,</span> <span class="n">founded</span><span class="o">=</span><span class="mi">2002</span><span class="p">)</span>
 <span class="p">]</span>
 </code></pre></div>
+
 <p>We defined three instances of the Publisher model. They all have a <code>name</code> property as it
 was required. All the foundations years are later than 1440. The last publisher has no
 location specified so by default this field is set to <code>None</code> (it will be stored as
 <code>null</code> in the database).</p>
 <p>For now, those instances only exists locally. We will persist them in a database in the
 next step.</p>
-<h3 id="populate-the-database-with-your-instances">Populate the database with your instances<a class="headerlink" href="#populate-the-database-with-your-instances" title="Permanent link">¶</a></h3>
+<h3 id="populate-the-database-with-your-instances">Populate the database with your instances<a class="headerlink" href="#populate-the-database-with-your-instances" title="Permanent link">&para;</a></h3>
 <blockquote>
 <p>For the next steps, you'll need to start a local MongoDB server.The easiest way is
 to use docker. Simply run the next command in a terminal (closing the terminal will
 terminate the MongoDB instance and remove the container).</p>
 <div class="highlight"><pre><span></span><code>docker run --rm --net<span class="o">=</span>host mongo
 </code></pre></div>
+
 </blockquote>
 <p>First, let's connect to the database using the engine. In ODMantic, every database
 operation is performed using the engine object.</p>
@@ -459,6 +728,7 @@ operation is performed using the engine object.</p>
 
 <span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">()</span>
 </code></pre></div>
+
 <p>By default, the <code>AIOEngine</code> (stands for AsyncIOEngine) automatically tries to connect to a
 MongoDB instance running locally (on port 27017). Since we didn't provide any database name, it will use
 the database named <code>test</code> by default.</p>
@@ -466,92 +736,106 @@ the database named <code>test</code> by default.</p>
 operation using the <code>AIOEngine.save_all</code> method.</p>
 <div class="highlight"><pre><span></span><code><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save_all</span><span class="p">(</span><span class="n">instances</span><span class="p">)</span>
 </code></pre></div>
+
 <p>Most of the engine I/O methods are asynchronous, hence the <code>await</code> keyword used here.
 Once the operation is complete, we should be able to see our created documents in the
-database. You can use <a href="https://www.mongodb.com/products/compass" target="_blank">Compass</a> or <a href="https://robomongo.org/" target="_blank">RoboMongo</a> if you'd like to have a graphical interface.</p>
+database. You can use <a href="https://www.mongodb.com/products/compass"
+target="_blank">Compass</a> or <a href="https://robomongo.org/"
+target="_blank">RoboMongo</a> if you'd like to have a graphical interface.</p>
 <p>Another possibility is to use <code>mongo</code> cli directly:</p>
-<div class="highlight"><pre><span></span><code>mongo --eval <span class="s2">"db.publisher.find({})"</span>
+<div class="highlight"><pre><span></span><code>mongo --eval <span class="s2">&quot;db.publisher.find({})&quot;</span>
 </code></pre></div>
+
 <p>Output:</p>
 <div class="highlight"><pre><span></span><code><span class="err">connecting</span> <span class="err">to:</span> <span class="err">mongodb://</span><span class="mf">127.0</span><span class="err">.</span><span class="mf">0.1</span><span class="err">:</span><span class="mi">27017</span>
 <span class="p">{</span>
-  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f67b331514d6855bc5c54c9"</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">"founded"</span><span class="p">:</span> <span class="mi">1989</span><span class="p">,</span>
-  <span class="nt">"location"</span><span class="p">:</span> <span class="s2">"US"</span><span class="p">,</span>
-  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"HarperCollins"</span>
+  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">&quot;5f67b331514d6855bc5c54c9&quot;</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">&quot;founded&quot;</span><span class="p">:</span> <span class="mi">1989</span><span class="p">,</span>
+  <span class="nt">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;US&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;HarperCollins&quot;</span>
 <span class="p">}</span><span class="err">,</span>
 <span class="p">{</span>
-  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f67b331514d6855bc5c54ca"</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">"founded"</span><span class="p">:</span><span class="mi">1826</span><span class="p">,</span>
-  <span class="nt">"location"</span><span class="p">:</span> <span class="s2">"FR"</span><span class="p">,</span>
-  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Hachette Livre"</span>
+  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">&quot;5f67b331514d6855bc5c54ca&quot;</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">&quot;founded&quot;</span><span class="p">:</span><span class="mi">1826</span><span class="p">,</span>
+  <span class="nt">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;FR&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Hachette Livre&quot;</span>
 <span class="p">}</span><span class="err">,</span>
 <span class="p">{</span>
-  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f67b331514d6855bc5c54cb"</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">"founded"</span><span class="p">:</span> <span class="mi">2002</span><span class="p">,</span>
-  <span class="nt">"location"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
-  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Lulu"</span>
+  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">&quot;5f67b331514d6855bc5c54cb&quot;</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">&quot;founded&quot;</span><span class="p">:</span> <span class="mi">2002</span><span class="p">,</span>
+  <span class="nt">&quot;location&quot;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Lulu&quot;</span>
 <span class="p">}</span>
 </code></pre></div>
+
 <p>The created instances are stored in the <code>test</code> database under the <code>publisher</code> collection.</p>
 <p>We can see that an <code>_id</code> field has been added to each document. MongoDB need this field
 to act as a primary key. Actually, this field is added by ODMantic and you can access it
 under the name <code>id</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">instances</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-<span class="c1">#&gt; ObjectId("5f67b331514d6855bc5c54c9")</span>
+<span class="c1">#&gt; ObjectId(&quot;5f67b331514d6855bc5c54c9&quot;)</span>
 </code></pre></div>
-<h3 id="find-instances-matching-a-criteria">Find instances matching a criteria<a class="headerlink" href="#find-instances-matching-a-criteria" title="Permanent link">¶</a></h3>
+
+<h3 id="find-instances-matching-a-criteria">Find instances matching a criteria<a class="headerlink" href="#find-instances-matching-a-criteria" title="Permanent link">&para;</a></h3>
 <p>Since we now have some documents in the database, we can start building some queries.</p>
 <p>First, let's find publishers created before the 2000s:</p>
 <div class="highlight"><pre><span></span><code><span class="n">early_publishers</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">Publisher</span><span class="p">,</span> <span class="n">Publisher</span><span class="o">.</span><span class="n">founded</span> <span class="o">&lt;=</span> <span class="mi">2000</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">early_publishers</span><span class="p">)</span>
-<span class="c1">#&gt; [Publisher(name="HarperCollins", founded=1989, location="US),</span>
-<span class="c1">#&gt;  Publisher(name="Hachette Livre", founded=1826, location="FR")]</span>
+<span class="c1">#&gt; [Publisher(name=&quot;HarperCollins&quot;, founded=1989, location=&quot;US),</span>
+<span class="c1">#&gt;  Publisher(name=&quot;Hachette Livre&quot;, founded=1826, location=&quot;FR&quot;)]</span>
 </code></pre></div>
+
 <p>Here, we called the <code>engine.find</code> method. The first argument we need to specify is the
 Model class we want to query on (in our case <code>Publisher</code>). The second argument is the
-actual query. Similarly to <a href="https://www.sqlalchemy.org/" target="_blank">SQLAlchemy</a>, you can build ODMantic queries using the regular python
+actual query. Similarly to <a href="https://www.sqlalchemy.org/"
+target="_blank">SQLAlchemy</a>, you can build ODMantic queries using the regular python
 operators.</p>
 <p>When awaited, the <code>engine.find</code> method will return the list of matching instances stored
 in the database.</p>
 <p>Another possibility is to query for at most one instance. For example, if we want to
 retrieve a publisher from Canada (CA):</p>
-<div class="highlight"><pre><span></span><code><span class="n">ca_publisher</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">Publisher</span><span class="p">,</span> <span class="n">Publisher</span><span class="o">.</span><span class="n">location</span> <span class="o">==</span> <span class="s2">"CA"</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">ca_publisher</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">Publisher</span><span class="p">,</span> <span class="n">Publisher</span><span class="o">.</span><span class="n">location</span> <span class="o">==</span> <span class="s2">&quot;CA&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">ca_publisher</span><span class="p">)</span>
 <span class="c1">#&gt; None</span>
 </code></pre></div>
+
 <p>Here the result is <code>None</code> because no matching instances have been found in the database.
 The <code>engine.find_one</code> method returns an instance if one exists in the database
 otherwise, it will return <code>None</code>.</p>
-<h3 id="modify-an-instance">Modify an instance<a class="headerlink" href="#modify-an-instance" title="Permanent link">¶</a></h3>
+<h3 id="modify-an-instance">Modify an instance<a class="headerlink" href="#modify-an-instance" title="Permanent link">&para;</a></h3>
 <p>Finally, let's edit some instances. For example, we can set the <code>location</code> for the
 publisher named <code>Lulu</code>.
 First, we need to gather the instance from the database:</p>
-<div class="highlight"><pre><span></span><code><span class="n">lulu</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">Publisher</span><span class="p">,</span> <span class="n">Publisher</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">"Lulu"</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">lulu</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">Publisher</span><span class="p">,</span> <span class="n">Publisher</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;Lulu&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">lulu</span><span class="p">)</span>
-<span class="c1">#&gt; Publisher(name="Lulu", founded=2002, location=None)</span>
+<span class="c1">#&gt; Publisher(name=&quot;Lulu&quot;, founded=2002, location=None)</span>
 </code></pre></div>
+
 <p>We still have the same instance, with no location set. We can change this field:</p>
-<div class="highlight"><pre><span></span><code><span class="n">lulu</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="s2">"US"</span>
+<div class="highlight"><pre><span></span><code><span class="n">lulu</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="s2">&quot;US&quot;</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">lulu</span><span class="p">)</span>
-<span class="c1">#&gt; Publisher(name="Lulu", founded=2002, location="US)</span>
+<span class="c1">#&gt; Publisher(name=&quot;Lulu&quot;, founded=2002, location=&quot;US)</span>
 </code></pre></div>
+
 <p>The location has been changed locally but the last step to persist this change is to
 save the document:</p>
 <div class="highlight"><pre><span></span><code><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">lulu</span><span class="p">)</span>
 </code></pre></div>
+
 <p>We can now check the database state:</p>
-<div class="highlight"><pre><span></span><code>mongo --eval <span class="s2">"db.publisher.find({name: 'Lulu'})"</span>
+<div class="highlight"><pre><span></span><code>mongo --eval <span class="s2">&quot;db.publisher.find({name: &#39;Lulu&#39;})&quot;</span>
 </code></pre></div>
+
 <p>Output:</p>
 <div class="highlight"><pre><span></span><code><span class="err">connecting</span> <span class="err">to:</span> <span class="err">mongodb://</span><span class="mf">127.0</span><span class="err">.</span><span class="mf">0.1</span><span class="err">:</span><span class="mi">27017</span>
 <span class="p">{</span>
-  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f67b331514d6855bc5c54cb"</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">"founded"</span><span class="p">:</span> <span class="mi">2002</span><span class="p">,</span>
-<span class="hll">  <span class="nt">"location"</span><span class="p">:</span> <span class="s2">"US"</span><span class="p">,</span>
-</span>  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Lulu"</span>
+  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">&quot;5f67b331514d6855bc5c54cb&quot;</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">&quot;founded&quot;</span><span class="p">:</span> <span class="mi">2002</span><span class="p">,</span>
+<span class="hll">  <span class="nt">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;US&quot;</span><span class="p">,</span>
+</span>  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Lulu&quot;</span>
 <span class="p">}</span>
 </code></pre></div>
+
 <p>The document have been successfully updated !</p>
 <p>Now, what if we would like to change the foundation date with an invalid one (before 1440) ?</p>
 <div class="highlight"><pre><span></span><code><span class="n">lulu</span><span class="o">.</span><span class="n">founded</span> <span class="o">=</span> <span class="mi">1000</span>
@@ -560,51 +844,73 @@ save the document:</p>
 <span class="c1">#&gt;   ensure this value is greater than 1440</span>
 <span class="c1">#&gt;   (type=value_error.number.not_gt; limit_value=1440)</span>
 </code></pre></div>
+
 <p>This will raise an exception as it's not matching the model definition. The raised
-exception is actually a <code>ValidationError</code> created by from <a href="https://pydantic-docs.helpmanual.io/usage/models/#error-handling" target="_blank">pydantic</a>.</p>
+exception is actually a <code>ValidationError</code> created by from <a
+href="https://pydantic-docs.helpmanual.io/usage/models/#error-handling"
+target="_blank">pydantic</a>.</p>
 <p>To get started on more advanced practices like relations and building more advanced
 queries, you can go to the <a href="https://art049.github.io/odmantic/quickstart/">Quickstart
 section</a>.</p>
-<h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">¶</a></h2>
-<p>This project is licensed under the terms of the <a href="https://en.wikipedia.org/wiki/ISC_license" target="_blank">ISC license</a>.</p>
-</article>
-</div>
-</div>
-</main>
+<h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
+<p>This project is licensed under the terms of the <a
+href="https://en.wikipedia.org/wiki/ISC_license" target="_blank">ISC license</a>.</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
 <footer class="md-footer">
-<div class="md-footer-nav">
-<nav aria-label="Footer" class="md-footer-nav__inner md-grid">
-<a class="md-footer-nav__link md-footer-nav__link--next" href="quickstart/" rel="next" title="Quickstart">
-<div class="md-footer-nav__title">
-<div class="md-ellipsis">
-<span class="md-footer-nav__direction">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+        
+          <a href="quickstart/" title="Quickstart" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
                   Next
                 </span>
                 Quickstart
               </div>
-</div>
-<div class="md-footer-nav__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
-</div>
-</a>
-</nav>
-</div>
-<div class="md-footer-meta md-typeset">
-<div class="md-footer-meta__inner md-grid">
-<div class="md-footer-copyright">
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
         
         Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
           Material for MkDocs
         </a>
-</div>
-</div>
-</div>
+      </div>
+      
+    </div>
+  </div>
 </footer>
-</div>
-<script src="assets/javascripts/vendor.2d1db4bd.min.js"></script>
-<script src="assets/javascripts/bundle.6627ddf3.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
-<script>
+      
+    </div>
+    
+      <script src="assets/javascripts/vendor.2d1db4bd.min.js"></script>
+      <script src="assets/javascripts/bundle.6627ddf3.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
         app = initialize({
           base: ".",
           features: ['instant'],
@@ -613,5 +919,7 @@ section</a>.</p>
           }, typeof search !== "undefined" && search)
         })
       </script>
-</body>
+      
+    
+  </body>
 </html>
