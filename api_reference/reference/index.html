@@ -15,7 +15,7 @@
     
     
       
-        <title>Reference - ODMantic</title>
+        <title>reference - ODMantic</title>
       
     
     
@@ -94,7 +94,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              Reference
+              reference
             
           </span>
         </div>
@@ -311,8 +311,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../model/" title="Model" class="md-nav__link">
-      Model
+    <a href="../model/" title="model" class="md-nav__link">
+      model
     </a>
   </li>
 
@@ -323,8 +323,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../engine/" title="Engine" class="md-nav__link">
-      Engine
+    <a href="../engine/" title="engine" class="md-nav__link">
+      engine
     </a>
   </li>
 
@@ -335,8 +335,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../query/" title="Query" class="md-nav__link">
-      Query
+    <a href="../query/" title="query" class="md-nav__link">
+      query
     </a>
   </li>
 
@@ -347,8 +347,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../field/" title="Field" class="md-nav__link">
-      Field
+    <a href="../field/" title="field" class="md-nav__link">
+      field
     </a>
   </li>
 
@@ -366,12 +366,12 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Reference
+        reference
         <span class="md-nav__icon md-icon"></span>
       </label>
     
-    <a href="./" title="Reference" class="md-nav__link md-nav__link--active">
-      Reference
+    <a href="./" title="reference" class="md-nav__link md-nav__link--active">
+      reference
     </a>
     
       
@@ -405,8 +405,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../exceptions/" title="Exceptions" class="md-nav__link">
-      Exceptions
+    <a href="../exceptions/" title="exceptions" class="md-nav__link">
+      exceptions
     </a>
   </li>
 
@@ -473,7 +473,7 @@
                   </a>
                 
                 
-                  <h1>Reference</h1>
+                  <h1>reference</h1>
                 
                 <div class="doc doc-object doc-function">
 <h2 class="doc doc-heading" id="odmantic.reference.Reference">
@@ -484,10 +484,42 @@ odmantic.reference.Reference<span class="p">(</span><span class="o">*</span><spa
 
       <a class="headerlink" href="#odmantic.reference.Reference" title="Permanent link">&para;</a></h2>
 <div class="doc doc-contents first">
+<p>Used to define reference fields.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>key_name</code></td>
+<td><code>Optional[str]</code></td>
+<td>
+<p>name of the Mongo key that stores the foreign key</p>
+</td>
+<td><code>None</code></td>
+</tr>
+</tbody>
+</table>
+<br />
 <details class="quote">
           <summary>Source code in <code>odmantic/reference.py</code></summary>
           <div class="highlight">
 <pre><span></span><code><span class="k">def</span> <span class="nf">Reference</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">key_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="sd">"""Used to define reference fields.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        key_name: name of the Mongo key that stores the foreign key</span>
+
+<span class="sd">    &lt;!--</span>
+<span class="sd">    #noqa: DAR201</span>
+<span class="sd">    --&gt;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">ODMReferenceInfo</span><span class="p">(</span><span class="n">key_name</span><span class="o">=</span><span class="n">key_name</span><span class="p">)</span>
 </code></pre>
 </div>
@@ -512,7 +544,7 @@ odmantic.reference.Reference<span class="p">(</span><span class="o">*</span><spa
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../field/" title="Field" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../field/" title="field" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -521,19 +553,19 @@ odmantic.reference.Reference<span class="p">(</span><span class="o">*</span><spa
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Field
+                field
               </div>
             </div>
           </a>
         
         
-          <a href="../exceptions/" title="Exceptions" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../exceptions/" title="exceptions" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Exceptions
+                exceptions
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">

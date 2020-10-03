@@ -15,7 +15,7 @@
     
     
       
-        <title>Field - ODMantic</title>
+        <title>field - ODMantic</title>
       
     
     
@@ -94,7 +94,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              Field
+              field
             
           </span>
         </div>
@@ -311,8 +311,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../model/" title="Model" class="md-nav__link">
-      Model
+    <a href="../model/" title="model" class="md-nav__link">
+      model
     </a>
   </li>
 
@@ -323,8 +323,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../engine/" title="Engine" class="md-nav__link">
-      Engine
+    <a href="../engine/" title="engine" class="md-nav__link">
+      engine
     </a>
   </li>
 
@@ -335,8 +335,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../query/" title="Query" class="md-nav__link">
-      Query
+    <a href="../query/" title="query" class="md-nav__link">
+      query
     </a>
   </li>
 
@@ -354,12 +354,12 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Field
+        field
         <span class="md-nav__icon md-icon"></span>
       </label>
     
-    <a href="./" title="Field" class="md-nav__link md-nav__link--active">
-      Field
+    <a href="./" title="field" class="md-nav__link md-nav__link--active">
+      field
     </a>
     
       
@@ -393,8 +393,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../reference/" title="Reference" class="md-nav__link">
-      Reference
+    <a href="../reference/" title="reference" class="md-nav__link">
+      reference
     </a>
   </li>
 
@@ -405,8 +405,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../exceptions/" title="Exceptions" class="md-nav__link">
-      Exceptions
+    <a href="../exceptions/" title="exceptions" class="md-nav__link">
+      exceptions
     </a>
   </li>
 
@@ -473,7 +473,7 @@
                   </a>
                 
                 
-                  <h1>Field</h1>
+                  <h1>field</h1>
                 
                 <div class="doc doc-object doc-function">
 <h2 class="doc doc-heading" id="odmantic.field.Field">
@@ -487,36 +487,192 @@ odmantic.field.Field<span class="p">(</span><span class="n">default</span><span 
 <p>Used to provide extra information about a field, either for the model schema or
 complex validation. Some arguments apply only to number fields (<code>int</code>, <code>float</code>,
  <code>Decimal</code>) and some apply only to <code>str</code>.</p>
-<p>:param default: since this is replacing the field’s default, its first argument is
-  used to set the default, use ellipsis (<code>...</code>) to indicate the field has no
-  default value
-:param key_name: the name to use in the the document structure
-:param primary_field: this field should be considered as a primary key.
-  Can't be used along with <code>key_name</code> since the key_name will be set to <code>_id</code></p>
-<p>:param default_factory: callable that will be called when a default value is needed
-  for this field.
-  If both <code>default</code> and <code>default_factory</code> are set, an error is raised.
-:param alias: Not supported by odmantic yet (the public name of the field)
-:param title: can be any string, used in the schema
-:param description: can be any string, used in the schema
-:param const: this field is required and <em>must</em> take it's default value
-:param gt: only applies to numbers, requires the field to be "greater than". The
-  schema will have an <code>exclusiveMinimum</code> validation keyword
-:param ge: only applies to numbers, requires the field to be "greater than or equal
-  to". The schema will have a <code>minimum</code> validation keyword
-:param lt: only applies to numbers, requires the field to be "less than". The schema
-  will have an <code>exclusiveMaximum</code> validation keyword
-:param le: only applies to numbers, requires the field to be "less than or equal to"
-  . The schema will have a <code>maximum</code> validation keyword
-:param multiple_of: only applies to numbers, requires the field to be "a multiple of
-  ". The schema will have a <code>multipleOf</code> validation keyword
-:param min_length: only applies to strings, requires the field to have a minimum
-  length. The schema will have a <code>maximum</code> validation keyword
-:param max_length: only applies to strings, requires the field to have a maximum
-  length. The schema will have a <code>maxLength</code> validation keyword
-:param regex: only applies to strings, requires the field match agains a regular
-  expression pattern string. The schema will have a <code>pattern</code> validation keyword
-:param **extra: any additional keyword arguments will be added as is to the schema</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If both <code>default</code> and <code>default_factory</code> are set, an error is raised.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code>primary_field</code> can't be used along with <code>key_name</code> since the key_name will be
+set to <code>_id</code>.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Main additions of ODMantic to the regular pydantic <code>Field</code> are the <code>key_name</code>
+and the <code>primary_field</code> options.</p>
+</div>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>default</code></td>
+<td><code>Any</code></td>
+<td>
+<p>since this is replacing the field’s default, its first argument is
+used to set the default, use ellipsis (<code>...</code>) to indicate the field has no
+default value</p>
+</td>
+<td><code>PydanticUndefined</code></td>
+</tr>
+<tr>
+<td><code>key_name</code></td>
+<td><code>Optional[str]</code></td>
+<td>
+<p>the name to use in the the mongo document structure</p>
+</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>primary_field</code></td>
+<td><code>bool</code></td>
+<td>
+<p>this field should be considered as a primary key.</p>
+</td>
+<td><code>False</code></td>
+</tr>
+<tr>
+<td><code>default_factory</code></td>
+<td><code>Optional[Callable[[], Any]]</code></td>
+<td>
+<p>callable that will be called when a default value is needed
+for this field.</p>
+</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td><code>Optional[str]</code></td>
+<td>
+<p>can be any string, used in the schema</p>
+</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><code>Optional[str]</code></td>
+<td>
+<p>can be any string, used in the schema</p>
+</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>const</code></td>
+<td><code>Optional[bool]</code></td>
+<td>
+<p>this field is required and <em>must</em> take it's default value</p>
+</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>gt</code></td>
+<td><code>Optional[float]</code></td>
+<td>
+<p>only applies to numbers, requires the field to be "greater than". The
+schema will have an <code>exclusiveMinimum</code> validation keyword</p>
+</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>ge</code></td>
+<td><code>Optional[float]</code></td>
+<td>
+<p>only applies to numbers, requires the field to be "greater than or equal
+to". The schema will have a <code>minimum</code> validation keyword</p>
+</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>lt</code></td>
+<td><code>Optional[float]</code></td>
+<td>
+<p>only applies to numbers, requires the field to be "less than". The schema
+will have an <code>exclusiveMaximum</code> validation keyword</p>
+</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>le</code></td>
+<td><code>Optional[float]</code></td>
+<td>
+<p>only applies to numbers, requires the field to be "less than or equal to"
+. The schema will have a <code>maximum</code> validation keyword</p>
+</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>multiple_of</code></td>
+<td><code>Optional[float]</code></td>
+<td>
+<p>only applies to numbers, requires the field to be "a multiple of
+". The schema will have a <code>multipleOf</code> validation keyword</p>
+</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>min_items</code></td>
+<td><code>Optional[int]</code></td>
+<td>
+<p>only applies to sequences, requires the field to have a minimum
+item count.</p>
+</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>max_items</code></td>
+<td><code>Optional[int]</code></td>
+<td>
+<p>only applies to sequences, requires the field to have a maximum
+item count.</p>
+</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>min_length</code></td>
+<td><code>Optional[int]</code></td>
+<td>
+<p>only applies to strings, requires the field to have a minimum
+length. The schema will have a <code>maximum</code> validation keyword</p>
+</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>max_length</code></td>
+<td><code>Optional[int]</code></td>
+<td>
+<p>only applies to strings, requires the field to have a maximum
+length. The schema will have a <code>maxLength</code> validation keyword</p>
+</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>regex</code></td>
+<td><code>Optional[str]</code></td>
+<td>
+<p>only applies to strings, requires the field match agains a regular
+expression pattern string. The schema will have a <code>pattern</code> validation
+keyword</p>
+</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>**extra</code></td>
+<td><code>Any</code></td>
+<td>
+<p>any additional keyword arguments will be added as is to the schema</p>
+</td>
+<td><code>{}</code></td>
+</tr>
+</tbody>
+</table>
+<br />
 <details class="quote">
           <summary>Source code in <code>odmantic/field.py</code></summary>
           <div class="highlight">
@@ -526,7 +682,7 @@ complex validation. Some arguments apply only to number fields (<code>int</code>
     <span class="n">key_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">primary_field</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">default_factory</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NoArgAnyCallable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="c1"># alias: str = None, not supported yet</span>
+    <span class="c1"># alias: str = None, # FIXME not supported yet</span>
     <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">const</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -546,43 +702,56 @@ complex validation. Some arguments apply only to number fields (<code>int</code>
 <span class="sd">    complex validation. Some arguments apply only to number fields (``int``, ``float``,</span>
 <span class="sd">     ``Decimal``) and some apply only to ``str``.</span>
 
-<span class="sd">    :param default: since this is replacing the field’s default, its first argument is</span>
-<span class="sd">      used to set the default, use ellipsis (``...``) to indicate the field has no</span>
-<span class="sd">      default value</span>
-<span class="sd">    :param key_name: the name to use in the the document structure</span>
-<span class="sd">    :param primary_field: this field should be considered as a primary key.</span>
-<span class="sd">      Can't be used along with `key_name` since the key_name will be set to `_id`</span>
+<span class="sd">    Warning:</span>
+<span class="sd">        If both `default` and `default_factory` are set, an error is raised.</span>
 
-<span class="sd">    :param default_factory: callable that will be called when a default value is needed</span>
-<span class="sd">      for this field.</span>
-<span class="sd">      If both `default` and `default_factory` are set, an error is raised.</span>
-<span class="sd">    :param alias: Not supported by odmantic yet (the public name of the field)</span>
-<span class="sd">    :param title: can be any string, used in the schema</span>
-<span class="sd">    :param description: can be any string, used in the schema</span>
-<span class="sd">    :param const: this field is required and *must* take it's default value</span>
-<span class="sd">    :param gt: only applies to numbers, requires the field to be "greater than". The</span>
-<span class="sd">      schema will have an ``exclusiveMinimum`` validation keyword</span>
-<span class="sd">    :param ge: only applies to numbers, requires the field to be "greater than or equal</span>
-<span class="sd">      to". The schema will have a ``minimum`` validation keyword</span>
-<span class="sd">    :param lt: only applies to numbers, requires the field to be "less than". The schema</span>
-<span class="sd">      will have an ``exclusiveMaximum`` validation keyword</span>
-<span class="sd">    :param le: only applies to numbers, requires the field to be "less than or equal to"</span>
-<span class="sd">      . The schema will have a ``maximum`` validation keyword</span>
-<span class="sd">    :param multiple_of: only applies to numbers, requires the field to be "a multiple of</span>
-<span class="sd">      ". The schema will have a ``multipleOf`` validation keyword</span>
-<span class="sd">    :param min_length: only applies to strings, requires the field to have a minimum</span>
-<span class="sd">      length. The schema will have a ``maximum`` validation keyword</span>
-<span class="sd">    :param max_length: only applies to strings, requires the field to have a maximum</span>
-<span class="sd">      length. The schema will have a ``maxLength`` validation keyword</span>
-<span class="sd">    :param regex: only applies to strings, requires the field match agains a regular</span>
-<span class="sd">      expression pattern string. The schema will have a ``pattern`` validation keyword</span>
-<span class="sd">    :param **extra: any additional keyword arguments will be added as is to the schema</span>
+<span class="sd">    Warning:</span>
+<span class="sd">        `primary_field` can't be used along with `key_name` since the key_name will be</span>
+<span class="sd">        set to `_id`.</span>
 
+<span class="sd">    Tip:</span>
+<span class="sd">        Main additions of ODMantic to the regular pydantic `Field` are the `key_name`</span>
+<span class="sd">        and the `primary_field` options.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        default: since this is replacing the field’s default, its first argument is</span>
+<span class="sd">          used to set the default, use ellipsis (``...``) to indicate the field has no</span>
+<span class="sd">          default value</span>
+<span class="sd">        key_name: the name to use in the the mongo document structure</span>
+<span class="sd">        primary_field: this field should be considered as a primary key.</span>
+<span class="sd">        default_factory: callable that will be called when a default value is needed</span>
+<span class="sd">          for this field.</span>
+<span class="sd">        title: can be any string, used in the schema</span>
+<span class="sd">        description: can be any string, used in the schema</span>
+<span class="sd">        const: this field is required and *must* take it's default value</span>
+<span class="sd">        gt: only applies to numbers, requires the field to be "greater than". The</span>
+<span class="sd">          schema will have an ``exclusiveMinimum`` validation keyword</span>
+<span class="sd">        ge: only applies to numbers, requires the field to be "greater than or equal</span>
+<span class="sd">          to". The schema will have a ``minimum`` validation keyword</span>
+<span class="sd">        lt: only applies to numbers, requires the field to be "less than". The schema</span>
+<span class="sd">          will have an ``exclusiveMaximum`` validation keyword</span>
+<span class="sd">        le: only applies to numbers, requires the field to be "less than or equal to"</span>
+<span class="sd">          . The schema will have a ``maximum`` validation keyword</span>
+<span class="sd">        multiple_of: only applies to numbers, requires the field to be "a multiple of</span>
+<span class="sd">          ". The schema will have a ``multipleOf`` validation keyword</span>
+<span class="sd">        min_items: only applies to sequences, requires the field to have a minimum</span>
+<span class="sd">          item count.</span>
+<span class="sd">        max_items: only applies to sequences, requires the field to have a maximum</span>
+<span class="sd">          item count.</span>
+<span class="sd">        min_length: only applies to strings, requires the field to have a minimum</span>
+<span class="sd">          length. The schema will have a ``maximum`` validation keyword</span>
+<span class="sd">        max_length: only applies to strings, requires the field to have a maximum</span>
+<span class="sd">          length. The schema will have a ``maxLength`` validation keyword</span>
+<span class="sd">        regex: only applies to strings, requires the field match agains a regular</span>
+<span class="sd">          expression pattern string. The schema will have a ``pattern`` validation</span>
+<span class="sd">          keyword</span>
+<span class="sd">        **extra: any additional keyword arguments will be added as is to the schema</span>
 
 <span class="sd">    &lt;!---</span>
-<span class="sd">    # noqa: DAR101</span>
 <span class="sd">    # noqa: DAR201</span>
+<span class="sd">    # noqa: DAR003</span>
 <span class="sd">    # noqa: DAR401</span>
+<span class="sd">    # noqa: DAR101</span>
 <span class="sd">    --&gt;</span>
 <span class="sd">    """</span>
     <span class="c1"># Perform casts on optional fields to avoid incompatibility due to the strict</span>
@@ -647,7 +816,7 @@ complex validation. Some arguments apply only to number fields (<code>int</code>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../query/" title="Query" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../query/" title="query" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -656,19 +825,19 @@ complex validation. Some arguments apply only to number fields (<code>int</code>
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Query
+                query
               </div>
             </div>
           </a>
         
         
-          <a href="../reference/" title="Reference" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../reference/" title="reference" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Reference
+                reference
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">
