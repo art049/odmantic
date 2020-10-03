@@ -21,5 +21,6 @@
     "--config-file=${workspaceFolder}/mypy.ini",
     "--no-pretty"
   ],
-  "python.languageServer": "Pylance"
+  "python.languageServer": "Pylance",
+  "python.linting.pydocstyleArgs": ["--config=./.pydocstyle"]
 }

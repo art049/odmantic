@@ -1,5 +1,3 @@
-# Query
-
 ::: odmantic.query.QueryExpression
 
 ## Logical Operators

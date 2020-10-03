@@ -2,6 +2,15 @@ from typing import Any, Optional
 
 
 def Reference(*, key_name: Optional[str] = None) -> Any:
+    """Used to define reference fields.
+
+    Args:
+        key_name: name of the Mongo key that stores the foreign key
+
+    <!--
+    #noqa: DAR201
+    -->
+    """
     return ODMReferenceInfo(key_name=key_name)
 
 

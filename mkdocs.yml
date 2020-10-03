@@ -50,10 +50,10 @@ nav:
   - types.md
   - hate.md
   - API Reference:
-      - ./api_reference/model.md
-      - ./api_reference/engine.md
-      - ./api_reference/query.md
-      - ./api_reference/field.md
-      - ./api_reference/reference.md
-      - ./api_reference/exceptions.md
+      - model: ./api_reference/model.md
+      - engine: ./api_reference/engine.md
+      - query: ./api_reference/query.md
+      - field: ./api_reference/field.md
+      - reference: ./api_reference/reference.md
+      - exceptions: ./api_reference/exceptions.md
   - changelog.md

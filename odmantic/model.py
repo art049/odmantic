@@ -505,6 +505,11 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
 
 
 class Model(_BaseODMModel, metaclass=ModelMetaclass):
+    """Class that can be extended to create an ODMantic Model.
+
+    Each model will be bound to a MongoDB collection.
+    """
+
     if TYPE_CHECKING:
         __collection__: ClassVar[str] = ""
         __primary_key__: ClassVar[str] = ""
@@ -531,4 +536,8 @@ class Model(_BaseODMModel, metaclass=ModelMetaclass):
 
 
 class EmbeddedModel(_BaseODMModel, metaclass=EmbeddedModelMetaclass):
-    ...
+    """Class that can be extended to create an ODMantic Embedded Model.
+
+    An embedded document cannot be persisted directly to the database but should be
+    integrated in a regular ODMantic Model
+    """

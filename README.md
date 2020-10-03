@@ -31,13 +31,15 @@ Core features:
 - **Simple**: define your model by typing your fields using python types, build queries
   using python comparison operators
 
-- **Developer experience**: field/method autocompletion, type hints
+- **Developer experience**: field/method autocompletion, type hints, data validation
 
 - **Fully typed**: leverage static analysis to reduce runtime issues
 
 - **AsyncIO**: works well with ASGI frameworks (<a href="https://fastapi.tiangolo.com/"
   target="_blank">FastAPI</a>, <a href="https://www.starlette.io/"
   target="_blank">Starlette</a>, ...)
+
+- **Serialization**: built in JSON serialization and JSON schema generation
 
 ## Requirements
 
@@ -153,7 +155,7 @@ database. You can use <a href="https://www.mongodb.com/products/compass"
 target="_blank">Compass</a> or <a href="https://robomongo.org/"
 target="_blank">RoboMongo</a> if you'd like to have a graphical interface.
 
-Another possibility is to use `mongo` cli directly:
+Another possibility is to use `mongo` CLI directly:
 
 ```shell
 mongo --eval "db.publisher.find({})"
