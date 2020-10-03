@@ -7,6 +7,7 @@ from typing import (
     Sequence,
     Set,
     Tuple,
+    Type,
     Union,
 )
 
@@ -25,7 +26,7 @@ from odmantic.bson_fields import (
     _objectId,
     _regex,
 )
-from odmantic.model import validate_type
+from odmantic.model import EmbeddedModel, is_type_mutable, validate_type
 
 
 @pytest.mark.parametrize("base, replacement", _BSON_SUBSTITUTED_FIELDS.items())
@@ -62,3 +63,51 @@ def test_deep_nest_bson_subst():
             Dict[Dict[Set[_long], _binary], Tuple[_regex, ...]],
         ]
     )
+
+
+class DummyEmbedded(EmbeddedModel):
+    field: str
+
+
+@pytest.mark.parametrize(
+    "t",
+    (
+        None,
+        bool,
+        int,
+        str,
+        Tuple,
+        Tuple[int, str, bool],
+        Tuple[int, ...],
+        FrozenSet[int],
+        Union[FrozenSet[int], Tuple[int, str]],
+        DummyEmbedded,
+    ),
+)
+def test_mutable_types_immutables(t: Type):
+    assert not is_type_mutable(t)
+
+
+@pytest.mark.parametrize(
+    "t",
+    (
+        List,
+        Set,
+        List[int],
+        Tuple[List[int]],
+        FrozenSet[Set[int]],
+        Dict[Tuple[int, ...], str],
+        Tuple[DummyEmbedded, ...],
+        Dict[str, DummyEmbedded],
+        FrozenSet[DummyEmbedded],
+    ),
+)
+def test_mutable_types_mutables(t: Type):
+    assert is_type_mutable(t)
+
+
+def test_mutable_types_unknown_type():
+    class T:
+        ...
+
+    assert is_type_mutable(T)

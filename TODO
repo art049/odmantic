@@ -1,10 +1,10 @@
 
 0.0.1:
-  ☐ Handle Mutable fields with smart update
-  ☐ Document usage outside odm (aggregation example)
-  ☐ Doc custom bson serializable fields
-  ☐ Doc enum fields
-  ☐ Define policy for optional fields default set to null ?
+☐ Document usage outside odm (aggregation example)
+☐ Doc custom bson serializable fields
+☐ Doc enum fields
+☐ Define policy for optional fields default set to null ?
+Handle Mutable fields with smart update
 Handle JSON serialization
 Query document based on embedded document content
 Support Embedded Documents
@@ -23,6 +23,11 @@ Async iterator
 Validate key_name argument
 
 Further Improvements:
+☐ mocked engine for testing
+☐ integrated engine test_client (using isolated db)
+  ☐ __init__ signature
+  ☐ Test embedded model as primary key mutated
+  ☐ Embedded document as dictionnary key ?
   ☐ Self referencing model ?
   ☐ Support exists not_exists and not query operators
   ☐ Support Documents/EmbeddedDocuments inheritance

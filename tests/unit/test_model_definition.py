@@ -162,7 +162,7 @@ def test_field_with_invalid_default_type():
             f: Optional[int] = "a"  # type: ignore
 
 
-@pytest.mark.skip("Wait for feedback on an pydantic issue")
+@pytest.mark.skip("Wait for feedback on an pydantic issue #1936")
 def test_field_with_invalid_default_type_in_field():
     with pytest.raises(TypeError, match="Unhandled field definition"):
 
@@ -170,7 +170,7 @@ def test_field_with_invalid_default_type_in_field():
             f: Optional[int] = Field("a")
 
 
-@pytest.mark.skip("Wait for feedback on an pydantic issue")
+@pytest.mark.skip("Wait for feedback on an pydantic issue #1936")
 def test_field_with_invalid_default_value_in_field_at_definition():
     with pytest.raises(TypeError, match="Unhandled field definition"):
 
@@ -218,7 +218,7 @@ def test_weird_overload_id_field():
     assert instance.doc() == {"_id": "Johnny", "id": 15}
 
 
-@pytest.mark.skip("Not implemented")
+@pytest.mark.skip("Not implemented, see if it should be supported...")
 def test_overload_id_with_another_primary_key():
     with pytest.raises(TypeError, match="cannot define multiple primary keys"):
 

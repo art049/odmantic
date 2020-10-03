@@ -1,4 +1,4 @@
-from typing import List
+from typing import Dict, List, Tuple
 
 import pytest
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -6,7 +6,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from odmantic.bson_fields import _objectId
 from odmantic.engine import AIOEngine
 from odmantic.exceptions import DocumentNotFoundError
-from odmantic.model import EmbeddedModel
+from odmantic.model import EmbeddedModel, Model
 
 from ..zoo.person import PersonModel
 
@@ -273,3 +273,77 @@ async def test_only_modified_set_on_save(engine: AIOEngine, mock_collection):
     collection.update_one.assert_awaited_once()
     (_, set_arg), _ = collection.update_one.await_args
     assert set_arg == {"$set": {"first_name": "John"}}
+
+
+async def test_only_mutable_list_set_on_save(engine: AIOEngine, mock_collection):
+    class M(Model):
+        field: List[str]
+        immutable_field: int
+
+    instance = M(field=["hello"], immutable_field=12)
+    await engine.save(instance)
+
+    collection = mock_collection()
+    await engine.save(instance)
+    collection.update_one.assert_awaited_once()
+    (_, set_arg), _ = collection.update_one.await_args
+    set_dict = set_arg["$set"]
+    assert list(set_dict.keys()) == ["field"]
+
+
+async def test_only_mutable_list_of_embedded_set_on_save(
+    engine: AIOEngine, mock_collection
+):
+    class E(EmbeddedModel):
+        a: str
+
+    class M(Model):
+        field: List[E]
+
+    instance = M(field=[E(a="hello")])
+    await engine.save(instance)
+
+    collection = mock_collection()
+    await engine.save(instance)
+    collection.update_one.assert_awaited_once()
+    (_, set_arg), _ = collection.update_one.await_args
+    set_dict = set_arg["$set"]
+    assert set_dict == {"field": [{"a": "hello"}]}
+
+
+async def test_only_mutable_dict_of_embedded_set_on_save(
+    engine: AIOEngine, mock_collection
+):
+    class E(EmbeddedModel):
+        a: str
+
+    class M(Model):
+        field: Dict[str, E]
+
+    instance = M(field={"hello": E(a="world")})
+    await engine.save(instance)
+
+    collection = mock_collection()
+    await engine.save(instance)
+    collection.update_one.assert_awaited_once()
+    (_, set_arg), _ = collection.update_one.await_args
+    set_dict = set_arg["$set"]
+    assert set_dict == {"field": {"hello": {"a": "world"}}}
+
+
+async def test_only_tuple_of_embedded_set_on_save(engine: AIOEngine, mock_collection):
+    class E(EmbeddedModel):
+        a: str
+
+    class M(Model):
+        field: Tuple[E]
+
+    instance = M(field=(E(a="world"),))
+    await engine.save(instance)
+
+    collection = mock_collection()
+    await engine.save(instance)
+    collection.update_one.assert_awaited_once()
+    (_, set_arg), _ = collection.update_one.await_args
+    set_dict = set_arg["$set"]
+    assert set_dict == {"field": ({"a": "world"},)}

@@ -223,11 +223,11 @@ class AIOEngine:
             save_tasks.append(self._save(sub_instance, session))
 
         await gather(*save_tasks)
-
-        if len(instance.__fields_modified__):
-            doc = instance.doc(
-                include=(instance.__fields_modified__ - set([instance.__primary_key__]))
-            )
+        fields_to_update = (
+            instance.__fields_modified__ | instance.__mutable_fields__
+        ) - set([instance.__primary_key__])
+        if len(fields_to_update) > 0:
+            doc = instance.doc(include=fields_to_update)
             collection = self._get_collection(type(instance))
             await collection.update_one(
                 {"_id": instance.id},

@@ -1,5 +1,10 @@
+import datetime
+import decimal
+import enum
+import pathlib
 import re
 import sys
+import uuid
 from abc import ABCMeta
 from collections.abc import Callable as abcCallable
 from types import FunctionType
@@ -21,6 +26,7 @@ from typing import (
     cast,
 )
 
+import bson
 import pydantic
 from pydantic.error_wrappers import ValidationError
 from pydantic.fields import Field as PDField
@@ -34,6 +40,7 @@ from odmantic.bson_fields import (
     _BSON_SUBSTITUTED_FIELDS,
     _BSON_TYPES_ENCODERS,
     BSONSerializedField,
+    _Decimal,
     _objectId,
 )
 from odmantic.field import (
@@ -87,6 +94,52 @@ def find_duplicate_key(fields: Iterable[ODMBaseField]) -> Optional[str]:
     return None
 
 
+_IMMUTABLE_TYPES = (
+    type(None),
+    bool,
+    int,
+    float,
+    str,
+    bytes,
+    tuple,
+    frozenset,
+    datetime.date,
+    datetime.time,
+    datetime.datetime,
+    datetime.timedelta,
+    enum.Enum,
+    decimal.Decimal,
+    pathlib.Path,
+    uuid.UUID,
+    pydantic.BaseModel,
+    bson.ObjectId,
+    bson.Decimal128,
+    _Decimal,
+)
+
+
+def is_type_mutable(type_: Type) -> bool:
+    type_origin: Optional[Type] = getattr(type_, "__origin__", None)
+    if type_origin is not None:
+        type_args: Tuple[Type, ...] = getattr(type_, "__args__", ())
+        for type_arg in type_args:
+            if type_arg is ...:  # Handle tuple definition
+                continue
+            if lenient_issubclass(type_origin, Iterable) and lenient_issubclass(
+                type_arg, EmbeddedModel
+            ):  # Handle nested embedded models
+                return True
+            if is_type_mutable(type_arg):
+                return True
+        if type_origin is Union:
+            return False
+        return not lenient_issubclass(type_origin, _IMMUTABLE_TYPES)
+    else:
+        return not (
+            type_ is None or lenient_issubclass(type_, _IMMUTABLE_TYPES)  # type:ignore
+        )
+
+
 def is_type_forbidden(t: Type) -> bool:
     if t is Callable or t is abcCallable:
         # Callable type require a special treatment since typing.Callable is not a class
@@ -101,6 +154,7 @@ def validate_type(type_: Type) -> Type:
         return type_
     if is_type_forbidden(type_):
         raise TypeError(f"{type_} fields are not supported")
+
     subst_type = _BSON_SUBSTITUTED_FIELDS.get(type_)
     if subst_type is not None:
         return subst_type
@@ -147,6 +201,7 @@ class BaseModelMetaclass(ABCMeta):
             odm_fields: Dict[str, ODMBaseField] = {}
             references: List[str] = []
             bson_serialized_fields: Set[str] = set()
+            mutable_fields: Set[str] = set()
 
             # Make sure all fields are defined with type annotation
             for field_name, value in namespace.items():
@@ -216,6 +271,8 @@ class BaseModelMetaclass(ABCMeta):
                     )
                     references.append(field_name)
                 else:
+                    if is_type_mutable(field_type):
+                        mutable_fields.add(field_name)
                     if isinstance(value, ODMFieldInfo):
                         key_name = (
                             value.key_name if value.key_name is not None else field_name
@@ -252,6 +309,7 @@ class BaseModelMetaclass(ABCMeta):
             namespace["__odm_fields__"] = odm_fields
             namespace["__references__"] = tuple(references)
             namespace["__bson_serialized_fields__"] = frozenset(bson_serialized_fields)
+            namespace["__mutable_fields__"] = frozenset(mutable_fields)
 
         return cast("BaseModelMetaclass", super().__new__(cls, name, bases, namespace))
 
@@ -356,6 +414,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
     if TYPE_CHECKING:
         __odm_fields__: ClassVar[Dict[str, ODMBaseField]] = {}
         __bson_serialized_fields__: ClassVar[FrozenSet[str]] = frozenset()
+        __mutable_fields__: ClassVar[FrozenSet[str]] = frozenset()
         __references__: ClassVar[Tuple[str, ...]] = ()
 
         __fields_modified__: Set[str] = set()
