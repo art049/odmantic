@@ -77,7 +77,7 @@ from odmantic import Field, Model
 
 class Publisher(Model):
     name: str
-    founded: int = Field(gte=1440)
+    founded: int = Field(ge=1440)
     location: Optional[str] = None
 ```
 
@@ -91,7 +91,7 @@ This model contains three fields:
 
 - `founded`: This is the year of foundation of the Publisher. Since the printing press
   has been invented in 1440, it would be handy to allow only values above 1440. The
-  `gte` keyword argument passed to the Field is exactly doing this. The model will
+  `ge` keyword argument passed to the Field is exactly doing this. The model will
   require a founded value greater or equal than 1440.
 
 - `location`: This field will contain the country code of the Publisher. Defining this

@@ -48,6 +48,10 @@ def Field(
     complex validation. Some arguments apply only to number fields (``int``, ``float``,
      ``Decimal``) and some apply only to ``str``.
 
+    Tip:
+        The main additions of ODMantic to the regular pydantic `Field` are the
+        `key_name` and the `primary_field` options.
+
     Warning:
         If both `default` and `default_factory` are set, an error is raised.
 
@@ -55,42 +59,39 @@ def Field(
         `primary_field` can't be used along with `key_name` since the key_name will be
         set to `_id`.
 
-    Tip:
-        Main additions of ODMantic to the regular pydantic `Field` are the `key_name`
-        and the `primary_field` options.
 
     Args:
         default: since this is replacing the field’s default, its first argument is
-          used to set the default, use ellipsis (``...``) to indicate the field has no
-          default value
+            used to set the default, use ellipsis (``...``) to indicate the field has no
+            default value
         key_name: the name to use in the the mongo document structure
         primary_field: this field should be considered as a primary key.
         default_factory: callable that will be called when a default value is needed
-          for this field.
+            for this field.
         title: can be any string, used in the schema
         description: can be any string, used in the schema
         const: this field is required and *must* take it's default value
         gt: only applies to numbers, requires the field to be "greater than". The
-          schema will have an ``exclusiveMinimum`` validation keyword
+            schema will have an ``exclusiveMinimum`` validation keyword
         ge: only applies to numbers, requires the field to be "greater than or equal
-          to". The schema will have a ``minimum`` validation keyword
+            to". The schema will have a ``minimum`` validation keyword
         lt: only applies to numbers, requires the field to be "less than". The schema
-          will have an ``exclusiveMaximum`` validation keyword
+            will have an ``exclusiveMaximum`` validation keyword
         le: only applies to numbers, requires the field to be "less than or equal to"
-          . The schema will have a ``maximum`` validation keyword
+            . The schema will have a ``maximum`` validation keyword
         multiple_of: only applies to numbers, requires the field to be "a multiple of
-          ". The schema will have a ``multipleOf`` validation keyword
+            ". The schema will have a ``multipleOf`` validation keyword
         min_items: only applies to sequences, requires the field to have a minimum
-          item count.
+            item count.
         max_items: only applies to sequences, requires the field to have a maximum
-          item count.
+            item count.
         min_length: only applies to strings, requires the field to have a minimum
-          length. The schema will have a ``maximum`` validation keyword
+            length. The schema will have a ``maximum`` validation keyword
         max_length: only applies to strings, requires the field to have a maximum
-          length. The schema will have a ``maxLength`` validation keyword
+            length. The schema will have a ``maxLength`` validation keyword
         regex: only applies to strings, requires the field match agains a regular
-          expression pattern string. The schema will have a ``pattern`` validation
-          keyword
+            expression pattern string. The schema will have a ``pattern`` validation
+            keyword
         **extra: any additional keyword arguments will be added as is to the schema
 
     <!---

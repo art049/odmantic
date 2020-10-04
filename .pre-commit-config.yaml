@@ -9,6 +9,7 @@ repos:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: check-yaml
+        exclude: "^mkdocs.yml"
       - id: check-added-large-files
   - repo: https://github.com/prettier/prettier
     rev: 1.19.1
@@ -19,6 +20,7 @@ repos:
     rev: 19.3b0
     hooks:
       - id: black
+        exclude: "^docs/.*"
   - repo: https://github.com/asottile/seed-isort-config
     rev: v2.2.0
     hooks:
@@ -31,6 +33,7 @@ repos:
     rev: v0.782
     hooks:
       - id: mypy
+        exclude: "^docs/.*"
         additional_dependencies:
           - pydantic
         args: [--no-pretty]
@@ -38,6 +41,7 @@ repos:
     rev: "3.8.3"
     hooks:
       - id: flake8
+        exclude: "^docs/.*"
         additional_dependencies:
           - darglint~=1.5.4
   - repo: https://github.com/pycqa/pydocstyle
