@@ -11,7 +11,7 @@
       
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.0.1">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.0.2">
     
     
       
@@ -192,7 +192,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../.." title="Overview" class="md-nav__link">
+    <a href="../.." class="md-nav__link">
       Overview
     </a>
   </li>
@@ -204,7 +204,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../quickstart/" title="Quickstart" class="md-nav__link">
+    <a href="../../quickstart/" class="md-nav__link">
       Quickstart
     </a>
   </li>
@@ -216,7 +216,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../fields/" title="Fields" class="md-nav__link">
+    <a href="../../fields/" class="md-nav__link">
       Fields
     </a>
   </li>
@@ -228,19 +228,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../engine/" title="Engine" class="md-nav__link">
-      Engine
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../../modeling/" title="Modeling" class="md-nav__link">
+    <a href="../../modeling/" class="md-nav__link">
       Modeling
     </a>
   </li>
@@ -252,7 +240,19 @@
 
 
   <li class="md-nav__item">
-    <a href="../../filtering/" title="Filtering" class="md-nav__link">
+    <a href="../../engine/" class="md-nav__link">
+      Engine
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../filtering/" class="md-nav__link">
       Filtering
     </a>
   </li>
@@ -264,7 +264,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../types/" title="Data types" class="md-nav__link">
+    <a href="../../types/" class="md-nav__link">
       Data types
     </a>
   </li>
@@ -276,7 +276,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../hate/" title="I hate ORMs/ODMs" class="md-nav__link">
+    <a href="../../outside_odm/" class="md-nav__link">
       I hate ORMs/ODMs
     </a>
   </li>
@@ -311,7 +311,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../model/" title="model" class="md-nav__link">
+    <a href="../model/" class="md-nav__link">
       model
     </a>
   </li>
@@ -323,7 +323,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../engine/" title="engine" class="md-nav__link">
+    <a href="../engine/" class="md-nav__link">
       engine
     </a>
   </li>
@@ -335,7 +335,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../query/" title="query" class="md-nav__link">
+    <a href="../query/" class="md-nav__link">
       query
     </a>
   </li>
@@ -358,7 +358,7 @@
         <span class="md-nav__icon md-icon"></span>
       </label>
     
-    <a href="./" title="field" class="md-nav__link md-nav__link--active">
+    <a href="./" class="md-nav__link md-nav__link--active">
       field
     </a>
     
@@ -393,7 +393,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../reference/" title="reference" class="md-nav__link">
+    <a href="../reference/" class="md-nav__link">
       reference
     </a>
   </li>
@@ -405,7 +405,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../exceptions/" title="exceptions" class="md-nav__link">
+    <a href="../exceptions/" class="md-nav__link">
       exceptions
     </a>
   </li>
@@ -422,7 +422,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../changelog/" title="Changelog" class="md-nav__link">
+    <a href="../../changelog/" class="md-nav__link">
       Changelog
     </a>
   </li>
@@ -487,6 +487,11 @@ odmantic.field.Field<span class="p">(</span><span class="n">default</span><span 
 <p>Used to provide extra information about a field, either for the model schema or
 complex validation. Some arguments apply only to number fields (<code>int</code>, <code>float</code>,
  <code>Decimal</code>) and some apply only to <code>str</code>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The main additions of ODMantic to the regular pydantic <code>Field</code> are the
+<code>key_name</code> and the <code>primary_field</code> options.</p>
+</div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>If both <code>default</code> and <code>default_factory</code> are set, an error is raised.</p>
@@ -495,11 +500,6 @@ complex validation. Some arguments apply only to number fields (<code>int</code>
 <p class="admonition-title">Warning</p>
 <p><code>primary_field</code> can't be used along with <code>key_name</code> since the key_name will be
 set to <code>_id</code>.</p>
-</div>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>Main additions of ODMantic to the regular pydantic <code>Field</code> are the <code>key_name</code>
-and the <code>primary_field</code> options.</p>
 </div>
 <p><strong>Parameters:</strong></p>
 <table>
@@ -702,6 +702,10 @@ keyword</p>
 <span class="sd">    complex validation. Some arguments apply only to number fields (``int``, ``float``,</span>
 <span class="sd">     ``Decimal``) and some apply only to ``str``.</span>
 
+<span class="sd">    Tip:</span>
+<span class="sd">        The main additions of ODMantic to the regular pydantic `Field` are the</span>
+<span class="sd">        `key_name` and the `primary_field` options.</span>
+
 <span class="sd">    Warning:</span>
 <span class="sd">        If both `default` and `default_factory` are set, an error is raised.</span>
 
@@ -709,42 +713,39 @@ keyword</p>
 <span class="sd">        `primary_field` can't be used along with `key_name` since the key_name will be</span>
 <span class="sd">        set to `_id`.</span>
 
-<span class="sd">    Tip:</span>
-<span class="sd">        Main additions of ODMantic to the regular pydantic `Field` are the `key_name`</span>
-<span class="sd">        and the `primary_field` options.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        default: since this is replacing the field’s default, its first argument is</span>
-<span class="sd">          used to set the default, use ellipsis (``...``) to indicate the field has no</span>
-<span class="sd">          default value</span>
+<span class="sd">            used to set the default, use ellipsis (``...``) to indicate the field has no</span>
+<span class="sd">            default value</span>
 <span class="sd">        key_name: the name to use in the the mongo document structure</span>
 <span class="sd">        primary_field: this field should be considered as a primary key.</span>
 <span class="sd">        default_factory: callable that will be called when a default value is needed</span>
-<span class="sd">          for this field.</span>
+<span class="sd">            for this field.</span>
 <span class="sd">        title: can be any string, used in the schema</span>
 <span class="sd">        description: can be any string, used in the schema</span>
 <span class="sd">        const: this field is required and *must* take it's default value</span>
 <span class="sd">        gt: only applies to numbers, requires the field to be "greater than". The</span>
-<span class="sd">          schema will have an ``exclusiveMinimum`` validation keyword</span>
+<span class="sd">            schema will have an ``exclusiveMinimum`` validation keyword</span>
 <span class="sd">        ge: only applies to numbers, requires the field to be "greater than or equal</span>
-<span class="sd">          to". The schema will have a ``minimum`` validation keyword</span>
+<span class="sd">            to". The schema will have a ``minimum`` validation keyword</span>
 <span class="sd">        lt: only applies to numbers, requires the field to be "less than". The schema</span>
-<span class="sd">          will have an ``exclusiveMaximum`` validation keyword</span>
+<span class="sd">            will have an ``exclusiveMaximum`` validation keyword</span>
 <span class="sd">        le: only applies to numbers, requires the field to be "less than or equal to"</span>
-<span class="sd">          . The schema will have a ``maximum`` validation keyword</span>
+<span class="sd">            . The schema will have a ``maximum`` validation keyword</span>
 <span class="sd">        multiple_of: only applies to numbers, requires the field to be "a multiple of</span>
-<span class="sd">          ". The schema will have a ``multipleOf`` validation keyword</span>
+<span class="sd">            ". The schema will have a ``multipleOf`` validation keyword</span>
 <span class="sd">        min_items: only applies to sequences, requires the field to have a minimum</span>
-<span class="sd">          item count.</span>
+<span class="sd">            item count.</span>
 <span class="sd">        max_items: only applies to sequences, requires the field to have a maximum</span>
-<span class="sd">          item count.</span>
+<span class="sd">            item count.</span>
 <span class="sd">        min_length: only applies to strings, requires the field to have a minimum</span>
-<span class="sd">          length. The schema will have a ``maximum`` validation keyword</span>
+<span class="sd">            length. The schema will have a ``maximum`` validation keyword</span>
 <span class="sd">        max_length: only applies to strings, requires the field to have a maximum</span>
-<span class="sd">          length. The schema will have a ``maxLength`` validation keyword</span>
+<span class="sd">            length. The schema will have a ``maxLength`` validation keyword</span>
 <span class="sd">        regex: only applies to strings, requires the field match agains a regular</span>
-<span class="sd">          expression pattern string. The schema will have a ``pattern`` validation</span>
-<span class="sd">          keyword</span>
+<span class="sd">            expression pattern string. The schema will have a ``pattern`` validation</span>
+<span class="sd">            keyword</span>
 <span class="sd">        **extra: any additional keyword arguments will be added as is to the schema</span>
 
 <span class="sd">    &lt;!---</span>
@@ -816,7 +817,7 @@ keyword</p>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../query/" title="query" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../query/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -831,7 +832,7 @@ keyword</p>
           </a>
         
         
-          <a href="../reference/" title="reference" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../reference/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
@@ -865,7 +866,7 @@ keyword</p>
     </div>
     
       <script src="../../assets/javascripts/vendor.77e55a48.min.js"></script>
-      <script src="../../assets/javascripts/bundle.aa3f9871.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      <script src="../../assets/javascripts/bundle.9554a270.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({

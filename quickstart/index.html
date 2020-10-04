@@ -11,7 +11,7 @@
       
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.0.1">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.0.2">
     
     
       
@@ -192,7 +192,7 @@
 
 
   <li class="md-nav__item">
-    <a href=".." title="Overview" class="md-nav__link">
+    <a href=".." class="md-nav__link">
       Overview
     </a>
   </li>
@@ -217,7 +217,7 @@
         <span class="md-nav__icon md-icon"></span>
       </label>
     
-    <a href="./" title="Quickstart" class="md-nav__link md-nav__link--active">
+    <a href="./" class="md-nav__link md-nav__link--active">
       Quickstart
     </a>
     
@@ -295,7 +295,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../fields/" title="Fields" class="md-nav__link">
+    <a href="../fields/" class="md-nav__link">
       Fields
     </a>
   </li>
@@ -307,19 +307,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../engine/" title="Engine" class="md-nav__link">
-      Engine
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../modeling/" title="Modeling" class="md-nav__link">
+    <a href="../modeling/" class="md-nav__link">
       Modeling
     </a>
   </li>
@@ -331,7 +319,19 @@
 
 
   <li class="md-nav__item">
-    <a href="../filtering/" title="Filtering" class="md-nav__link">
+    <a href="../engine/" class="md-nav__link">
+      Engine
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../filtering/" class="md-nav__link">
       Filtering
     </a>
   </li>
@@ -343,7 +343,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../types/" title="Data types" class="md-nav__link">
+    <a href="../types/" class="md-nav__link">
       Data types
     </a>
   </li>
@@ -355,7 +355,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../hate/" title="I hate ORMs/ODMs" class="md-nav__link">
+    <a href="../outside_odm/" class="md-nav__link">
       I hate ORMs/ODMs
     </a>
   </li>
@@ -388,7 +388,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../api_reference/model/" title="model" class="md-nav__link">
+    <a href="../api_reference/model/" class="md-nav__link">
       model
     </a>
   </li>
@@ -400,7 +400,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../api_reference/engine/" title="engine" class="md-nav__link">
+    <a href="../api_reference/engine/" class="md-nav__link">
       engine
     </a>
   </li>
@@ -412,7 +412,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../api_reference/query/" title="query" class="md-nav__link">
+    <a href="../api_reference/query/" class="md-nav__link">
       query
     </a>
   </li>
@@ -424,7 +424,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../api_reference/field/" title="field" class="md-nav__link">
+    <a href="../api_reference/field/" class="md-nav__link">
       field
     </a>
   </li>
@@ -436,7 +436,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../api_reference/reference/" title="reference" class="md-nav__link">
+    <a href="../api_reference/reference/" class="md-nav__link">
       reference
     </a>
   </li>
@@ -448,7 +448,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../api_reference/exceptions/" title="exceptions" class="md-nav__link">
+    <a href="../api_reference/exceptions/" class="md-nav__link">
       exceptions
     </a>
   </li>
@@ -465,7 +465,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../changelog/" title="Changelog" class="md-nav__link">
+    <a href="../changelog/" class="md-nav__link">
       Changelog
     </a>
   </li>
@@ -588,35 +588,38 @@
 </code></pre></div>
 
 <h3 id="persisting-an-instance">Persisting an instance<a class="headerlink" href="#persisting-an-instance" title="Permanent link">&para;</a></h3>
-<div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">save</label><div class="tabbed-content"></div>
-</div>
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">save</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">Person</span><span class="p">(</span><span class="n">first_name</span><span class="o">=</span><span class="s2">&quot;Freddie&quot;</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="s2">&quot;Mercury&quot;</span><span class="p">))</span>
 <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">Person</span><span class="p">(</span><span class="n">first_name</span><span class="o">=</span><span class="s2">&quot;Robert&quot;</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="s2">&quot;Miles&quot;</span><span class="p">))</span><span class="err">`</span>
 </code></pre></div>
 
-<div class="tabbed-set" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">save_all</label><div class="tabbed-content"></div>
 </div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">save_all</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save_all</span><span class="p">([</span>
     <span class="n">Person</span><span class="p">(</span><span class="n">first_name</span><span class="o">=</span><span class="s2">&quot;Freddie&quot;</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="s2">&quot;Mercury&quot;</span><span class="p">),</span>
     <span class="n">Person</span><span class="p">(</span><span class="n">first_name</span><span class="o">=</span><span class="s2">&quot;Robert&quot;</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="s2">&quot;Miles&quot;</span><span class="p">)</span>
 <span class="p">])</span>
 </code></pre></div>
 
-<h2 id="querying-instances">Querying instances<a class="headerlink" href="#querying-instances" title="Permanent link">&para;</a></h2>
-<div class="tabbed-set" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">async for</label><div class="tabbed-content"></div>
 </div>
+</div>
+<h2 id="querying-instances">Querying instances<a class="headerlink" href="#querying-instances" title="Permanent link">&para;</a></h2>
+<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">async for</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="n">cursor</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">Person</span><span class="p">,</span> <span class="n">Person</span><span class="o">.</span><span class="n">first_name</span> <span class="o">==</span> <span class="s2">&quot;Freddie&quot;</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">for</span> <span class="n">freddie</span> <span class="ow">in</span> <span class="n">cursor</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">freddie</span><span class="p">)</span>
 <span class="c1">#&gt; Person(first_name=&quot;Freddie&quot;, last_name=&quot;Mercury&quot;)`</span>
 </code></pre></div>
 
-<div class="tabbed-set" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">await</label><div class="tabbed-content"></div>
 </div>
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">await</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="n">freddies</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">Person</span><span class="p">,</span> <span class="n">Person</span><span class="o">.</span><span class="n">first_name</span> <span class="o">==</span> <span class="s2">&quot;Freddie&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">freddies</span><span class="p">)</span>
 <span class="c1">#&gt; [Person(first_name=&quot;Freddie&quot;, last_name=&quot;Mercury&quot;)]`</span>
 </code></pre></div>
+
+</div>
+</div>
                 
               
               
@@ -635,7 +638,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href=".." title="Overview" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href=".." class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -650,7 +653,7 @@
           </a>
         
         
-          <a href="../fields/" title="Fields" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../fields/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
@@ -684,7 +687,7 @@
     </div>
     
       <script src="../assets/javascripts/vendor.77e55a48.min.js"></script>
-      <script src="../assets/javascripts/bundle.aa3f9871.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      <script src="../assets/javascripts/bundle.9554a270.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({
