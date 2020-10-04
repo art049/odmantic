@@ -144,9 +144,18 @@
     </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#relations">
-    Relations ?
+<a class="md-nav__link" href="#models">
+    Models
   </a>
+<nav aria-label="Models" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#collection">
+    Collection
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#embedded-models">
@@ -162,6 +171,11 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#one-to-many">
     One to Many
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#customization">
+    Customization
   </a>
 </li>
 </ul>
@@ -274,9 +288,18 @@
     </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#relations">
-    Relations ?
+<a class="md-nav__link" href="#models">
+    Models
   </a>
+<nav aria-label="Models" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#collection">
+    Collection
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#embedded-models">
@@ -292,6 +315,11 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#one-to-many">
     One to Many
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#customization">
+    Customization
   </a>
 </li>
 </ul>
@@ -327,7 +355,33 @@
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
 <h1 id="modeling">Modeling<a class="headerlink" href="#modeling" title="Permanent link">¶</a></h1>
-<h2 id="relations">Relations ?<a class="headerlink" href="#relations" title="Permanent link">¶</a></h2>
+<h2 id="models">Models<a class="headerlink" href="#models" title="Permanent link">¶</a></h2>
+<p>To create a Model, simply inherit from the <a href="../api_reference/model/#odmantic.model.Model">Model</a> class and then
+specify the field types and eventually their descriptors.</p>
+<h3 id="collection">Collection<a class="headerlink" href="#collection" title="Permanent link">¶</a></h3>
+<p>Each Model will be linked to its own collection. By default, the collection name will be
+created from the chosen class name and converted to
+<a href="https://en.wikipedia.org/wiki/Snake_case">snake_case</a>. For example a model class named
+<code>CapitalCity</code> will be stored in the collection named <code>capital_city</code>.</p>
+<p>If the class name ends with <code>Model</code>, ODMantic will remove it to create the collection
+name. For example, a model class named <code>PersonModel</code> will belong in the <code>person</code>
+collection.</p>
+<p>It's possible to change the collection name of a model by specifying the <code>__collection__</code>
+class variable in the class body.</p>
+<div class="admonition example">
+<p class="admonition-title">Custom collection name example</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">Model</span>
+
+<span class="k">class</span> <span class="nc">CapitalCity</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">__collection__</span> <span class="o">=</span> <span class="s2">"city"</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">population</span><span class="p">:</span> <span class="nb">int</span>
+</code></pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Models and Embedded models inheritance is not supported yet.</p>
+</div>
 <h2 id="embedded-models">Embedded Models<a class="headerlink" href="#embedded-models" title="Permanent link">¶</a></h2>
 <p>Using an embedded model will store it directly in the root model it's integrated
 in. On the MongoDB side, the collection will contain the root documents and in inside
@@ -343,6 +397,9 @@ relationships.</p>
 model, it will not be possible to query on them directly without specifying a root
 document.</p>
 </div>
+<p>The creation of an Embedded model is done by inheriting the
+<a href="../api_reference/model/#odmantic.model.EmbeddedModel">EmbeddedModel</a> class. You can then define fields exactly
+as for the regular Models.</p>
 <h3 id="one-to-one">One to One<a class="headerlink" href="#one-to-one" title="Permanent link">¶</a></h3>
 <p>In this example, we will model the relation between a country and its capital city.
 Since one capital city can belong to one and only one country, we can model this
@@ -410,8 +467,7 @@ relation as a One-to-One relationship. We will use an Embedded Model in this cas
 <code>CapitalCity</code> class will be considered as a field type during the model definition.</p>
 <p>The <a href="../api_reference/field/#odmantic.field.Field">Field</a> descriptor can be used as well for Embedded
 Models in order to bring more flexibility (default values, Mongo key name, ...).</p>
-<p>Content of the <code>country</code> collection after execution:
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<details class="abstract" open="open"><summary>Content of the <code>country</code> collection after execution</summary><div class="highlight"><pre><span></span><code><span class="p">{</span>
   <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f79d7e8b305f24ca43593e2"</span><span class="err">)</span><span class="p">,</span>
   <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Sweden"</span><span class="p">,</span>
   <span class="nt">"currency"</span><span class="p">:</span> <span class="s2">"Swedish krona"</span><span class="p">,</span>
@@ -429,7 +485,8 @@ Models in order to bring more flexibility (default values, Mongo key name, ...).
 </span><span class="hll">    <span class="nt">"population"</span><span class="p">:</span> <span class="mi">1035000</span>
 </span><span class="hll">  <span class="p">}</span>
 </span><span class="p">}</span>
-</code></pre></div></p>
+</code></pre></div>
+</details>
 <!-- prettier-ignore -->
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -530,8 +587,7 @@ should not be linked together).</p>
 <p>As done previously for the One to One relation, defining a One to Many relationship with
 Embedded Models is done exactly as defining a field with its type being a sequence of
 <code>Address</code> objects.</p>
-<p>Content of the <code>customer</code> collection after execution:
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<details class="abstract" open="open"><summary>Content of the <code>customer</code> collection after execution</summary><div class="highlight"><pre><span></span><code><span class="p">{</span>
   <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f79eb116371e09b16e4fae4"</span><span class="err">)</span><span class="p">,</span>
   <span class="nt">"name"</span><span class="p">:</span><span class="s2">"John Doe"</span><span class="p">,</span>
 <span class="hll">  <span class="nt">"addresses"</span><span class="p">:[</span>
@@ -549,7 +605,8 @@ Embedded Models is done exactly as defining a field with its type being a sequen
 </span><span class="hll">    <span class="p">}</span>
 </span><span class="hll">  <span class="p">]</span>
 </span><span class="p">}</span>
-</code></pre></div></p>
+</code></pre></div>
+</details>
 <!-- prettier-ignore -->
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -567,16 +624,41 @@ not supported yet (but this feature is planned for an upcoming release <img alt=
 (<code>$all</code>, <code>$elemMatch</code>, <code>$size</code>). See the <a href="../outside_odm/">Usage outside the ODM</a> section for
 more details.</p>
 </div>
+<h3 id="customization">Customization<a class="headerlink" href="#customization" title="Permanent link">¶</a></h3>
+<p>Since the Embedded Models are considered as types by ODMantic, most of the complex type
+constructs that could be imagined should be supported.</p>
+<p>Some ideas which could be useful:</p>
+<ul>
+<li>
+<p>Combine two different embedded models in a single field using <code>typing.Tuple</code>.</p>
+</li>
+<li>
+<p>Allow multiple Embedded model types using a <code>typing.Union</code> type.</p>
+</li>
+<li>
+<p>Make an Embedded model not required using <code>typing.Optional</code>.</p>
+</li>
+<li>
+<p>Embed the documents in a dictionary (using the <code>typing.Dict</code> type) to provide an
+  additional key-value mapping to the embedded documents.</p>
+</li>
+<li>
+<p>Nest embedded documents</p>
+</li>
+</ul>
 <h2 id="referenced-models">Referenced models<a class="headerlink" href="#referenced-models" title="Permanent link">¶</a></h2>
 <p>Embedded models are really simple to use but sometimes it is needed as well to
-have many-to-one or
+have <strong>many-to-one</strong> or
 <a href="https://en.wikipedia.org/wiki/Many-to-many_(data_model)" target="_blank">many-to-many</a>
 relationships. This is not really possible to model those using embedded documents and
 in this case, references will come handy.
-Another use case where references are useful is for One-to-One/One-to-Many relations but
-when the referenced model has to exist in its own collection, to be accessed on its own
-without any parent model specified.</p>
+Another use case where references are useful is for one-to-one/one-to-many relations but
+when the referenced model has to exist in its own collection, in order to be accessed on
+ its own without any parent model specified.</p>
 <h3 id="many-to-one-mapped">Many to One (Mapped)<a class="headerlink" href="#many-to-one-mapped" title="Permanent link">¶</a></h3>
+<p>In this part, we will model the relation between books and publishers. Let's consider that each
+book has a single publisher. In this case, multiple books could be published by the same
+publisher. We can thus model this relation as a many-to-one relationship.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -589,21 +671,97 @@ without any parent model specified.</p>
 10
 11
 12
-13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">Reference</span>
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span><span class="p">,</span> <span class="n">Model</span><span class="p">,</span> <span class="n">Reference</span>
 
 
-<span class="k">class</span> <span class="nc">Publisher</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+<span class="hll"><span class="k">class</span> <span class="nc">Publisher</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+</span>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">founded</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">location</span><span class="p">:</span> <span class="nb">str</span>
 
-<span class="hll">
-</span><span class="k">class</span> <span class="nc">Book</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span>
+
+<span class="hll"><span class="k">class</span> <span class="nc">Book</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+</span>    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">pages</span><span class="p">:</span> <span class="nb">int</span>
-    <span class="n">publisher</span><span class="p">:</span> <span class="n">Publisher</span> <span class="o">=</span> <span class="n">Reference</span><span class="p">()</span>
+<span class="hll">    <span class="n">publisher</span><span class="p">:</span> <span class="n">Publisher</span> <span class="o">=</span> <span class="n">Reference</span><span class="p">()</span>
+</span>
+
+<span class="n">hachette</span> <span class="o">=</span> <span class="n">Publisher</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"Hachette Livre"</span><span class="p">,</span> <span class="n">founded</span><span class="o">=</span><span class="mi">1826</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s2">"FR"</span><span class="p">)</span>
+<span class="n">harper</span> <span class="o">=</span> <span class="n">Publisher</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"HarperCollins"</span><span class="p">,</span> <span class="n">founded</span><span class="o">=</span><span class="mi">1989</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s2">"US"</span><span class="p">)</span>
+
+<span class="hll"><span class="n">books</span> <span class="o">=</span> <span class="p">[</span>
+</span><span class="hll">    <span class="n">Book</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"They Didn't See Us Coming"</span><span class="p">,</span> <span class="n">pages</span><span class="o">=</span><span class="mi">304</span><span class="p">,</span> <span class="n">publisher</span><span class="o">=</span><span class="n">hachette</span><span class="p">),</span>
+</span><span class="hll">    <span class="n">Book</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"This Isn't Happening"</span><span class="p">,</span> <span class="n">pages</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">publisher</span><span class="o">=</span><span class="n">hachette</span><span class="p">,),</span>
+</span><span class="hll">    <span class="n">Book</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"Prodigal Summer"</span><span class="p">,</span> <span class="n">pages</span><span class="o">=</span><span class="mi">464</span><span class="p">,</span> <span class="n">publisher</span><span class="o">=</span><span class="n">harper</span><span class="p">),</span>
+</span><span class="hll"><span class="p">]</span>
+</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">()</span>
+<span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save_all</span><span class="p">(</span><span class="n">books</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+<p>The definition of a reference field <strong>requires</strong> the presence of the <a href="../api_reference/reference/#odmantic.reference.Reference">Reference()</a>
+descriptor. Once the models are defined, linking two instances is done simply by
+assigning the reference field of referencing instance to the referenced instance.</p>
+<details class="question"><summary>Why is it required to include the Reference descriptor ?</summary><p>The main goal behind enforcing the presence of the descriptor is to have a clear
+distinction between Embedded Models and References.</p>
+<p>In the future, a generic <code>Reference[T]</code> type will probably be included to make this
+distinction since it would make more sense than having to set a descriptor for each
+reference.</p>
+</details>
+<details class="abstract" open="open"><summary>Content of the <code>publisher</code> collection after execution</summary><p><div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="hll">  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f7a0dc48a73b20f16e2a364"</span><span class="err">)</span><span class="p">,</span>
+</span>  <span class="nt">"founded"</span><span class="p">:</span> <span class="mi">1826</span><span class="p">,</span>
+  <span class="nt">"location"</span><span class="p">:</span> <span class="s2">"FR"</span><span class="p">,</span>
+  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Hachette Livre"</span>
+<span class="p">}</span>
+<span class="p">{</span>
+<span class="hll">  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f7a0dc48a73b20f16e2a365"</span><span class="err">)</span><span class="p">,</span>
+</span>  <span class="nt">"founded"</span><span class="p">:</span> <span class="mi">1989</span><span class="p">,</span>
+  <span class="nt">"location"</span><span class="p">:</span> <span class="s2">"US"</span><span class="p">,</span>
+  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"HarperCollins"</span>
+<span class="p">}</span>
+</code></pre></div>
+We can see that the publishers have been persisted to their collection even if no
+explicit save has been perfomed.
+When calling the <a href="../api_reference/engine/#odmantic.engine.AIOEngine.save">engine.save</a> method, the engine
+will persist automatically the referenced documents.</p>
+<p>While fetching instances, the engine will as well resolve <strong>every</strong> reference.</p>
+</details>
+<details class="abstract" open="open"><summary>Content of the <code>book</code> collection after execution</summary><p><div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f7a0dc48a73b20f16e2a366"</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">"pages"</span><span class="p">:</span> <span class="mi">304</span><span class="p">,</span>
+<span class="hll">  <span class="nt">"publisher"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f7a0dc48a73b20f16e2a364"</span><span class="err">)</span><span class="p">,</span>
+</span>  <span class="nt">"title"</span><span class="p">:</span> <span class="s2">"They Didn't See Us Coming"</span>
+<span class="p">}</span>
+<span class="p">{</span>
+  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f7a0dc48a73b20f16e2a367"</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">"pages"</span><span class="p">:</span> <span class="mi">256</span><span class="p">,</span>
+<span class="hll">  <span class="nt">"publisher"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f7a0dc48a73b20f16e2a364"</span><span class="err">)</span><span class="p">,</span>
+</span>  <span class="nt">"title"</span><span class="p">:</span> <span class="s2">"This Isn't Happening"</span>
+<span class="p">}</span>
+<span class="p">{</span>
+  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f7a0dc48a73b20f16e2a368"</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">"pages"</span><span class="p">:</span> <span class="mi">464</span><span class="p">,</span>
+<span class="hll">  <span class="nt">"publisher"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f7a0dc48a73b20f16e2a365"</span><span class="err">)</span><span class="p">,</span>
+</span>  <span class="nt">"title"</span><span class="p">:</span> <span class="s2">"Prodigal Summer"</span>
+<span class="p">}</span>
+</code></pre></div>
+The resulting books in the collection contain the publisher reference directly as a
+document attribute (using the reference name as the document's key).</p>
+</details>
 <!-- prettier-ignore -->
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -611,6 +769,14 @@ without any parent model specified.</p>
 while building the <a href="../api_reference/reference/#odmantic.reference.Reference">Reference</a> descriptor.</p>
 </div>
 <h3 id="many-to-many-manual">Many to Many (Manual)<a class="headerlink" href="#many-to-many-manual" title="Permanent link">¶</a></h3>
+<p>Here, we will model the relation between books and their authors. Since a book can have
+multiple authors and an author can be authoring multiple books, we will model this
+ relation as a many-to-many relationship.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Currently, ODMantic does not support mapped multi-references yet. But we will still
+define the relationship in a manual way.</p>
+</div>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -620,18 +786,111 @@ while building the <a href="../api_reference/reference/#odmantic.reference.Refer
  7
  8
  9
-10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Publisher</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+<span class="kn">from</span> <span class="nn">bson</span> <span class="kn">import</span> <span class="n">ObjectId</span>
+
+<span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span><span class="p">,</span> <span class="n">Model</span>
+
+
+<span class="k">class</span> <span class="nc">Author</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">founded</span><span class="p">:</span> <span class="nb">int</span>
-    <span class="n">location</span><span class="p">:</span> <span class="nb">str</span>
 
 
 <span class="k">class</span> <span class="nc">Book</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">title</span><span class="p">:</span> <span class="nb">str</span>
 <span class="hll">    <span class="n">pages</span><span class="p">:</span> <span class="nb">int</span>
-</span>    <span class="n">publisher_ids</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">ObjectId</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+</span>    <span class="n">author_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">ObjectId</span><span class="p">]</span>
+
+
+<span class="hll"><span class="n">david</span> <span class="o">=</span> <span class="n">Author</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"David Beazley"</span><span class="p">)</span>
+</span><span class="hll"><span class="n">brian</span> <span class="o">=</span> <span class="n">Author</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"Brian K. Jones"</span><span class="p">)</span>
+</span>
+<span class="n">python_cookbook</span> <span class="o">=</span> <span class="n">Book</span><span class="p">(</span>
+<span class="hll">    <span class="n">title</span><span class="o">=</span><span class="s2">"Python Cookbook"</span><span class="p">,</span> <span class="n">pages</span><span class="o">=</span><span class="mi">706</span><span class="p">,</span> <span class="n">author_ids</span><span class="o">=</span><span class="p">[</span><span class="n">david</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">brian</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
+</span><span class="p">)</span>
+<span class="n">python_essentials</span> <span class="o">=</span> <span class="n">Book</span><span class="p">(</span>
+<span class="hll">    <span class="n">title</span><span class="o">=</span><span class="s2">"Python Essential Reference"</span><span class="p">,</span> <span class="n">pages</span><span class="o">=</span><span class="mi">717</span><span class="p">,</span> <span class="n">author_ids</span><span class="o">=</span><span class="p">[</span><span class="n">brian</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
+</span><span class="p">)</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">()</span>
+<span class="hll"><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save_all</span><span class="p">((</span><span class="n">david</span><span class="p">,</span> <span class="n">brian</span><span class="p">))</span>
+</span><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save_all</span><span class="p">((</span><span class="n">python_cookbook</span><span class="p">,</span> <span class="n">python_essentials</span><span class="p">))</span>
 </code></pre></div>
 </td></tr></table>
+<p>We defined an <code>author_ids</code> field which holds the list of unique ids of the authors (This
+<code>id</code> field in the <code>Author</code> model is generated implicitly by default).</p>
+<p>Since this multi-reference is not mapped by the ODM, we have to persist the authors
+manually.</p>
+<details class="abstract" open="open"><summary>Content of the <code>author</code> collection after execution</summary><div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="hll">  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f7a37dc7311be1362e1da4e"</span><span class="err">)</span><span class="p">,</span>
+</span>  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"David Beazley"</span>
+<span class="p">}</span>
+<span class="p">{</span>
+<span class="hll">  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f7a37dc7311be1362e1da4f"</span><span class="err">)</span><span class="p">,</span>
+</span>  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Brian K. Jones"</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+<details class="abstract" open="open"><summary>Content of the <code>book</code> collection after execution</summary><div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">"_id"</span><span class="p">:</span><span class="s2">"ObjectId(""5f7a37dc7311be1362e1da50"")"</span><span class="p">,</span>
+  <span class="nt">"title"</span><span class="p">:</span><span class="s2">"Python Cookbook"</span>
+  <span class="s2">"pages"</span><span class="p">:</span><span class="mi">706</span><span class="p">,</span>
+<span class="hll">  <span class="nt">"author_ids"</span><span class="p">:[</span>
+</span><span class="hll">    <span class="err">ObjectId(</span><span class="s2">"5f7a37dc7311be1362e1da4e"</span><span class="err">)</span><span class="p">,</span>
+</span><span class="hll">    <span class="err">ObjectId(</span><span class="s2">"5f7a37dc7311be1362e1da4f"</span><span class="err">)</span>
+</span><span class="hll">  <span class="p">],</span>
+</span><span class="p">}</span>
+<span class="p">{</span>
+  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f7a37dc7311be1362e1da51"</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">"title"</span><span class="p">:</span><span class="s2">"Python Essential Reference"</span>
+  <span class="s2">"pages"</span><span class="p">:</span><span class="mi">717</span><span class="p">,</span>
+<span class="hll">  <span class="nt">"author_ids"</span><span class="p">:[</span>
+</span><span class="hll">    <span class="err">ObjectId(</span><span class="s2">"5f7a37dc7311be1362e1da4f"</span><span class="err">)</span>
+</span><span class="hll">  <span class="p">],</span>
+</span><span class="p">}</span>
+</code></pre></div>
+</details>
+<div class="admonition example">
+<p class="admonition-title">Retrieving the authors of the Python Cookbook</p>
+<p>First, it's required to fetch the ids of the authors. Then we can use the
+<a href="../api_reference/query/#odmantic.query.in_">in_</a> filter to select only the authors with the desired ids.
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">book</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">Book</span><span class="p">,</span> <span class="n">Book</span><span class="o">.</span><span class="n">title</span> <span class="o">==</span> <span class="s2">"Python Cookbook"</span><span class="p">)</span>
+<span class="hll"><span class="n">authors</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">Author</span><span class="p">,</span> <span class="n">Author</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="n">book</span><span class="o">.</span><span class="n">author_ids</span><span class="p">))</span>
+</span><span class="nb">print</span><span class="p">(</span><span class="n">authors</span><span class="p">)</span>
+<span class="c1">#&gt; [</span>
+<span class="c1">#&gt;   Author(id=ObjectId("5f7a37dc7311be1362e1da4e"), name="David Beazley"),</span>
+<span class="c1">#&gt;   Author(id=ObjectId("5f7a37dc7311be1362e1da4f"), name="Brian K. Jones"),</span>
+<span class="c1">#&gt; ]</span>
+</code></pre></div>
+</td></tr></table></p>
+</div>
 </article>
 </div>
 </div>

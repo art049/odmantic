@@ -500,7 +500,8 @@
       <a class="headerlink" href="#odmantic.model.Model" title="Permanent link">&para;</a></h2>
 <div class="doc doc-contents first">
 <p>Class that can be extended to create an ODMantic Model.</p>
-<p>Each model will be bound to a MongoDB collection.</p>
+<p>Each model will be bound to a MongoDB collection. You can customize the collection
+name by setting the <code>__collection__</code> class variable in the model classes.</p>
 </div>
 </div>
 <div class="doc doc-object doc-class">
@@ -515,7 +516,7 @@
 <div class="doc doc-contents first">
 <p>Class that can be extended to create an ODMantic Embedded Model.</p>
 <p>An embedded document cannot be persisted directly to the database but should be
-integrated in a regular ODMantic Model</p>
+integrated in a regular ODMantic Model.</p>
 </div>
 </div>
                 
