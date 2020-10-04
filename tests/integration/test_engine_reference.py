@@ -1,6 +1,8 @@
 import pytest
 
 from odmantic.engine import AIOEngine
+from odmantic.model import Model
+from odmantic.reference import Reference
 from tests.zoo.deeply_nested import NestedLevel1, NestedLevel2, NestedLevel3
 
 from ..zoo.book_reference import Book, Publisher
@@ -62,3 +64,19 @@ async def test_multiple_save_deeply_nested_and_fetch(engine: AIOEngine):
     assert len(fetched) == 2
     assert fetched[0] in instances
     assert fetched[1] in instances
+
+
+async def test_reference_with_key_name(engine: AIOEngine):
+    class R(Model):
+        field: int
+
+    class M(Model):
+        r: R = Reference(key_name="fancy_key_name")
+
+    instance = M(r=R(field=3))
+    assert "fancy_key_name" in instance.doc()
+    await engine.save(instance)
+
+    fetched = await engine.find_one(M)
+    assert fetched is not None
+    assert fetched.r.field == 3

@@ -134,12 +134,12 @@ class AIOEngine:
                                 doc_namespace=f"{doc_namespace}{ref_field_name}.",
                             ),
                         ],
-                        "as": ref_field_name
+                        "as": odm_reference.key_name
                         # FIXME if ref field name is an existing key_name ?
                     }
                 }
             )
-            pipeline.append({"$unwind": f"${ref_field_name}"})
+            pipeline.append({"$unwind": f"${odm_reference.key_name}"})
         return pipeline
 
     def find(
