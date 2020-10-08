@@ -360,18 +360,6 @@
 
 
   <li class="md-nav__item">
-    <a href="types/" class="md-nav__link">
-      Data types
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
     <a href="outside_odm/" class="md-nav__link">
       I hate ORMs/ODMs
     </a>
@@ -385,14 +373,14 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
     
-    <label class="md-nav__link" for="nav-9">
+    <label class="md-nav__link" for="nav-8">
       API Reference
       <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="API Reference" data-md-level="1">
-      <label class="md-nav__title" for="nav-9">
+      <label class="md-nav__title" for="nav-8">
         <span class="md-nav__icon md-icon"></span>
         API Reference
       </label>
@@ -406,7 +394,7 @@
 
   <li class="md-nav__item">
     <a href="api_reference/model/" class="md-nav__link">
-      model
+      odmantic.model
     </a>
   </li>
 
@@ -418,7 +406,7 @@
 
   <li class="md-nav__item">
     <a href="api_reference/engine/" class="md-nav__link">
-      engine
+      odmantic.engine
     </a>
   </li>
 
@@ -430,7 +418,7 @@
 
   <li class="md-nav__item">
     <a href="api_reference/query/" class="md-nav__link">
-      query
+      odmantic.query
     </a>
   </li>
 
@@ -442,7 +430,7 @@
 
   <li class="md-nav__item">
     <a href="api_reference/field/" class="md-nav__link">
-      field
+      odmantic.field
     </a>
   </li>
 
@@ -454,7 +442,7 @@
 
   <li class="md-nav__item">
     <a href="api_reference/reference/" class="md-nav__link">
-      reference
+      odmantic.reference
     </a>
   </li>
 
@@ -466,7 +454,7 @@
 
   <li class="md-nav__item">
     <a href="api_reference/exceptions/" class="md-nav__link">
-      exceptions
+      odmantic.exceptions
     </a>
   </li>
 
@@ -657,12 +645,16 @@ MongoDB based on standard python type hints. It's built on top of
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>pip install odmantic
 </code></pre></div>
-
 <h2 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h2>
 <blockquote>
-<p>To enjoy an async context without any code boilerplate, it's strongly advised
-to run the following steps with
-<a href="https://ipython.readthedocs.io/en/stable/install/index.html" target="_blank">IPython</a>.</p>
+<p>To enjoy an async context without any code boilerplate, You can reproduce the
+following steps using using the AsyncIO REPL (only for Python 3.8+).
+<div class="highlight"><pre><span></span><code>python3.8 -m asyncio
+</code></pre></div>
+If you are using an earlier version of Python you can use <a
+href="https://ipython.readthedocs.io/en/stable/install/index.html"
+target="_blank">IPython</a> which provide an Autoawait feature starting for Python
+3.6+</p>
 </blockquote>
 <h3 id="define-your-first-model">Define your first model<a class="headerlink" href="#define-your-first-model" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
@@ -675,7 +667,6 @@ to run the following steps with
     <span class="n">founded</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">ge</span><span class="o">=</span><span class="mi">1440</span><span class="p">)</span>
     <span class="n">location</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 </code></pre></div>
-
 <p>By defining the <code>Publisher</code> class, we've just created an ODMantic model 🎉. In this
 example, the model will represent book publishers.</p>
 <p>This model contains three fields:</p>
@@ -705,7 +696,6 @@ example, the model will represent book publishers.</p>
     <span class="n">Publisher</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Lulu&quot;</span><span class="p">,</span> <span class="n">founded</span><span class="o">=</span><span class="mi">2002</span><span class="p">)</span>
 <span class="p">]</span>
 </code></pre></div>
-
 <p>We defined three instances of the Publisher model. They all have a <code>name</code> property as it
 was required. All the foundations years are later than 1440. The last publisher has no
 location specified so by default this field is set to <code>None</code> (it will be stored as
@@ -719,7 +709,6 @@ to use docker. Simply run the next command in a terminal (closing the terminal w
 terminate the MongoDB instance and remove the container).</p>
 <div class="highlight"><pre><span></span><code>docker run --rm --net<span class="o">=</span>host mongo
 </code></pre></div>
-
 </blockquote>
 <p>First, let's connect to the database using the engine. In ODMantic, every database
 operation is performed using the engine object.</p>
@@ -727,7 +716,6 @@ operation is performed using the engine object.</p>
 
 <span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">()</span>
 </code></pre></div>
-
 <p>By default, the <code>AIOEngine</code> (stands for AsyncIOEngine) automatically tries to connect to a
 MongoDB instance running locally (on port 27017). Since we didn't provide any database name, it will use
 the database named <code>test</code> by default.</p>
@@ -735,7 +723,6 @@ the database named <code>test</code> by default.</p>
 operation using the <code>AIOEngine.save_all</code> method.</p>
 <div class="highlight"><pre><span></span><code><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save_all</span><span class="p">(</span><span class="n">instances</span><span class="p">)</span>
 </code></pre></div>
-
 <p>Most of the engine I/O methods are asynchronous, hence the <code>await</code> keyword used here.
 Once the operation is complete, we should be able to see our created documents in the
 database. You can use <a href="https://www.mongodb.com/products/compass"
@@ -744,7 +731,6 @@ target="_blank">RoboMongo</a> if you'd like to have a graphical interface.</p>
 <p>Another possibility is to use <code>mongo</code> CLI directly:</p>
 <div class="highlight"><pre><span></span><code>mongo --eval <span class="s2">&quot;db.publisher.find({})&quot;</span>
 </code></pre></div>
-
 <p>Output:</p>
 <div class="highlight"><pre><span></span><code><span class="err">connecting</span> <span class="err">to:</span> <span class="err">mongodb://</span><span class="mf">127.0</span><span class="err">.</span><span class="mf">0.1</span><span class="err">:</span><span class="mi">27017</span>
 <span class="p">{</span>
@@ -766,7 +752,6 @@ target="_blank">RoboMongo</a> if you'd like to have a graphical interface.</p>
   <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Lulu&quot;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p>The created instances are stored in the <code>test</code> database under the <code>publisher</code> collection.</p>
 <p>We can see that an <code>_id</code> field has been added to each document. MongoDB need this field
 to act as a primary key. Actually, this field is added by ODMantic and you can access it
@@ -774,7 +759,6 @@ under the name <code>id</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">instances</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 <span class="c1">#&gt; ObjectId(&quot;5f67b331514d6855bc5c54c9&quot;)</span>
 </code></pre></div>
-
 <h3 id="find-instances-matching-a-criteria">Find instances matching a criteria<a class="headerlink" href="#find-instances-matching-a-criteria" title="Permanent link">&para;</a></h3>
 <p>Since we now have some documents in the database, we can start building some queries.</p>
 <p>First, let's find publishers created before the 2000s:</p>
@@ -783,7 +767,6 @@ under the name <code>id</code>.</p>
 <span class="c1">#&gt; [Publisher(name=&quot;HarperCollins&quot;, founded=1989, location=&quot;US),</span>
 <span class="c1">#&gt;  Publisher(name=&quot;Hachette Livre&quot;, founded=1826, location=&quot;FR&quot;)]</span>
 </code></pre></div>
-
 <p>Here, we called the <code>engine.find</code> method. The first argument we need to specify is the
 Model class we want to query on (in our case <code>Publisher</code>). The second argument is the
 actual query. Similarly to <a href="https://www.sqlalchemy.org/"
@@ -797,7 +780,6 @@ retrieve a publisher from Canada (CA):</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">ca_publisher</span><span class="p">)</span>
 <span class="c1">#&gt; None</span>
 </code></pre></div>
-
 <p>Here the result is <code>None</code> because no matching instances have been found in the database.
 The <code>engine.find_one</code> method returns an instance if one exists in the database
 otherwise, it will return <code>None</code>.</p>
@@ -809,22 +791,18 @@ First, we need to gather the instance from the database:</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">lulu</span><span class="p">)</span>
 <span class="c1">#&gt; Publisher(name=&quot;Lulu&quot;, founded=2002, location=None)</span>
 </code></pre></div>
-
 <p>We still have the same instance, with no location set. We can change this field:</p>
 <div class="highlight"><pre><span></span><code><span class="n">lulu</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="s2">&quot;US&quot;</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">lulu</span><span class="p">)</span>
 <span class="c1">#&gt; Publisher(name=&quot;Lulu&quot;, founded=2002, location=&quot;US)</span>
 </code></pre></div>
-
 <p>The location has been changed locally but the last step to persist this change is to
 save the document:</p>
 <div class="highlight"><pre><span></span><code><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">lulu</span><span class="p">)</span>
 </code></pre></div>
-
 <p>We can now check the database state:</p>
 <div class="highlight"><pre><span></span><code>mongo --eval <span class="s2">&quot;db.publisher.find({name: &#39;Lulu&#39;})&quot;</span>
 </code></pre></div>
-
 <p>Output:</p>
 <div class="highlight"><pre><span></span><code><span class="err">connecting</span> <span class="err">to:</span> <span class="err">mongodb://</span><span class="mf">127.0</span><span class="err">.</span><span class="mf">0.1</span><span class="err">:</span><span class="mi">27017</span>
 <span class="p">{</span>
@@ -834,7 +812,6 @@ save the document:</p>
 </span>  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Lulu&quot;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p>The document have been successfully updated !</p>
 <p>Now, what if we would like to change the foundation date with an invalid one (before 1440) ?</p>
 <div class="highlight"><pre><span></span><code><span class="n">lulu</span><span class="o">.</span><span class="n">founded</span> <span class="o">=</span> <span class="mi">1000</span>
@@ -843,7 +820,6 @@ save the document:</p>
 <span class="c1">#&gt;   ensure this value is greater than 1440</span>
 <span class="c1">#&gt;   (type=value_error.number.not_gt; limit_value=1440)</span>
 </code></pre></div>
-
 <p>This will raise an exception as it's not matching the model definition. The raised
 exception is actually a <code>ValidationError</code> created by from <a
 href="https://pydantic-docs.helpmanual.io/usage/models/#error-handling"
@@ -900,6 +876,37 @@ href="https://en.wikipedia.org/wiki/ISC_license" target="_blank">ISC license</a>
         </a>
       </div>
       
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/art049" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://twitter.com/art049" target="_blank" rel="noopener" title="twitter.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://www.linkedin.com/in/arthur-pastel-a08579112" target="_blank" rel="noopener" title="www.linkedin.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+      </a>
+    
+  </div>
+
     </div>
   </div>
 </footer>
