@@ -39,7 +39,6 @@ from pydantic.utils import lenient_issubclass
 from odmantic.bson_fields import (
     _BSON_SUBSTITUTED_FIELDS,
     _BSON_TYPES_ENCODERS,
-    BSONSerializedField,
     _Decimal,
     _objectId,
 )
@@ -222,7 +221,10 @@ class BaseModelMetaclass(ABCMeta):
                     substituted_type = validate_type(field_type)
                     # Handle BSON serialized fields after substitution to allow some
                     # builtin substitution
-                    if lenient_issubclass(substituted_type, BSONSerializedField):
+                    bson_serialization_method = getattr(
+                        substituted_type, "__bson__", None
+                    )
+                    if bson_serialization_method is not None:
                         bson_serialized_fields.add(field_name)
                     annotations[field_name] = substituted_type
 
@@ -477,7 +479,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
                 doc[field.key_name] = raw_doc[field_name]["id"]
             else:
                 if field_name in self.__bson_serialized_fields__:
-                    doc[field.key_name] = self.__fields__[field_name].type_.to_bson(
+                    doc[field.key_name] = self.__fields__[field_name].type_.__bson__(
                         raw_doc[field_name]
                     )
                 else:

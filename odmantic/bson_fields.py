@@ -1,5 +1,4 @@
 import re
-from abc import ABCMeta
 from datetime import datetime
 from decimal import Decimal
 from typing import Any, Pattern, cast
@@ -16,8 +15,6 @@ from pydantic.validators import (
     int_validator,
     pattern_validator,
 )
-
-from odmantic.typing import BSON_TYPE
 
 
 class _objectId(BsonObjectId):
@@ -122,19 +119,7 @@ class _datetime:
         return d.replace(microsecond=microsecs)
 
 
-class BSONSerializedField(metaclass=ABCMeta):
-    """Field types with a custom BSON serialization"""
-
-    @classmethod
-    def to_bson(cls, v: Any) -> BSON_TYPE:
-        """This should be overridden as a class method"""
-
-    def __pos__(self) -> None:
-        """Only here to help type checkers"""
-        raise RuntimeError("__pos__ method should be called on the FieldProxy object")
-
-
-class _Decimal(BSONSerializedField):
+class _Decimal:
     """This specific BSON substitution field helps to handle the support of standard
     python Decimal objects
 
@@ -156,13 +141,13 @@ class _Decimal(BSONSerializedField):
         return a
 
     @classmethod
-    def to_bson(cls, v: Any) -> BsonDecimal:
+    def __bson__(cls, v: Any) -> BsonDecimal:
         return BsonDecimal(v)
 
 
 _BSON_TYPES_ENCODERS = {
     BsonObjectId: str,
-    BsonDecimal: lambda x: x.to_decimal(),  # Convertt to regular decimal
+    BsonDecimal: lambda x: x.to_decimal(),  # Convert to regular decimal
     BsonRegex: lambda x: x.pattern,  # TODO: document no serialization of flags
 }
 

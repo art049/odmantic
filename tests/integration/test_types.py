@@ -8,7 +8,6 @@ import pytest
 from bson import Binary, Decimal128, Int64, ObjectId, Regex
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
-from odmantic.bson_fields import BSONSerializedField
 from odmantic.engine import AIOEngine
 from odmantic.model import Model
 
@@ -97,7 +96,7 @@ async def test_bson_type_inference(
 async def test_custom_bson_serializable(
     motor_database: AsyncIOMotorDatabase, engine: AIOEngine
 ):
-    class FancyFloat(BSONSerializedField):
+    class FancyFloat:
         @classmethod
         def __get_validators__(cls):
             yield cls.validate
@@ -107,7 +106,7 @@ async def test_custom_bson_serializable(
             return float(v)
 
         @classmethod
-        def to_bson(cls, v):
+        def __bson__(cls, v):
             # We store the float as a string in the DB
             return str(v)
 
@@ -118,7 +117,7 @@ async def test_custom_bson_serializable(
     document = await motor_database[ModelWithCustomField.__collection__].find_one(
         {
             +ModelWithCustomField.id: instance.id,
-            +ModelWithCustomField.field: {"$type": "string"},
+            +ModelWithCustomField.field: {"$type": "string"},  # type: ignore
         }
     )
     assert document is not None, "Couldn't retrieve the document with it's string value"

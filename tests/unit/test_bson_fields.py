@@ -10,7 +10,6 @@ from bson.objectid import ObjectId
 from bson.regex import Regex
 from pydantic.error_wrappers import ValidationError
 
-from odmantic.bson_fields import BSONSerializedField
 from odmantic.model import Model
 
 pytestmark = pytest.mark.asyncio
@@ -203,22 +202,3 @@ def test_validate_pattern_invalid_string():
     assert len(errors) == 1
     assert errors[0]["loc"] == ("field",)
     assert "Invalid regular expression" in errors[0]["msg"]
-
-
-def test_bson_serialized_raise_on_pos_call():
-    class FancyFloat(BSONSerializedField):
-        @classmethod
-        def __get_validators__(cls):
-            yield cls.validate
-
-        @classmethod
-        def validate(cls, v):
-            return float(v)
-
-        @classmethod
-        def to_bson(cls, v):
-            # We store the float as a string in the DB
-            return str(v)
-
-    with pytest.raises(RuntimeError, match="should be called on the FieldProxy object"):
-        +FancyFloat()
