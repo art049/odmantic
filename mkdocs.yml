@@ -20,6 +20,7 @@ markdown_extensions:
   - attr_list
   - toc:
       permalink: true
+      toc_depth: 3
   - codehilite:
       linenums: true
       guess_lang: false
@@ -52,13 +53,21 @@ nav:
   - modeling.md
   - engine.md
   - filtering.md
-  - types.md
   - "I hate ORMs/ODMs": outside_odm.md
   - API Reference:
-      - model: ./api_reference/model.md
-      - engine: ./api_reference/engine.md
-      - query: ./api_reference/query.md
-      - field: ./api_reference/field.md
-      - reference: ./api_reference/reference.md
-      - exceptions: ./api_reference/exceptions.md
+      - odmantic.model: ./api_reference/model.md
+      - odmantic.engine: ./api_reference/engine.md
+      - odmantic.query: ./api_reference/query.md
+      - odmantic.field: ./api_reference/field.md
+      - odmantic.reference: ./api_reference/reference.md
+      - odmantic.exceptions: ./api_reference/exceptions.md
   - changelog.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/art049
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/art049
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/arthur-pastel-a08579112

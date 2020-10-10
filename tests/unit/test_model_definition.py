@@ -143,6 +143,7 @@ def test_optional_field():
     class M(Model):
         f: Optional[str]
 
+    assert M().f is None
     assert M(f=None).f is None
     assert M(f="hello world").f == "hello world"
 

@@ -1,5 +1,9 @@
 # Quickstart
 
+- Model creation with details
+
+
+
 ## Defining a model
 
 ```python

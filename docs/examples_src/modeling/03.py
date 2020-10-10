@@ -18,7 +18,7 @@ harper = Publisher(name="HarperCollins", founded=1989, location="US")
 
 books = [
     Book(title="They Didn't See Us Coming", pages=304, publisher=hachette),
-    Book(title="This Isn't Happening", pages=256, publisher=hachette,),
+    Book(title="This Isn't Happening", pages=256, publisher=hachette),
     Book(title="Prodigal Summer", pages=464, publisher=harper),
 ]
 

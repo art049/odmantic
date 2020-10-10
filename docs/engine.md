@@ -35,3 +35,5 @@
     print(count)
     #> 3
     ```
+
+Interop with regular queries link

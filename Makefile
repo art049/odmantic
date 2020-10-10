@@ -33,7 +33,7 @@ test: $(addprefix test-,$(PYTHON_VERSIONS))
 
 .PHONY: mongo-test-server
 mongo-test-server:
-	docker run --net=host --name odmantic-mongo-test -d mongo:4.2
+	docker run --rm --net=host --name odmantic-mongo-test -d mongo:4.2
 
 .PHONY: lint
 lint:

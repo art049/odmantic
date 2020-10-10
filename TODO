@@ -1,9 +1,11 @@
 
 0.0.1:
 ☐ Document usage outside odm (aggregation example)
-☐ Doc custom bson serializable fields
-☐ Doc enum fields
-☐ Define policy for optional fields default set to null ?
+☐ Fix docs/examples_src/fields/04.py
+☐ Test query Enum
+
+Doc custom bson serializable fields
+Doc enum fields
 Handle Mutable fields with smart update
 Handle JSON serialization
 Query document based on embedded document content
@@ -24,30 +26,33 @@ Validate key_name argument
 
 Further Improvements:
 ☐ mocked engine for testing
+☐ Non strict optional
 ☐ integrated engine test_client (using isolated db)
-  ☐ __init__ signature
-  ☐ Test embedded model as primary key mutated
-  ☐ Embedded document as dictionnary key ?
-  ☐ Self referencing model ?
-  ☐ Support exists not_exists and not query operators
-  ☐ Support Documents/EmbeddedDocuments inheritance
-  ☐ Enable primary key change (what about instances referencing the current one ?&)
-  ☐ Array queries $elemMatch $all $size
-  ☐ Support one to many references
-  ☐ Additional pydantic fields
-  ☐ Write timeout
-  ☐ Read/Write concern
-  ☐ Use bson.son for embedded documents https://docs.mongodb.com/manual/tutorial/query-array-of-documents/
-  ☐ Querying on embedded documents
-  ☐ Enable usage of document not matching the schema
-  Custom field types
-  ☐ Generate Mongo Schema
-  ☐ $text operator for search
-  ☐ $type operator -> a bit contradictory to the ODM principle
-  ☐ Retrieve only certain fields
-  ☐ Custom indexes
-  ☐ Unique fields with indexes
-  ☐ Aggregation pipeline
-  ☐ Handle transactions
-  ☐ Set support
-  ☐ Collation support
+☐ copy method (to change the object id for example)
+☐ Define policy for optional fields default set to null ? What if the default value is changed
+☐ __init__ signature
+☐ Test embedded model as primary key mutated
+☐ Embedded document as dictionnary key ?
+☐ Self referencing model? https://pydantic-docs.helpmanual.io/usage/postponed_annotations/#self-referencing-models
+☐ Support exists not_exists and not query operators
+☐ Support Documents/EmbeddedDocuments inheritance
+☐ Enable primary key change (what about instances referencing the current one ?&)
+☐ Array queries $elemMatch $all $size
+☐ Support one to many references
+☐ Additional pydantic fields
+☐ Write timeout
+☐ Read/Write concern
+☐ Use bson.son for embedded documents https://docs.mongodb.com/manual/tutorial/query-array-of-documents/
+☐ Querying on embedded documents
+☐ Enable usage of document not matching the schema
+Custom field types
+☐ Generate Mongo Schema
+☐ $text operator for search
+☐ $type operator -> a bit contradictory to the ODM principle
+☐ Retrieve only certain fields
+☐ Custom indexes
+☐ Unique fields with indexes
+☐ Aggregation pipeline
+☐ Handle transactions
+☐ Set support
+☐ Collation support

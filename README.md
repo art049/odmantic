@@ -63,9 +63,17 @@ pip install odmantic
 
 ## Example
 
-> To enjoy an async context without any code boilerplate, it's strongly advised
-> to run the following steps with
-> <a href="https://ipython.readthedocs.io/en/stable/install/index.html" target="_blank">IPython</a>.
+> To enjoy an async context without any code boilerplate, You can reproduce the
+> following steps using using the AsyncIO REPL (only for Python 3.8+).
+>
+> ```
+> python3.8 -m asyncio
+> ```
+>
+> If you are using an earlier version of Python you can use <a
+> href="https://ipython.readthedocs.io/en/stable/install/index.html"
+> target="_blank">IPython</a> which provide an Autoawait feature starting for Python
+> 3.6+
 
 ### Define your first model
 
