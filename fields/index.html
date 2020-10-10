@@ -150,18 +150,23 @@
 <nav aria-label="Field types" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#basic-fields">
-    Basic fields
-  </a>
-</li>
-<li class="md-nav__item">
 <a class="md-nav__link" href="#optional-fields">
     Optional fields
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#array-fields">
-    Array fields
+<a class="md-nav__link" href="#union-fields">
+    Union fields
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#enum-fields">
+    Enum fields
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#container-fields">
+    Container fields
   </a>
 </li>
 <li class="md-nav__item">
@@ -176,11 +181,6 @@
 </li>
 </ul>
 </nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#validation">
-    Validation
-  </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#customization">
@@ -205,6 +205,11 @@
 </li>
 </ul>
 </nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#validation">
+    Validation
+  </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#custom-fields">
@@ -319,18 +324,23 @@
 <nav aria-label="Field types" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#basic-fields">
-    Basic fields
-  </a>
-</li>
-<li class="md-nav__item">
 <a class="md-nav__link" href="#optional-fields">
     Optional fields
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#array-fields">
-    Array fields
+<a class="md-nav__link" href="#union-fields">
+    Union fields
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#enum-fields">
+    Enum fields
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#container-fields">
+    Container fields
   </a>
 </li>
 <li class="md-nav__item">
@@ -345,11 +355,6 @@
 </li>
 </ul>
 </nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#validation">
-    Validation
-  </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#customization">
@@ -374,6 +379,11 @@
 </li>
 </ul>
 </nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#validation">
+    Validation
+  </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#custom-fields">
@@ -440,12 +450,11 @@ the database and the ones only created locally.</p>
 <p>Even if this behavior is convenient, it is still possible to <a href="#primary-key">define custom primary
 keys</a>.</p>
 <h2 id="field-types">Field types<a class="headerlink" href="#field-types" title="Permanent link">¶</a></h2>
-<h3 id="basic-fields">Basic fields<a class="headerlink" href="#basic-fields" title="Permanent link">¶</a></h3>
 <h3 id="optional-fields">Optional fields<a class="headerlink" href="#optional-fields" title="Permanent link">¶</a></h3>
 <p>By default, every single field will be required. To specify a field as non-required, the
 easiest way is to use the <code>typing.Optional</code> generic type that will allow the field to
 take the <code>None</code> value as well (it will be stored as <code>null</code> in the database).</p>
-<p><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
  4
@@ -470,29 +479,410 @@ take the <code>None</code> value as well (it will be stored as <code>null</code>
 <span class="c1">#&gt; None</span>
 </code></pre></div>
 </td></tr></table>
-Enum example</p>
-<p>Union ...</p>
-<p>Additionally, most of the types supported by pydantic are supported. See <a href="https://pydantic-docs.helpmanual.io/usage/types" target="bank_">pydantic:
-Field Types</a> for more
-details.</p>
-<h3 id="array-fields">Array fields<a class="headerlink" href="#array-fields" title="Permanent link">¶</a></h3>
+<h3 id="union-fields">Union fields<a class="headerlink" href="#union-fields" title="Permanent link">¶</a></h3>
+<p>As explained in the <a href="https://docs.python.org/3/library/typing.html#typing.Optional" target="bank_">Python Typing
+documentation</a>,
+<code>Optional[X]</code> is equivalent to <code>Union[X, None]</code>. That implies that the field type will
+be either <code>X</code> or <code>None</code>.</p>
+<p>It's possible to combine any kind of type using the <code>typîng.Union</code> type constructor. For
+example if we want to allow both <code>string</code> and <code>int</code> in a field:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">Model</span>
+
+
+<span class="k">class</span> <span class="nc">Thing</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+<span class="hll">    <span class="n">ref_id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+</span>
+
+<span class="n">thing_1</span> <span class="o">=</span> <span class="n">Thing</span><span class="p">(</span><span class="n">ref_id</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">thing_1</span><span class="o">.</span><span class="n">ref_id</span><span class="p">)</span>
+<span class="c1">#&gt; 42</span>
+
+<span class="n">thing_2</span> <span class="o">=</span> <span class="n">Thing</span><span class="p">(</span><span class="n">ref_id</span><span class="o">=</span><span class="s2">"i am a string"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">thing_2</span><span class="o">.</span><span class="n">ref_id</span><span class="p">)</span>
+<span class="c1">#&gt; i am a string</span>
+</code></pre></div>
+</td></tr></table>
+<div class="admonition question">
+<p class="admonition-title">NoneType</p>
+<p>Internally python describes the type of the <code>None</code> object as <code>NoneType</code> but in
+practice, <code>None</code> is used directly in type annotations (<a href="https://mypy.readthedocs.io/en/stable/kinds_of_types.html#optional-types-and-the-none-type" target="bank_">more details</a>).</p>
+</div>
+<h3 id="enum-fields">Enum fields<a class="headerlink" href="#enum-fields" title="Permanent link">¶</a></h3>
+<p>To define choices, it's possible to use the standard <code>enum</code> classes:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+<span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">AIOEngine</span>
+
+
+<span class="k">class</span> <span class="nc">TreeKind</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="hll">    <span class="n">BIG</span> <span class="o">=</span> <span class="s2">"big"</span>
+</span>    <span class="n">SMALL</span> <span class="o">=</span> <span class="s2">"small"</span>
+
+
+<span class="k">class</span> <span class="nc">Tree</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">kind</span><span class="p">:</span> <span class="n">TreeKind</span>
+
+
+<span class="n">sequoia</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"Sequoia"</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="n">TreeKind</span><span class="o">.</span><span class="n">BIG</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sequoia</span><span class="o">.</span><span class="n">kind</span><span class="p">)</span>
+<span class="c1">#&gt; TreeKind.BIG</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sequoia</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="s2">"big"</span><span class="p">)</span>
+<span class="c1">#&gt; True</span>
+
+<span class="n">spruce</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"Spruce"</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">"small"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">spruce</span><span class="o">.</span><span class="n">kind</span><span class="p">)</span>
+<span class="c1">#&gt; TreeKind.SMALL</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">spruce</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="n">TreeKind</span><span class="o">.</span><span class="n">SMALL</span><span class="p">)</span>
+<span class="c1">#&gt; True</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">()</span>
+<span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save_all</span><span class="p">([</span><span class="n">sequoia</span><span class="p">,</span> <span class="n">spruce</span><span class="p">])</span>
+</code></pre></div>
+</td></tr></table>
+<div class="admonition abstract">
+<p class="admonition-title">Resulting documents in the collection <code>tree</code> after execution</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span> <span class="nt">"_id"</span> <span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f818f2dd5708527282c49b6"</span><span class="err">)</span><span class="p">,</span> <span class="nt">"kind"</span> <span class="p">:</span> <span class="s2">"big"</span><span class="p">,</span> <span class="nt">"name"</span> <span class="p">:</span> <span class="s2">"Sequoia"</span> <span class="p">}</span>
+<span class="p">{</span> <span class="nt">"_id"</span> <span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f818f2dd5708527282c49b7"</span><span class="err">)</span><span class="p">,</span> <span class="nt">"kind"</span> <span class="p">:</span> <span class="s2">"small"</span><span class="p">,</span> <span class="nt">"name"</span> <span class="p">:</span> <span class="s2">"Spruce"</span> <span class="p">}</span>
+</code></pre></div>
+</div>
+<p>If you try to use a value not present in the allowed choices, a <a href="https://pydantic-docs.helpmanual.io/usage/models/#error-handling" target="blank_">ValidationError</a> exception will be raised.</p>
+<div class="admonition warning">
+<p class="admonition-title">Usage of <code>enum.auto</code></p>
+<p>If you might add some values to an <code>Enum</code>, it's strongly recommended not to use the
+<code>enum.auto</code> value generator. Depending on the order you add choices, it could
+completely break the consistency with documents stored in the database.</p>
+<details class="example"><summary>Unwanted behavior example</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
+
+
+<span class="k">class</span> <span class="nc">Color</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">RED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">BLUE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">RED</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<span class="c1">#&gt; 1</span>
+<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">BLUE</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+</span><span class="hll"><span class="c1">#&gt; 2</span>
+</span></code></pre></div>
+</td></tr></table>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
+
+
+<span class="k">class</span> <span class="nc">Color</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">RED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+<span class="hll">    <span class="n">GREEN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+</span>    <span class="n">BLUE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">RED</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<span class="c1">#&gt; 1</span>
+<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">GREEN</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+</span><span class="hll"><span class="c1">#&gt; 2</span>
+</span><span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">BLUE</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+</span><span class="hll"><span class="c1">#&gt; 3</span>
+</span></code></pre></div>
+</td></tr></table>
+</details>
+</div>
+<h3 id="container-fields">Container fields<a class="headerlink" href="#container-fields" title="Permanent link">¶</a></h3>
+<h4>List</h4>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">Model</span>
+
+
+<span class="k">class</span> <span class="nc">SimpleListModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">field</span><span class="p">:</span> <span class="nb">list</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="n">SimpleListModel</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"a"</span><span class="p">,</span> <span class="kc">True</span><span class="p">])</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+<span class="c1">#&gt; [1, 'a', True]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">SimpleListModel</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"a"</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+<span class="c1">#&gt; [1, 'a', True]</span>
+
+
+<span class="k">class</span> <span class="nc">IntListModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">field</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="n">IntListModel</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+<span class="c1">#&gt; [1, 5]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">IntListModel</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+<span class="c1">#&gt; [1, 5]</span>
+
+
+<span class="k">class</span> <span class="nc">IntStrListModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">field</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="n">IntStrListModel</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"b"</span><span class="p">])</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+<span class="c1">#&gt; [1, 'b']</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">IntStrListModel</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"b"</span><span class="p">))</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+<span class="c1">#&gt; [1, 'b']</span>
+</code></pre></div>
+</td></tr></table>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>It's possible to define element count constraints for a list field using the
+<a href="../api_reference/field/#odmantic.field.Field">Field</a> descriptor.</p>
+</div>
+<h4>Tuple</h4>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
+
+<span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">Model</span>
+
+
+<span class="k">class</span> <span class="nc">SimpleTupleModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">field</span><span class="p">:</span> <span class="nb">tuple</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="n">SimpleTupleModel</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"a"</span><span class="p">,</span> <span class="kc">True</span><span class="p">])</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+<span class="c1">#&gt; (1, 'a', True)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">SimpleTupleModel</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"a"</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+<span class="c1">#&gt; (1, 'a', True)</span>
+
+
+<span class="k">class</span> <span class="nc">TwoIntTupleModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">field</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="n">SimpleTupleModel</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+<span class="c1">#&gt; (1, 10)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">SimpleTupleModel</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+<span class="c1">#&gt; (1, 10)</span>
+
+
+<span class="k">class</span> <span class="nc">IntTupleModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">field</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="n">IntTupleModel</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,))</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+<span class="c1">#&gt; (1,)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">IntTupleModel</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+<span class="c1">#&gt; (1, 2, 3, 10)</span>
+</code></pre></div>
+</td></tr></table>
+<h4>Dict</h4>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>For mapping types with already known keys, you can see the <a href="../modeling/#embedded-models">embedded models
+section</a>.</p>
+</div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">Model</span>
+
+
+<span class="k">class</span> <span class="nc">SimpleDictModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">field</span><span class="p">:</span> <span class="nb">dict</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="n">SimpleDictModel</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="p">{</span><span class="mi">18</span><span class="p">:</span> <span class="s2">"a string"</span><span class="p">,</span> <span class="kc">True</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span> <span class="mf">18.3</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]})</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+<span class="c1">#&gt; {18: 'a string', True: 42, 18.3: [1, 2, 3]}</span>
+
+
+<span class="k">class</span> <span class="nc">IntStrDictModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">field</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="n">IntStrDictModel</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s2">"one"</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s2">"two"</span><span class="p">})</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+<span class="c1">#&gt; {1: 'one', 2: 'two'}</span>
+
+
+<span class="k">class</span> <span class="nc">IntBoolStrDictModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">field</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="n">IntBoolStrDictModel</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="s2">"three"</span><span class="p">})</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+<span class="c1">#&gt; {0: False, 1: True, 3: 'three'}</span>
+</code></pre></div>
+</td></tr></table>
+<div class="admonition tip">
+<p class="admonition-title">Performance tip</p>
+<p>Whenever possible, try to avoid mutable container types (<code>List</code>, <code>Set</code>, ...) and
+prefer their Immutable alternatives (<code>Tuple</code>, <code>FrozenSet</code>, ...). This will allow
+ODMantic to speedup database writes by only saving the modified container fields.</p>
+</div>
 <h3 id="bson-types-integration"><code>BSON</code> types integration<a class="headerlink" href="#bson-types-integration" title="Permanent link">¶</a></h3>
-<p>Models supports native python BSON types (<code>bson</code> package). Those types can be used directly as field types:</p>
+<p>ODMantic supports native python BSON types (<a href="https://api.mongodb.com/python/current/api/bson/index.html" target="blank_"><code>bson</code>
+package</a>).
+Those types can be used directly as field types:</p>
 <ul>
 <li>
-<p><code>bson.ObjectId</code></p>
+<p><a href="https://api.mongodb.com/python/current/api/bson/objectid.html" target="blank_"><code>bson.ObjectId</code></a></p>
 </li>
 <li>
-<p><code>bson.Int64</code></p>
+<p><a href="https://api.mongodb.com/python/current/api/bson/int64.html" target="blank_"><code>bson.Int64</code></a></p>
 </li>
 <li>
-<p><code>bson.Decimal128</code></p>
+<p><a href="https://api.mongodb.com/python/current/api/bson/decimal128.html" target="blank_"><code>bson.Decimal128</code></a></p>
 </li>
 <li>
-<p><code>bson.Regex</code></p>
+<p><a href="https://api.mongodb.com/python/current/api/bson/regex.html" target="blank_"><code>bson.Regex</code></a></p>
 </li>
 <li>
-<p><code>bson.Binary</code></p>
+<p><a href="https://api.mongodb.com/python/current/api/bson/binary.html#bson.binary.Binary" target="blank_"><code>bson.Binary</code></a></p>
 </li>
 </ul>
 <details class="info"><summary>Generic python to BSON type map</summary><table>
@@ -598,17 +988,11 @@ details.</p>
 </table>
 </details>
 <h3 id="pydantic-fields">Pydantic fields<a class="headerlink" href="#pydantic-fields" title="Permanent link">¶</a></h3>
-<h2 id="validation">Validation<a class="headerlink" href="#validation" title="Permanent link">¶</a></h2>
-<p>As ODMantic relies on pydantic when it comes to data validation, all validation features
-provided by pydantic are available:</p>
-<ul>
-<li>
-<p>Use constrained types</p>
-</li>
-<li>
-<p>Define custom validators for each model</p>
-</li>
-</ul>
+<p>callable</p>
+<p>datetime naive + microseconds truncated</p>
+<p>Additionally, most of the types supported by pydantic are supported. See <a href="https://pydantic-docs.helpmanual.io/usage/types" target="bank_">pydantic:
+Field Types</a> for more
+details.</p>
 <h2 id="customization">Customization<a class="headerlink" href="#customization" title="Permanent link">¶</a></h2>
 <p>The field customization can mainly be performed using the <a href="../api_reference/field/#odmantic.field.Field">Field</a>
 descriptor. This descriptor is here to define everything about the field except its
@@ -699,7 +1083,7 @@ possible to override this naming policy by using the <code>key_name</code> argum
 </code></pre></div>
 </td></tr></table></p>
 <div class="admonition abstract">
-<p class="admonition-title">Resulting document in the collection <code>player</code> after execution</p>
+<p class="admonition-title">Resulting documents in the collection <code>player</code> after execution</p>
 <p><div class="highlight"><pre><span></span><code><span class="p">{</span>
   <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5ed50fcad11d1975aa3d7a28"</span><span class="err">)</span><span class="p">,</span>
 <span class="hll">  <span class="nt">"username"</span><span class="p">:</span> <span class="s2">"Jack"</span><span class="p">,</span>
@@ -738,7 +1122,7 @@ other field as the primary key.</p>
 </code></pre></div>
 </td></tr></table>
 <div class="admonition abstract">
-<p class="admonition-title">Resulting document in the collection <code>player</code> after execution</p>
+<p class="admonition-title">Resulting documents in the collection <code>player</code> after execution</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
     <span class="nt">"_id"</span><span class="p">:</span> <span class="s2">"Leeroy Jenkins"</span>
 <span class="p">}</span>
@@ -754,6 +1138,17 @@ able to change it.</p>
 <p>Using mutable types (Set, List, ...) as primary field might result in inconsistent
 behaviors.</p>
 </div>
+<h2 id="validation">Validation<a class="headerlink" href="#validation" title="Permanent link">¶</a></h2>
+<p>As ODMantic strongly relies on pydantic when it comes to data validation, all validation
+features provided by pydantic are available:</p>
+<ul>
+<li>
+<p>Use constrained types</p>
+</li>
+<li>
+<p>Define custom validators for each model</p>
+</li>
+</ul>
 <h2 id="custom-fields">Custom Fields<a class="headerlink" href="#custom-fields" title="Permanent link">¶</a></h2>
 <h3 id="bson-serialization">BSON serialization<a class="headerlink" href="#bson-serialization" title="Permanent link">¶</a></h3>
 </article>
