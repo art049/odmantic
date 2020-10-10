@@ -14,4 +14,3 @@ print(thing_1.ref_id)
 thing_2 = Thing(ref_id="i am a string")
 print(thing_2.ref_id)
 #> i am a string
-

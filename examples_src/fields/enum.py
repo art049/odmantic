@@ -1,6 +1,6 @@
 from enum import Enum
 
-from odmantic import Model, AIOEngine
+from odmantic import AIOEngine, Model
 
 
 class TreeKind(str, Enum):
