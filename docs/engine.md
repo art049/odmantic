@@ -136,7 +136,7 @@ this method with filtering queries.
     While using [find][odmantic.engine.AIOEngine.find],
     [find_one][odmantic.engine.AIOEngine.find_one] or
     [count][odmantic.engine.AIOEngine.count], you may pass as many queries as you want
-    as positional arguments. Those will be internally combined as single
+    as positional arguments. Those will be implicitly combined as single
     [and_][odmantic.query.and_] query.
 
 ## Update
