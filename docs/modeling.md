@@ -82,7 +82,7 @@ Since one capital city can belong to one and only one country, we can model this
 relation as a One-to-One relationship. We will use an Embedded Model in this case.
 
 ```python hl_lines="4 12 19 24" linenums="1"
---8<-- "modeling/01.py"
+--8<-- "modeling/one_to_one.py"
 ```
 
 Defining this relation is done in the same way as defining a new field. Here, the
@@ -118,7 +118,7 @@ Models in order to bring more flexibility (default values, Mongo key name, ...).
     It is possible as well to define query filters based on embedded documents content.
 
     ```python hl_lines="2"
-    --8<-- "modeling/01_1.py"
+    --8<-- "modeling/one_to_one_1.py"
     ```
 
     For more details, see the [Filtering](filtering.md) section.
@@ -131,7 +131,7 @@ addresses (for example if two family members use the same address, their address
 should not be linked together).
 
 ```python hl_lines="6 15 20-33" linenums="1"
---8<-- "modeling/02.py"
+--8<-- "modeling/one_to_many.py"
 ```
 
 As done previously for the One to One relation, defining a One to Many relationship with
@@ -213,7 +213,7 @@ book has a single publisher. In this case, multiple books could be published by 
 publisher. We can thus model this relation as a many-to-one relationship.
 
 ```python hl_lines="4 10 13 19-23" linenums="1"
---8<-- "modeling/03.py"
+--8<-- "modeling/many_to_one.py"
 ```
 
 The definition of a reference field **requires** the presence of the [Reference()][odmantic.reference.Reference]
@@ -289,7 +289,7 @@ multiple authors and an author can be authoring multiple books, we will model th
     define the relationship in a manual way.
 
 ```python hl_lines="14 18-19 22 25 29" linenums="1"
---8<-- "modeling/04.py"
+--8<-- "modeling/many_to_many.py"
 ```
 
 We defined an `author_ids` field which holds the list of unique ids of the authors (This
@@ -334,6 +334,7 @@ manually.
 !!! example "Retrieving the authors of the Python Cookbook"
     First, it's required to fetch the ids of the authors. Then we can use the
     [in_][odmantic.query.in_] filter to select only the authors with the desired ids.
+
     ```python hl_lines="2" linenums="1"
-    --8<-- "modeling/04_1.py"
+    --8<-- "modeling/many_to_many_1.py"
     ```
