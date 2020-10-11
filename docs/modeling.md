@@ -45,9 +45,14 @@ In the following example, we will define a rectangle class and add two validator
 first one will check that the height is greater than the width. The second one will
 ensure that the area of the rectangle is less or equal to 9.
 
-```python hl_lines="10-11 14-15 18-19 22-23 31 36-37 41 46-47 51 56-57" linenums="1"
+```python hl_lines="9 14-15 18-19 22-23 26-27 35 40-41 45 50-51 55 60-61" linenums="1"
 --8<-- "modeling/custom_validators.py"
 ```
+
+!!! tip
+    You can define class variables in the Models using the `typing.ClassVar` type
+    construct, as done in this example with `MAX_AREA`. Those class variables will be
+    completely ignored by ODMantic while persisting instances to the database.
 
 ## Embedded Models
 

@@ -33,7 +33,7 @@ from pydantic.fields import Field as PDField
 from pydantic.fields import FieldInfo as PDFieldInfo
 from pydantic.fields import Undefined
 from pydantic.tools import parse_obj_as
-from pydantic.typing import resolve_annotations
+from pydantic.typing import is_classvar, resolve_annotations
 from pydantic.utils import lenient_issubclass
 
 from odmantic.bson_fields import (
@@ -64,7 +64,17 @@ if TYPE_CHECKING:
 USES_OLD_TYPING_INTERFACE = sys.version_info[:3] < (3, 7, 0)  # PEP 560
 if USES_OLD_TYPING_INTERFACE:
     from typing import _subs_tree  # type: ignore  # noqa
+
+
 UNTOUCHED_TYPES = FunctionType, property, classmethod, staticmethod
+
+
+def should_touch_field(value: Any = None, type_: Optional[Type] = None) -> bool:
+    return not (
+        lenient_issubclass(type_, UNTOUCHED_TYPES)
+        or isinstance(value, UNTOUCHED_TYPES)
+        or (type_ is not None and is_classvar(type_))
+    )
 
 
 def is_valid_odm_field_name(name: str) -> bool:
@@ -147,7 +157,7 @@ def is_type_forbidden(t: Type) -> bool:
 
 
 def validate_type(type_: Type) -> Type:
-    if lenient_issubclass(type_, UNTOUCHED_TYPES) or lenient_issubclass(
+    if not should_touch_field(type_=type_) or lenient_issubclass(
         type_, (Model, EmbeddedModel)
     ):
         return type_
@@ -205,7 +215,7 @@ class BaseModelMetaclass(ABCMeta):
             # Make sure all fields are defined with type annotation
             for field_name, value in namespace.items():
                 if (
-                    not isinstance(value, UNTOUCHED_TYPES)
+                    should_touch_field(value=value)
                     and is_valid_odm_field_name(field_name)
                     and field_name not in annotations
                 ):
@@ -215,8 +225,8 @@ class BaseModelMetaclass(ABCMeta):
 
             # Validate fields types and substitute bson fields
             for (field_name, field_type) in annotations.items():
-                if is_valid_odm_field_name(field_name) and not lenient_issubclass(
-                    field_type, UNTOUCHED_TYPES
+                if is_valid_odm_field_name(field_name) and should_touch_field(
+                    type_=field_type
                 ):
                     substituted_type = validate_type(field_type)
                     # Handle BSON serialized fields after substitution to allow some
@@ -232,12 +242,11 @@ class BaseModelMetaclass(ABCMeta):
             for (field_name, field_type) in annotations.items():
                 value = namespace.get(field_name, Undefined)
 
-                if (
-                    not is_valid_odm_field_name(field_name)
-                    or lenient_issubclass(field_type, UNTOUCHED_TYPES)
-                    or isinstance(value, UNTOUCHED_TYPES)
+                if not is_valid_odm_field_name(field_name) or not should_touch_field(
+                    value, field_type
                 ):
-                    continue
+                    continue  # pragma: no cover
+                    # https://github.com/nedbat/coveragepy/issues/198
 
                 if isinstance(value, PDFieldInfo):
                     raise TypeError(

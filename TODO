@@ -56,3 +56,4 @@ Custom field types
 ☐ Handle transactions
 ☐ Set support
 ☐ Collation support
+☐ Handle bson deserialization in a separate method

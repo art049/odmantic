@@ -1,16 +1,20 @@
+from typing import ClassVar
+
 from pydantic import ValidationError, validator
 
 from odmantic import Model
 
 
 class SmallRectangle(Model):
+    MAX_SIDE_SIZE: ClassVar[float] = 10
+
     length: float
     width: float
 
     @validator("width", "length")
     def check_small_sides(cls, v):
-        if v > 10:
-            raise ValueError("side is greater than 10")
+        if v > cls.MAX_SIDE_SIZE:
+            raise ValueError(f"side is greater than {cls.MAX_SIDE_SIZE}")
         return v
 
     @validator("width")

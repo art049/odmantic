@@ -2,6 +2,7 @@ from types import FunctionType
 from typing import (
     Any,
     Callable,
+    ClassVar,
     Dict,
     FrozenSet,
     List,
@@ -338,3 +339,15 @@ def test_forbidden_field():
 
         class M(Model):
             children: Callable
+
+
+def test_model_with_class_var():
+    class M(Model):
+        cls_var: ClassVar[str] = "theclassvar"
+        field: int
+
+    assert M.cls_var == "theclassvar"
+    m = M(field=5)
+    assert m.cls_var == "theclassvar"
+    assert m.field == 5
+    assert "cls_var" not in m.doc().keys()
