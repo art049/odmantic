@@ -58,6 +58,13 @@ def test_auto_collection_name_nested():
     assert TheNestedClassNameOverriden.__collection__ == "collection_name"
 
 
+def test_get_collection_name_pos():
+    class Thing(Model):
+        ...
+
+    assert +Thing == "thing"
+
+
 def test_duplicated_key_name():
     with pytest.raises(TypeError):
 

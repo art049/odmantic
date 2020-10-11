@@ -389,6 +389,9 @@ class ModelMetaclass(BaseModelMetaclass, pydantic.main.ModelMetaclass):
             pydantic.main.ModelMetaclass.__new__(cls, name, bases, namespace, **kwargs),
         )
 
+    def __pos__(cls) -> str:
+        return cast(str, getattr(cls, "__collection__"))
+
 
 class EmbeddedModelMetaclass(BaseModelMetaclass, pydantic.main.ModelMetaclass):
     def __new__(  # noqa C901
@@ -422,6 +425,13 @@ TBase = TypeVar("TBase", bound="_BaseODMModel")
 
 
 class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
+    """Base class for [Model][odmantic.model.Model] and
+    [EmbeddedModel][odmantic.model.EmbeddedModel].
+
+    !!! warning
+        This internal class should never be instanciated directly.
+    """
+
     if TYPE_CHECKING:
         __odm_fields__: ClassVar[Dict[str, ODMBaseField]] = {}
         __bson_serialized_fields__: ClassVar[FrozenSet[str]] = frozenset()
@@ -478,7 +488,15 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         self.__fields_modified__.add(name)
 
     def doc(self, include: Optional["AbstractSetIntStr"] = None) -> Dict[str, Any]:
-        """Generate a document representation of the instance (as a dictionary)."""
+        """Generate a document representation of the instance (as a dictionary).
+
+        Args:
+            include: field that should be included; if None, all the field will be
+                included
+
+        Returns:
+            the document associated to the instance
+        """
         raw_doc = self.dict()
         doc: Dict[str, Any] = {}
         for field_name, field in self.__odm_fields__.items():
@@ -503,7 +521,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
             raw_doc: document to parse (as Dict)
 
         Returns:
-            TBase: [description]
+            an instance of the Model class this method is called on.
         """
         doc: Dict[str, Any] = {}
         for field_name, field in cls.__odm_fields__.items():

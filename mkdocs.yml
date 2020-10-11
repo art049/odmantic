@@ -18,6 +18,7 @@ extra_css:
 markdown_extensions:
   - admonition
   - attr_list
+  - def_list
   - toc:
       permalink: true
       toc_depth: 3
@@ -53,7 +54,7 @@ nav:
   - modeling.md
   - engine.md
   - filtering.md
-  - "I hate ORMs/ODMs": outside_odm.md
+  - raw_query_usage.md
   - API Reference:
       - odmantic.model: ./api_reference/model.md
       - odmantic.engine: ./api_reference/engine.md

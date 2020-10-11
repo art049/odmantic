@@ -112,3 +112,11 @@ def test_model_copy_not_implemented():
     instance = M()
     with pytest.raises(NotImplementedError):
         instance.copy()
+
+
+def test_pos_key_name():
+    class M(Model):
+        field: int = Field(key_name="alternate_name")
+
+    assert +M.field == "alternate_name"
+    assert ++M.field == "$alternate_name"

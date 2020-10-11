@@ -204,6 +204,13 @@ class ODMEmbedded(ODMField):
         self.model = model
 
 
+class FieldNameProxy(str):
+    """Used to provide the `++` operating enabling reference key name creation"""
+
+    def __pos__(self) -> str:
+        return f"${self}"
+
+
 class FieldProxy:
     __slots__ = ("parent", "field")
 
@@ -249,8 +256,8 @@ class FieldProxy:
             )
         return super().__getattribute__(name)
 
-    def __pos__(self) -> str:
-        return cast(str, object.__getattribute__(self, "_get_key_name")())
+    def __pos__(self) -> FieldNameProxy:
+        return FieldNameProxy(object.__getattribute__(self, "_get_key_name")())
 
     def __gt__(self, value: Any) -> QueryExpression:
         return self.gt(value)

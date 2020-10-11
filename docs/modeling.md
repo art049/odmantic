@@ -173,7 +173,7 @@ Embedded Models is done exactly as defining a field with its type being a sequen
 
     Anyway, it's still possible to perform the filtering operation manually using Mongo
     [Array Operators](https://docs.mongodb.com/manual/reference/operator/query-array/){:target=_blank}
-    (`$all`, `$elemMatch`, `$size`). See the [Usage outside the ODM](outside_odm.md) section for
+    (`$all`, `$elemMatch`, `$size`). See the [Raw query usage](raw_query_usage.md) section for
     more details.
 
 ### Customization
