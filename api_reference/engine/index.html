@@ -571,7 +571,7 @@ delete<span class="p">(</span><span class="bp">self</span><span class="p">,</spa
 <span class="sd">    """</span>
     <span class="c1"># TODO handle cascade deletion</span>
     <span class="n">collection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="n">instance</span><span class="o">.</span><span class="n">__collection__</span><span class="p">]</span>
-    <span class="n">pk_name</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">__primary_key__</span>
+    <span class="n">pk_name</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">__primary_field__</span>
     <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">collection</span><span class="o">.</span><span class="n">delete_many</span><span class="p">({</span><span class="s2">"_id"</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">pk_name</span><span class="p">)})</span>
     <span class="n">count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">deleted_count</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
