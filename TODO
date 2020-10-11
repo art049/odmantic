@@ -1,9 +1,8 @@
 
 0.0.1:
 ☐ Document usage outside odm (aggregation example)
-☐ Fix docs/examples_src/fields/04.py
 ☐ Test query Enum
-
+Fix docs/examples_src/fields/04.py
 Doc custom bson serializable fields
 Doc enum fields
 Handle Mutable fields with smart update

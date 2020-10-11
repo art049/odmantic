@@ -225,12 +225,12 @@ class AIOEngine:
         await gather(*save_tasks)
         fields_to_update = (
             instance.__fields_modified__ | instance.__mutable_fields__
-        ) - set([instance.__primary_key__])
+        ) - set([instance.__primary_field__])
         if len(fields_to_update) > 0:
             doc = instance.doc(include=fields_to_update)
             collection = self._get_collection(type(instance))
             await collection.update_one(
-                {"_id": instance.id},
+                {"_id": getattr(instance, instance.__primary_field__)},
                 {"$set": doc},
                 upsert=True,
                 bypass_document_validation=True,
@@ -306,7 +306,7 @@ class AIOEngine:
         """
         # TODO handle cascade deletion
         collection = self.database[instance.__collection__]
-        pk_name = instance.__primary_key__
+        pk_name = instance.__primary_field__
         result = await collection.delete_many({"_id": getattr(instance, pk_name)})
         count = int(result.deleted_count)
         if count == 0:

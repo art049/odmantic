@@ -342,9 +342,9 @@ class ModelMetaclass(BaseModelMetaclass, pydantic.main.ModelMetaclass):
             primary_field: Optional[str] = None
             odm_fields: Dict[str, ODMBaseField] = namespace["__odm_fields__"]
 
-            for field in odm_fields.values():
+            for field_name, field in odm_fields.items():
                 if isinstance(field, ODMField) and field.primary_field:
-                    primary_field = field.key_name
+                    primary_field = field_name
                     break
 
             if primary_field is None:
@@ -358,7 +358,7 @@ class ModelMetaclass(BaseModelMetaclass, pydantic.main.ModelMetaclass):
                 namespace["id"] = PDField(default_factory=_objectId)
                 namespace["__annotations__"]["id"] = _objectId
 
-            namespace["__primary_key__"] = primary_field
+            namespace["__primary_field__"] = primary_field
 
             if "__collection__" in namespace:
                 collection_name = namespace["__collection__"]
@@ -524,7 +524,7 @@ class Model(_BaseODMModel, metaclass=ModelMetaclass):
 
     if TYPE_CHECKING:
         __collection__: ClassVar[str] = ""
-        __primary_key__: ClassVar[str] = ""
+        __primary_field__: ClassVar[str] = ""
 
         id: Union[_objectId, Any]  # TODO fix basic id field typing
 
@@ -539,7 +539,7 @@ class Model(_BaseODMModel, metaclass=ModelMetaclass):
         )
 
     def __setattr__(self, name: str, value: Any) -> None:
-        if name == self.__primary_key__:
+        if name == self.__primary_field__:
             # TODO implement
             raise NotImplementedError(
                 "Reassigning a new primary key is not supported yet"
