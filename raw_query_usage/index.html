@@ -15,7 +15,7 @@
     
     
       
-        <title>I hate ORMs/ODMs - ODMantic</title>
+        <title>Raw query usage - ODMantic</title>
       
     
     
@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#usage-outside-the-odm" class="md-skip">
+        <a href="#raw-query-usage" class="md-skip">
           Skip to content
         </a>
       
@@ -94,7 +94,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              I hate ORMs/ODMs
+              Raw query usage
             
           </span>
         </div>
@@ -273,12 +273,12 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        I hate ORMs/ODMs
+        Raw query usage
         <span class="md-nav__icon md-icon"></span>
       </label>
     
     <a href="./" class="md-nav__link md-nav__link--active">
-      I hate ORMs/ODMs
+      Raw query usage
     </a>
     
       
@@ -309,8 +309,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#dump-documents" class="md-nav__link">
-    Dump documents
+  <a href="#dump-documents-from-instances" class="md-nav__link">
+    Dump documents from instances
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aggregation-example" class="md-nav__link">
+    Aggregation example
   </a>
   
 </li>
@@ -470,8 +477,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#dump-documents" class="md-nav__link">
-    Dump documents
+  <a href="#dump-documents-from-instances" class="md-nav__link">
+    Dump documents from instances
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aggregation-example" class="md-nav__link">
+    Aggregation example
   </a>
   
 </li>
@@ -488,15 +502,127 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/art049/odmantic/edit/master/docs/outside_odm.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/art049/odmantic/edit/master/docs/raw_query_usage.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="usage-outside-the-odm">Usage outside the ODM<a class="headerlink" href="#usage-outside-the-odm" title="Permanent link">&para;</a></h1>
+                <h1 id="raw-query-usage">Raw query usage<a class="headerlink" href="#raw-query-usage" title="Permanent link">&para;</a></h1>
 <h2 id="raw-query-helpers">Raw query helpers<a class="headerlink" href="#raw-query-helpers" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<dl>
+<dt>Getting the collection name</dt>
+<dd>hello</dd>
+</dl>
+</li>
+<li>
+<p>Getting the motor collection object</p>
+</li>
+<li>Getting the key name of a field</li>
+</ul>
 <h2 id="creating-instances-from-a-raw-mongodb-document">Creating instances from a raw MongoDB document<a class="headerlink" href="#creating-instances-from-a-raw-mongodb-document" title="Permanent link">&para;</a></h2>
-<h2 id="dump-documents">Dump documents<a class="headerlink" href="#dump-documents" title="Permanent link">&para;</a></h2>
+<h2 id="dump-documents-from-instances">Dump documents from instances<a class="headerlink" href="#dump-documents-from-instances" title="Permanent link">&para;</a></h2>
+<h2 id="aggregation-example">Aggregation example<a class="headerlink" href="#aggregation-example" title="Permanent link">&para;</a></h2>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span><span class="p">,</span> <span class="n">Model</span>
+
+
+<span class="k">class</span> <span class="nc">Rectangle</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">length</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">width</span><span class="p">:</span> <span class="nb">float</span>
+
+
+<span class="n">rectangles</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Rectangle</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">Rectangle</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mf">3.5</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">Rectangle</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mf">2.87</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">5.19</span><span class="p">),</span>
+    <span class="n">Rectangle</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span>
+    <span class="n">Rectangle</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">100</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">()</span>
+<span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save_all</span><span class="p">(</span><span class="n">rectangles</span><span class="p">)</span>
+
+<span class="hll"><span class="n">collection</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="n">Rectangle</span><span class="p">)</span>
+</span><span class="n">pipeline</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1"># Add an area field</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;$addFields&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;area&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="hll">                <span class="s2">&quot;$multiply&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">++</span><span class="n">Rectangle</span><span class="o">.</span><span class="n">length</span><span class="p">,</span> <span class="o">++</span><span class="n">Rectangle</span><span class="o">.</span><span class="n">width</span><span class="p">]</span>
+</span>            <span class="p">}</span>  <span class="c1"># Compute the area remotely</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+<span class="c1"># Filter only rectanges with an area lower than 10</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;$match&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;area&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;$lt&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}}})</span>
+<span class="c1"># Project to keep only the defined fields (this step is optional)</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;$project&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="hll">            <span class="o">+</span><span class="n">Rectangle</span><span class="o">.</span><span class="n">length</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+</span><span class="hll">            <span class="o">+</span><span class="n">Rectangle</span><span class="o">.</span><span class="n">width</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+</span>        <span class="p">}</span>  <span class="c1"># Specifying &quot;area&quot;: False is unnecessary here</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+<span class="n">documents</span> <span class="o">=</span> <span class="k">await</span> <span class="n">collection</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">pipeline</span><span class="p">)</span><span class="o">.</span><span class="n">to_list</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="hll"><span class="n">small_rectangles</span> <span class="o">=</span> <span class="p">[</span><span class="n">Rectangle</span><span class="o">.</span><span class="n">parse_doc</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">documents</span><span class="p">]</span>
+</span><span class="nb">print</span><span class="p">(</span><span class="n">small_rectangles</span><span class="p">)</span>
+<span class="c1">#&gt; [</span>
+<span class="c1">#&gt;     Rectangle(id=ObjectId(&quot;...&quot;), length=0.1, width=1.0),</span>
+<span class="c1">#&gt;     Rectangle(id=ObjectId(&quot;...&quot;), length=3.5, width=1.0),</span>
+<span class="c1">#&gt; ]</span>
+</code></pre></div>
+</td></tr></table>
                 
               
               
