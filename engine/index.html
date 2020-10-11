@@ -165,8 +165,13 @@
 <nav aria-label="Read" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#fetch-documents">
-    Fetch documents
+<a class="md-nav__link" href="#fetch-a-single-instance">
+    Fetch a single instance
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#fetch-multiple-instances">
+    Fetch multiple instances
   </a>
 </li>
 <li class="md-nav__item">
@@ -281,8 +286,13 @@
 <nav aria-label="Read" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#fetch-documents">
-    Fetch documents
+<a class="md-nav__link" href="#fetch-a-single-instance">
+    Fetch a single instance
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#fetch-multiple-instances">
+    Fetch multiple instances
   </a>
 </li>
 <li class="md-nav__item">
@@ -352,7 +362,17 @@ Format</a>
 <a href="https://pypi.org/project/dnspython/" target="blank_">dnspython</a> package.</p>
 </div>
 <h2 id="create">Create<a class="headerlink" href="#create" title="Permanent link">¶</a></h2>
-<p><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+<p>There are two ways of persisting instances to the database (i.e creating new documents):</p>
+<ul>
+<li>
+<p><a href="../api_reference/engine/#odmantic.engine.AIOEngine.save">AIOEngine.save</a>: to save a single instance</p>
+</li>
+<li>
+<p><a href="../api_reference/engine/#odmantic.engine.AIOEngine.save">AIOEngine.save_all</a>: to save multiple instances at
+  once</p>
+</li>
+</ul>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
  4
@@ -381,15 +401,21 @@ Format</a>
 <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save_all</span><span class="p">(</span><span class="n">players</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-Reference field fetched</p>
 <details class="abstract"><summary>Resulting documents in the <code>player</code> collection</summary><div class="highlight"><pre><span></span><code><span class="p">{</span> <span class="nt">"_id"</span> <span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f8312ecab747c96fa29f792"</span><span class="err">)</span><span class="p">,</span> <span class="nt">"name"</span> <span class="p">:</span> <span class="s2">"Leeroy Jenkins"</span> <span class="p">}</span>
 <span class="p">{</span> <span class="nt">"_id"</span> <span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f8312ecab747c96fa29f793"</span><span class="err">)</span><span class="p">,</span> <span class="nt">"name"</span> <span class="p">:</span> <span class="s2">"xQc"</span> <span class="p">}</span>
 <span class="p">{</span> <span class="nt">"_id"</span> <span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f8312ecab747c96fa29f794"</span><span class="err">)</span><span class="p">,</span> <span class="nt">"name"</span> <span class="p">:</span> <span class="s2">"Shroud"</span> <span class="p">}</span>
 <span class="p">{</span> <span class="nt">"_id"</span> <span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f8312ecab747c96fa29f795"</span><span class="err">)</span><span class="p">,</span> <span class="nt">"name"</span> <span class="p">:</span> <span class="s2">"Serral"</span> <span class="p">}</span>
 </code></pre></div>
 </details>
+<div class="admonition note">
+<p class="admonition-title">Referenced instances</p>
+<p>When calling <a href="../api_reference/engine/#odmantic.engine.AIOEngine.save">save</a> or
+<a href="../api_reference/engine/#odmantic.engine.AIOEngine.save">save_all</a>, the referenced models will be persisted
+as well.</p>
+</div>
 <h2 id="read">Read<a class="headerlink" href="#read" title="Permanent link">¶</a></h2>
-<h3 id="fetch-documents">Fetch documents<a class="headerlink" href="#fetch-documents" title="Permanent link">¶</a></h3>
+<h3 id="fetch-a-single-instance">Fetch a single instance<a class="headerlink" href="#fetch-a-single-instance" title="Permanent link">¶</a></h3>
+<h3 id="fetch-multiple-instances">Fetch multiple instances<a class="headerlink" href="#fetch-multiple-instances" title="Permanent link">¶</a></h3>
 <p>Reference field fetched</p>
 <h4>Usage as an async iterator</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1

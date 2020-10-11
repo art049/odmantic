@@ -715,7 +715,7 @@ find<span class="p">(</span><span class="bp">self</span><span class="p">,</span>
 <div class="doc doc-object doc-method">
 <h3 class="doc doc-heading" id="odmantic.engine.AIOEngine.find_one">
 <code class="highlight language-python">
-find_one<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="p">{})</span> </code>
+find_one<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="p">{},</span> <span class="o">*</span><span class="n">additional_queries</span><span class="p">)</span> </code>
 <span class="doc doc-properties">
 <small class="doc doc-property doc-property-async">
 <code>async</code>
@@ -779,7 +779,8 @@ find_one<span class="p">(</span><span class="bp">self</span><span class="p">,</s
     <span class="n">model</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ModelType</span><span class="p">],</span>
     <span class="n">query</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
         <span class="n">QueryExpression</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="nb">bool</span>
-    <span class="p">]</span> <span class="o">=</span> <span class="n">QueryExpression</span><span class="p">(),</span>  <span class="c1"># bool: allow using binary operators w/o plugin</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="n">QueryExpression</span><span class="p">(),</span>  <span class="c1"># bool: allow using binary operators w/o plugin,</span>
+    <span class="o">*</span><span class="n">additional_queries</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">QueryExpression</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="nb">bool</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ModelType</span><span class="p">]:</span>
     <span class="sd">"""Search for a Model instance matching the query filter provided</span>
 
@@ -796,7 +797,7 @@ find_one<span class="p">(</span><span class="bp">self</span><span class="p">,</s
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">lenient_issubclass</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">Model</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Can only call find_one with a Model class"</span><span class="p">)</span>
-    <span class="n">results</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="o">*</span><span class="n">additional_queries</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="k">return</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
