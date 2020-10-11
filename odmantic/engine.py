@@ -199,7 +199,8 @@ class AIOEngine:
         model: Type[ModelType],
         query: Union[
             QueryExpression, Dict, bool
-        ] = QueryExpression(),  # bool: allow using binary operators w/o plugin
+        ] = QueryExpression(),  # bool: allow using binary operators w/o plugin,
+        *additional_queries: Union[QueryExpression, Dict, bool],
     ) -> Optional[ModelType]:
         """Search for a Model instance matching the query filter provided
 
@@ -216,7 +217,7 @@ class AIOEngine:
         """
         if not lenient_issubclass(model, Model):
             raise TypeError("Can only call find_one with a Model class")
-        results = await self.find(model, query, limit=1)
+        results = await self.find(model, query, *additional_queries, limit=1)
         if len(results) == 0:
             return None
         return results[0]
