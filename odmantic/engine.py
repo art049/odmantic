@@ -111,7 +111,15 @@ class AIOEngine:
         self.database_name = database
         self.database = motor_client[self.database_name]
 
-    def _get_collection(self, model: Type[ModelType]) -> AsyncIOMotorCollection:
+    def get_collection(self, model: Type[ModelType]) -> AsyncIOMotorCollection:
+        """Get the motor collection associated to a Model.
+
+        Args:
+            model: model class
+
+        Returns:
+            the AsyncIO motor collection object
+        """
         return self.database[model.__collection__]
 
     @staticmethod
@@ -176,7 +184,7 @@ class AIOEngine:
         if skip < 0:
             raise ValueError("skip has to be a positive integer")
 
-        collection = self._get_collection(model)
+        collection = self.get_collection(model)
         pipeline: List[Dict] = [{"$match": query}]
         if limit is not None and limit > 0:
             pipeline.append({"$limit": limit})
@@ -228,7 +236,7 @@ class AIOEngine:
         ) - set([instance.__primary_field__])
         if len(fields_to_update) > 0:
             doc = instance.doc(include=fields_to_update)
-            collection = self._get_collection(type(instance))
+            collection = self.get_collection(type(instance))
             await collection.update_one(
                 {"_id": getattr(instance, instance.__primary_field__)},
                 {"$set": doc},

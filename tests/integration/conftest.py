@@ -54,7 +54,7 @@ def mock_collection(engine: AIOEngine, monkeypatch):
         collection = Mock()
         collection.update_one = AsyncMock()
         collection.aggregate = AsyncMock()
-        monkeypatch.setattr(engine, "_get_collection", lambda _: collection)
+        monkeypatch.setattr(engine, "get_collection", lambda _: collection)
         return collection
 
     return f
