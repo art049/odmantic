@@ -1,7 +1,7 @@
 
 0.0.1:
 ☐ Document usage outside odm (aggregation example)
-☐ Test query Enum
+Test query Enum
 Fix docs/examples_src/fields/04.py
 Doc custom bson serializable fields
 Doc enum fields

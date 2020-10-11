@@ -1,4 +1,5 @@
 import re
+from enum import Enum
 from typing import TYPE_CHECKING, Any, Dict, Pattern, Sequence, Union
 
 if TYPE_CHECKING:
@@ -52,6 +53,8 @@ def _cmp_expression(f: "FieldProxy", op: str, cmp_value: Any) -> QueryExpression
 
     if isinstance(cmp_value, EmbeddedModel):
         value = cmp_value.doc()
+    elif isinstance(cmp_value, Enum):
+        value = cmp_value.value
     else:
         value = cmp_value
     return QueryExpression({+f: {op: value}})
