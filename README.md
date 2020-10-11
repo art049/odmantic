@@ -63,8 +63,8 @@ pip install odmantic
 
 ## Example
 
-> To enjoy an async context without any code boilerplate, You can reproduce the
-> following steps using using the AsyncIO REPL (only for Python 3.8+).
+> To enjoy an async context without any code boilerplate, you can reproduce the
+> following steps using the AsyncIO REPL (only for Python 3.8+).
 >
 > ```
 > python3.8 -m asyncio
