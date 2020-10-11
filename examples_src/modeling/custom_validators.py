@@ -1,9 +1,13 @@
+from typing import ClassVar
+
 from pydantic import ValidationError, root_validator
 
 from odmantic import Model
 
 
 class SmallRectangle(Model):
+    MAX_AREA: ClassVar[float] = 9
+
     length: float
     width: float
 
@@ -19,8 +23,8 @@ class SmallRectangle(Model):
     def check_area(cls, values):
         length = values.get("length", 0)
         width = values.get("width", 0)
-        if length * width > 9:
-            raise ValueError("area is greater than 9")
+        if length * width > cls.MAX_AREA:
+            raise ValueError(f"area is greater than {cls.MAX_AREA}")
         return values
 
 

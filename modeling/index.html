@@ -454,12 +454,20 @@ ensure that the area of the rectangle is less or equal to 9.</p>
 55
 56
 57
-58</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">ValidationError</span><span class="p">,</span> <span class="n">root_validator</span>
+58
+59
+60
+61
+62</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">ClassVar</span>
+
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">ValidationError</span><span class="p">,</span> <span class="n">root_validator</span>
 
 <span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">Model</span>
 
 
 <span class="k">class</span> <span class="nc">SmallRectangle</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+<span class="hll">    <span class="n">MAX_AREA</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">9</span>
+</span>
     <span class="n">length</span><span class="p">:</span> <span class="nb">float</span>
     <span class="n">width</span><span class="p">:</span> <span class="nb">float</span>
 
@@ -475,8 +483,8 @@ ensure that the area of the rectangle is less or equal to 9.</p>
 </span><span class="hll">    <span class="k">def</span> <span class="nf">check_area</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
 </span>        <span class="n">length</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"length"</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="n">width</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"width"</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="hll">        <span class="k">if</span> <span class="n">length</span> <span class="o">*</span> <span class="n">width</span> <span class="o">&gt;</span> <span class="mi">9</span><span class="p">:</span>
-</span><span class="hll">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"area is greater than 9"</span><span class="p">)</span>
+<span class="hll">        <span class="k">if</span> <span class="n">length</span> <span class="o">*</span> <span class="n">width</span> <span class="o">&gt;</span> <span class="bp">cls</span><span class="o">.</span><span class="n">MAX_AREA</span><span class="p">:</span>
+</span><span class="hll">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"area is greater than </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">MAX_AREA</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </span>        <span class="k">return</span> <span class="n">values</span>
 
 
@@ -514,6 +522,12 @@ ensure that the area of the rectangle is less or equal to 9.</p>
 </span><span class="sd">    """</span>
 </code></pre></div>
 </td></tr></table>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can define class variables in the Models using the <code>typing.ClassVar</code> type
+construct, as done in this example with <code>MAX_AREA</code>. Those class variables will be
+completely ignored by ODMantic while persisting instances to the database.</p>
+</div>
 <h2 id="embedded-models">Embedded Models<a class="headerlink" href="#embedded-models" title="Permanent link">¶</a></h2>
 <p>Using an embedded model will store it directly in the root model it's integrated
 in. On the MongoDB side, the collection will contain the root documents and in inside
