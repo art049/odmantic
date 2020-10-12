@@ -10,6 +10,7 @@ from typing import (
     List,
     Optional,
     Sequence,
+    Tuple,
     Type,
     TypeVar,
     Union,
@@ -27,7 +28,7 @@ from pydantic.utils import lenient_issubclass
 from odmantic.exceptions import DocumentNotFoundError
 from odmantic.field import ODMReference
 from odmantic.model import Model
-from odmantic.query import QueryExpression
+from odmantic.query import QueryExpression, and_
 
 ModelType = TypeVar("ModelType", bound=Model)
 
@@ -123,6 +124,18 @@ class AIOEngine:
         return self.database[model.__collection__]
 
     @staticmethod
+    def _build_query(*queries: Union[QueryExpression, Dict, bool]) -> QueryExpression:
+        if len(queries) == 0:
+            return QueryExpression()
+        for query in queries:
+            if isinstance(query, bool):
+                raise TypeError("cannot build query using booleans")
+        queries = cast(Tuple[Union[QueryExpression, Dict], ...], queries)
+        if len(queries) == 1:
+            return QueryExpression(queries[0])
+        return and_(*queries)
+
+    @staticmethod
     def _cascade_find_pipeline(
         model: Type[ModelType], doc_namespace: str = ""
     ) -> List[Dict]:
@@ -153,10 +166,9 @@ class AIOEngine:
     def find(
         self,
         model: Type[ModelType],
-        query: Union[
+        *queries: Union[
             QueryExpression, Dict, bool
-        ] = QueryExpression(),  # bool: allow using binary operators with mypy
-        *,
+        ],  # bool: allow using binary operators with mypy
         limit: Optional[int] = None,
         skip: int = 0,
     ) -> AIOCursor[ModelType]:
@@ -164,7 +176,7 @@ class AIOEngine:
 
         Args:
             model: model to perform the operation on
-            query: query filter to apply
+            queries: query filter to apply
             limit: maximum number of instance fetched
             skip: number of document to skip
 
@@ -183,7 +195,7 @@ class AIOEngine:
             raise ValueError("limit has to be a strict positive value or None")
         if skip < 0:
             raise ValueError("skip has to be a positive integer")
-
+        query = AIOEngine._build_query(*queries)
         collection = self.get_collection(model)
         pipeline: List[Dict] = [{"$match": query}]
         if limit is not None and limit > 0:
@@ -197,16 +209,15 @@ class AIOEngine:
     async def find_one(
         self,
         model: Type[ModelType],
-        query: Union[
+        *queries: Union[
             QueryExpression, Dict, bool
-        ] = QueryExpression(),  # bool: allow using binary operators w/o plugin,
-        *additional_queries: Union[QueryExpression, Dict, bool],
+        ],  # bool: allow using binary operators w/o plugin,
     ) -> Optional[ModelType]:
         """Search for a Model instance matching the query filter provided
 
         Args:
             model: model to perform the operation on
-            query: query filter to apply
+            queries: query filter to apply
 
         Returns:
             the fetched instance if found otherwise None
@@ -217,7 +228,7 @@ class AIOEngine:
         """
         if not lenient_issubclass(model, Model):
             raise TypeError("Can only call find_one with a Model class")
-        results = await self.find(model, query, *additional_queries, limit=1)
+        results = await self.find(model, *queries, limit=1)
         if len(results) == 0:
             return None
         return results[0]
@@ -322,13 +333,13 @@ class AIOEngine:
             raise DocumentNotFoundError(instance)
 
     async def count(
-        self, model: Type[ModelType], query: Union[QueryExpression, Dict, bool] = {}
+        self, model: Type[ModelType], *queries: Union[QueryExpression, Dict, bool]
     ) -> int:
         """Get the count of documents matching a query
 
         Args:
             model: model to perform the operation on
-            query: query filter to apply
+            queries: query filters to apply
 
         Returns:
             number of document matching the query
@@ -339,6 +350,7 @@ class AIOEngine:
         """
         if not lenient_issubclass(model, Model):
             raise TypeError("Can only call count with a Model class")
+        query = AIOEngine._build_query(*queries)
         collection = self.database[model.__collection__]
         count = await collection.count_documents(query)
         return int(count)

@@ -126,6 +126,11 @@ async def test_find_skip(engine: AIOEngine, person_persisted: List[PersonModel])
         assert instance in person_persisted
 
 
+async def test_find_one_bad_query(engine: AIOEngine):
+    with pytest.raises(TypeError):
+        await engine.find_one(PersonModel, True, False)
+
+
 async def test_find_one_on_non_model(engine: AIOEngine):
     class BadModel:
         pass
@@ -195,6 +200,16 @@ async def test_save_on_embedded(engine: AIOEngine):
     instance = BadModel(field=12)
     with pytest.raises(TypeError):
         await engine.save(instance)  # type: ignore
+
+
+@pytest.mark.usefixtures("person_persisted")
+async def test_implicit_and(engine: AIOEngine):
+    count = await engine.count(
+        PersonModel,
+        PersonModel.first_name == "Michel",
+        PersonModel.last_name == "Drucker",
+    )
+    assert count == 1
 
 
 async def test_save_update(engine: AIOEngine):
