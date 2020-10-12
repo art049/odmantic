@@ -415,6 +415,34 @@ as well.</p>
 </div>
 <h2 id="read">Read<a class="headerlink" href="#read" title="Permanent link">¶</a></h2>
 <h3 id="fetch-a-single-instance">Fetch a single instance<a class="headerlink" href="#fetch-a-single-instance" title="Permanent link">¶</a></h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span><span class="p">,</span> <span class="n">Model</span>
+
+
+<span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">()</span>
+
+<span class="n">player</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">Player</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">player</span><span class="p">))</span>
+<span class="c1">#&gt; Player(id=ObjectId("5f8312ecab747c96fa29f795"), name="Serral"),</span>
+</code></pre></div>
+</td></tr></table>
+<div class="admonition tip">
+<p class="admonition-title">Combinining multiple queries</p>
+</div>
 <h3 id="fetch-multiple-instances">Fetch multiple instances<a class="headerlink" href="#fetch-multiple-instances" title="Permanent link">¶</a></h3>
 <p>Reference field fetched</p>
 <h4>Usage as an async iterator</h4>
