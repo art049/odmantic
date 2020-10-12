@@ -32,17 +32,20 @@ class QueryExpression(Dict[str, Any]):
         return and_(self, other)
 
 
-def and_(*elements: Union[QueryExpression, bool]) -> QueryExpression:
+QueryDictBool = Union[QueryExpression, Dict, bool]
+
+
+def and_(*elements: QueryDictBool) -> QueryExpression:
     """Logical **AND** operation between multiple `QueryExpression` objects."""
     return QueryExpression({"$and": elements})
 
 
-def or_(*elements: Union[QueryExpression, bool]) -> QueryExpression:
+def or_(*elements: QueryDictBool) -> QueryExpression:
     """Logical **OR** operation between multiple `QueryExpression` objects."""
     return QueryExpression({"$or": elements})
 
 
-def nor_(*elements: Union[QueryExpression, bool]) -> QueryExpression:
+def nor_(*elements: QueryDictBool) -> QueryExpression:
     """Logical **NOR** operation between multiple `QueryExpression` objects."""
     return QueryExpression({"$nor": elements})
 
