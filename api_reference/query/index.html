@@ -415,7 +415,7 @@ odmantic.query.and_<span class="p">(</span><span class="o">*</span><span class="
 <details class="quote">
 <summary>Source code in <code>odmantic/query.py</code></summary>
 <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">and_</span><span class="p">(</span><span class="o">*</span><span class="n">elements</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">QueryExpression</span><span class="p">,</span> <span class="nb">bool</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">QueryExpression</span><span class="p">:</span>
+<pre><span></span><code><span class="k">def</span> <span class="nf">and_</span><span class="p">(</span><span class="o">*</span><span class="n">elements</span><span class="p">:</span> <span class="n">QueryDictBool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QueryExpression</span><span class="p">:</span>
     <span class="sd">"""Logical **AND** operation between multiple `QueryExpression` objects."""</span>
     <span class="k">return</span> <span class="n">QueryExpression</span><span class="p">({</span><span class="s2">"$and"</span><span class="p">:</span> <span class="n">elements</span><span class="p">})</span>
 </code></pre>
@@ -433,7 +433,7 @@ odmantic.query.or_<span class="p">(</span><span class="o">*</span><span class="n
 <details class="quote">
 <summary>Source code in <code>odmantic/query.py</code></summary>
 <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">or_</span><span class="p">(</span><span class="o">*</span><span class="n">elements</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">QueryExpression</span><span class="p">,</span> <span class="nb">bool</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">QueryExpression</span><span class="p">:</span>
+<pre><span></span><code><span class="k">def</span> <span class="nf">or_</span><span class="p">(</span><span class="o">*</span><span class="n">elements</span><span class="p">:</span> <span class="n">QueryDictBool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QueryExpression</span><span class="p">:</span>
     <span class="sd">"""Logical **OR** operation between multiple `QueryExpression` objects."""</span>
     <span class="k">return</span> <span class="n">QueryExpression</span><span class="p">({</span><span class="s2">"$or"</span><span class="p">:</span> <span class="n">elements</span><span class="p">})</span>
 </code></pre>
@@ -451,7 +451,7 @@ odmantic.query.nor_<span class="p">(</span><span class="o">*</span><span class="
 <details class="quote">
 <summary>Source code in <code>odmantic/query.py</code></summary>
 <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">nor_</span><span class="p">(</span><span class="o">*</span><span class="n">elements</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">QueryExpression</span><span class="p">,</span> <span class="nb">bool</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">QueryExpression</span><span class="p">:</span>
+<pre><span></span><code><span class="k">def</span> <span class="nf">nor_</span><span class="p">(</span><span class="o">*</span><span class="n">elements</span><span class="p">:</span> <span class="n">QueryDictBool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QueryExpression</span><span class="p">:</span>
     <span class="sd">"""Logical **NOR** operation between multiple `QueryExpression` objects."""</span>
     <span class="k">return</span> <span class="n">QueryExpression</span><span class="p">({</span><span class="s2">"$nor"</span><span class="p">:</span> <span class="n">elements</span><span class="p">})</span>
 </code></pre>
