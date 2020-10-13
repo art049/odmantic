@@ -49,7 +49,6 @@ plugins:
 
 nav:
   - Overview: index.md
-  - quickstart.md
   - fields.md
   - modeling.md
   - engine.md
