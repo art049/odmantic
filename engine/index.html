@@ -175,8 +175,8 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#count-documents">
-    Count documents
+<a class="md-nav__link" href="#count-instances">
+    Count instances
   </a>
 </li>
 </ul>
@@ -296,8 +296,8 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#count-documents">
-    Count documents
+<a class="md-nav__link" href="#count-instances">
+    Count instances
   </a>
 </li>
 </ul>
@@ -385,36 +385,71 @@ Format</a>
 11
 12
 13
-14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span><span class="p">,</span> <span class="n">Model</span>
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span><span class="p">,</span> <span class="n">Model</span>
 
 
 <span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">game</span><span class="p">:</span> <span class="nb">str</span>
 
 
 <span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">()</span>
 
-<span class="n">leeroy</span> <span class="o">=</span> <span class="n">Player</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"Leeroy Jenkins"</span><span class="p">)</span>
-<span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">leeroy</span><span class="p">)</span>
-
-<span class="n">players</span> <span class="o">=</span> <span class="p">[</span><span class="n">Player</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"xQc"</span><span class="p">),</span> <span class="n">Player</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"Shroud"</span><span class="p">),</span> <span class="n">Player</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"Serral"</span><span class="p">)]</span>
-<span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save_all</span><span class="p">(</span><span class="n">players</span><span class="p">)</span>
-</code></pre></div>
+<span class="n">leeroy</span> <span class="o">=</span> <span class="n">Player</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"Leeroy Jenkins"</span><span class="p">,</span> <span class="n">game</span><span class="o">=</span><span class="s2">"World of Warcraft"</span><span class="p">)</span>
+<span class="hll"><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">leeroy</span><span class="p">)</span>
+</span>
+<span class="n">players</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Player</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"Shroud"</span><span class="p">,</span> <span class="n">game</span><span class="o">=</span><span class="s2">"Counter-Strike"</span><span class="p">),</span>
+    <span class="n">Player</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"Serral"</span><span class="p">,</span> <span class="n">game</span><span class="o">=</span><span class="s2">"Starcraft"</span><span class="p">),</span>
+    <span class="n">Player</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"TLO"</span><span class="p">,</span> <span class="n">game</span><span class="o">=</span><span class="s2">"Starcraft"</span><span class="p">),</span>
+<span class="p">]</span>
+<span class="hll"><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save_all</span><span class="p">(</span><span class="n">players</span><span class="p">)</span>
+</span></code></pre></div>
 </td></tr></table>
-<details class="abstract"><summary>Resulting documents in the <code>player</code> collection</summary><div class="highlight"><pre><span></span><code><span class="p">{</span> <span class="nt">"_id"</span> <span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f8312ecab747c96fa29f792"</span><span class="err">)</span><span class="p">,</span> <span class="nt">"name"</span> <span class="p">:</span> <span class="s2">"Leeroy Jenkins"</span> <span class="p">}</span>
-<span class="p">{</span> <span class="nt">"_id"</span> <span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f8312ecab747c96fa29f793"</span><span class="err">)</span><span class="p">,</span> <span class="nt">"name"</span> <span class="p">:</span> <span class="s2">"xQc"</span> <span class="p">}</span>
-<span class="p">{</span> <span class="nt">"_id"</span> <span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f8312ecab747c96fa29f794"</span><span class="err">)</span><span class="p">,</span> <span class="nt">"name"</span> <span class="p">:</span> <span class="s2">"Shroud"</span> <span class="p">}</span>
-<span class="p">{</span> <span class="nt">"_id"</span> <span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f8312ecab747c96fa29f795"</span><span class="err">)</span><span class="p">,</span> <span class="nt">"name"</span> <span class="p">:</span> <span class="s2">"Serral"</span> <span class="p">}</span>
+<details class="abstract"><summary>Resulting documents in the <code>player</code> collection</summary><div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f85f36d6dfecacc68428a46"</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">"game"</span><span class="p">:</span> <span class="s2">"World of Warcraft"</span><span class="p">,</span>
+  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Leeroy Jenkins"</span>
+<span class="p">}</span>
+<span class="p">{</span>
+  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f85f36d6dfecacc68428a47"</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">"game"</span><span class="p">:</span> <span class="s2">"Counter-Strike"</span><span class="p">,</span>
+  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Shroud"</span>
+<span class="p">}</span>
+<span class="p">{</span>
+  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f85f36d6dfecacc68428a49"</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">"game"</span><span class="p">:</span> <span class="s2">"Starcraft"</span><span class="p">,</span>
+  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"TLO"</span>
+<span class="p">}</span>
+<span class="p">{</span>
+  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f85f36d6dfecacc68428a48"</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">"game"</span><span class="p">:</span> <span class="s2">"Starcraft"</span><span class="p">,</span>
+  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Serral"</span>
+<span class="p">}</span>
 </code></pre></div>
 </details>
-<div class="admonition note">
+<div class="admonition tip">
 <p class="admonition-title">Referenced instances</p>
-<p>When calling <a href="../api_reference/engine/#odmantic.engine.AIOEngine.save">save</a> or
-<a href="../api_reference/engine/#odmantic.engine.AIOEngine.save">save_all</a>, the referenced models will be persisted
+<p>When calling <a href="../api_reference/engine/#odmantic.engine.AIOEngine.save">AIOEngine.save</a> or
+<a href="../api_reference/engine/#odmantic.engine.AIOEngine.save">AIOEngine.save_all</a>, the referenced models will be persisted
 as well.</p>
 </div>
 <h2 id="read">Read<a class="headerlink" href="#read" title="Permanent link">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Examples database content</p>
+<p>The next examples will consider that you have a <code>player</code> collection populated with
+the documents previously created.</p>
+</div>
 <h3 id="fetch-a-single-instance">Fetch a single instance<a class="headerlink" href="#fetch-a-single-instance" title="Permanent link">¶</a></h3>
+<p>As with regular MongoDB driver, you can use the
+<a href="../api_reference/engine/#odmantic.engine.AIOEngine.find_one">AIOEngine.find_one</a> method to get at most one
+instance of a specific Model. This method will either return an instance matching the
+specified criteriums or <code>None</code> if no instances have been found.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -426,26 +461,74 @@ as well.</p>
  9
 10
 11
-12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span><span class="p">,</span> <span class="n">Model</span>
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span><span class="p">,</span> <span class="n">Model</span>
 
 
 <span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">game</span><span class="p">:</span> <span class="nb">str</span>
 
 
 <span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">()</span>
 
-<span class="n">player</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">Player</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">player</span><span class="p">))</span>
-<span class="c1">#&gt; Player(id=ObjectId("5f8312ecab747c96fa29f795"), name="Serral"),</span>
+<span class="hll"><span class="n">player</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">Player</span><span class="p">,</span> <span class="n">Player</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">"Serral"</span><span class="p">)</span>
+</span><span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">player</span><span class="p">))</span>
+<span class="c1">#&gt; Player(id=ObjectId(...), name="Serral", game="Starcraft")</span>
+
+<span class="hll"><span class="n">another_player</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span>
+</span><span class="hll">    <span class="n">Player</span><span class="p">,</span> <span class="n">Player</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">"Player_Not_Stored_In_Database"</span>
+</span><span class="hll"><span class="p">)</span>
+</span><span class="nb">print</span><span class="p">(</span><span class="n">another_player</span><span class="p">)</span>
+<span class="c1">#&gt; None</span>
 </code></pre></div>
 </td></tr></table>
-<div class="admonition tip">
-<p class="admonition-title">Combinining multiple queries</p>
-</div>
 <h3 id="fetch-multiple-instances">Fetch multiple instances<a class="headerlink" href="#fetch-multiple-instances" title="Permanent link">¶</a></h3>
-<p>Reference field fetched</p>
+<p>To get more than one instance from the database at once, you can use the
+<a href="../api_reference/engine/#odmantic.engine.AIOEngine.find">AIOEngine.find</a> method.</p>
+<p>This method will return an <a href="../api_reference/engine/#odmantic.engine.AIOCursor">AIOCursor</a> object, that can be
+used in two different ways.</p>
 <h4>Usage as an async iterator</h4>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span><span class="p">,</span> <span class="n">Model</span>
+
+
+<span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">game</span><span class="p">:</span> <span class="nb">str</span>
+
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">()</span>
+
+<span class="hll"><span class="k">async</span> <span class="k">for</span> <span class="n">player</span> <span class="ow">in</span> <span class="n">engine</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">Player</span><span class="p">,</span> <span class="n">Player</span><span class="o">.</span><span class="n">game</span> <span class="o">==</span> <span class="s2">"Starcraft"</span><span class="p">):</span>
+</span>    <span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">player</span><span class="p">))</span>
+
+<span class="c1">#&gt; Player(id=ObjectId(...), name='TLO', game='Starcraft')</span>
+<span class="c1">#&gt; Player(id=ObjectId(...), name='Serral', game='Starcraft')</span>
+</code></pre></div>
+</td></tr></table>
+<h4>Usage as an awaitable</h4>
+<p>Even if the async iterator usage should be preferred, in some cases it might be required
+to gather all the documents from the database before processing them.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -466,20 +549,41 @@ as well.</p>
 
 <span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">game</span><span class="p">:</span> <span class="nb">str</span>
 
 
 <span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">()</span>
 
-<span class="k">async</span> <span class="k">for</span> <span class="n">player</span> <span class="ow">in</span> <span class="n">engine</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">Player</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">player</span><span class="p">))</span>
-
-<span class="c1">#&gt; Player(id=ObjectId('5f8312ecab747c96fa29f792'), name='Leeroy Jenkins')</span>
-<span class="c1">#&gt; Player(id=ObjectId('5f8312ecab747c96fa29f793'), name='xQc')</span>
-<span class="c1">#&gt; Player(id=ObjectId('5f8312ecab747c96fa29f794'), name='Shroud')</span>
-<span class="c1">#&gt; Player(id=ObjectId('5f8312ecab747c96fa29f795'), name='Serral')</span>
+<span class="hll"><span class="n">players</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">Player</span><span class="p">,</span> <span class="n">Player</span><span class="o">.</span><span class="n">game</span> <span class="o">!=</span> <span class="s2">"Starcraft"</span><span class="p">)</span>
+</span><span class="nb">print</span><span class="p">(</span><span class="n">players</span><span class="p">)</span>
+<span class="c1">#&gt; [</span>
+<span class="c1">#&gt;     Player(id=ObjectId(...), name="Leeroy Jenkins", game="World of Warcraft"),</span>
+<span class="c1">#&gt;     Player(id=ObjectId(...), name="Shroud", game="Counter-Strike"),</span>
+<span class="c1">#&gt; ]</span>
 </code></pre></div>
 </td></tr></table>
-<h4>Usage as an awaitable</h4>
+<div class="admonition note">
+<p class="admonition-title">Pagination</p>
+<p>You can as well use the <code>skip</code> and <code>limit</code> keyword arguments when using
+<a href="../api_reference/engine/#odmantic.engine.AIOEngine.find">AIOEngine.find</a>, respectively to skip a specified
+number of instances and to limit the number of fetched instances.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Referenced instances</p>
+<p>When calling <a href="../api_reference/engine/#odmantic.engine.AIOEngine.find">AIOEngine.find</a> or
+<a href="../api_reference/engine/#odmantic.engine.AIOEngine.find_one">AIOEngine.find_one</a>, the referenced models will
+be recursively resolved as well.</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">Passing the model class to <code>find</code> and <code>find_one</code></p>
+<p>When using the method to retrieve instances from the database, you have to specify
+the Model you want to query on as the first positional parameter. Internally, this
+enables ODMantic to properly type the results.</p>
+</div>
+<h3 id="count-instances">Count instances<a class="headerlink" href="#count-instances" title="Permanent link">¶</a></h3>
+<p>You can count instances in the database by using the
+<a href="../api_reference/engine/#odmantic.engine.AIOEngine.count">AIOEngine.count</a> method. It's possible as well to use
+this method with filtering queries.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -496,26 +600,44 @@ as well.</p>
 14
 15
 16
-17</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span><span class="p">,</span> <span class="n">Model</span>
+17
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span><span class="p">,</span> <span class="n">Model</span>
 
 
 <span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">game</span><span class="p">:</span> <span class="nb">str</span>
 
 
 <span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">()</span>
 
-<span class="n">players</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">Player</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">players</span><span class="p">)</span>
-<span class="c1">#&gt; [</span>
-<span class="c1">#&gt;     Player(id=ObjectId("5f8312ecab747c96fa29f792"), name="Leeroy Jenkins"),</span>
-<span class="c1">#&gt;     Player(id=ObjectId("5f8312ecab747c96fa29f793"), name="xQc"),</span>
-<span class="c1">#&gt;     Player(id=ObjectId("5f8312ecab747c96fa29f794"), name="Shroud"),</span>
-<span class="c1">#&gt;     Player(id=ObjectId("5f8312ecab747c96fa29f795"), name="Serral"),</span>
-<span class="c1">#&gt; ]</span>
+<span class="hll"><span class="n">player_count</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">Player</span><span class="p">)</span>
+</span><span class="nb">print</span><span class="p">(</span><span class="n">player_count</span><span class="p">)</span>
+<span class="c1">#&gt; 4</span>
+<span class="hll"><span class="n">cs_count</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">Player</span><span class="p">,</span> <span class="n">Player</span><span class="o">.</span><span class="n">game</span> <span class="o">==</span> <span class="s2">"Counter-Strike"</span><span class="p">)</span>
+</span><span class="nb">print</span><span class="p">(</span><span class="n">cs_count</span><span class="p">)</span>
+<span class="c1">#&gt; 1</span>
+<span class="hll"><span class="n">valorant_count</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">Player</span><span class="p">,</span> <span class="n">Player</span><span class="o">.</span><span class="n">game</span> <span class="o">==</span> <span class="s2">"Valorant"</span><span class="p">)</span>
+</span><span class="nb">print</span><span class="p">(</span><span class="n">valorant_count</span><span class="p">)</span>
+<span class="c1">#&gt; 0</span>
 </code></pre></div>
 </td></tr></table>
-<h3 id="count-documents">Count documents<a class="headerlink" href="#count-documents" title="Permanent link">¶</a></h3>
+<div class="admonition tip">
+<p class="admonition-title">Combining multiple queries in read operations</p>
+<p>While using <a href="../api_reference/engine/#odmantic.engine.AIOEngine.find">find</a>,
+<a href="../api_reference/engine/#odmantic.engine.AIOEngine.find_one">find_one</a> or
+<a href="../api_reference/engine/#odmantic.engine.AIOEngine.count">count</a>, you may pass as many queries as you want
+as positional arguments. Those will be internally combined as single
+<a href="../api_reference/query/#odmantic.query.and_">and_</a> query.</p>
+</div>
+<h2 id="update">Update<a class="headerlink" href="#update" title="Permanent link">¶</a></h2>
+<p>Updating an instance in the database can be done simply by modifying the instance
+locally and saving it again to the database.</p>
+<p>The <a href="../api_reference/engine/#odmantic.engine.AIOEngine.save">AIOEngine.save</a> and
+<a href="../api_reference/engine/#odmantic.engine.AIOEngine.save">AIOEngine.save_all</a> methods are actually behaving as
+<code>upsert</code> operations. In other words, if the instance already exists it will be updated.
+Otherwise, the related document will be created in the database.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -527,36 +649,142 @@ as well.</p>
  9
 10
 11
-12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span><span class="p">,</span> <span class="n">Model</span>
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span><span class="p">,</span> <span class="n">Model</span>
 
 
 <span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">game</span><span class="p">:</span> <span class="nb">str</span>
 
 
 <span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">()</span>
-
-<span class="n">player_count</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">Player</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">player_count</span><span class="p">)</span>
-<span class="c1">#&gt; 4</span>
-</code></pre></div>
+<span class="n">shroud</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">Player</span><span class="p">,</span> <span class="n">Player</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">"Shroud"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">shroud</span><span class="o">.</span><span class="n">game</span><span class="p">)</span>
+<span class="c1">#&gt; Counter-Strike</span>
+<span class="hll"><span class="n">shroud</span><span class="o">.</span><span class="n">game</span> <span class="o">=</span> <span class="s2">"Valorant"</span>
+</span><span class="hll"><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">shroud</span><span class="p">)</span>
+</span></code></pre></div>
 </td></tr></table>
-<h2 id="update">Update<a class="headerlink" href="#update" title="Permanent link">¶</a></h2>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>
+<details class="abstract" open="open"><summary>Resulting documents in the <code>player</code> collection</summary><div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f85f36d6dfecacc68428a46"</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">"game"</span><span class="p">:</span> <span class="s2">"World of Warcraft"</span><span class="p">,</span>
+  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Leeroy Jenkins"</span>
+<span class="p">}</span>
+<span class="hll"><span class="p">{</span>
+</span><span class="hll">  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f85f36d6dfecacc68428a47"</span><span class="err">)</span><span class="p">,</span>
+</span><span class="hll">  <span class="nt">"game"</span><span class="p">:</span> <span class="s2">"Valorant"</span><span class="p">,</span>
+</span><span class="hll">  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Shroud"</span>
+</span><span class="hll"><span class="p">}</span>
+</span><span class="p">{</span>
+  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f85f36d6dfecacc68428a49"</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">"game"</span><span class="p">:</span> <span class="s2">"Starcraft"</span><span class="p">,</span>
+  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"TLO"</span>
+<span class="p">}</span>
+<span class="p">{</span>
+  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f85f36d6dfecacc68428a48"</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">"game"</span><span class="p">:</span> <span class="s2">"Starcraft"</span><span class="p">,</span>
+  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Serral"</span>
+<span class="p">}</span>
 </code></pre></div>
-</td></tr></table>
+</details>
 <div class="admonition warning">
 <p class="admonition-title">Primary field update</p>
 <p>Currently, changing the primary field value is disabled and a <code>NotImplementedError</code>
 exception will be raised if you try to do so. It is still possible to mutate the
-primary field if the field is a mutable object but it might result in unexpected
+primary field if the field type is mutable but it might result in unexpected
 behaviors.</p>
+<details class="tip"><summary>Workaround to modify the primary key</summary><p>There is still a workaround to update the primary key of a document:
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">bson</span> <span class="kn">import</span> <span class="n">ObjectId</span>
+
+<span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span><span class="p">,</span> <span class="n">Model</span>
+
+
+<span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">game</span><span class="p">:</span> <span class="nb">str</span>
+
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">()</span>
+
+<span class="n">shroud</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">Player</span><span class="p">,</span> <span class="n">Player</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">"Shroud"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">shroud</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+<span class="c1">#&gt; 5f86074f6dfecacc68428a62</span>
+<span class="n">new_id</span> <span class="o">=</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s2">"ffffffffffffffffffffffff"</span><span class="p">)</span>
+<span class="c1"># First delete the remote instance</span>
+<span class="hll"><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">shroud</span><span class="p">)</span>
+</span><span class="c1"># Then, copy the player object with a new primary key</span>
+<span class="hll"><span class="n">new_shroud</span> <span class="o">=</span> <span class="n">Player</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="o">**</span><span class="n">shroud</span><span class="o">.</span><span class="n">dict</span><span class="p">(),</span> <span class="s2">"id"</span><span class="p">:</span> <span class="n">new_id</span><span class="p">})</span>
+</span><span class="c1"># Finally create again the document</span>
+<span class="hll"><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">new_shroud</span><span class="p">)</span>
+</span></code></pre></div>
+</td></tr></table></p>
+<div class="admonition abstract">
+<p class="admonition-title">Resulting document associated to the player</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="hll">    <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"ffffffffffffffffffffffff"</span><span class="err">)</span><span class="p">,</span>
+</span>    <span class="nt">"game"</span><span class="p">:</span> <span class="s2">"Valorant"</span><span class="p">,</span>
+    <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Shroud"</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+</details>
 </div>
 <h2 id="delete">Delete<a class="headerlink" href="#delete" title="Permanent link">¶</a></h2>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>
-</code></pre></div>
+<p>You can delete instance by passing them to the
+<a href="../api_reference/engine/#odmantic.engine.AIOEngine.delete">AIOEngine.delete</a> method.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span><span class="p">,</span> <span class="n">Model</span>
+
+
+<span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">game</span><span class="p">:</span> <span class="nb">str</span>
+
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">()</span>
+
+<span class="n">players</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">Player</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">player</span> <span class="ow">in</span> <span class="n">players</span><span class="p">:</span>
+<span class="hll">    <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
+</span></code></pre></div>
 </td></tr></table>
-<p>Interop with regular queries link</p>
+<p>The collection is now empty <img alt="🧹" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/72x72/1f9f9.png" title=":broom:"/>.</p>
 </article>
 </div>
 </div>
