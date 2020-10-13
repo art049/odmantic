@@ -302,8 +302,7 @@ href="https://pydantic-docs.helpmanual.io/usage/models/#error-handling"
 target="_blank">pydantic</a>.
 
 To get started on more advanced practices like relations and building more advanced
-queries, you can go to the [Quickstart
-section](https://art049.github.io/odmantic/quickstart/).
+queries, you can check the [documentation](https://art049.github.io/odmantic/).
 
 ## License
 
