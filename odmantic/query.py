@@ -19,11 +19,11 @@ class QueryExpression(Dict[str, Any]):
         to avoid python operator precedence issues.
     """
 
-    # def __repr__(self):
-    #     parent_repr = super().__repr__()
-    #     if parent_repr == "{}":
-    #         parent_repr = ""
-    #     return f"QueryExpression({parent_repr})"
+    def __repr__(self) -> str:
+        parent_repr = super().__repr__()
+        if parent_repr == "{}":
+            parent_repr = ""
+        return f"QueryExpression({parent_repr})"
 
     def __or__(self, other: "QueryExpression") -> "QueryExpression":
         return or_(self, other)
