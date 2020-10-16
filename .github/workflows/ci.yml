@@ -48,11 +48,17 @@ jobs:
       - name: Install dependencies
         run: |
           pip install poetry
-          poetry config --local virtualenvs.in-project true
+          poetry config virtualenvs.in-project true
+          poetry config experimental.new-installer false
           poetry install
+
       - name: Run all tests
         run: |
-          poetry run ./scripts/coverage.sh
+          set -e
+          poetry run coverage run -m pytest -v
+          poetry run coverage report -m
+          poetry run coverage xml
+
       - uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos

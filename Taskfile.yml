@@ -1,0 +1,44 @@
+# https://taskfile.dev
+
+version: "3"
+
+silent: true
+
+tasks:
+  mongodb-docker:
+    desc: Start the local MongoDB server.
+    cmds:
+      - echo "Starting odmantic-mongo-test mongo container"
+      - docker run --rm --net=host --name odmantic-mongo-test -d mongo:4
+    status:
+      - docker container inspect odmantic-mongo-test
+
+  test:
+    desc: |
+      Run the tests against supported versions. (If the version=py3x argument is specified it will only run against this version)
+    deps:
+      - mongodb-docker
+    cmds:
+      - tox {{if .version}}-e {{.version}} {{else}} --parallel {{end}}
+
+  docs:
+    desc: Start the local documentation server.
+    cmds:
+      - poetry run mkdocs serve
+
+  lint:
+    desc: Run the linting checks.
+    cmds:
+      - pre-commit run --all-files
+
+  format:
+    desc: Format the code (and imports).
+    cmds:
+      - poetry run isort -y
+      - poetry run black ./
+
+  setup:
+    desc: Configure the development environment.
+    cmds:
+      - poetry install
+      - poetry run pre-commit install
