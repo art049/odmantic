@@ -43,7 +43,7 @@ motor = "~=2.2.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "~=6.0"
-isort = {extras = ["pipfile"],version = "~=4.3"}
+isort = "~=5.6.4"
 black = { version = "*", allow-prereleases = true }
 flake8 = "==3.8.3"
 mypy = "^0.782"
@@ -61,3 +61,18 @@ mkdocs-material = "^6.0.2"
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
+
+[tool.isort]
+line_length=88
+multi_line_output=3
+include_trailing_comma=true
+use_parentheses=true
+force_grid_wrap=0
+known_third_party=["bson", "motor", "pydantic", "pytest", "pytz"]
+known_first_party=["odmantic","tests"]
+skip=["docs"]
+
+[tool.pytest.ini_options]
+filterwarnings =[
+    "ignore:\"@coroutine\" decorator is deprecated.*:DeprecationWarning:motor.*"
+]
