@@ -11,20 +11,16 @@ from typing import (
     Union,
 )
 
+import bson
 import pytest
-from bson.binary import Binary
-from bson.decimal128 import Decimal128
-from bson.int64 import Int64
-from bson.objectid import ObjectId
-from bson.regex import Regex
 
-from odmantic.bson_fields import (
+from odmantic.bson import (
     _BSON_SUBSTITUTED_FIELDS,
-    _binary,
-    _bson_decimal,
-    _long,
-    _objectId,
-    _regex,
+    Binary,
+    Decimal128,
+    Int64,
+    ObjectId,
+    Regex,
 )
 from odmantic.model import EmbeddedModel, is_type_mutable, validate_type
 
@@ -54,13 +50,13 @@ def test_deep_nest_bson_subst():
     assert (
         validate_type(
             Union[  # type: ignore
-                Dict[List[ObjectId], Dict[ObjectId, Decimal128]],
-                Dict[Dict[Set[Int64], Binary], Tuple[Regex, ...]],
+                Dict[List[bson.ObjectId], Dict[bson.ObjectId, bson.Decimal128]],
+                Dict[Dict[Set[bson.Int64], bson.Binary], Tuple[bson.Regex, ...]],
             ]
         )
         == Union[
-            Dict[List[_objectId], Dict[_objectId, _bson_decimal]],
-            Dict[Dict[Set[_long], _binary], Tuple[_regex, ...]],
+            Dict[List[ObjectId], Dict[ObjectId, Decimal128]],
+            Dict[Dict[Set[Int64], Binary], Tuple[Regex, ...]],
         ]
     )
 

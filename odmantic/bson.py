@@ -1,13 +1,13 @@
+import decimal
 import re
 from datetime import datetime
-from decimal import Decimal
 from typing import Any, Pattern, cast
 
-from bson.binary import Binary as BsonBinary
-from bson.decimal128 import Decimal128 as BsonDecimal
-from bson.int64 import Int64 as BsonLong
-from bson.objectid import ObjectId as BsonObjectId
-from bson.regex import Regex as BsonRegex
+import bson
+import bson.binary
+import bson.decimal128
+import bson.int64
+import bson.regex
 from pydantic.datetime_parse import parse_datetime
 from pydantic.main import BaseModel
 from pydantic.validators import (
@@ -18,70 +18,73 @@ from pydantic.validators import (
 )
 
 
-class _objectId(BsonObjectId):
+class ObjectId(bson.ObjectId):
     @classmethod
     def __get_validators__(cls):  # type: ignore
         yield cls.validate
 
     @classmethod
-    def validate(cls, v: Any) -> BsonObjectId:
-        if isinstance(v, (BsonObjectId, cls)):
+    def validate(cls, v: Any) -> bson.ObjectId:
+        if isinstance(v, (bson.ObjectId, cls)):
             return v
-        if isinstance(v, str) and BsonObjectId.is_valid(v):
-            return BsonObjectId(v)
+        if isinstance(v, str) and bson.ObjectId.is_valid(v):
+            return bson.ObjectId(v)
         raise TypeError("invalid ObjectId specified")
 
 
-class _long:
+class Int64(bson.int64.Int64):
     @classmethod
     def __get_validators__(cls):  # type: ignore
         yield cls.validate
 
     @classmethod
-    def validate(cls, v: Any) -> BsonLong:
-        if isinstance(v, BsonLong):
+    def validate(cls, v: Any) -> bson.int64.Int64:
+        if isinstance(v, bson.int64.Int64):
             return v
         a = int_validator(v)
-        return BsonLong(a)
+        return bson.int64.Int64(a)
 
 
-class _bson_decimal:
+Long = Int64
+
+
+class Decimal128(bson.decimal128.Decimal128):
     @classmethod
     def __get_validators__(cls):  # type: ignore
         yield cls.validate
 
     @classmethod
-    def validate(cls, v: Any) -> BsonDecimal:
-        if isinstance(v, BsonDecimal):
+    def validate(cls, v: Any) -> bson.decimal128.Decimal128:
+        if isinstance(v, bson.decimal128.Decimal128):
             return v
         a = decimal_validator(v)
-        return BsonDecimal(a)
+        return bson.decimal128.Decimal128(a)
 
 
-class _binary:
+class Binary(bson.binary.Binary):
     @classmethod
     def __get_validators__(cls):  # type: ignore
         yield cls.validate
 
     @classmethod
-    def validate(cls, v: Any) -> BsonBinary:
-        if isinstance(v, BsonBinary):
+    def validate(cls, v: Any) -> bson.binary.Binary:
+        if isinstance(v, bson.binary.Binary):
             return v
         a = bytes_validator(v)
-        return BsonBinary(a)
+        return bson.binary.Binary(a)
 
 
-class _regex:
+class Regex(bson.regex.Regex):
     @classmethod
     def __get_validators__(cls):  # type: ignore
         yield cls.validate
 
     @classmethod
-    def validate(cls, v: Any) -> BsonRegex:
-        if isinstance(v, BsonRegex):
+    def validate(cls, v: Any) -> bson.regex.Regex:
+        if isinstance(v, bson.regex.Regex):
             return v
         a = pattern_validator(v)
-        return BsonRegex(a.pattern)
+        return bson.regex.Regex(a.pattern)
 
 
 class _Pattern:
@@ -93,7 +96,7 @@ class _Pattern:
     def validate(cls, v: Any) -> Pattern:
         if isinstance(v, Pattern):
             return v
-        elif isinstance(v, BsonRegex):
+        elif isinstance(v, bson.regex.Regex):
             return re.compile(v.pattern, flags=v.flags)
 
         a = pattern_validator(v)
@@ -120,7 +123,7 @@ class _datetime:
         return d.replace(microsecond=microsecs)
 
 
-class _Decimal:
+class _decimalDecimal(decimal.Decimal):
     """This specific BSON substitution field helps to handle the support of standard
     python Decimal objects
 
@@ -132,39 +135,45 @@ class _Decimal:
         yield cls.validate
 
     @classmethod
-    def validate(cls, v: Any) -> Decimal:
-        if isinstance(v, Decimal):
+    def validate(cls, v: Any) -> decimal.Decimal:
+        if isinstance(v, decimal.Decimal):
             return v
-        elif isinstance(v, BsonDecimal):
-            return cast(Decimal, v.to_decimal())
+        elif isinstance(v, bson.decimal128.Decimal128):
+            return cast(decimal.Decimal, v.to_decimal())
 
         a = decimal_validator(v)
         return a
 
     @classmethod
-    def __bson__(cls, v: Any) -> BsonDecimal:
-        return BsonDecimal(v)
+    def __bson__(cls, v: Any) -> bson.decimal128.Decimal128:
+        return bson.decimal128.Decimal128(v)
 
 
-_BSON_TYPES_ENCODERS = {
-    BsonObjectId: str,
-    BsonDecimal: lambda x: x.to_decimal(),  # Convert to regular decimal
-    BsonRegex: lambda x: x.pattern,  # TODO: document no serialization of flags
+BSON_TYPES_ENCODERS = {
+    bson.ObjectId: str,
+    bson.decimal128.Decimal128: lambda x: x.to_decimal(),  # Convert to regular decimal
+    bson.regex.Regex: lambda x: x.pattern,  # TODO: document no serialization of flags
 }
 
 
 class BaseBSONModel(BaseModel):
+    """Equivalent of `pydantic.BaseModel` supporting BSON types encoding.
+
+    If you want to apply other custom JSON encoders, you'll need to use
+    [BSON_TYPES_ENCODERS][odmantic.bson.BSON_TYPES_ENCODERS] directly.
+    """
+
     class Config:
-        json_encoders = _BSON_TYPES_ENCODERS
+        json_encoders = BSON_TYPES_ENCODERS
 
 
 _BSON_SUBSTITUTED_FIELDS = {
-    BsonObjectId: _objectId,
-    BsonLong: _long,
-    BsonDecimal: _bson_decimal,
-    BsonBinary: _binary,
-    BsonRegex: _regex,
+    bson.ObjectId: ObjectId,
+    bson.int64.Int64: Int64,
+    bson.decimal128.Decimal128: Decimal128,
+    bson.binary.Binary: Binary,
+    bson.regex.Regex: Regex,
     Pattern: _Pattern,
-    Decimal: _Decimal,
+    decimal.Decimal: _decimalDecimal,
     datetime: _datetime,
 }
