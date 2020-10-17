@@ -9,6 +9,7 @@ from bson.int64 import Int64 as BsonLong
 from bson.objectid import ObjectId as BsonObjectId
 from bson.regex import Regex as BsonRegex
 from pydantic.datetime_parse import parse_datetime
+from pydantic.main import BaseModel
 from pydantic.validators import (
     bytes_validator,
     decimal_validator,
@@ -150,6 +151,12 @@ _BSON_TYPES_ENCODERS = {
     BsonDecimal: lambda x: x.to_decimal(),  # Convert to regular decimal
     BsonRegex: lambda x: x.pattern,  # TODO: document no serialization of flags
 }
+
+
+class BaseBSONModel(BaseModel):
+    class Config:
+        json_encoders = _BSON_TYPES_ENCODERS
+
 
 _BSON_SUBSTITUTED_FIELDS = {
     BsonObjectId: _objectId,
