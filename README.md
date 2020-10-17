@@ -72,8 +72,8 @@ pip install odmantic
 >
 > If you are using an earlier version of Python you can use <a
 > href="https://ipython.readthedocs.io/en/stable/install/index.html"
-> target="_blank">IPython</a> which provide an Autoawait feature starting from Python
-> 3.6
+> target="_blank">IPython</a> which provide an Autoawait feature (starting from Python
+> 3.6).
 
 ### Define your first model
 

@@ -62,6 +62,7 @@ nav:
       - odmantic.reference: ./api_reference/reference.md
       - odmantic.bson: ./api_reference/bson.md
       - odmantic.exceptions: ./api_reference/exceptions.md
+  - contributing.md
   - changelog.md
 
 extra:

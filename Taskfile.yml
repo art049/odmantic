@@ -53,16 +53,28 @@ tasks:
       - poetry run isort -y
       - poetry run black ./
 
+  setup:
+    desc: Configure the development environment.
+    deps:
+      - setup:pre-commit-hook
+      - setup:poetry-setup
+      - setup:tox
+
+  setup:tox:
+    cmds:
+      - tox --notest
+    status:
+      - test -d .tox/py36
+      - test -d .tox/py37
+      - test -d .tox/py38
+
   setup:pre-commit-hook:
     cmds:
       - poetry run pre-commit install
     status:
       - test -f .git/hooks/pre-commit
 
-  setup:
-    desc: Configure the development environment.
-    deps:
-      - setup:pre-commit-hook
+  setup:poetry-setup:
     cmds:
       - poetry install
     sources:
