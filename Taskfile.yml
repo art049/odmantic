@@ -13,13 +13,29 @@ tasks:
     status:
       - docker container inspect odmantic-mongo-test
 
-  test:
-    desc: |
-      Run the tests against supported versions. (If the version=py3x argument is specified it will only run against this version)
+  full-test:
+    desc: Run the tests against all supported versions.
     deps:
       - mongodb-docker
     cmds:
-      - tox {{if .version}}-e {{.version}} {{else}} --parallel {{end}}
+      - tox --parallel
+
+  test:
+    desc: |
+      Run the tests with the current version.
+    deps:
+      - mongodb-docker
+    cmds:
+      - poetry run pytest  -rs
+
+  coverage:
+    desc: Get the test coverage (xml and html) with the current version.
+    deps:
+      - mongodb-docker
+    cmds:
+      - poetry run coverage run -m pytest -rs
+      - poetry run coverage html
+      - poetry run coverage xml
 
   docs:
     desc: Start the local documentation server.
@@ -37,8 +53,19 @@ tasks:
       - poetry run isort -y
       - poetry run black ./
 
+  setup:pre-commit-hook:
+    cmds:
+      - poetry run pre-commit install
+    status:
+      - test -f .git/hooks/pre-commit
+
   setup:
     desc: Configure the development environment.
+    deps:
+      - setup:pre-commit-hook
     cmds:
       - poetry install
-      - poetry run pre-commit install
+    sources:
+      - pyproject.toml
+    generates:
+      - poetry.lock
