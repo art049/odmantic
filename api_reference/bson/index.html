@@ -15,7 +15,7 @@
     
     
       
-        <title>odmantic.reference - ODMantic</title>
+        <title>odmantic.bson - ODMantic</title>
       
     
     
@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#odmantic.reference.Reference" class="md-skip">
+        <a href="#pydantic-model-helpers" class="md-skip">
           Skip to content
         </a>
       
@@ -94,7 +94,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              odmantic.reference
+              odmantic.bson
             
           </span>
         </div>
@@ -333,6 +333,18 @@
           
           
 
+
+  <li class="md-nav__item">
+    <a href="../reference/" class="md-nav__link">
+      odmantic.reference
+    </a>
+  </li>
+
+        
+          
+          
+          
+
   
 
 
@@ -342,12 +354,12 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        odmantic.reference
+        odmantic.bson
         <span class="md-nav__icon md-icon"></span>
       </label>
     
     <a href="./" class="md-nav__link md-nav__link--active">
-      odmantic.reference
+      odmantic.bson
     </a>
     
       
@@ -362,8 +374,57 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#odmantic.reference.Reference" class="md-nav__link">
-    Reference()
+  <a href="#pydantic-model-helpers" class="md-nav__link">
+    Pydantic model helpers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#odmantic.bson.BSON_TYPES_ENCODERS" class="md-nav__link">
+    BSON_TYPES_ENCODERS
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pydantic-type-helpers" class="md-nav__link">
+    Pydantic type helpers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#odmantic.bson.ObjectId" class="md-nav__link">
+    ObjectId
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#odmantic.bson.Int64" class="md-nav__link">
+    Int64
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#odmantic.bson.Decimal128" class="md-nav__link">
+    Decimal128
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#odmantic.bson.Binary" class="md-nav__link">
+    Binary
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#odmantic.bson.Regex" class="md-nav__link">
+    Regex
   </a>
   
 </li>
@@ -372,18 +433,6 @@
   
 </nav>
     
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../bson/" class="md-nav__link">
-      odmantic.bson
-    </a>
   </li>
 
         
@@ -438,8 +487,57 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#odmantic.reference.Reference" class="md-nav__link">
-    Reference()
+  <a href="#pydantic-model-helpers" class="md-nav__link">
+    Pydantic model helpers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#odmantic.bson.BSON_TYPES_ENCODERS" class="md-nav__link">
+    BSON_TYPES_ENCODERS
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pydantic-type-helpers" class="md-nav__link">
+    Pydantic type helpers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#odmantic.bson.ObjectId" class="md-nav__link">
+    ObjectId
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#odmantic.bson.Int64" class="md-nav__link">
+    Int64
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#odmantic.bson.Decimal128" class="md-nav__link">
+    Decimal128
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#odmantic.bson.Binary" class="md-nav__link">
+    Binary
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#odmantic.bson.Regex" class="md-nav__link">
+    Regex
   </a>
   
 </li>
@@ -456,62 +554,143 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/art049/odmantic/edit/master/docs/api_reference/reference.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/art049/odmantic/edit/master/docs/api_reference/bson.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                  <h1>odmantic.reference</h1>
+                  <h1>odmantic.bson</h1>
                 
-                <div class="doc doc-object doc-function">
-<h2 class="doc doc-heading" id="odmantic.reference.Reference">
+                <p>This module provides helpers to build Pydantic Models containing BSON objects.</p>
+<h2 id="pydantic-model-helpers">Pydantic model helpers<a class="headerlink" href="#pydantic-model-helpers" title="Permanent link">&para;</a></h2>
+<div class="doc doc-object doc-attribute">
+<h2 class="doc doc-heading" id="odmantic.bson.BSON_TYPES_ENCODERS">
 
-        <code class="highlight language-python">
-odmantic.reference.Reference<span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">key_name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>        </code>
+        <code class="highlight">
+odmantic.bson.BSON_TYPES_ENCODERS        </code>
 
 
-      <a class="headerlink" href="#odmantic.reference.Reference" title="Permanent link">&para;</a></h2>
+      <a class="headerlink" href="#odmantic.bson.BSON_TYPES_ENCODERS" title="Permanent link">&para;</a></h2>
 <div class="doc doc-contents first">
-<p>Used to define reference fields.</p>
-<p><strong>Parameters:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>key_name</code></td>
-<td><code>Optional[str]</code></td>
-<td>
-<p>name of the Mongo key that stores the foreign key</p>
-</td>
-<td><code>None</code></td>
-</tr>
-</tbody>
-</table>
-<br />
-<details class="quote">
-          <summary>Source code in <code>odmantic/reference.py</code></summary>
-          <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">Reference</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">key_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-    <span class="sd">"""Used to define reference fields.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        key_name: name of the Mongo key that stores the foreign key</span>
-
-<span class="sd">    &lt;!--</span>
-<span class="sd">    #noqa: DAR201</span>
-<span class="sd">    --&gt;</span>
-<span class="sd">    """</span>
-    <span class="k">return</span> <span class="n">ODMReferenceInfo</span><span class="p">(</span><span class="n">key_name</span><span class="o">=</span><span class="n">key_name</span><span class="p">)</span>
-</code></pre>
+    </div>
 </div>
-</details>
+<p>Encoders required to encode BSON fields (can be used in the Pydantic Model's <code>Config.json_encoders</code> parameter). See <a href="https://pydantic-docs.helpmanual.io/usage/exporting_models/#json_encoders" target="blank_">pydantic: JSON Encoders</a> for more details.</p>
+<h2 id="pydantic-type-helpers">Pydantic type helpers<a class="headerlink" href="#pydantic-type-helpers" title="Permanent link">&para;</a></h2>
+<p>Those helpers inherit directly from their respective <code>bson</code> types. They add the field
+validation logic required by Pydantic to work with them.</p>
+<div class="doc doc-object doc-class">
+<h2 class="doc doc-heading" id="odmantic.bson.ObjectId">
+
+        <code>odmantic.bson.ObjectId</code>
+
+
+      <a class="headerlink" href="#odmantic.bson.ObjectId" title="Permanent link">&para;</a></h2>
+<div class="doc doc-contents first">
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</div>
+</div>
+<div class="doc doc-object doc-class">
+<h2 class="doc doc-heading" id="odmantic.bson.Int64">
+
+        <code>odmantic.bson.Int64</code>
+
+
+      <a class="headerlink" href="#odmantic.bson.Int64" title="Permanent link">&para;</a></h2>
+<div class="doc doc-contents first">
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</div>
+</div>
+<div class="doc doc-object doc-class">
+<h2 class="doc doc-heading" id="odmantic.bson.Decimal128">
+
+        <code>odmantic.bson.Decimal128</code>
+
+
+      <a class="headerlink" href="#odmantic.bson.Decimal128" title="Permanent link">&para;</a></h2>
+<div class="doc doc-contents first">
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</div>
+</div>
+<div class="doc doc-object doc-class">
+<h2 class="doc doc-heading" id="odmantic.bson.Binary">
+
+        <code>odmantic.bson.Binary</code>
+
+
+      <a class="headerlink" href="#odmantic.bson.Binary" title="Permanent link">&para;</a></h2>
+<div class="doc doc-contents first">
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</div>
+</div>
+<div class="doc doc-object doc-class">
+<h2 class="doc doc-heading" id="odmantic.bson.Regex">
+
+        <code>odmantic.bson.Regex</code>
+
+
+      <a class="headerlink" href="#odmantic.bson.Regex" title="Permanent link">&para;</a></h2>
+<div class="doc doc-contents first">
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
 </div>
 </div>
                 
@@ -532,7 +711,7 @@ odmantic.reference.Reference<span class="p">(</span><span class="o">*</span><spa
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../field/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../reference/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -541,19 +720,19 @@ odmantic.reference.Reference<span class="p">(</span><span class="o">*</span><spa
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                odmantic.field
+                odmantic.reference
               </div>
             </div>
           </a>
         
         
-          <a href="../bson/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../exceptions/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                odmantic.bson
+                odmantic.exceptions
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">
