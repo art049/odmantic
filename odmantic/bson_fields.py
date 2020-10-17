@@ -29,7 +29,7 @@ class _objectId(BsonObjectId):
             return v
         if isinstance(v, str) and BsonObjectId.is_valid(v):
             return BsonObjectId(v)
-        raise TypeError("ObjectId required")
+        raise TypeError("invalid ObjectId specified")
 
 
 class _long:

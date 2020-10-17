@@ -70,7 +70,7 @@ def test_validate_invalid_bson_objectid():
     errors = exc_info.value.errors()
     assert len(errors) == 1
     assert errors[0]["loc"] == ("id",)
-    assert "ObjectId required" in errors[0]["msg"]
+    assert "invalid ObjectId specified" in errors[0]["msg"]
 
 
 def test_validate_decimal_valid_string():
