@@ -57,6 +57,8 @@ darglint = "^1.5.4"
 ipython = "^7.16.1"
 pytest-asyncio = "^0.14.0"
 mkdocs-material = "^6.0.2"
+fastapi = "^0.61.1"
+requests = "^2.24.0"
 
 [build-system]
 requires = ["poetry>=0.12"]
@@ -68,7 +70,7 @@ multi_line_output=3
 include_trailing_comma=true
 use_parentheses=true
 force_grid_wrap=0
-known_third_party=["bson", "motor", "pydantic", "pytest", "pytz"]
+known_third_party=["bson", "fastapi", "motor", "pydantic", "pytest", "pytz"]
 known_first_party=["odmantic","tests"]
 skip=["docs"]
 
