@@ -540,9 +540,7 @@
 <h3 id="installing-the-tools">Installing the tools<a class="headerlink" href="#installing-the-tools" title="Permanent link">&para;</a></h3>
 <ul>
 <li><a href="https://docs.docker.com/get-docker/">Docker</a>: used to run a local MongoDB instance</li>
-<li><a href="https://taskfile.dev" target="blank_">Task</a>: task manager
-  <div class="highlight"><pre><span></span><code>curl -sL https://taskfile.dev/install.sh <span class="p">|</span> sh
-</code></pre></div></li>
+<li><a href="https://taskfile.dev" target="blank_">Task</a>: task manager</li>
 </ul>
 <div class="admonition tip">
 <p class="admonition-title">Installing python based development tools</p>
@@ -569,6 +567,17 @@ python3 -m pipx ensurepath
 </code></pre></div></p>
 </li>
 </ul>
+<div class="admonition tip">
+<p class="admonition-title">Python versions</p>
+<p>If you want to test the project with multiple python versions, you'll need to
+install them manually.</p>
+<p>You can use <a href="https://github.com/pyenv/pyenv" target="blank_">pyenv</a> to
+ install them easily.</p>
+<div class="highlight"><pre><span></span><code>pyenv install <span class="s2">&quot;3.6.12&quot;</span>
+pyenv install <span class="s2">&quot;3.7.9&quot;</span>
+pyenv install <span class="s2">&quot;3.8.9&quot;</span>
+</code></pre></div>
+</div>
 <h3 id="configuring-the-local-project">Configuring the local project<a class="headerlink" href="#configuring-the-local-project" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>task setup
 </code></pre></div>
