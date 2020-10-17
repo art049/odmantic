@@ -204,8 +204,8 @@ class ODMEmbedded(ODMField):
         self.model = model
 
 
-class FieldNameProxy(str):
-    """Used to provide the `++` operating enabling reference key name creation"""
+class KeyNameProxy(str):
+    """Used to provide the `++` operator enabling reference key name creation"""
 
     def __pos__(self) -> str:
         return f"${self}"
@@ -231,33 +231,29 @@ class FieldProxy:
     def __getattribute__(self, name: str) -> Any:
         field: ODMBaseField = object.__getattribute__(self, "field")
         if isinstance(field, ODMReference):
-            try:
-                return super().__getattribute__(name)
-            except AttributeError:
-                if name in field.model.__odm_fields__:
-                    raise NotImplementedError(
-                        "filtering across references is not supported"
-                    )
-                raise
+            if name in field.model.__odm_fields__:
+                raise NotImplementedError(
+                    "filtering across references is not supported"
+                )
         elif isinstance(field, ODMEmbedded):
-            embedded_field = field.model.__odm_fields__.get(name)
-            if embedded_field is None:
+            child_field = field.model.__odm_fields__.get(name)
+            if child_field is None:
                 try:
                     return super().__getattribute__(name)
                 except AttributeError:
                     raise AttributeError(
                         f"attribute {name} not found in {field.model.__name__}"
                     )
-            return FieldProxy(parent=self, field=embedded_field)
+            return FieldProxy(parent=self, field=child_field)
 
         if name not in field.__allowed_operators__:
             raise AttributeError(
-                f"operator {name} not allowed for {type(field).__name__}"
+                f"operator {name} not allowed for {type(field).__name__} fields"
             )
         return super().__getattribute__(name)
 
-    def __pos__(self) -> FieldNameProxy:
-        return FieldNameProxy(object.__getattribute__(self, "_get_key_name")())
+    def __pos__(self) -> KeyNameProxy:
+        return KeyNameProxy(object.__getattribute__(self, "_get_key_name")())
 
     def __gt__(self, value: Any) -> QueryExpression:
         return self.gt(value)
