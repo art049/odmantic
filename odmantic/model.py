@@ -37,12 +37,12 @@ from pydantic.tools import parse_obj_as
 from pydantic.typing import is_classvar, resolve_annotations
 from pydantic.utils import lenient_issubclass
 
-from odmantic.bson_fields import (
+from odmantic.bson import (
     _BSON_SUBSTITUTED_FIELDS,
-    _BSON_TYPES_ENCODERS,
+    BSON_TYPES_ENCODERS,
     BaseBSONModel,
-    _Decimal,
-    _objectId,
+    ObjectId,
+    _decimalDecimal,
 )
 from odmantic.field import (
     FieldProxy,
@@ -125,7 +125,7 @@ _IMMUTABLE_TYPES = (
     pydantic.BaseModel,
     bson.ObjectId,
     bson.Decimal128,
-    _Decimal,
+    _decimalDecimal,
 )
 
 
@@ -362,8 +362,8 @@ class ModelMetaclass(BaseModelMetaclass):
                     )
                 primary_field = "id"
                 odm_fields["id"] = ODMField(primary_field=True, key_name="_id")
-                namespace["id"] = PDField(default_factory=_objectId)
-                namespace["__annotations__"]["id"] = _objectId
+                namespace["id"] = PDField(default_factory=ObjectId)
+                namespace["__annotations__"]["id"] = ObjectId
 
             namespace["__primary_field__"] = primary_field
 
@@ -446,7 +446,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
     class Config:
         validate_all = True
         validate_assignment = True
-        json_encoders = _BSON_TYPES_ENCODERS
+        json_encoders = BSON_TYPES_ENCODERS
 
     @classmethod
     def validate(cls: Type[TBase], value: Any) -> TBase:
@@ -539,7 +539,7 @@ class Model(_BaseODMModel, metaclass=ModelMetaclass):
         __collection__: ClassVar[str] = ""
         __primary_field__: ClassVar[str] = ""
 
-        id: Union[_objectId, Any]  # TODO fix basic id field typing
+        id: Union[ObjectId, Any]  # TODO fix basic id field typing
 
     def __init__(__odmantic_self__, **data: Any):
         super().__init__(**data)

@@ -60,6 +60,7 @@ nav:
       - odmantic.query: ./api_reference/query.md
       - odmantic.field: ./api_reference/field.md
       - odmantic.reference: ./api_reference/reference.md
+      - odmantic.bson: ./api_reference/bson.md
       - odmantic.exceptions: ./api_reference/exceptions.md
   - changelog.md
 

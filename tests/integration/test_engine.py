@@ -3,7 +3,7 @@ from typing import Dict, List, Tuple
 import pytest
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from odmantic.bson_fields import _objectId
+from odmantic.bson import ObjectId
 from odmantic.engine import AIOEngine
 from odmantic.exceptions import DocumentNotFoundError
 from odmantic.model import EmbeddedModel, Model
@@ -28,7 +28,7 @@ async def test_save(engine: AIOEngine):
     instance = await engine.save(
         PersonModel(first_name="Jean-Pierre", last_name="Pernaud")
     )
-    assert isinstance(instance.id, _objectId)
+    assert isinstance(instance.id, ObjectId)
 
 
 async def test_save_find_find_one(engine: AIOEngine):
@@ -154,7 +154,7 @@ async def test_find_invalid_skip(engine: AIOEngine):
 
 
 async def test_save_multiple_time_same_document(engine: AIOEngine):
-    fixed_id = _objectId()
+    fixed_id = ObjectId()
 
     instance = PersonModel(first_name="Jean-Pierre", last_name="Pernaud", id=fixed_id)
     await engine.save(instance)
