@@ -26,7 +26,7 @@ jobs:
           poetry install
 
       - name: Build documentation
-        run: poetry run mkdocs build
+        run: poetry run mkdocs build -f ./docs/mkdocs.yml
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3

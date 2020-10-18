@@ -40,7 +40,7 @@ tasks:
   docs:
     desc: Start the local documentation server.
     cmds:
-      - poetry run mkdocs serve
+      - poetry run mkdocs serve -f ./docs/mkdocs.yml
 
   lint:
     desc: Run the linting checks.
