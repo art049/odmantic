@@ -28,6 +28,7 @@ class ObjectId(bson.ObjectId):
         field_schema.update(
             examples=["5f85f36d6dfecacc68428a46", "ffffffffffffffffffffffff"],
             example="ffffffffffffffffffffffff",
+            description="MongoDB ObjectId string",
             type="string",
         )
 

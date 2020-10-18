@@ -132,3 +132,21 @@ def test_docstring_nullified(base: Type):
 def test_base_classes_docstring_not_nullified(base: Type):
     doc = getdoc(base)
     assert doc is not None and doc != ""
+
+
+@pytest.mark.parametrize("base", (Model, EmbeddedModel))
+def test_pydantic_model_title(base: Type):
+    class M(base):  # type: ignore
+        ...
+
+    assert M.__pydantic_model__.schema()["title"] == "M"
+
+
+@pytest.mark.skip("Not handled yet. Move all model config to the Config object")
+@pytest.mark.parametrize("base", (Model, EmbeddedModel))
+def test_pydantic_model_custom_title(base: Type):
+    class M(base):  # type: ignore
+        class Config:
+            title = "CustomTitle"
+
+    assert M.__pydantic_model__.schema()["title"] == "CustomTitle"

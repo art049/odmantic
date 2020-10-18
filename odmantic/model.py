@@ -346,6 +346,8 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
             pydantic_cls = pydantic.main.ModelMetaclass.__new__(
                 mcs, f"{name}.__pydantic_model__", (BaseBSONModel,), namespace, **kwargs
             )
+            pydantic_cls.__config__.title = name
+
             cls.__pydantic_model__ = pydantic_cls
             for name, field in cls.__odm_fields__.items():
                 setattr(cls, name, FieldProxy(parent=None, field=field))
@@ -457,7 +459,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         __bson_serialized_fields__: ClassVar[FrozenSet[str]] = frozenset()
         __mutable_fields__: ClassVar[FrozenSet[str]] = frozenset()
         __references__: ClassVar[Tuple[str, ...]] = ()
-        __pydantic_model__: ClassVar[Type[pydantic.BaseModel]]
+        __pydantic_model__: ClassVar[Type[BaseBSONModel]]
         __fields_modified__: Set[str] = set()
 
     __slots__ = ("__fields_modified__",)
