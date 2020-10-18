@@ -5,6 +5,13 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Current File",
+      "type": "python",
+      "request": "launch",
+      "program": "${file}",
+      "console": "internalConsole"
+    },
+    {
       "name": "Debug Tests",
       "type": "python",
       "request": "test",

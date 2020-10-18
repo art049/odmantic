@@ -319,14 +319,25 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
         namespace: Dict[str, Any],
         **kwargs: Any,
     ):
-        cls = super().__new__(mcs, name, bases, namespace, **kwargs)
+        # Handle calls from pydantic.main.create_model (used internally by FastAPI)
+        patched_bases = []
+        for b in bases:
+            if hasattr(b, "__pydantic_model__"):
+                patched_bases.append(b.__pydantic_model__)
+            else:
+                patched_bases.append(b)
+
+        cls = super().__new__(mcs, name, tuple(patched_bases), namespace, **kwargs)
         if namespace.get("__module__") != "odmantic.model" and namespace.get(
             "__qualname__"
-        ) not in ("Model", "EmbeddedModel"):
+        ) not in ("_BaseODMModel", "Model", "EmbeddedModel"):
             pydantic_cls = pydantic.main.ModelMetaclass.__new__(
-                mcs, name, (BaseBSONModel,), namespace, **kwargs
+                mcs, f"{name}.__pydantic_model__", (BaseBSONModel,), namespace, **kwargs
             )
-            cls.__base_model__ = pydantic_cls
+            cls.__pydantic_model__ = pydantic_cls
+            if cls.__doc__ in (Model.__doc__, EmbeddedModel.__doc__):
+                # Nullify unset docstrings (used when generating the Schema)
+                cls.__doc__ = ""
             for name, field in cls.__odm_fields__.items():
                 setattr(cls, name, FieldProxy(parent=None, field=field))
         return cls
@@ -341,10 +352,9 @@ class ModelMetaclass(BaseModelMetaclass):
         namespace: Dict[str, Any],
         **kwargs: Any,
     ):
-        if (namespace.get("__module__"), namespace.get("__qualname__")) != (
-            "odmantic.model",
-            "Model",
-        ):
+        if namespace.get("__module__") != "odmantic.model" and namespace.get(
+            "__qualname__"
+        ) not in ("_BaseODMModel", "Model"):
             mcs.__validate_cls_namespace__(name, namespace)
             primary_field: Optional[str] = None
             odm_fields: Dict[str, ODMBaseField] = namespace["__odm_fields__"]
@@ -407,10 +417,9 @@ class EmbeddedModelMetaclass(BaseModelMetaclass):
         **kwargs: Any,
     ):
 
-        if (namespace.get("__module__"), namespace.get("__qualname__")) != (
-            "odmantic.model",
-            "EmbeddedModel",
-        ):
+        if namespace.get("__module__") != "odmantic.model" and namespace.get(
+            "__qualname__"
+        ) not in ("_BaseODMModel", "EmbeddedModel"):
             mcs.__validate_cls_namespace__(name, namespace)
             odm_fields: Dict[str, ODMBaseField] = namespace["__odm_fields__"]
             for field in odm_fields.values():
@@ -438,7 +447,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         __bson_serialized_fields__: ClassVar[FrozenSet[str]] = frozenset()
         __mutable_fields__: ClassVar[FrozenSet[str]] = frozenset()
         __references__: ClassVar[Tuple[str, ...]] = ()
-        __base_model__: Type[pydantic.BaseModel]
+        __pydantic_model__: ClassVar[Type[pydantic.BaseModel]]
         __fields_modified__: Set[str] = set()
 
     __slots__ = ("__fields_modified__",)

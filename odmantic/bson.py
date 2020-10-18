@@ -1,7 +1,7 @@
 import decimal
 import re
 from datetime import datetime
-from typing import Any, Pattern, cast
+from typing import Any, Dict, Pattern, cast
 
 import bson
 import bson.binary
@@ -24,6 +24,14 @@ class ObjectId(bson.ObjectId):
         yield cls.validate
 
     @classmethod
+    def __modify_schema__(cls, field_schema: Dict) -> None:
+        field_schema.update(
+            examples=["5f85f36d6dfecacc68428a46", "ffffffffffffffffffffffff"],
+            example="ffffffffffffffffffffffff",
+            type="string",
+        )
+
+    @classmethod
     def validate(cls, v: Any) -> bson.ObjectId:
         if isinstance(v, (bson.ObjectId, cls)):
             return v
@@ -36,6 +44,10 @@ class Int64(bson.int64.Int64):
     @classmethod
     def __get_validators__(cls):  # type: ignore
         yield cls.validate
+
+    @classmethod
+    def __modify_schema__(cls, field_schema: Dict) -> None:
+        field_schema.update(examples=[2147483649], type="number")
 
     @classmethod
     def validate(cls, v: Any) -> bson.int64.Int64:
@@ -54,6 +66,10 @@ class Decimal128(bson.decimal128.Decimal128):
         yield cls.validate
 
     @classmethod
+    def __modify_schema__(cls, field_schema: Dict) -> None:
+        field_schema.update(examples=[214.7483649], example=214.7483649, type="number")
+
+    @classmethod
     def validate(cls, v: Any) -> bson.decimal128.Decimal128:
         if isinstance(v, bson.decimal128.Decimal128):
             return v
@@ -67,6 +83,10 @@ class Binary(bson.binary.Binary):
         yield cls.validate
 
     @classmethod
+    def __modify_schema__(cls, field_schema: Dict) -> None:
+        field_schema.update(type="string", format="binary")
+
+    @classmethod
     def validate(cls, v: Any) -> bson.binary.Binary:
         if isinstance(v, bson.binary.Binary):
             return v
@@ -78,6 +98,12 @@ class Regex(bson.regex.Regex):
     @classmethod
     def __get_validators__(cls):  # type: ignore
         yield cls.validate
+
+    @classmethod
+    def __modify_schema__(cls, field_schema: Dict) -> None:
+        field_schema.update(
+            examples=[r"^Foo"], example=r"^Foo", type="string", format="binary"
+        )
 
     @classmethod
     def validate(cls, v: Any) -> bson.regex.Regex:

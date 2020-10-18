@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 from odmantic import Model, ObjectId
-from odmantic.bson import BaseBSONModel
+from odmantic.bson import BaseBSONModel, Binary, Decimal128, Int64, Regex
 
 
 @pytest.fixture
@@ -42,7 +42,7 @@ def test_object_id_fastapi_get_query_invalid_id(fastapi_app, test_client):
     assert response.json()["detail"][0]["loc"] == ["path", "id"]
 
 
-@pytest.mark.skip("Need to specify custom json_encoder")
+@pytest.mark.skip("Need to specify custom json_encoder or to use a root_type")
 def test_object_id_fastapi_response(fastapi_app, test_client):
     id_get_str = "5f79d7e8b305f24ca43593e2"
 
@@ -71,13 +71,13 @@ def test_object_id_fastapi_pydantic_response_model(fastapi_app, test_client):
     assert response.json() == {"id": id_get_str}
 
 
-def test_object_id_fastapi_odmantic_response_base_model(fastapi_app, test_client):
+def test_object_id_fastapi_odmantic_response_pydantic_model(fastapi_app, test_client):
     class ODMModel(Model):
         ...
 
     object = ODMModel()
 
-    @fastapi_app.get("/", response_model=ODMModel.__base_model__)
+    @fastapi_app.get("/", response_model=ODMModel.__pydantic_model__)
     def get():
         return object
 
@@ -85,7 +85,6 @@ def test_object_id_fastapi_odmantic_response_base_model(fastapi_app, test_client
     assert response.json() == {"id": str(object.id)}
 
 
-@pytest.mark.skip("Depends on the basemodel shadowing attributes: pydantic issue #242")
 def test_object_id_fastapi_odmantic_response_model(fastapi_app, test_client):
     class ODMModel(Model):
         ...
@@ -98,3 +97,19 @@ def test_object_id_fastapi_odmantic_response_model(fastapi_app, test_client):
 
     response = test_client.get("/")
     assert response.json() == {"id": str(object.id)}
+
+
+def test_openapi_json_with_bson_fields(fastapi_app, test_client):
+    class ODMModel(Model):
+        oid: ObjectId
+        int64: Int64
+        decimal: Decimal128
+        binary: Binary
+        regex: Regex
+
+    @fastapi_app.get("/", response_model=ODMModel)
+    def get():
+        return None
+
+    response = test_client.get("/openapi.json")
+    assert response.status_code == 200
