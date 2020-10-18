@@ -1,20 +1,12 @@
+from typing import Type
+
 import pytest
 from bson import ObjectId as BSONObjectId
-from fastapi import FastAPI
-from fastapi.testclient import TestClient
+from pydantic.main import create_model
 
 from odmantic import Model, ObjectId
 from odmantic.bson import BaseBSONModel, Binary, Decimal128, Int64, Regex
-
-
-@pytest.fixture
-def fastapi_app():
-    return FastAPI()
-
-
-@pytest.fixture
-def test_client(fastapi_app):
-    return TestClient(fastapi_app)
+from odmantic.model import EmbeddedModel
 
 
 def test_object_id_fastapi_get_query(fastapi_app, test_client):
