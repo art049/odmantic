@@ -68,6 +68,11 @@ There are two ways of persisting instances to the database (i.e creating new doc
     [AIOEngine.save_all][odmantic.engine.AIOEngine.save], the referenced models will be persisted
     as well.
 
+!!! warning "Upsert behavior"
+    The `save` and `save_all` methods behave as upsert operations ([more
+    details](engine.md#update)). Hence, you might overwrite documents if you save
+    instances with an existing primary key already existing in the database.
+
 ## Read
 
 !!! note "Examples database content"

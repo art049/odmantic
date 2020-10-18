@@ -31,7 +31,8 @@ Core features:
 - **Simple**: define your model by typing your fields using python types, build queries
   using python comparison operators
 
-- **Developer experience**: field/method autocompletion, type hints, data validation
+- **Developer experience**: field/method autocompletion, type hints, data validation,
+  perform database operations in a functional way
 
 - **Fully typed**: leverage static analysis to reduce runtime issues
 
@@ -301,10 +302,19 @@ exception is actually a `ValidationError` created by from <a
 href="https://pydantic-docs.helpmanual.io/usage/models/#error-handling"
 target="_blank">pydantic</a>.
 
-To get started on more advanced practices like relations and building more advanced
-queries, you can check the [documentation](https://art049.github.io/odmantic/).
+### Next steps
+
+If you already have experience with Pydantic and FastAPI, the [Usage with FastAPI](https://art049.github.io/odmantic/usage_fastapi/) example might be interesting for you.
+
+Otherwise, to get started on more advanced practices like relations and building more
+advanced queries, you can directly check the other sections of the
+[documentation](https://art049.github.io/odmantic/).
+
+If you wish to contribute to the project (Thank you! :smiley:), you can have a look to the
+[Contributing](https://art049.github.io/odmantic/contributing/) section of the
+documentation.
 
 ## License
 
 This project is licensed under the terms of the <a
-href="https://en.wikipedia.org/wiki/ISC_license" target="_blank">ISC license</a>.
+href="https://github.com/art049/odmantic/blob/master/LICENSE" target="_blank">ISC license</a>.

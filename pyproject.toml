@@ -33,7 +33,7 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python",
 ]
-include = ["LICENSE"]
+include = ["LICENSE", "README.md"]
 
 [tool.poetry.dependencies]
 python = ">=3.6 <4.0"
@@ -75,7 +75,7 @@ multi_line_output = 3
 include_trailing_comma = true
 use_parentheses = true
 force_grid_wrap = 0
-known_third_party = ["bson", "fastapi", "motor", "pydantic", "pytest", "pytz"]
+known_third_party = ["bson", "fastapi", "motor", "pydantic", "pytest", "pytz", "uvicorn"]
 known_first_party = ["odmantic", "tests"]
 skip = ["docs"]
 

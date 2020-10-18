@@ -60,8 +60,16 @@ tasks:
     desc: Configure the development environment.
     deps:
       - setup:pre-commit-hook
+      - setup:git-lfs
       - setup:poetry-setup
       - setup:tox
+
+  setup:git-lfs:
+    cmds:
+      - git lfs install
+      - git lfs pull
+    status:
+      - test -d .git/lfs/
 
   setup:tox:
     cmds:

@@ -1,10 +1,19 @@
 # Contributing
 
-## Local development
+## Sharing feedback
+
+If you want to contribute (thanks a lot ! :smiley:), you can open an [issue](https://github.com/art049/odmantic/issues/new){:target=blank_}.
+
+You can create issues for questions, feature request, bug report, ...
+
+Before creating a non obvious (typo, documentation fix) Pull Request, make sure to open
+an issue.
+
+## Developing locally
 
 ### Installing the tools
 
-
+- [Git LFS](https://git-lfs.github.com/): used to store documentation assets in the repository
 - [Docker](https://docs.docker.com/get-docker/): used to run a local MongoDB instance
 - [Task](https://taskfile.dev){:target=blank_}: task manager
 
