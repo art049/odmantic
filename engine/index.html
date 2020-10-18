@@ -16,6 +16,8 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
 <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
 <link href="../css/extra.css" rel="stylesheet"/>
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-180814888-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
 </head>
 <body data-md-color-accent="light-green" data-md-color-primary="light-green" data-md-color-scheme="preference" dir="ltr">
 <script>matchMedia("(prefers-color-scheme: dark)").matches&&document.body.setAttribute("data-md-color-scheme","slate")</script>
@@ -200,14 +202,24 @@
       Raw query usage
     </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usage_fastapi/">
+      Usage with FastAPI
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usage_pydantic/">
+      Usage with Pydantic
+    </a>
+</li>
 <li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" id="nav-7" type="checkbox"/>
-<label class="md-nav__link" for="nav-7">
+<input class="md-nav__toggle md-toggle" data-md-toggle="nav-9" id="nav-9" type="checkbox"/>
+<label class="md-nav__link" for="nav-9">
       API Reference
       <span class="md-nav__icon md-icon"></span>
 </label>
 <nav aria-label="API Reference" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="nav-7">
+<label class="md-nav__title" for="nav-9">
 <span class="md-nav__icon md-icon"></span>
         API Reference
       </label>
@@ -448,6 +460,12 @@ Format</a>
 <p>When calling <a href="../api_reference/engine/#odmantic.engine.AIOEngine.save">AIOEngine.save</a> or
 <a href="../api_reference/engine/#odmantic.engine.AIOEngine.save">AIOEngine.save_all</a>, the referenced models will be persisted
 as well.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Upsert behavior</p>
+<p>The <code>save</code> and <code>save_all</code> methods behave as upsert operations (<a href="./#update">more
+details</a>). Hence, you might overwrite documents if you save
+instances with an existing primary key already existing in the database.</p>
 </div>
 <h2 id="read">Read<a class="headerlink" href="#read" title="Permanent link">¶</a></h2>
 <div class="admonition note">

@@ -45,6 +45,10 @@
     
     
       
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-180814888-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
     
     
   </head>
@@ -279,6 +283,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    Next steps
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -363,16 +374,40 @@
       
 
 
+  <li class="md-nav__item">
+    <a href="usage_fastapi/" class="md-nav__link">
+      Usage with FastAPI
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="usage_pydantic/" class="md-nav__link">
+      Usage with Pydantic
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
     
-    <label class="md-nav__link" for="nav-7">
+    <label class="md-nav__link" for="nav-9">
       API Reference
       <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="API Reference" data-md-level="1">
-      <label class="md-nav__title" for="nav-7">
+      <label class="md-nav__title" for="nav-9">
         <span class="md-nav__icon md-icon"></span>
         API Reference
       </label>
@@ -582,6 +617,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    Next steps
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -642,7 +684,8 @@ MongoDB based on standard python type hints. It's built on top of
   using python comparison operators</p>
 </li>
 <li>
-<p><strong>Developer experience</strong>: field/method autocompletion, type hints, data validation</p>
+<p><strong>Developer experience</strong>: field/method autocompletion, type hints, data validation,
+  perform database operations in a functional way</p>
 </li>
 <li>
 <p><strong>Fully typed</strong>: leverage static analysis to reduce runtime issues</p>
@@ -852,11 +895,17 @@ save the document:</p>
 exception is actually a <code>ValidationError</code> created by from <a
 href="https://pydantic-docs.helpmanual.io/usage/models/#error-handling"
 target="_blank">pydantic</a>.</p>
-<p>To get started on more advanced practices like relations and building more advanced
-queries, you can check the <a href="https://art049.github.io/odmantic/">documentation</a>.</p>
+<h3 id="next-steps">Next steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h3>
+<p>If you already have experience with Pydantic and FastAPI, the <a href="https://art049.github.io/odmantic/usage_fastapi/">Usage with FastAPI</a> example might be interesting for you.</p>
+<p>Otherwise, to get started on more advanced practices like relations and building more
+advanced queries, you can directly check the other sections of the
+<a href="https://art049.github.io/odmantic/">documentation</a>.</p>
+<p>If you wish to contribute to the project (Thank you! <img alt="😃" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/72x72/1f603.png" title=":smiley:" />), you can have a look to the
+<a href="https://art049.github.io/odmantic/contributing/">Contributing</a> section of the
+documentation.</p>
 <h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
 <p>This project is licensed under the terms of the <a
-href="https://en.wikipedia.org/wiki/ISC_license" target="_blank">ISC license</a>.</p>
+href="https://github.com/art049/odmantic/blob/master/LICENSE" target="_blank">ISC license</a>.</p>
                 
               
               
