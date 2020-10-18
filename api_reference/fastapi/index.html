@@ -266,43 +266,19 @@
       
       
 
-
-  <li class="md-nav__item">
-    <a href="../../usage_fastapi/" class="md-nav__link">
-      Usage with FastAPI
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../../usage_pydantic/" class="md-nav__link">
-      Usage with Pydantic
-    </a>
-  </li>
-
-    
-      
-      
-      
-
   
 
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9" checked>
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" checked>
     
-    <label class="md-nav__link" for="nav-9">
+    <label class="md-nav__link" for="nav-7">
       API Reference
       <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="API Reference" data-md-level="1">
-      <label class="md-nav__title" for="nav-9">
+      <label class="md-nav__title" for="nav-7">
         <span class="md-nav__icon md-icon"></span>
         API Reference
       </label>
@@ -418,6 +394,19 @@
     AIOEngineDependency
   </a>
   
+    <nav class="md-nav" aria-label="AIOEngineDependency">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#odmantic.fastapi.AIOEngineDependency.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -494,6 +483,19 @@
     AIOEngineDependency
   </a>
   
+    <nav class="md-nav" aria-label="AIOEngineDependency">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#odmantic.fastapi.AIOEngineDependency.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -523,19 +525,86 @@
 
       <a class="headerlink" href="#odmantic.fastapi.AIOEngineDependency" title="Permanent link">&para;</a></h2>
 <div class="doc doc-contents first">
+<p>AIOEngine FastAPI Dependency.</p>
+<p>Internally caches the AIOEngine instance to avoid creating a new client on each
+request.</p>
+<p>Sample usage:
+<div class="highlight">
+<pre><span></span><code><span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">()</span>
+<span class="n">EngineD</span> <span class="o">=</span> <span class="n">AIOEngineDependency</span><span class="p">()</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">engine</span><span class="p">:</span> <span class="n">AIOEngine</span> <span class="o">=</span> <span class="n">EngineD</span><span class="p">):</span>
+    <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</code></pre>
+</div>
+</p>
 <div class="doc doc-children">
+<div class="doc doc-object doc-method">
+<h3 class="doc doc-heading" id="odmantic.fastapi.AIOEngineDependency.__init__">
 
+        <code class="highlight language-python">
+__init__<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mongo_uri</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="s1">'test'</span><span class="p">)</span>        </code>
 
+<span class="doc doc-properties">
+   <small class="doc doc-property doc-property-special">
+    <code>special</code>
+  </small>
+ </span>
 
+      <a class="headerlink" href="#odmantic.fastapi.AIOEngineDependency.__init__" title="Permanent link">&para;</a></h3>
+<div class="doc doc-contents ">
+<p>Dependency initializer for AIOEngine.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mongo_uri</code></td>
+<td><code>Optional[str]</code></td>
+<td>
+<p>mongo_uri that should be used for creating the motor client</p>
+</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>database</code></td>
+<td><code>str</code></td>
+<td>
+<p>database to use</p>
+</td>
+<td><code>'test'</code></td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+          <summary>Source code in <code>odmantic/fastapi.py</code></summary>
+          <div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mongo_uri</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">database</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"test"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">"""Dependency initializer for AIOEngine.</span>
 
-
-
-
-
-
-
-
-  </div>
+<span class="sd">    Args:</span>
+<span class="sd">        mongo_uri: mongo_uri that should be used for creating the motor client</span>
+<span class="sd">        database: database to use</span>
+<span class="sd">    """</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dependency</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">mongo_uri</span> <span class="o">=</span> <span class="n">mongo_uri</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">AIOEngine</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+</div>
 </div>
 </div>
                 
