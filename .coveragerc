@@ -1,8 +1,0 @@
-[run]
-branch = True
-[report]
-include =
-    odmantic/*
-exclude_lines =
-    pragma: no cover
-    if TYPE_CHECKING:

@@ -37,9 +37,13 @@ include = ["LICENSE"]
 
 [tool.poetry.dependencies]
 python = ">=3.6 <4.0"
-importlib-metadata = {version = "^1.0", python = "<3.8"}
+importlib-metadata = { version = "^1.0", python = "<3.8" }
 pydantic = "~=1.6.0"
 motor = "~=2.2.0"
+fastapi = { version = "^0.61.1", optional = true }
+
+[tool.poetry.extras]
+fastapi = ["fastapi"]
 
 [tool.poetry.dev-dependencies]
 pytest = "~=6.0"
@@ -47,7 +51,7 @@ isort = "~=5.6.4"
 black = { version = "*", allow-prereleases = true }
 flake8 = "==3.8.3"
 mypy = "^0.782"
-coverage = "^5.3"
+coverage = { extras = ["toml"], version = "^5.3" }
 pytest-xdist = "^2.1.0"
 pytz = "^2020.1"
 asyncmock = "^0.4.2"
@@ -57,6 +61,7 @@ darglint = "^1.5.4"
 ipython = "^7.16.1"
 pytest-asyncio = "^0.14.0"
 mkdocs-material = "^6.0.2"
+uvicorn = "^0.12.1"
 fastapi = "^0.61.1"
 requests = "^2.24.0"
 
@@ -65,16 +70,22 @@ requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
 
 [tool.isort]
-line_length=88
-multi_line_output=3
-include_trailing_comma=true
-use_parentheses=true
-force_grid_wrap=0
-known_third_party=["bson", "fastapi", "motor", "pydantic", "pytest", "pytz"]
-known_first_party=["odmantic","tests"]
-skip=["docs"]
+line_length = 88
+multi_line_output = 3
+include_trailing_comma = true
+use_parentheses = true
+force_grid_wrap = 0
+known_third_party = ["bson", "fastapi", "motor", "pydantic", "pytest", "pytz"]
+known_first_party = ["odmantic", "tests"]
+skip = ["docs"]
 
 [tool.pytest.ini_options]
-filterwarnings =[
-    "ignore:\"@coroutine\" decorator is deprecated.*:DeprecationWarning:motor.*"
+filterwarnings = [
+    "ignore:\"@coroutine\" decorator is deprecated.*:DeprecationWarning:motor.*",
 ]
+
+[tool.coverage.run]
+branch = true
+[tool.coverage.report]
+include = ["odmantic/*"]
+exclude_lines = ["pragma: no cover", "if TYPE_CHECKING:"]
