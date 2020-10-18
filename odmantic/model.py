@@ -319,27 +319,37 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
         namespace: Dict[str, Any],
         **kwargs: Any,
     ):
-        # Handle calls from pydantic.main.create_model (used internally by FastAPI)
-        patched_bases = []
-        for b in bases:
-            if hasattr(b, "__pydantic_model__"):
-                patched_bases.append(b.__pydantic_model__)
-            else:
-                patched_bases.append(b)
+        is_custom_cls = namespace.get(
+            "__module__"
+        ) != "odmantic.model" and namespace.get("__qualname__") not in (
+            "_BaseODMModel",
+            "Model",
+            "EmbeddedModel",
+        )
+        if is_custom_cls:
+            # Handle calls from pydantic.main.create_model (used internally by FastAPI)
+            patched_bases = []
+            for b in bases:
+                if hasattr(b, "__pydantic_model__"):
+                    patched_bases.append(b.__pydantic_model__)
+                else:
+                    patched_bases.append(b)
+            bases = tuple(patched_bases)
+            # Nullify unset docstring (to avoid getting the docstrings from the parent
+            # classes)
+            if namespace.get("__doc__", None) is None:
+                namespace["__doc__"] = ""
 
-        cls = super().__new__(mcs, name, tuple(patched_bases), namespace, **kwargs)
-        if namespace.get("__module__") != "odmantic.model" and namespace.get(
-            "__qualname__"
-        ) not in ("_BaseODMModel", "Model", "EmbeddedModel"):
+        cls = super().__new__(mcs, name, bases, namespace, **kwargs)
+
+        if is_custom_cls:
             pydantic_cls = pydantic.main.ModelMetaclass.__new__(
                 mcs, f"{name}.__pydantic_model__", (BaseBSONModel,), namespace, **kwargs
             )
             cls.__pydantic_model__ = pydantic_cls
-            if cls.__doc__ in (Model.__doc__, EmbeddedModel.__doc__):
-                # Nullify unset docstrings (used when generating the Schema)
-                cls.__doc__ = ""
             for name, field in cls.__odm_fields__.items():
                 setattr(cls, name, FieldProxy(parent=None, field=field))
+
         return cls
 
 

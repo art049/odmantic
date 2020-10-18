@@ -1,8 +1,8 @@
+from inspect import getdoc
 from typing import Type
 
 import pytest
 from bson import ObjectId as BSONObjectId
-from pydantic.main import create_model
 
 from odmantic import Model, ObjectId
 from odmantic.bson import BaseBSONModel, Binary, Decimal128, Int64, Regex
@@ -105,3 +105,30 @@ def test_openapi_json_with_bson_fields(fastapi_app, test_client):
 
     response = test_client.get("/openapi.json")
     assert response.status_code == 200
+
+
+@pytest.mark.parametrize("base", (Model, EmbeddedModel))
+def test_docstring_not_nullified(base: Type):
+    class M(base):  # type: ignore
+        """My docstring"""
+
+    doc = getdoc(M)
+    assert doc is None or doc == "My docstring"
+    description = M.schema()["description"]
+    assert description == "My docstring"
+
+
+@pytest.mark.parametrize("base", (Model, EmbeddedModel))
+def test_docstring_nullified(base: Type):
+    class M(base):  # type: ignore
+        ...
+
+    doc = getdoc(M)
+    assert doc == ""
+    assert "description" not in M.schema()
+
+
+@pytest.mark.parametrize("base", (Model, EmbeddedModel, BaseBSONModel))
+def test_base_classes_docstring_not_nullified(base: Type):
+    doc = getdoc(base)
+    assert doc is not None and doc != ""
