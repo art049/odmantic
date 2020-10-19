@@ -435,6 +435,7 @@ Otherwise, we found the requested instance. We can return it !
 ```python
 return tree
 ```
+
 !!! example "Getting a tree from the command line"
     === "HTTPie"
         Get the tree `5f8c8266f1d33aa1012f3082`:

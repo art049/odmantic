@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          lfs: true
       - name: Set up Python 3.8
         uses: actions/setup-python@v2
         with:
@@ -26,7 +28,9 @@ jobs:
           poetry install
 
       - name: Build documentation
-        run: poetry run mkdocs build -f ./docs/mkdocs.yml
+        run: |
+          poetry run mkdocs build -f ./docs/mkdocs.yml
+          cp -r ./docs/img ./site/img
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
