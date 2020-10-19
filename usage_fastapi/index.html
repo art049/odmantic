@@ -824,6 +824,21 @@ well available directly from the <code>odmantic</code> module.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">ObjectId</span>
 </code></pre></div>
 </div>
+<p>With this <code>ObjectId</code>, we build a query that will filter only the instances having this
+exactly same <code>id</code>:
+<div class="highlight"><pre><span></span><code><span class="n">Tree</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span>
+</code></pre></div>
+Then, we pass this query to the <a href="../api_reference/engine/#odmantic.engine.AIOEngine.find_one">AIOEngine.find_one</a> method that will try to return an instance, otherwise <code>None</code> will be returned:
+<div class="highlight"><pre><span></span><code><span class="n">tree</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">Tree</span><span class="p">,</span> <span class="n">Tree</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">)</span>
+</code></pre></div>
+Now, if our tree object is None (i.e the instance has not been found), we need to return
+a <code>404 Not Found</code> error:
+<div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="n">tree</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
+</code></pre></div>
+Otherwise, we found the requested instance. We can return it !
+<div class="highlight"><pre><span></span><code><span class="k">return</span> <span class="n">tree</span>
+</code></pre></div></p>
 <div class="admonition example">
 <p class="admonition-title">Getting a tree from the command line</p>
 <div class="tabbed-set" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio"/><label for="__tabbed_6_1">HTTPie</label><div class="tabbed-content">
