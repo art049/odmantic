@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ODMantic"
-version = "0.0.0b0"
+version = "0.1.0"
 description = "ODMantic, an AsyncIO MongoDB Object Document Mapper for Python using type hints "
 authors = ["Arthur Pastel <arthur.pastel@gmail.com>"]
 license = "ISC License"
@@ -21,7 +21,7 @@ classifiers = [
     "Topic :: Software Development :: Libraries",
     "Topic :: Software Development",
     "Typing :: Typed",
-    "Development Status :: 4 - Alpha",
+    "Development Status :: 4 - Beta",
     "Framework :: AsyncIO",
     "Environment :: Web Environment",
     "License :: OSI Approved :: ISC License (ISCL)",
