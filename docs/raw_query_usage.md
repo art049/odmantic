@@ -49,7 +49,7 @@ You can parse MongoDB document to instances using the
 You can generate a document from instances using the
 [doc][odmantic.model._BaseODMModel.doc] method.
 ```python linenums="1" hl_lines="20 27 38-39 44"
---8<-- "raw_query_usage/extract_from_raw.py"
+--8<-- "raw_query_usage/extract_from_existing.py"
 ```
 ## Aggregation example
 In the following example, we will demonstrate the use of the previous helpers to build
