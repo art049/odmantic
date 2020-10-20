@@ -2,19 +2,70 @@
 
 ## Sharing feedback
 
-If you want to contribute (thanks a lot ! :smiley:), you can open an [issue](https://github.com/art049/odmantic/issues/new){:target=blank_}.
+This project is still quite new and therefore having your feedback will really help to
+prioritize relevant feature developments :rocket:.
 
-You can create issues for questions, feature request, bug report, ...
+The easiest way to share feedback and discuss about the project is to join the [Gitter
+chatroom](https://gitter.im/odmantic/community?utm_source=share-link&utm_medium=link&utm_campaign=share-link){:target=blank_}.
 
-Before creating a non obvious (typo, documentation fix) Pull Request, make sure to open
-an issue.
+If you want to contribute (thanks a lot ! :smiley:), you can open an
+[issue](https://github.com/art049/odmantic/issues/new){:target=blank_} on Github.
+
+Before creating a non obvious (typo, documentation fix) Pull Request, please make sure
+to open an issue.
 
 ## Developing locally
 
-### Installing the tools
+<div align="center">
+  <a href="https://codecov.io/gh/art049/odmantic" target="_blank">
+      <img src="https://codecov.io/gh/art049/odmantic/branch/master/graph/badge.svg?token=3NYZK14STZ"    alt="coverage">
+  </a>
+  <a href="https://github.com/pre-commit/pre-commit" target="_blank">
+      <img src="https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white"
+      alt="pre-commit">
+  </a>
+  <a href="http://mypy-lang.org/" target="_blank">
+      <img src="https://img.shields.io/badge/mypy-checked-informational.svg" alt="mypy: checked">
+  </a>
+  <a href="https://github.com/python/black" target="_blank">
+      <img src="https://img.shields.io/badge/code%20style-black-000000.svg" alt="Code style: black">
+  </a>
+  <a href="https://gitter.im/odmantic/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge"    target="_blank">
+      <img src="https://badges.gitter.im/odmantic/community.svg" alt="Gitter">
+  </a>
+</div>
 
-- [Git LFS](https://git-lfs.github.com/): used to store documentation assets in the repository
-- [Docker](https://docs.docker.com/get-docker/): used to run a local MongoDB instance
+### With the VSCode's [devcontainer](https://code.visualstudio.com/docs/remote/containers){:target=blank_} feature
+
+This feature will make the tools/environment installation very simple as you will develop
+in a container that has already been configured to run this project.
+
+Here are the steps:
+
+1. Clone the repository and open it with [Visual Studio
+   Code](https://code.visualstudio.com/){:target=blank_}.
+2. Make sure that the [Remote -
+    Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers){:target=blank_}
+    (`ms-vscode-remote.remote-containers`) extension is installed.
+3. Run the `Remote-Container: Reopen in Container` command (press `Ctrl`+`Shift`+`P` and
+   then type the command).
+4. After the setup script completes, the environment is ready. You can start the local
+   development :fire:.
+
+   You can go to the [development tasks](#running-development-tasks) section to see the
+   available `task` commands.
+
+!!! note "MongoDB container"
+    In this containerized development environment, a MongoDB instance should already be
+    running as a part of the development `docker-compose.yml` file internally used by
+    VSCode.
+
+### Regular environment setup
+
+#### Installing the tools
+
+- [Git LFS](https://git-lfs.github.com/){:target=blank_}: used to store documentation assets in the repository
+- [Docker](https://docs.docker.com/get-docker/){:target=blank_}: used to run a local MongoDB instance
 - [Task](https://taskfile.dev){:target=blank_}: task manager
 
 !!! tip "Installing python based development tools"
@@ -54,14 +105,14 @@ an issue.
     pyenv install "3.8.9"
     ```
 
-### Configuring the local project
+#### Configuring the local environment
   ```shell
   task setup
   ```
 
-### Developing
+### Running development tasks
 
-Available tasks for the project:
+The following tasks are available for the project:
 
 * `task setup`:                Configure the development environment.
 
@@ -69,7 +120,7 @@ Available tasks for the project:
 
 * `task format`:               Format the code (and imports).
 
-* `task mongodb-docker`:       Start the local MongoDB server.
+* `task mongodb`:              Start the local MongoDB server.
 
 * `task test`:                 Run the tests with the current version.
 

@@ -1,0 +1,32 @@
+// Update the VARIANT arg in docker-compose.yml to pick a Node.js version: 10, 12, 14
+{
+  "name": "Python3 & Mongo DB",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+
+  // Set *default* container specific settings.json values on container create.
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+
+  // Add the IDs of extensions you want installed when the container is created.
+  "extensions": [
+    "njpwerner.autodocstring",
+    "ryanluker.vscode-coverage-gutters",
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "littlefoxteam.vscode-python-test-adapter",
+    "hbenl.vscode-test-explorer",
+    "paulvarache.vscode-taskfile"
+  ],
+
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  "forwardPorts": [8000, 8080, 27017],
+
+  // Use 'postCreateCommand' to run commands after the container is created.
+  "postCreateCommand": "bash -i -c 'task setup'"
+
+  // Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
+  // "remoteUser": "node"
+}
