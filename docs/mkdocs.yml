@@ -21,6 +21,10 @@ theme:
 extra_css:
   - css/extra.css
 
+extra_javascript:
+  - js/gitter.js
+  - https://sidecar.gitter.im/dist/sidecar.v1.js
+
 markdown_extensions:
   - admonition
   - attr_list
