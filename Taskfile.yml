@@ -5,8 +5,14 @@ version: "3"
 silent: true
 
 tasks:
-  mongodb-docker:
+  mongodb:
     desc: Start the local MongoDB server.
+    cmds:
+      - task: mongodb:docker
+    status:
+      - nc -vz 127.0.0.1 27017
+
+  mongodb:docker:
     cmds:
       - echo "Starting odmantic-mongo-test mongo container"
       - docker run --rm --net=host --name odmantic-mongo-test -d mongo:4
@@ -16,22 +22,22 @@ tasks:
   full-test:
     desc: Run the tests against all supported versions.
     deps:
-      - mongodb-docker
+      - task: mongodb
     cmds:
-      - tox --parallel
+      - tox --parallel auto
 
   test:
     desc: |
       Run the tests with the current version.
     deps:
-      - mongodb-docker
+      - task: mongodb
     cmds:
       - poetry run pytest  -rs
 
   coverage:
     desc: Get the test coverage (xml and html) with the current version.
     deps:
-      - mongodb-docker
+      - task: mongodb
     cmds:
       - poetry run coverage run -m pytest -rs
       - poetry run coverage report -m
@@ -58,11 +64,10 @@ tasks:
 
   setup:
     desc: Configure the development environment.
-    deps:
-      - setup:pre-commit-hook
-      - setup:git-lfs
-      - setup:poetry-setup
-      - setup:tox
+    cmds:
+      - task: setup:git-lfs
+      - task: setup:pre-commit-hook
+      - task: setup:poetry-setup
 
   setup:git-lfs:
     cmds:
@@ -70,14 +75,6 @@ tasks:
       - git lfs pull
     status:
       - test -d .git/lfs/
-
-  setup:tox:
-    cmds:
-      - tox --notest
-    status:
-      - test -d .tox/py36
-      - test -d .tox/py37
-      - test -d .tox/py38
 
   setup:pre-commit-hook:
     cmds:
