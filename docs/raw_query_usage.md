@@ -34,7 +34,7 @@ field reference name.
 --8<-- "raw_query_usage/field_key_name.py"
 ```
 
-## Creating instances from a raw documents
+## Creating instances from raw documents
 You can parse MongoDB document to instances using the
 [parse_doc][odmantic.model._BaseODMModel.parse_doc] method.
 
