@@ -15,7 +15,7 @@ tasks:
   mongodb:docker:
     cmds:
       - echo "Starting odmantic-mongo-test mongo container"
-      - docker run --rm --net=host --name odmantic-mongo-test -d mongo:4
+      - docker run --rm -p 27017:27017 --name odmantic-mongo-test -d mongo:4
     status:
       - docker container inspect odmantic-mongo-test
 
@@ -32,7 +32,7 @@ tasks:
     deps:
       - task: mongodb
     cmds:
-      - poetry run pytest  -rs
+      - poetry run pytest -rs
 
   coverage:
     desc: Get the test coverage (xml and html) with the current version.
@@ -78,7 +78,7 @@ tasks:
 
   setup:pre-commit-hook:
     cmds:
-      - poetry run pre-commit install
+      - pre-commit install
     status:
       - test -f .git/hooks/pre-commit
 
