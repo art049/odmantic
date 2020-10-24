@@ -1,6 +1,7 @@
 import asyncio
 from asyncio.tasks import gather
 from typing import (
+    Any,
     AsyncGenerator,
     AsyncIterable,
     Awaitable,
@@ -8,6 +9,7 @@ from typing import (
     Generator,
     Generic,
     List,
+    Literal,
     Optional,
     Sequence,
     Tuple,
@@ -26,11 +28,13 @@ from motor.motor_asyncio import (
 from pydantic.utils import lenient_issubclass
 
 from odmantic.exceptions import DocumentNotFoundError
-from odmantic.field import ODMReference
+from odmantic.field import FieldProxy, ODMReference
 from odmantic.model import Model
 from odmantic.query import QueryExpression, and_
 
 ModelType = TypeVar("ModelType", bound=Model)
+
+SortExpressionType = Optional[Union[FieldProxy, Tuple[FieldProxy]]]
 
 
 class AIOCursor(
@@ -163,12 +167,32 @@ class AIOEngine:
             pipeline.append({"$unwind": f"${odm_reference.key_name}"})
         return pipeline
 
+    @staticmethod
+    def _build_sort_expression(
+        sort_fields: Tuple[FieldProxy, ...]
+    ) -> Dict[str, Literal[-1, 1]]:
+        return {+sort_field: 1 for sort_field in sort_fields}
+
+    @staticmethod
+    def _validate_sort_argument(sort: Any) -> SortExpressionType:
+        if sort is not None:
+            if isinstance(sort, tuple):
+                for sorted_field in sort:
+                    if not isinstance(sorted_field, FieldProxy):
+                        raise TypeError("sort elements have to be a Model field")
+            elif not isinstance(sort, FieldProxy):
+                raise TypeError(
+                    "sort has to be either a Model field or a tuple of Model fields"
+                )
+        return cast(SortExpressionType, sort)
+
     def find(
         self,
         model: Type[ModelType],
         *queries: Union[
             QueryExpression, Dict, bool
         ],  # bool: allow using binary operators with mypy
+        sort: Optional[Any] = None,
         limit: Optional[int] = None,
         skip: int = 0,
     ) -> AIOCursor[ModelType]:
@@ -177,6 +201,7 @@ class AIOEngine:
         Args:
             model: model to perform the operation on
             queries: query filter to apply
+            sort: sort expression
             limit: maximum number of instance fetched
             skip: number of document to skip
 
@@ -191,6 +216,7 @@ class AIOEngine:
         """
         if not lenient_issubclass(model, Model):
             raise TypeError("Can only call find with a Model class")
+        sort = self._validate_sort_argument(sort)
         if limit is not None and limit <= 0:
             raise ValueError("limit has to be a strict positive value or None")
         if skip < 0:
@@ -198,6 +224,11 @@ class AIOEngine:
         query = AIOEngine._build_query(*queries)
         collection = self.get_collection(model)
         pipeline: List[Dict] = [{"$match": query}]
+        if sort is not None:
+            sort_expression = self._build_sort_expression(
+                sort if isinstance(sort, tuple) else (sort,)
+            )
+            pipeline.append({"$sort": sort_expression})
         if limit is not None and limit > 0:
             pipeline.append({"$limit": limit})
         if skip > 0:
