@@ -2,6 +2,8 @@ import re
 from enum import Enum
 from typing import TYPE_CHECKING, Any, Dict, Pattern, Sequence, Union
 
+from odmantic.typing import Literal
+
 if TYPE_CHECKING:
     from odmantic.field import FieldProxy
 
@@ -115,3 +117,27 @@ def match(field: FieldProxyAny, pattern: Union[Pattern, str]) -> QueryExpression
     else:
         r = pattern
     return QueryExpression({+field: r})
+
+
+class SortExpression(Dict[str, Literal[-1, 1]]):
+    """Base object used to build sort queries."""
+
+    def __repr__(self) -> str:
+        parent_repr = super().__repr__()
+        if parent_repr == "{}":
+            parent_repr = ""
+        return f"SortExpression({parent_repr})"
+
+
+def _build_sort_expression(
+    field: FieldProxyAny, order: Literal[-1, 1]
+) -> SortExpression:
+    return SortExpression({+field: order})
+
+
+def asc(field: FieldProxyAny) -> SortExpression:
+    return _build_sort_expression(field, 1)
+
+
+def desc(field: FieldProxyAny) -> SortExpression:
+    return _build_sort_expression(field, -1)
