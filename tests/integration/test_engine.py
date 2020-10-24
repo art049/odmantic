@@ -362,3 +362,30 @@ async def test_only_tuple_of_embedded_set_on_save(engine: AIOEngine, mock_collec
     (_, set_arg), _ = collection.update_one.await_args
     set_dict = set_arg["$set"]
     assert set_dict == {"field": ({"a": "world"},)}
+
+
+async def test_find_sort_asc(engine: AIOEngine, person_persisted: List[PersonModel]):
+    results = await engine.find(PersonModel, sort=PersonModel.last_name)
+    assert results == sorted(person_persisted, key=lambda person: person.last_name)
+
+
+async def test_find_sort_list(engine: AIOEngine, person_persisted: List[PersonModel]):
+    results = await engine.find(
+        PersonModel, sort=(PersonModel.first_name, PersonModel.last_name)
+    )
+    assert results == sorted(
+        person_persisted, key=lambda person: (person.first_name, person.last_name)
+    )
+
+
+async def test_find_sort_wrong_argument(engine: AIOEngine):
+    with pytest.raises(
+        TypeError,
+        match="sort has to be either a Model field or a tuple of Model fields",
+    ):
+        await engine.find(PersonModel, sort="first_name")
+
+
+async def test_find_sort_wrong_tuple_argument(engine: AIOEngine):
+    with pytest.raises(TypeError, match="sort elements have to be a Model field"):
+        await engine.find(PersonModel, sort=("first_name",))
