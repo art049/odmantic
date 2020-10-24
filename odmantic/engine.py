@@ -9,7 +9,6 @@ from typing import (
     Generator,
     Generic,
     List,
-    Literal,
     Optional,
     Sequence,
     Tuple,
@@ -31,6 +30,7 @@ from odmantic.exceptions import DocumentNotFoundError
 from odmantic.field import FieldProxy, ODMReference
 from odmantic.model import Model
 from odmantic.query import QueryExpression, and_
+from odmantic.typing import Literal
 
 ModelType = TypeVar("ModelType", bound=Model)
 
