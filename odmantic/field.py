@@ -14,7 +14,21 @@ from typing import (
 from pydantic.fields import Field as PDField
 from pydantic.fields import FieldInfo, Undefined
 
-from odmantic.query import QueryExpression, eq, gt, gte, in_, lt, lte, match, ne, not_in
+from odmantic.query import (
+    QueryExpression,
+    SortExpression,
+    asc,
+    desc,
+    eq,
+    gt,
+    gte,
+    in_,
+    lt,
+    lte,
+    match,
+    ne,
+    not_in,
+)
 
 from .typing import NoArgAnyCallable
 
@@ -173,7 +187,7 @@ class ODMField(ODMBaseField):
 
     __slots__ = ("primary_field",)
     __allowed_operators__ = set(
-        ("eq", "ne", "in_", "not_in", "lt", "lte", "gt", "gte", "match")
+        ("eq", "ne", "in_", "not_in", "lt", "lte", "gt", "gte", "match", "asc", "desc")
     )
 
     def __init__(self, *, primary_field: bool, key_name: str):
@@ -229,6 +243,9 @@ class FieldProxy:
         return f"{parent_name}.{field.key_name}"
 
     def __getattribute__(self, name: str) -> Any:
+        if name == "__class__":  # support `isinstance` for python < 3.7
+            return super().__getattribute__(name)
+
         field: ODMBaseField = object.__getattribute__(self, "field")
         if isinstance(field, ODMReference):
             if name in field.model.__odm_fields__:
@@ -299,3 +316,9 @@ class FieldProxy:
 
     def match(self, pattern: Union[Pattern, str]) -> QueryExpression:
         return match(self, pattern)
+
+    def asc(self) -> SortExpression:
+        return asc(self)
+
+    def desc(self) -> SortExpression:
+        return desc(self)

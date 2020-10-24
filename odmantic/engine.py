@@ -29,8 +29,7 @@ from pydantic.utils import lenient_issubclass
 from odmantic.exceptions import DocumentNotFoundError
 from odmantic.field import FieldProxy, ODMReference
 from odmantic.model import Model
-from odmantic.query import QueryExpression, and_
-from odmantic.typing import Literal
+from odmantic.query import QueryExpression, SortExpression, and_
 
 ModelType = TypeVar("ModelType", bound=Model)
 
@@ -169,22 +168,38 @@ class AIOEngine:
 
     @staticmethod
     def _build_sort_expression(
-        sort_fields: Tuple[FieldProxy, ...]
-    ) -> Dict[str, Literal[-1, 1]]:
-        return {+sort_field: 1 for sort_field in sort_fields}
+        sort_field: Union[FieldProxy, SortExpression]
+    ) -> SortExpression:
+        return (
+            SortExpression({+sort_field: 1})
+            if not isinstance(sort_field, SortExpression)
+            else sort_field
+        )
 
-    @staticmethod
-    def _validate_sort_argument(sort: Any) -> SortExpressionType:
-        if sort is not None:
-            if isinstance(sort, tuple):
-                for sorted_field in sort:
-                    if not isinstance(sorted_field, FieldProxy):
-                        raise TypeError("sort elements have to be a Model field")
-            elif not isinstance(sort, FieldProxy):
-                raise TypeError(
-                    "sort has to be either a Model field or a tuple of Model fields"
-                )
-        return cast(SortExpressionType, sort)
+    @classmethod
+    def _validate_sort_argument(cls, sort: Any) -> Optional[SortExpression]:
+        if sort is None:
+            return None
+
+        if isinstance(sort, tuple):
+            for sorted_field in sort:
+                if not isinstance(sorted_field, (FieldProxy, SortExpression)):
+                    raise TypeError(
+                        "sort elements have to be Model fields or asc, desc descriptors"
+                    )
+            sort_expression: Dict = {}
+            for sort_field in sort:
+                sort_expression.update(cls._build_sort_expression(sort_field))
+
+            return SortExpression(sort_expression)
+
+        if not isinstance(sort, (FieldProxy, SortExpression)):
+            raise TypeError(
+                "sort has to be a Model field or "
+                "asc, desc descriptors or a tuple of these"
+            )
+
+        return cls._build_sort_expression(sort)
 
     def find(
         self,
@@ -216,7 +231,7 @@ class AIOEngine:
         """
         if not lenient_issubclass(model, Model):
             raise TypeError("Can only call find with a Model class")
-        sort = self._validate_sort_argument(sort)
+        sort_expression = self._validate_sort_argument(sort)
         if limit is not None and limit <= 0:
             raise ValueError("limit has to be a strict positive value or None")
         if skip < 0:
@@ -224,10 +239,7 @@ class AIOEngine:
         query = AIOEngine._build_query(*queries)
         collection = self.get_collection(model)
         pipeline: List[Dict] = [{"$match": query}]
-        if sort is not None:
-            sort_expression = self._build_sort_expression(
-                sort if isinstance(sort, tuple) else (sort,)
-            )
+        if sort_expression is not None:
             pipeline.append({"$sort": sort_expression})
         if limit is not None and limit > 0:
             pipeline.append({"$limit": limit})

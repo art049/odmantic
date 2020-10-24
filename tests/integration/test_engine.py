@@ -7,6 +7,7 @@ from odmantic.bson import ObjectId
 from odmantic.engine import AIOEngine
 from odmantic.exceptions import DocumentNotFoundError
 from odmantic.model import EmbeddedModel, Model
+from odmantic.query import asc, desc
 
 from ..zoo.person import PersonModel
 
@@ -381,11 +382,72 @@ async def test_find_sort_list(engine: AIOEngine, person_persisted: List[PersonMo
 async def test_find_sort_wrong_argument(engine: AIOEngine):
     with pytest.raises(
         TypeError,
-        match="sort has to be either a Model field or a tuple of Model fields",
+        match=(
+            "sort has to be a Model field or "
+            "asc, desc descriptors or a tuple of these"
+        ),
     ):
         await engine.find(PersonModel, sort="first_name")
 
 
 async def test_find_sort_wrong_tuple_argument(engine: AIOEngine):
-    with pytest.raises(TypeError, match="sort elements have to be a Model field"):
+    with pytest.raises(
+        TypeError,
+        match="sort elements have to be Model fields or asc, desc descriptors",
+    ):
         await engine.find(PersonModel, sort=("first_name",))
+
+
+async def test_find_sort_desc(engine: AIOEngine, person_persisted: List[PersonModel]):
+    results = await engine.find(
+        PersonModel, sort=PersonModel.last_name.desc()  # type: ignore
+    )
+    assert results == list(
+        reversed(sorted(person_persisted, key=lambda person: person.last_name))
+    )
+
+
+async def test_find_sort_asc_function(
+    engine: AIOEngine, person_persisted: List[PersonModel]
+):
+    results = await engine.find(PersonModel, sort=asc(PersonModel.last_name))
+    assert results == sorted(person_persisted, key=lambda person: person.last_name)
+
+
+async def test_find_sort_multiple_descriptors(engine: AIOEngine):
+    class TestModel(Model):
+        a: int
+        b: int
+        c: int
+
+    persisted_models = [
+        TestModel(a=1, b=2, c=3),
+        TestModel(a=2, b=2, c=3),
+        TestModel(a=3, b=3, c=2),
+    ]
+    await engine.save_all(persisted_models)
+    results = await engine.find(
+        TestModel,
+        sort=(
+            desc(TestModel.a),
+            TestModel.b,
+            TestModel.c.asc(),  # type: ignore
+        ),
+    )
+    assert results == sorted(
+        persisted_models,
+        key=lambda test_model: (-test_model.a, test_model.b, test_model.c),
+    )
+
+
+async def test_sort_embedded_field(engine: AIOEngine):
+    class E(EmbeddedModel):
+        field: int
+
+    class M(Model):
+        e: E
+
+    instances = [M(e=E(field=0)), M(e=E(field=1)), M(e=E(field=2))]
+    await engine.save_all(instances)
+    results = await engine.find(M, sort=desc(M.e.field))
+    assert results == sorted(instances, key=lambda instance: -instance.e.field)

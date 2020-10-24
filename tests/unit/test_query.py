@@ -1,4 +1,4 @@
-from odmantic.query import QueryExpression
+from odmantic.query import QueryExpression, SortExpression, asc
 from tests.zoo.book_embedded import Book, Publisher
 from tests.zoo.tree import TreeKind, TreeModel
 
@@ -30,3 +30,11 @@ def test_query_repr():
 
 def test_query_empty_repr():
     assert repr(QueryExpression()) == "QueryExpression()"
+
+
+def test_sort_repr():
+    assert repr(asc(TreeModel.name)) == "SortExpression({'name': 1})"
+
+
+def test_sort_empty_repr():
+    assert repr(SortExpression()) == "SortExpression()"
