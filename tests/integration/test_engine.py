@@ -451,3 +451,9 @@ async def test_sort_embedded_field(engine: AIOEngine):
     await engine.save_all(instances)
     results = await engine.find(M, sort=desc(M.e.field))
     assert results == sorted(instances, key=lambda instance: -instance.e.field)
+
+
+async def test_find_one_sort(engine: AIOEngine, person_persisted: List[PersonModel]):
+    person = await engine.find_one(PersonModel, sort=PersonModel.last_name)
+    assert person is not None
+    assert person.last_name == "Castaldi"
