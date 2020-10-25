@@ -18,3 +18,10 @@
 ::: odmantic.query.in_
 ::: odmantic.query.not_in
 ::: odmantic.query.match
+
+
+## Sort helpers
+
+::: odmantic.query.SortExpression
+::: odmantic.query.asc
+::: odmantic.query.desc

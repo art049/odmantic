@@ -121,7 +121,7 @@ Models in order to bring more flexibility (default values, Mongo key name, ...).
     --8<-- "modeling/one_to_one_1.py"
     ```
 
-    For more details, see the [Filtering](filtering.md) section.
+    For more details, see the [Querying](querying.md) section.
 
 ### One to Many
 Here, we will model the relation between a customer of an online shop and his shipping

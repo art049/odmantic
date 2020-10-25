@@ -31,7 +31,7 @@ markdown_extensions:
   - def_list
   - toc:
       permalink: true
-      toc_depth: 3
+      toc_depth: 4
   - codehilite:
       linenums: true
       guess_lang: false
@@ -62,7 +62,7 @@ nav:
   - fields.md
   - modeling.md
   - engine.md
-  - filtering.md
+  - querying.md
   - raw_query_usage.md
   - usage_fastapi.md
   - usage_pydantic.md
