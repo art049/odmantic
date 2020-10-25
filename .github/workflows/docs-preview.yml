@@ -1,0 +1,47 @@
+name: docs-preview
+on:
+  - pull_request
+
+jobs:
+  deploy-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          lfs: true
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Cache environment
+        uses: actions/cache@v2
+        with:
+          path: .venv
+          key: doc-${{ hashFiles('pyproject.toml') }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install poetry
+          poetry config --local virtualenvs.in-project true
+          poetry install
+
+      - name: Build documentation
+        run: poetry run mkdocs build -f ./docs/mkdocs.yml
+
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v1.1
+        id: deployment
+        with:
+          publish-dir: "./site"
+          production-branch: master
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "#${{ github.event.number }}: ${{ github.event.pull_request.title }}"
+          enable-pull-request-comment: true
+          enable-commit-comment: true
+          overwrites-pull-request-comment: true
+          alias: docs-preview-${{ github.event.number }}
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 1
