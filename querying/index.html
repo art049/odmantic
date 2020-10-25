@@ -8,7 +8,7 @@
 <meta content="AsyncIO MongoDB ODM (Object Document Mapper) using python type hinting" name="description"/>
 <link href="../assets/images/favicon.png" rel="shortcut icon"/>
 <meta content="mkdocs-1.1.2, mkdocs-material-6.1.0" name="generator"/>
-<title>Filtering - ODMantic</title>
+<title>Querying - ODMantic</title>
 <link href="../assets/stylesheets/main.bc7e593a.min.css" rel="stylesheet"/>
 <link href="../assets/stylesheets/palette.ab28b872.min.css" rel="stylesheet"/>
 <meta content="#8bc34b" name="theme-color"/>
@@ -25,7 +25,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#filtering">
+<a class="md-skip" href="#querying">
           Skip to content
         </a>
 </div>
@@ -46,7 +46,7 @@
           </span>
 <span class="md-header-nav__topic md-ellipsis">
             
-              Filtering
+              Querying
             
           </span>
 </div>
@@ -138,11 +138,11 @@
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
 <label class="md-nav__link md-nav__link--active" for="__toc">
-        Filtering
+        Querying
         <span class="md-nav__icon md-icon"></span>
 </label>
 <a class="md-nav__link md-nav__link--active" href="./">
-      Filtering
+      Querying
     </a>
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
 <label class="md-nav__title" for="__toc">
@@ -150,6 +150,12 @@
       Table of contents
     </label>
 <ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#filtering">
+    Filtering
+  </a>
+<nav aria-label="Filtering" class="md-nav">
+<ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#comparison-operators">
     Comparison operators
@@ -236,6 +242,38 @@
 <a class="md-nav__link" href="#embedded-documents-filters">
     Embedded documents filters
   </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sorting">
+    Sorting
+  </a>
+<nav aria-label="Sorting" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ascending">
+    Ascending
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#descending">
+    Descending
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sort-on-multiple-fields">
+    Sort on multiple fields
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#embedded-model-field-as-a-sort-key">
+    Embedded model field as a sort key
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -335,6 +373,12 @@
     </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
+<a class="md-nav__link" href="#filtering">
+    Filtering
+  </a>
+<nav aria-label="Filtering" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
 <a class="md-nav__link" href="#comparison-operators">
     Comparison operators
   </a>
@@ -423,21 +467,54 @@
 </li>
 </ul>
 </nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sorting">
+    Sorting
+  </a>
+<nav aria-label="Sorting" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ascending">
+    Ascending
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#descending">
+    Descending
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sort-on-multiple-fields">
+    Sort on multiple fields
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#embedded-model-field-as-a-sort-key">
+    Embedded model field as a sort key
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
 </div>
 </div>
 </div>
 <div class="md-content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/art049/odmantic/edit/master/docs/filtering.md" title="Edit this page">
+<a class="md-content__button md-icon" href="https://github.com/art049/odmantic/edit/master/docs/querying.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1 id="filtering">Filtering<a class="headerlink" href="#filtering" title="Permanent link">¶</a></h1>
+<h1 id="querying">Querying<a class="headerlink" href="#querying" title="Permanent link">¶</a></h1>
+<h2 id="filtering">Filtering<a class="headerlink" href="#filtering" title="Permanent link">¶</a></h2>
 <p>ODMantic uses <a href="../api_reference/query/#odmantic.query.QueryExpression">QueryExpression</a> objects to handle filter
 expressions. These expressions can be built from the comparison operators. It's then
 possible to combine multiple expressions using the logical operators. To support the
 wide variety of operators provided by MongoDB, it's possible as well to define the
 filter 'manually'.</p>
-<h2 id="comparison-operators">Comparison operators<a class="headerlink" href="#comparison-operators" title="Permanent link">¶</a></h2>
+<h3 id="comparison-operators">Comparison operators<a class="headerlink" href="#comparison-operators" title="Permanent link">¶</a></h3>
 <p>There are multiple ways of building <a href="../api_reference/query/#odmantic.query.QueryExpression">QueryExpression</a>
 objects with comparisons operators:</p>
 <ol>
@@ -479,7 +556,7 @@ objects with comparisons operators:</p>
 <p>Since there is currently not any type checker plugin, the third usage might create
 some errors with type checkers.</p>
 </div>
-<h3 id="equal">Equal<a class="headerlink" href="#equal" title="Permanent link">¶</a></h3>
+<h4 id="equal">Equal<a class="headerlink" href="#equal" title="Permanent link">¶</a></h4>
 <p>Filter the trees named "Spruce":
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
@@ -568,7 +645,7 @@ Equivalent raw MongoDB filter:
 </details>
 <p><a href="../fields/#enum-fields">More details</a> about Enum fields.</p>
 </div>
-<h3 id="not-equal">Not Equal<a class="headerlink" href="#not-equal" title="Permanent link">¶</a></h3>
+<h4 id="not-equal">Not Equal<a class="headerlink" href="#not-equal" title="Permanent link">¶</a></h4>
 <p>Filter the trees that are <strong>not</strong> named "Spruce":
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
@@ -602,7 +679,7 @@ Equivalent raw MongoDB filter:
 Equivalent raw MongoDB filter:
 <div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">"name"</span><span class="p">:</span> <span class="p">{</span><span class="nt">"$ne"</span><span class="p">:</span> <span class="s2">"Spruce"</span><span class="p">}}</span>
 </code></pre></div></p>
-<h3 id="less-than-or-equal-to">Less than (or equal to)<a class="headerlink" href="#less-than-or-equal-to" title="Permanent link">¶</a></h3>
+<h4 id="less-than-or-equal-to">Less than (or equal to)<a class="headerlink" href="#less-than-or-equal-to" title="Permanent link">¶</a></h4>
 <p>Filter the trees that have a size that is less than (or equal to) 2:
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
@@ -653,7 +730,7 @@ Equivalent raw MongoDB filter (less than):
 Equivalent raw MongoDB filter (less than or equal to):
 <div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">"average_size"</span><span class="p">:</span> <span class="p">{</span><span class="nt">"$lte"</span><span class="p">:</span> <span class="mi">2</span><span class="p">}}</span>
 </code></pre></div></p>
-<h3 id="greater-than-or-equal-to">Greater than (or equal to)<a class="headerlink" href="#greater-than-or-equal-to" title="Permanent link">¶</a></h3>
+<h4 id="greater-than-or-equal-to">Greater than (or equal to)<a class="headerlink" href="#greater-than-or-equal-to" title="Permanent link">¶</a></h4>
 <p>Filter the trees having a size that is greater than (or equal to) 2:
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
@@ -704,7 +781,7 @@ Equivalent raw MongoDB filter (greater than):
 Equivalent raw MongoDB filter (greater than or equal to):
 <div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">"average_size"</span><span class="p">:</span> <span class="p">{</span><span class="nt">"$gte"</span><span class="p">:</span> <span class="mi">2</span><span class="p">}}</span>
 </code></pre></div></p>
-<h3 id="included-in">Included in<a class="headerlink" href="#included-in" title="Permanent link">¶</a></h3>
+<h4 id="included-in">Included in<a class="headerlink" href="#included-in" title="Permanent link">¶</a></h4>
 <p>Filter the trees named either "Spruce" or "Pine":
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
@@ -734,7 +811,7 @@ Equivalent raw MongoDB filter (greater than or equal to):
 Equivalent raw MongoDB filter:
 <div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">"name"</span><span class="p">:</span> <span class="p">{</span><span class="nt">"$in"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"Spruce"</span><span class="p">,</span> <span class="s2">"Pine"</span><span class="p">]}}</span>
 </code></pre></div></p>
-<h3 id="not-included-in">Not included in<a class="headerlink" href="#not-included-in" title="Permanent link">¶</a></h3>
+<h4 id="not-included-in">Not included in<a class="headerlink" href="#not-included-in" title="Permanent link">¶</a></h4>
 <p>Filter the trees neither named "Spruce" nor "Pine":
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
@@ -764,8 +841,8 @@ Equivalent raw MongoDB filter:
 <p>Equivalent raw MongoDB filter:
 <div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">"name"</span><span class="p">:</span> <span class="p">{</span><span class="nt">"$nin"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"Spruce"</span><span class="p">,</span> <span class="s2">"Pine"</span><span class="p">]}}</span>
 </code></pre></div></p>
-<h2 id="evaluation-operators">Evaluation operators<a class="headerlink" href="#evaluation-operators" title="Permanent link">¶</a></h2>
-<h3 id="match-regex">Match (Regex)<a class="headerlink" href="#match-regex" title="Permanent link">¶</a></h3>
+<h3 id="evaluation-operators">Evaluation operators<a class="headerlink" href="#evaluation-operators" title="Permanent link">¶</a></h3>
+<h4 id="match-regex">Match (Regex)<a class="headerlink" href="#match-regex" title="Permanent link">¶</a></h4>
 <p>Filter the trees with a name starting with 'Spruce':
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
@@ -793,7 +870,7 @@ Equivalent raw MongoDB filter:
 <p>Equivalent raw MongoDB filter:
 <div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">"name"</span><span class="p">:</span> <span class="p">{</span><span class="nt">"$regex"</span><span class="p">:</span> <span class="s2">"^Spruce"</span><span class="p">}}</span>
 </code></pre></div></p>
-<h2 id="logical-operators">Logical operators<a class="headerlink" href="#logical-operators" title="Permanent link">¶</a></h2>
+<h3 id="logical-operators">Logical operators<a class="headerlink" href="#logical-operators" title="Permanent link">¶</a></h3>
 <p>There are two ways of combining <a href="../api_reference/query/#odmantic.query.QueryExpression">QueryExpression</a>
 objects with logical operators:</p>
 <ol>
@@ -803,16 +880,21 @@ objects with logical operators:</p>
 <dd><code>&amp;</code>, <code>|</code></dd>
 </dl>
 </li>
-<li>
-<p>Using the functions provided by the <code>odmantic.query</code> module</p>
-<ul>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When using those operators make sure to correctly bracket the expressions
+to avoid python operator precedence issues.</p>
+</div>
+<ol>
+<li>Using the functions provided by the <code>odmantic.query</code> module<ul>
 <li><a href="../api_reference/query/#odmantic.query.and_">query.and_</a></li>
 <li><a href="../api_reference/query/#odmantic.query.or_">query.or_</a></li>
 <li><a href="../api_reference/query/#odmantic.query.nor_">query.nor_</a></li>
 </ul>
 </li>
 </ol>
-<h3 id="and">And<a class="headerlink" href="#and" title="Permanent link">¶</a></h3>
+<h4 id="and">And<a class="headerlink" href="#and" title="Permanent link">¶</a></h4>
 <p>Filter the trees named Spruce (<strong>AND</strong>) with a size less than 2:
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
@@ -863,7 +945,7 @@ Equivalent raw MongoDB filter:
 <a href="../api_reference/engine/#odmantic.engine.AIOEngine.count">count</a>, you can specify multiple queries as
 positional arguments and those will be implicitly combined with the <code>AND</code> operator.</p>
 </div>
-<h3 id="or">Or<a class="headerlink" href="#or" title="Permanent link">¶</a></h3>
+<h4 id="or">Or<a class="headerlink" href="#or" title="Permanent link">¶</a></h4>
 <p>Filter the trees named Spruce <strong>OR</strong> the trees with a size greater than 2:</p>
 <p><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
@@ -912,7 +994,7 @@ Equivalent raw MongoDB filter:
   <span class="p">]</span>
 <span class="p">}</span>
 </code></pre></div></p>
-<h3 id="nor">Nor<a class="headerlink" href="#nor" title="Permanent link">¶</a></h3>
+<h4 id="nor">Nor<a class="headerlink" href="#nor" title="Permanent link">¶</a></h4>
 <p>Filter the trees neither named Spruce <strong>NOR</strong> bigger than 2 (size):
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
@@ -972,14 +1054,14 @@ Equivalent raw MongoDB filter:
 an extra underscore to avoid overlapping with the python keywords.
 While it could've been possible to name the NOR operator query.nor, the extra underscore has been kept for consistency in the naming of the logical operators.</p>
 </div>
-<h2 id="manual-filtering">Manual filtering<a class="headerlink" href="#manual-filtering" title="Permanent link">¶</a></h2>
+<h3 id="manual-filtering">Manual filtering<a class="headerlink" href="#manual-filtering" title="Permanent link">¶</a></h3>
 <p>Raw MongoDB filter expressions can be used as well with the
 <a href="../api_reference/engine/#odmantic.engine.AIOEngine.find">find</a>, <a href="../api_reference/engine/#odmantic.engine.AIOEngine.find_one">find_one</a>
 or <a href="../api_reference/engine/#odmantic.engine.AIOEngine.count">count</a> methods.</p>
 <p>You can find more details about building raw query filters using the Model in the <a href="../raw_query_usage/">Raw
 query usage</a> section.</p>
-<h2 id="embedded-documents-filters">Embedded documents filters<a class="headerlink" href="#embedded-documents-filters" title="Permanent link">¶</a></h2>
-<p>It's possible to build filter based on the content of embedded documents.</p>
+<h3 id="embedded-documents-filters">Embedded documents filters<a class="headerlink" href="#embedded-documents-filters" title="Permanent link">¶</a></h3>
+<p>It's possible to build filter based on the content of embedded documents:</p>
 <p><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -1025,6 +1107,181 @@ Equivalent raw MongoDB filters:
 <div class="admonition warning">
 <p class="admonition-title">Filtering across References</p>
 <p>Currently, it is not possible to build filter based on referenced objects.</p>
+</div>
+<h2 id="sorting">Sorting<a class="headerlink" href="#sorting" title="Permanent link">¶</a></h2>
+<p>ODMantic uses <a href="../api_reference/query/#odmantic.query.SortExpression">SortExpression</a> objects to handle sort
+expressions.</p>
+<p>There are multiple ways of building <a href="../api_reference/query/#odmantic.query.SortExpression">SortExpression</a>
+objects:</p>
+<ol>
+<li>
+<p>Using implicit <code>Model</code> fields:</p>
+<div class="admonition example">
+<p class="admonition-title">Ascending sort</p>
+<p>To sort <code>Publisher</code> instances by <strong>ascending</strong> <code>Publisher.founded</code>:</p>
+<p><div class="highlight"><pre><span></span><code><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">Publisher</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">Publisher</span><span class="o">.</span><span class="n">founded</span><span class="p">)</span>
+</code></pre></div>
+This example refers to the code showcased in the <a href="..#define-your-first-model">Overview</a>.</p>
+</div>
+</li>
+<li>
+<p>Using the functions provided by the <code>odmantic.query</code> module</p>
+<ul>
+<li><a href="../api_reference/query/#odmantic.query.asc">query.asc</a></li>
+<li><a href="../api_reference/query/#odmantic.query.desc">query.desc</a></li>
+</ul>
+</li>
+<li>
+<p>Using methods of the model's field and the desired value</p>
+<ul>
+<li><code>field.asc</code></li>
+<li><code>field.desc</code></li>
+</ul>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Type checkers</p>
+<p>Since there is currently not any type checker plugin, the third usage might create
+some errors with type checkers.</p>
+</div>
+<h3 id="ascending">Ascending<a class="headerlink" href="#ascending" title="Permanent link">¶</a></h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span><span class="p">,</span> <span class="n">Model</span><span class="p">,</span> <span class="n">query</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">Tree</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">average_size</span><span class="p">:</span> <span class="nb">float</span>
+
+
+<span class="c1"># The following queries are equivalent,</span>
+<span class="c1"># they will sort `Tree` by ascending `average_size`</span>
+
+<span class="hll"><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">Tree</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">Tree</span><span class="o">.</span><span class="n">average_size</span><span class="p">)</span>
+</span><span class="hll"><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">Tree</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">Tree</span><span class="o">.</span><span class="n">average_size</span><span class="o">.</span><span class="n">asc</span><span class="p">())</span>
+</span><span class="hll"><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">Tree</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">query</span><span class="o">.</span><span class="n">asc</span><span class="p">(</span><span class="n">Tree</span><span class="o">.</span><span class="n">average_size</span><span class="p">))</span>
+</span></code></pre></div>
+</td></tr></table>
+<h3 id="descending">Descending<a class="headerlink" href="#descending" title="Permanent link">¶</a></h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span><span class="p">,</span> <span class="n">Model</span><span class="p">,</span> <span class="n">query</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">Tree</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">average_size</span><span class="p">:</span> <span class="nb">float</span>
+
+
+<span class="c1"># The following queries are equivalent,</span>
+<span class="c1"># they will sort `Tree` by descending `average_size`</span>
+
+<span class="hll"><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">Tree</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">Tree</span><span class="o">.</span><span class="n">average_size</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span>
+</span><span class="hll"><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">Tree</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">query</span><span class="o">.</span><span class="n">desc</span><span class="p">(</span><span class="n">Tree</span><span class="o">.</span><span class="n">average_size</span><span class="p">))</span>
+</span></code></pre></div>
+</td></tr></table>
+<h3 id="sort-on-multiple-fields">Sort on multiple fields<a class="headerlink" href="#sort-on-multiple-fields" title="Permanent link">¶</a></h3>
+<p>We can pass a <code>tuple</code> to the <code>sort</code> kwarg, this will enable us to make a more complex sort query:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span><span class="p">,</span> <span class="n">Model</span><span class="p">,</span> <span class="n">query</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">Tree</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">average_size</span><span class="p">:</span> <span class="nb">float</span>
+
+
+<span class="c1"># This query will first sort on ascending `average_size`, then</span>
+<span class="c1"># on descending `name` when `average_size` is the same</span>
+
+<span class="hll"><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">Tree</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="p">(</span><span class="n">Tree</span><span class="o">.</span><span class="n">average_size</span><span class="p">,</span> <span class="n">Tree</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">desc</span><span class="p">()))</span>
+</span></code></pre></div>
+</td></tr></table>
+<h3 id="embedded-model-field-as-a-sort-key">Embedded model field as a sort key<a class="headerlink" href="#embedded-model-field-as-a-sort-key" title="Permanent link">¶</a></h3>
+<p>We can sort instances based on the content of their embedded models.</p>
+<div class="admonition example">
+<p class="admonition-title">Sorting by an embedded model field</p>
+<p>We can sort the countries by descending order of the population of their capital
+city:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span><span class="p">,</span> <span class="n">EmbeddedModel</span><span class="p">,</span> <span class="n">Model</span>
+<span class="kn">from</span> <span class="nn">odmantic.query</span> <span class="kn">import</span> <span class="n">desc</span>
+
+
+<span class="hll"><span class="k">class</span> <span class="nc">CapitalCity</span><span class="p">(</span><span class="n">EmbeddedModel</span><span class="p">):</span>
+</span>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">population</span><span class="p">:</span> <span class="nb">int</span>
+
+
+<span class="k">class</span> <span class="nc">Country</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">currency</span><span class="p">:</span> <span class="nb">str</span>
+<span class="hll">    <span class="n">capital_city</span><span class="p">:</span> <span class="n">CapitalCity</span>
+</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">()</span>
+<span class="hll"><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">Country</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">desc</span><span class="p">(</span><span class="n">Country</span><span class="o">.</span><span class="n">capital_city</span><span class="o">.</span><span class="n">population</span><span class="p">))</span>
+</span></code></pre></div>
+</td></tr></table>
 </div>
 </article>
 </div>

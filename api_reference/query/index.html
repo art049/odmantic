@@ -136,8 +136,8 @@
     </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../filtering/">
-      Filtering
+<a class="md-nav__link" href="../../querying/">
+      Querying
     </a>
 </li>
 <li class="md-nav__item">
@@ -265,6 +265,26 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#odmantic.query.match">
     match()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sort-helpers">
+    Sort helpers
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#odmantic.query.SortExpression">
+    SortExpression
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#odmantic.query.asc">
+    asc()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#odmantic.query.desc">
+    desc()
   </a>
 </li>
 </ul>
@@ -395,6 +415,26 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#odmantic.query.match">
     match()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sort-helpers">
+    Sort helpers
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#odmantic.query.SortExpression">
+    SortExpression
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#odmantic.query.asc">
+    asc()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#odmantic.query.desc">
+    desc()
   </a>
 </li>
 </ul>
@@ -645,6 +685,53 @@ odmantic.query.match<span class="p">(</span><span class="n">field</span><span cl
     <span class="k">else</span><span class="p">:</span>
         <span class="n">r</span> <span class="o">=</span> <span class="n">pattern</span>
     <span class="k">return</span> <span class="n">QueryExpression</span><span class="p">({</span><span class="o">+</span><span class="n">field</span><span class="p">:</span> <span class="n">r</span><span class="p">})</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+<h2 id="sort-helpers">Sort helpers<a class="headerlink" href="#sort-helpers" title="Permanent link">¶</a></h2>
+<div class="doc doc-object doc-class">
+<h2 class="doc doc-heading" id="odmantic.query.SortExpression">
+<code>odmantic.query.SortExpression</code>
+<a class="headerlink" href="#odmantic.query.SortExpression" title="Permanent link">¶</a></h2>
+<div class="doc doc-contents first">
+<p>Base object used to build sort queries.</p>
+<div class="doc doc-children">
+</div>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h2 class="doc doc-heading" id="odmantic.query.asc">
+<code class="highlight language-python">
+odmantic.query.asc<span class="p">(</span><span class="n">field</span><span class="p">)</span> </code>
+<a class="headerlink" href="#odmantic.query.asc" title="Permanent link">¶</a></h2>
+<div class="doc doc-contents first">
+<p>Sort by ascending <code>field</code>.</p>
+<details class="quote">
+<summary>Source code in <code>odmantic/query.py</code></summary>
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">asc</span><span class="p">(</span><span class="n">field</span><span class="p">:</span> <span class="n">FieldProxyAny</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SortExpression</span><span class="p">:</span>
+    <span class="sd">"""Sort by ascending `field`."""</span>
+    <span class="k">return</span> <span class="n">_build_sort_expression</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre>
+</div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h2 class="doc doc-heading" id="odmantic.query.desc">
+<code class="highlight language-python">
+odmantic.query.desc<span class="p">(</span><span class="n">field</span><span class="p">)</span> </code>
+<a class="headerlink" href="#odmantic.query.desc" title="Permanent link">¶</a></h2>
+<div class="doc doc-contents first">
+<p>Sort by descending <code>field</code>.</p>
+<details class="quote">
+<summary>Source code in <code>odmantic/query.py</code></summary>
+<div class="highlight">
+<pre><span></span><code><span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="n">field</span><span class="p">:</span> <span class="n">FieldProxyAny</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SortExpression</span><span class="p">:</span>
+    <span class="sd">"""Sort by descending `field`."""</span>
+    <span class="k">return</span> <span class="n">_build_sort_expression</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 </code></pre>
 </div>
 </details>

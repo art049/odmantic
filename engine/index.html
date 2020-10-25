@@ -170,6 +170,20 @@
 <a class="md-nav__link" href="#fetch-multiple-instances">
     Fetch multiple instances
   </a>
+<nav aria-label="Fetch multiple instances" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#usage-as-an-async-iterator">
+    Usage as an async iterator
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#usage-as-an-awaitable">
+    Usage as an awaitable
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#count-instances">
@@ -193,8 +207,8 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../filtering/">
-      Filtering
+<a class="md-nav__link" href="../querying/">
+      Querying
     </a>
 </li>
 <li class="md-nav__item">
@@ -316,6 +330,20 @@
 <a class="md-nav__link" href="#fetch-multiple-instances">
     Fetch multiple instances
   </a>
+<nav aria-label="Fetch multiple instances" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#usage-as-an-async-iterator">
+    Usage as an async iterator
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#usage-as-an-awaitable">
+    Usage as an awaitable
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#count-instances">
@@ -517,12 +545,20 @@ specified criteriums or <code>None</code> if no instances have been found.</p>
 <span class="c1">#&gt; None</span>
 </code></pre></div>
 </td></tr></table>
+<div class="admonition tip">
+<p class="admonition-title">Fetch using <code>sort</code></p>
+<p>We can use the <code>sort</code> parameter to fetch the <code>Player</code> instance with
+the first <code>name</code> in ascending order:
+<div class="highlight"><pre><span></span><code><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">Player</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">Player</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</code></pre></div>
+Find out more on <code>sort</code> in <a href="../querying/#sorting">the dedicated section</a>.</p>
+</div>
 <h3 id="fetch-multiple-instances">Fetch multiple instances<a class="headerlink" href="#fetch-multiple-instances" title="Permanent link">¶</a></h3>
 <p>To get more than one instance from the database at once, you can use the
 <a href="../api_reference/engine/#odmantic.engine.AIOEngine.find">AIOEngine.find</a> method.</p>
 <p>This method will return an <a href="../api_reference/engine/#odmantic.engine.AIOCursor">AIOCursor</a> object, that can be
 used in two different ways.</p>
-<h4>Usage as an async iterator</h4>
+<h4 id="usage-as-an-async-iterator">Usage as an async iterator<a class="headerlink" href="#usage-as-an-async-iterator" title="Permanent link">¶</a></h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -554,7 +590,15 @@ used in two different ways.</p>
 <span class="c1">#&gt; Player(id=ObjectId(...), name='Serral', game='Starcraft')</span>
 </code></pre></div>
 </td></tr></table>
-<h4>Usage as an awaitable</h4>
+<div class="admonition tip">
+<p class="admonition-title">Ordering instances</p>
+<p>The <code>sort</code> parameter allows to order the query in ascending or descending order on
+a single or multiple fields.
+<div class="highlight"><pre><span></span><code><span class="n">engine</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">Player</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="p">(</span><span class="n">Player</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">Player</span><span class="o">.</span><span class="n">game</span><span class="o">.</span><span class="n">desc</span><span class="p">()))</span>
+</code></pre></div>
+Find out more on <code>sort</code> in <a href="../querying/#sorting">the dedicated section</a>.</p>
+</div>
+<h4 id="usage-as-an-awaitable">Usage as an awaitable<a class="headerlink" href="#usage-as-an-awaitable" title="Permanent link">¶</a></h4>
 <p>Even if the async iterator usage should be preferred, in some cases it might be required
 to gather all the documents from the database before processing them.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
@@ -833,13 +877,13 @@ behaviors.</p>
               </div>
 </div>
 </a>
-<a class="md-footer-nav__link md-footer-nav__link--next" href="../filtering/" rel="next">
+<a class="md-footer-nav__link md-footer-nav__link--next" href="../querying/" rel="next">
 <div class="md-footer-nav__title">
 <div class="md-ellipsis">
 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Filtering
+                Querying
               </div>
 </div>
 <div class="md-footer-nav__button md-icon">

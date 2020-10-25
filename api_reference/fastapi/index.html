@@ -248,8 +248,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../filtering/" class="md-nav__link">
-      Filtering
+    <a href="../../querying/" class="md-nav__link">
+      Querying
     </a>
   </li>
 
@@ -554,6 +554,11 @@
       <a class="headerlink" href="#odmantic.fastapi.AIOEngineDependency" title="Permanent link">&para;</a></h2>
 <div class="doc doc-contents first">
 <p>AIOEngine FastAPI Dependency.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Deprecated since v0.2.0, <a href="https://art049.github.io/odmantic/usage_fastapi/#building-the-engine">more
+details</a>.</p>
+</div>
 <p>Internally caches the AIOEngine instance to avoid creating a new client on each
 request.</p>
 <p>Sample usage:
@@ -627,6 +632,12 @@ __init__<span class="p">(</span><span class="bp">self</span><span class="p">,</s
     <span class="bp">self</span><span class="o">.</span><span class="n">mongo_uri</span> <span class="o">=</span> <span class="n">mongo_uri</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">AIOEngine</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+        <span class="s2">"the AIOEngineDependency object is deprecated, see "</span>
+        <span class="s2">"https://art049.github.io/odmantic/usage_fastapi/#building-the-engine "</span>
+        <span class="s2">"for more details."</span><span class="p">,</span>
+        <span class="ne">DeprecationWarning</span><span class="p">,</span>
+    <span class="p">)</span>
 </code></pre>
 </div>
 </details>

@@ -136,8 +136,8 @@
     </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../filtering/">
-      Filtering
+<a class="md-nav__link" href="../../querying/">
+      Querying
     </a>
 </li>
 <li class="md-nav__item">
@@ -617,7 +617,7 @@ delete<span class="p">(</span><span class="bp">self</span><span class="p">,</spa
 <div class="doc doc-object doc-method">
 <h3 class="doc doc-heading" id="odmantic.engine.AIOEngine.find">
 <code class="highlight language-python">
-find<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> </code>
+find<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> </code>
 <a class="headerlink" href="#odmantic.engine.AIOEngine.find" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Search for Model instances matching the query filter provided</p>
@@ -647,6 +647,14 @@ find<span class="p">(</span><span class="bp">self</span><span class="p">,</span>
 <p>query filter to apply</p>
 </td>
 <td><code>()</code></td>
+</tr>
+<tr>
+<td><code>sort</code></td>
+<td><code>Optional[Any]</code></td>
+<td>
+<p>sort expression</p>
+</td>
+<td><code>None</code></td>
 </tr>
 <tr>
 <td><code>limit</code></td>
@@ -693,6 +701,7 @@ find<span class="p">(</span><span class="bp">self</span><span class="p">,</span>
     <span class="o">*</span><span class="n">queries</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
         <span class="n">QueryExpression</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="nb">bool</span>
     <span class="p">],</span>  <span class="c1"># bool: allow using binary operators with mypy</span>
+    <span class="n">sort</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">skip</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AIOCursor</span><span class="p">[</span><span class="n">ModelType</span><span class="p">]:</span>
@@ -701,6 +710,7 @@ find<span class="p">(</span><span class="bp">self</span><span class="p">,</span>
 <span class="sd">    Args:</span>
 <span class="sd">        model: model to perform the operation on</span>
 <span class="sd">        queries: query filter to apply</span>
+<span class="sd">        sort: sort expression</span>
 <span class="sd">        limit: maximum number of instance fetched</span>
 <span class="sd">        skip: number of document to skip</span>
 
@@ -715,6 +725,7 @@ find<span class="p">(</span><span class="bp">self</span><span class="p">,</span>
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">lenient_issubclass</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">Model</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Can only call find with a Model class"</span><span class="p">)</span>
+    <span class="n">sort_expression</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_sort_argument</span><span class="p">(</span><span class="n">sort</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">limit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">limit</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"limit has to be a strict positive value or None"</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">skip</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -722,6 +733,8 @@ find<span class="p">(</span><span class="bp">self</span><span class="p">,</span>
     <span class="n">query</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="o">.</span><span class="n">_build_query</span><span class="p">(</span><span class="o">*</span><span class="n">queries</span><span class="p">)</span>
     <span class="n">collection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
     <span class="n">pipeline</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">"$match"</span><span class="p">:</span> <span class="n">query</span><span class="p">}]</span>
+    <span class="k">if</span> <span class="n">sort_expression</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">pipeline</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"$sort"</span><span class="p">:</span> <span class="n">sort_expression</span><span class="p">})</span>
     <span class="k">if</span> <span class="n">limit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">limit</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">pipeline</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"$limit"</span><span class="p">:</span> <span class="n">limit</span><span class="p">})</span>
     <span class="k">if</span> <span class="n">skip</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -737,7 +750,7 @@ find<span class="p">(</span><span class="bp">self</span><span class="p">,</span>
 <div class="doc doc-object doc-method">
 <h3 class="doc doc-heading" id="odmantic.engine.AIOEngine.find_one">
 <code class="highlight language-python">
-find_one<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">)</span> </code>
+find_one<span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> </code>
 <span class="doc doc-properties">
 <small class="doc doc-property doc-property-async">
 <code>async</code>
@@ -773,6 +786,14 @@ find_one<span class="p">(</span><span class="bp">self</span><span class="p">,</s
 </td>
 <td><code>()</code></td>
 </tr>
+<tr>
+<td><code>sort</code></td>
+<td><code>Optional[Any]</code></td>
+<td>
+<p>sort expression</p>
+</td>
+<td><code>None</code></td>
+</tr>
 </tbody>
 </table>
 <p><strong>Returns:</strong></p>
@@ -802,12 +823,14 @@ find_one<span class="p">(</span><span class="bp">self</span><span class="p">,</s
     <span class="o">*</span><span class="n">queries</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
         <span class="n">QueryExpression</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="nb">bool</span>
     <span class="p">],</span>  <span class="c1"># bool: allow using binary operators w/o plugin,</span>
+    <span class="n">sort</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ModelType</span><span class="p">]:</span>
     <span class="sd">"""Search for a Model instance matching the query filter provided</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        model: model to perform the operation on</span>
 <span class="sd">        queries: query filter to apply</span>
+<span class="sd">        sort: sort expression</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        the fetched instance if found otherwise None</span>
@@ -818,7 +841,7 @@ find_one<span class="p">(</span><span class="bp">self</span><span class="p">,</s
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">lenient_issubclass</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">Model</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Can only call find_one with a Model class"</span><span class="p">)</span>
-    <span class="n">results</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="k">return</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>

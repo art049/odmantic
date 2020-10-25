@@ -136,8 +136,8 @@
     </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../filtering/">
-      Filtering
+<a class="md-nav__link" href="../querying/">
+      Querying
     </a>
 </li>
 <li class="md-nav__item">
@@ -167,8 +167,13 @@
 <nav aria-label="Example" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#using-the-engine-as-a-dependency">
-    Using the engine as a dependency
+<a class="md-nav__link" href="#defining-the-model">
+    Defining the model
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#building-the-engine">
+    Building the engine
   </a>
 </li>
 <li class="md-nav__item">
@@ -312,8 +317,13 @@
 <nav aria-label="Example" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#using-the-engine-as-a-dependency">
-    Using the engine as a dependency
+<a class="md-nav__link" href="#defining-the-model">
+    Defining the model
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#building-the-engine">
+    Building the engine
   </a>
 </li>
 <li class="md-nav__item">
@@ -423,19 +433,11 @@
 39
 40
 41
-42
-43
-44
-45
-46
-47
-48</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+42</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 
-<span class="kn">import</span> <span class="nn">uvicorn</span>
 <span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">HTTPException</span>
 
 <span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span><span class="p">,</span> <span class="n">Model</span><span class="p">,</span> <span class="n">ObjectId</span>
-<span class="kn">from</span> <span class="nn">odmantic.fastapi</span> <span class="kn">import</span> <span class="n">AIOEngineDependency</span>
 
 
 <span class="k">class</span> <span class="nc">Tree</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
@@ -446,42 +448,39 @@
 
 <span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">()</span>
 
-<span class="n">EngineD</span> <span class="o">=</span> <span class="n">AIOEngineDependency</span><span class="p">()</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">()</span>
 
 
 <span class="nd">@app</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">"/trees/"</span><span class="p">,</span> <span class="n">response_model</span><span class="o">=</span><span class="n">Tree</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span> <span class="nf">create_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">:</span> <span class="n">Tree</span><span class="p">,</span> <span class="n">engine</span><span class="p">:</span> <span class="n">AIOEngine</span> <span class="o">=</span> <span class="n">EngineD</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">create_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">:</span> <span class="n">Tree</span><span class="p">):</span>
     <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tree</span>
 
 
 <span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/trees/"</span><span class="p">,</span> <span class="n">response_model</span><span class="o">=</span><span class="n">List</span><span class="p">[</span><span class="n">Tree</span><span class="p">])</span>
-<span class="k">async</span> <span class="k">def</span> <span class="nf">get_trees</span><span class="p">(</span><span class="n">engine</span><span class="p">:</span> <span class="n">AIOEngine</span> <span class="o">=</span> <span class="n">EngineD</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">get_trees</span><span class="p">():</span>
     <span class="n">trees</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">Tree</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">trees</span>
 
 
 <span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/trees/count"</span><span class="p">,</span> <span class="n">response_model</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span> <span class="nf">count_trees</span><span class="p">(</span><span class="n">engine</span><span class="p">:</span> <span class="n">AIOEngine</span> <span class="o">=</span> <span class="n">EngineD</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">count_trees</span><span class="p">():</span>
     <span class="n">count</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">Tree</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">count</span>
 
 
 <span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/trees/</span><span class="si">{id}</span><span class="s2">"</span><span class="p">,</span> <span class="n">response_model</span><span class="o">=</span><span class="n">Tree</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span> <span class="nf">get_tree_by_id</span><span class="p">(</span><span class="nb">id</span><span class="p">:</span> <span class="n">ObjectId</span><span class="p">,</span> <span class="n">engine</span><span class="p">:</span> <span class="n">AIOEngine</span> <span class="o">=</span> <span class="n">EngineD</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">get_tree_by_id</span><span class="p">(</span><span class="nb">id</span><span class="p">:</span> <span class="n">ObjectId</span><span class="p">):</span>
     <span class="n">tree</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">Tree</span><span class="p">,</span> <span class="n">Tree</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">tree</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tree</span>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
-    <span class="n">uvicorn</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s2">"localhost"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8080</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-<p>This script can be run directly:</p>
-<div class="highlight"><pre><span></span><code><span class="n">python3</span> <span class="n">script</span><span class="o">.</span><span class="n">py</span>
-</code></pre></div>
+<p>You can then start the application. For example if you saved the file above in a file
+named <code>tree_api.py</code>:
+<div class="highlight"><pre><span></span><code><span class="n">uvicorn</span> <span class="n">tree_api</span><span class="p">:</span><span class="n">app</span>
+</code></pre></div></p>
 <p>Uvicorn should start serving the API locally:</p>
 <div class="highlight"><pre><span></span><code>INFO:     Started server process [21429]
 INFO:     Waiting for application startup.
@@ -492,39 +491,61 @@ INFO:     Uvicorn running on http://localhost:8080 (Press CTRL+C to quit)
 at <a href="http://localhost:8080/docs" target="blank_">http://localhost:8080/docs</a>.</p>
 <p><img align="left" alt="Swagger for the created Tree API" src="../img/usage_fastapi_swagger.png"/></p>
 <p>We'll now dive in the details of this example.</p>
-<h3 id="using-the-engine-as-a-dependency">Using the engine as a dependency<a class="headerlink" href="#using-the-engine-as-a-dependency" title="Permanent link">¶</a></h3>
-<p>After having defined the model, we create the
-<a href="../api_reference/fastapi/#odmantic.fastapi.AIOEngineDependency">AIOEngineDependency</a>:</p>
-<div class="highlight"><pre><span></span><code><span class="n">EngineD</span> <span class="o">=</span> <span class="n">AIOEngineDependency</span><span class="p">()</span>
+<h3 id="defining-the-model">Defining the model<a class="headerlink" href="#defining-the-model" title="Permanent link">¶</a></h3>
+<p>First, we create our <code>Tree</code> model.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Tree</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">average_size</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">discovery_year</span><span class="p">:</span> <span class="nb">int</span>
 </code></pre></div>
+<p>This describes our <code>Tree</code> instances structure both for JSON serialization and for the
+storage in the MongoDB collection.</p>
+<h3 id="building-the-engine">Building the engine<a class="headerlink" href="#building-the-engine" title="Permanent link">¶</a></h3>
+<p>After having defined the model, we create the <a href="../api_reference/engine/#odmantic.engine.AIOEngine">AIOEngine</a>
+object. This object will be responsible for performing database operations.</p>
+<div class="highlight"><pre><span></span><code><span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">()</span>
+</code></pre></div>
+<p>It's possible as well to build the engine with custom parameters (mongo URI,
+database name). See <a href="../engine/#creating-the-engine">this section</a> for more details.</p>
 <div class="admonition tip">
-<p class="admonition-title">Custom AIOEngine parameters</p>
-<p>It's possible as well to build the dependency with custom parameters (mongo URI,
-database name).</p>
-<p>See <a href="../api_reference/fastapi/#odmantic.fastapi.AIOEngineDependency">this section</a> of the API Reference for
- more details.</p>
+<p class="admonition-title">Running the python file directly</p>
+<p>If you need to execute the python file directly with the interpreter (to use a
+debugger for example), some extra steps will be required.</p>
+<p>Run <code>uvicorn</code> using the default event loop (if the file is called directly):
+<div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">asyncio</span>
+    <span class="kn">import</span> <span class="nn">uvicorn</span>
+    <span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">uvicorn</span><span class="o">.</span><span class="n">Config</span><span class="p">(</span><span class="n">app</span><span class="o">=</span><span class="n">app</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8080</span><span class="p">,</span> <span class="n">loop</span><span class="o">=</span><span class="n">loop</span><span class="p">)</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">uvicorn</span><span class="o">.</span><span class="n">Server</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+    <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">server</span><span class="o">.</span><span class="n">serve</span><span class="p">())</span>
+</code></pre></div></p>
+<details class="info"><summary><code>uvicorn.run</code> behavior with event loops (Advanced)</summary><p>The usual entrypoint <code>uvicorn.run(app)</code> for ASGI apps doesn't work because when
+called <code>uvicorn</code> will create and run a brand <strong>new</strong> event loop.</p>
+<p>Thus, the engine object will be bound to a different event loop that will not be
+running. In this case, you'll witness <code>&lt;Future pending&gt; attached to a different
+loop</code> errors because the app itself will be running in a different event loop
+than the engine's driver.</p>
+<p>Anyway, when running directly the app through the <code>uvicorn</code> CLI, the default
+event loop will be the one that will be running later, so no modifications are
+required.</p>
+</details>
 </div>
-<p>This <a href="https://fastapi.tiangolo.com/tutorial/dependencies/" target="blank_">FastAPI
-dependency</a>, will
-be used to pass the engine to the routes:</p>
-<div class="highlight"><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/example"</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span> <span class="nf">example</span><span class="p">(</span><span class="n">engine</span><span class="p">:</span> <span class="n">AIOEngine</span> <span class="o">=</span> <span class="n">EngineD</span><span class="p">):</span>
-    <span class="c1"># engine is an AIOEngine instance</span>
-    <span class="c1"># you can use it to find, save or delete instances</span>
-    <span class="o">...</span>
-</code></pre></div>
-<div class="admonition tip">
-<p class="admonition-title">Type annotation for the Engine dependency</p>
-<p>Even if it's not required to annotate the <code>engine</code> argument with its <code>AIOEngine</code>
-type, this will strongly help by enabling your IDE to autocomplete the methods and
-by making static type analysis possible with the <code>engine</code> object.</p>
+<div class="admonition warning">
+<p class="admonition-title">AIOEngineDependency deprecation (from v0.2.0)</p>
+<p>The <code>AIOEngineDependency</code> that was used to inject the engine in the API routes is
+now deprecated (it will be kept for few versions though).</p>
+<p>Using a global engine object should be preferred as it will dramatically reduce the
+required verbosity to use the engine in an endpoint.</p>
+<p>If you need to run your <code>app</code> directly from a python file, see the above <strong>Running the
+python file directly</strong> section.</p>
 </div>
 <h3 id="creating-a-tree">Creating a tree<a class="headerlink" href="#creating-a-tree" title="Permanent link">¶</a></h3>
 <p>The next step is to define a route enabling us to create a new tree. To that end, we
 create a <code>PUT</code> route with the path <code>/trees/</code>. This endpoint will receive a tree,
 persist it to the database and return the created object.</p>
 <p><div class="highlight"><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">"/trees/"</span><span class="p">,</span> <span class="n">response_model</span><span class="o">=</span><span class="n">Tree</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span> <span class="nf">create_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">:</span> <span class="n">Tree</span><span class="p">,</span> <span class="n">engine</span><span class="p">:</span> <span class="n">AIOEngine</span> <span class="o">=</span> <span class="n">EngineD</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">create_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">:</span> <span class="n">Tree</span><span class="p">):</span>
     <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tree</span>
 </code></pre></div>
@@ -691,7 +712,7 @@ mandatory but it is strongly advised as it helps FastAPI to generate the documen
 details</a>), this gives us directly the list of Tree
 instances that we can return directly:</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/trees/"</span><span class="p">,</span> <span class="n">response_model</span><span class="o">=</span><span class="n">List</span><span class="p">[</span><span class="n">Tree</span><span class="p">])</span>
-<span class="k">async</span> <span class="k">def</span> <span class="nf">get_trees</span><span class="p">(</span><span class="n">engine</span><span class="p">:</span> <span class="n">AIOEngine</span> <span class="o">=</span> <span class="n">EngineD</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">get_trees</span><span class="p">():</span>
     <span class="n">trees</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">Tree</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">trees</span>
 </code></pre></div>
@@ -769,7 +790,7 @@ arguments while calling the <a href="../api_reference/engine/#odmantic.engine.AI
 <a href="../api_reference/engine/#odmantic.engine.AIOEngine.count">AIOEngine.count</a> method without specifying any query
 parameters (to directly get the total count of instances).</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/trees/count"</span><span class="p">,</span> <span class="n">response_model</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span> <span class="nf">count_trees</span><span class="p">(</span><span class="n">engine</span><span class="p">:</span> <span class="n">AIOEngine</span> <span class="o">=</span> <span class="n">EngineD</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">count_trees</span><span class="p">():</span>
     <span class="n">count</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">Tree</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">count</span>
 </code></pre></div>
@@ -801,7 +822,7 @@ Output:
 </div>
 <h3 id="getting-a-tree-by-id">Getting a tree by <code>id</code><a class="headerlink" href="#getting-a-tree-by-id" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/trees/</span><span class="si">{id}</span><span class="s2">"</span><span class="p">,</span> <span class="n">response_model</span><span class="o">=</span><span class="n">Tree</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span> <span class="nf">get_tree_by_id</span><span class="p">(</span><span class="nb">id</span><span class="p">:</span> <span class="n">ObjectId</span><span class="p">,</span> <span class="n">engine</span><span class="p">:</span> <span class="n">AIOEngine</span> <span class="o">=</span> <span class="n">EngineD</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">get_tree_by_id</span><span class="p">(</span><span class="nb">id</span><span class="p">:</span> <span class="n">ObjectId</span><span class="p">,</span> <span class="p">):</span>
     <span class="n">tree</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">Tree</span><span class="p">,</span> <span class="n">Tree</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">tree</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
@@ -972,16 +993,10 @@ Output:
 29
 30
 31
-32
-33
-34
-35
-36
-37</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">uvicorn</span>
+32</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">uvicorn</span>
 <span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">HTTPException</span>
 
 <span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span><span class="p">,</span> <span class="n">Model</span><span class="p">,</span> <span class="n">ObjectId</span>
-<span class="kn">from</span> <span class="nn">odmantic.fastapi</span> <span class="kn">import</span> <span class="n">AIOEngineDependency</span>
 
 
 <span class="k">class</span> <span class="nc">Tree</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
@@ -992,11 +1007,11 @@ Output:
 
 <span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">()</span>
 
-<span class="n">EngineD</span> <span class="o">=</span> <span class="n">AIOEngineDependency</span><span class="p">()</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">()</span>
 
 
 <span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/trees/</span><span class="si">{id}</span><span class="s2">"</span><span class="p">,</span> <span class="n">response_model</span><span class="o">=</span><span class="n">Tree</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span> <span class="nf">get_tree_by_id</span><span class="p">(</span><span class="nb">id</span><span class="p">:</span> <span class="n">ObjectId</span><span class="p">,</span> <span class="n">engine</span><span class="p">:</span> <span class="n">AIOEngine</span> <span class="o">=</span> <span class="n">EngineD</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">get_tree_by_id</span><span class="p">(</span><span class="nb">id</span><span class="p">:</span> <span class="n">ObjectId</span><span class="p">):</span>
     <span class="n">tree</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">Tree</span><span class="p">,</span> <span class="n">Tree</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">tree</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
@@ -1004,17 +1019,13 @@ Output:
 
 
 <span class="hll"><span class="nd">@app</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s2">"/trees/</span><span class="si">{id}</span><span class="s2">"</span><span class="p">,</span> <span class="n">response_model</span><span class="o">=</span><span class="n">Tree</span><span class="p">)</span>
-</span><span class="hll"><span class="k">async</span> <span class="k">def</span> <span class="nf">delete_tree_by_id</span><span class="p">(</span><span class="nb">id</span><span class="p">:</span> <span class="n">ObjectId</span><span class="p">,</span> <span class="n">engine</span><span class="p">:</span> <span class="n">AIOEngine</span> <span class="o">=</span> <span class="n">EngineD</span><span class="p">):</span>
+</span><span class="hll"><span class="k">async</span> <span class="k">def</span> <span class="nf">delete_tree_by_id</span><span class="p">(</span><span class="nb">id</span><span class="p">:</span> <span class="n">ObjectId</span><span class="p">):</span>
 </span><span class="hll">    <span class="n">tree</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">Tree</span><span class="p">,</span> <span class="n">Tree</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">)</span>
 </span><span class="hll">    <span class="k">if</span> <span class="n">tree</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
 </span><span class="hll">        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
 </span><span class="hll">    <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
 </span><span class="hll">    <span class="k">return</span> <span class="n">tree</span>
-</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
-    <span class="n">uvicorn</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s2">"localhost"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8080</span><span class="p">)</span>
-</code></pre></div>
+</span></code></pre></div>
 </td></tr></table>
 <p>This new <code>DELETE</code> route is strongly inspired from the one used to <a href="#getting-a-tree-by-id">get a tree from its
 <code>id</code></a>.</p>
@@ -1125,23 +1136,13 @@ fields of a Tree instance:</p>
 42
 43
 44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+45</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 
 <span class="kn">import</span> <span class="nn">uvicorn</span>
 <span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">HTTPException</span>
 <span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
 
 <span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span><span class="p">,</span> <span class="n">Model</span><span class="p">,</span> <span class="n">ObjectId</span>
-<span class="kn">from</span> <span class="nn">odmantic.fastapi</span> <span class="kn">import</span> <span class="n">AIOEngineDependency</span>
 
 
 <span class="k">class</span> <span class="nc">Tree</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
@@ -1152,11 +1153,11 @@ fields of a Tree instance:</p>
 
 <span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">()</span>
 
-<span class="n">EngineD</span> <span class="o">=</span> <span class="n">AIOEngineDependency</span><span class="p">()</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">()</span>
 
 
 <span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/trees/</span><span class="si">{id}</span><span class="s2">"</span><span class="p">,</span> <span class="n">response_model</span><span class="o">=</span><span class="n">Tree</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span> <span class="nf">get_tree_by_id</span><span class="p">(</span><span class="nb">id</span><span class="p">:</span> <span class="n">ObjectId</span><span class="p">,</span> <span class="n">engine</span><span class="p">:</span> <span class="n">AIOEngine</span> <span class="o">=</span> <span class="n">EngineD</span><span class="p">):</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">get_tree_by_id</span><span class="p">(</span><span class="nb">id</span><span class="p">:</span> <span class="n">ObjectId</span><span class="p">):</span>
     <span class="n">tree</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">Tree</span><span class="p">,</span> <span class="n">Tree</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">tree</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
@@ -1170,11 +1171,7 @@ fields of a Tree instance:</p>
 </span>
 
 <span class="hll"><span class="nd">@app</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s2">"/trees/</span><span class="si">{id}</span><span class="s2">"</span><span class="p">,</span> <span class="n">response_model</span><span class="o">=</span><span class="n">Tree</span><span class="p">)</span>
-</span><span class="hll"><span class="k">async</span> <span class="k">def</span> <span class="nf">update_tree_by_id</span><span class="p">(</span>
-</span><span class="hll">    <span class="nb">id</span><span class="p">:</span> <span class="n">ObjectId</span><span class="p">,</span>
-</span><span class="hll">    <span class="n">patch</span><span class="p">:</span> <span class="n">TreePatchSchema</span><span class="p">,</span>
-</span><span class="hll">    <span class="n">engine</span><span class="p">:</span> <span class="n">AIOEngine</span> <span class="o">=</span> <span class="n">EngineD</span><span class="p">,</span>
-</span><span class="hll"><span class="p">):</span>
+</span><span class="hll"><span class="k">async</span> <span class="k">def</span> <span class="nf">update_tree_by_id</span><span class="p">(</span><span class="nb">id</span><span class="p">:</span> <span class="n">ObjectId</span><span class="p">,</span> <span class="n">patch</span><span class="p">:</span> <span class="n">TreePatchSchema</span><span class="p">):</span>
 </span><span class="hll">    <span class="n">tree</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">Tree</span><span class="p">,</span> <span class="n">Tree</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">)</span>
 </span><span class="hll">    <span class="k">if</span> <span class="n">tree</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
 </span><span class="hll">        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
@@ -1184,11 +1181,7 @@ fields of a Tree instance:</p>
 </span><span class="hll">        <span class="nb">setattr</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 </span><span class="hll">    <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
 </span><span class="hll">    <span class="k">return</span> <span class="n">tree</span>
-</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
-    <span class="n">uvicorn</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s2">"localhost"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8080</span><span class="p">)</span>
-</code></pre></div>
+</span></code></pre></div>
 </td></tr></table>
 First, we define the <code>TreePatchSchema</code> this Pydantic model will contain the
 modifications that we need to apply on the instance. Since we want to be able to update
@@ -1198,8 +1191,8 @@ as a path parameter and the <code>TreePatchSchema</code> as the request body par
 <p>Once all the parameters have been validated properly and the associated instance have
 been gathered, we can apply the modifications to the model.</p>
 <p>The first step is to create a dictionnary containing only the fields to modify (the
-<code>exclude_unset</code> argument help us to gather only the field that have been set in the
-body):</p>
+<code>exclude_unset</code> argument helps us to gather only the fields that have been set from the
+request's body):</p>
 <div class="highlight"><pre><span></span><code><span class="n">patch_dict</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_unset</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div>
 <p>The next step is to iterate over this dictionary to apply the changes to the model
