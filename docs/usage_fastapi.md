@@ -15,7 +15,7 @@ In this example, we create a minimalist REST API describing trees by their name,
 ```
 
 You can then start the application. For example if you saved the file above in a file
-named `tree_app.py`:
+named `tree_api.py`:
 ```python
 uvicorn tree_api:app
 ```
