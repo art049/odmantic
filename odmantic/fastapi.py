@@ -1,3 +1,4 @@
+import warnings
 from typing import Optional
 
 import fastapi.params
@@ -8,6 +9,11 @@ from odmantic.engine import AIOEngine
 
 class AIOEngineDependency(fastapi.params.Depends):
     """AIOEngine FastAPI Dependency.
+
+
+    Warning:
+        Deprecated since v0.2.0, [more
+        details](https://art049.github.io/odmantic/usage_fastapi/#building-the-engine).
 
     Internally caches the AIOEngine instance to avoid creating a new client on each
     request.
@@ -22,6 +28,7 @@ class AIOEngineDependency(fastapi.params.Depends):
         await engine.find(...)
         await engine.save(...)
     ```
+
     """
 
     def __init__(self, mongo_uri: Optional[str] = None, database: str = "test") -> None:
@@ -35,6 +42,12 @@ class AIOEngineDependency(fastapi.params.Depends):
         self.mongo_uri = mongo_uri
         self.database = database
         self.engine: Optional[AIOEngine] = None
+        warnings.warn(
+            "the AIOEngineDependency object is deprecated, see "
+            "https://art049.github.io/odmantic/usage_fastapi/#building-the-engine "
+            "for more details.",
+            DeprecationWarning,
+        )
 
     async def __call__(self) -> AIOEngine:
         if self.engine is None:
