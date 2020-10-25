@@ -270,6 +270,7 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
                     model=field_type, key_name=key_name
                 )
                 references.append(field_name)
+                del namespace[field_name]  # Remove default ODMReferenceInfo value
             else:
                 if is_type_mutable(field_type):
                     mutable_fields.add(field_name)
@@ -343,9 +344,18 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
         cls = super().__new__(mcs, name, bases, namespace, **kwargs)
 
         if is_custom_cls:
+            # Patch Model related fields to build a "pure" pydantic model
+            odm_fields: Dict[str, ODMBaseField] = namespace["__odm_fields__"]
+            for field_name, field in odm_fields.items():
+                if isinstance(field, (ODMReference, ODMEmbedded)):
+                    namespace["__annotations__"][
+                        field_name
+                    ] = field.model.__pydantic_model__
+            # Build the pydantic model
             pydantic_cls = pydantic.main.ModelMetaclass.__new__(
                 mcs, f"{name}.__pydantic_model__", (BaseBSONModel,), namespace, **kwargs
             )
+            # Change the title to generate clean JSON schemas from this "pure" model
             pydantic_cls.__config__.title = name
 
             cls.__pydantic_model__ = pydantic_cls
