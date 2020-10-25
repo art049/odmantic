@@ -39,7 +39,7 @@ include = ["LICENSE", "README.md"]
 python = ">=3.6 <4.0"
 importlib-metadata = { version = "^1.0", python = "<3.8" }
 pydantic = "~=1.6.0"
-motor = "~=2.2.0"
+motor = ">=2.1.0 <2.4.0"
 fastapi = { version = "^0.61.1", optional = true }
 
 [tool.poetry.extras]
