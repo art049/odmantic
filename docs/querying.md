@@ -1,11 +1,13 @@
-# Filtering
+# Querying
+
+## Filtering
 ODMantic uses [QueryExpression][odmantic.query.QueryExpression] objects to handle filter
 expressions. These expressions can be built from the comparison operators. It's then
 possible to combine multiple expressions using the logical operators. To support the
 wide variety of operators provided by MongoDB, it's possible as well to define the
 filter 'manually'.
 
-## Comparison operators
+### Comparison operators
 
 There are multiple ways of building [QueryExpression][odmantic.query.QueryExpression]
 objects with comparisons operators:
@@ -38,11 +40,11 @@ objects with comparisons operators:
     Since there is currently not any type checker plugin, the third usage might create
     some errors with type checkers.
 
-### Equal
+#### Equal
 
 Filter the trees named "Spruce":
 ```python linenums="1" hl_lines="9 11 13"
---8<-- "filtering/equal.py"
+--8<-- "querying/equal.py"
 ```
 Equivalent raw MongoDB filter:
 ```json
@@ -55,7 +57,7 @@ Equivalent raw MongoDB filter:
     ???+example "Example of filter built on an Enum field"
         Filter the 'small' trees:
         ```python linenums="1" hl_lines="6-8 14 17 19 21"
-        --8<-- "filtering/enum.py"
+        --8<-- "querying/enum.py"
         ```
         Equivalent raw MongoDB filter:
         ```json
@@ -64,21 +66,21 @@ Equivalent raw MongoDB filter:
 
     [More details](fields.md#enum-fields) about Enum fields.
 
-### Not Equal
+#### Not Equal
 
 Filter the trees that are **not** named "Spruce":
 ```python linenums="1" hl_lines="9 11 13"
---8<-- "filtering/not_equal.py"
+--8<-- "querying/not_equal.py"
 ```
 Equivalent raw MongoDB filter:
 ```json
 {"name": {"$ne": "Spruce"}}
 ```
-### Less than (or equal to)
+#### Less than (or equal to)
 
 Filter the trees that have a size that is less than (or equal to) 2:
 ```python linenums="1" hl_lines="9 11 13 16 18 20"
---8<-- "filtering/lt_e.py"
+--8<-- "querying/lt_e.py"
 ```
 Equivalent raw MongoDB filter (less than):
 ```json
@@ -89,11 +91,11 @@ Equivalent raw MongoDB filter (less than or equal to):
 {"average_size": {"$lte": 2}}
 ```
 
-### Greater than (or equal to)
+#### Greater than (or equal to)
 
 Filter the trees having a size that is greater than (or equal to) 2:
 ```python linenums="1" hl_lines="9 11 13 16 18 20"
---8<-- "filtering/gt_e.py"
+--8<-- "querying/gt_e.py"
 ```
 Equivalent raw MongoDB filter (greater than):
 ```json
@@ -106,11 +108,11 @@ Equivalent raw MongoDB filter (greater than or equal to):
 
 
 
-### Included in
+#### Included in
 
 Filter the trees named either "Spruce" or "Pine":
 ```python linenums="1" hl_lines="9 11"
---8<-- "filtering/in.py"
+--8<-- "querying/in.py"
 ```
 Equivalent raw MongoDB filter:
 ```json
@@ -118,31 +120,31 @@ Equivalent raw MongoDB filter:
 ```
 
 
-### Not included in
+#### Not included in
 
 Filter the trees neither named "Spruce" nor "Pine":
 ```python linenums="1" hl_lines="9 11"
---8<-- "filtering/not_in.py"
+--8<-- "querying/not_in.py"
 ```
 
 Equivalent raw MongoDB filter:
 ```json
 {"name": {"$nin": ["Spruce", "Pine"]}}
 ```
-## Evaluation operators
+### Evaluation operators
 
-### Match (Regex)
+#### Match (Regex)
 
 Filter the trees with a name starting with 'Spruce':
 ```python linenums="1" hl_lines="8 10"
---8<-- "filtering/match.py"
+--8<-- "querying/match.py"
 ```
 
 Equivalent raw MongoDB filter:
 ```json
 {"name": {"$regex": "^Spruce"}}
 ```
-## Logical operators
+### Logical operators
 There are two ways of combining [QueryExpression][odmantic.query.QueryExpression]
 objects with logical operators:
 
@@ -158,11 +160,11 @@ objects with logical operators:
     - [query.or_][odmantic.query.or_]
     - [query.nor_][odmantic.query.nor_]
 
-### And
+#### And
 
 Filter the trees named Spruce (**AND**) with a size less than 2:
 ```python linenums="1" hl_lines="9 18"
---8<-- "filtering/and.py"
+--8<-- "querying/and.py"
 ```
 Equivalent raw MongoDB filter:
 ```json
@@ -175,11 +177,11 @@ Equivalent raw MongoDB filter:
     [count][odmantic.engine.AIOEngine.count], you can specify multiple queries as
     positional arguments and those will be implicitly combined with the `AND` operator.
 
-### Or
+#### Or
 Filter the trees named Spruce **OR** the trees with a size greater than 2:
 
 ```python linenums="1" hl_lines="9 18"
---8<-- "filtering/or.py"
+--8<-- "querying/or.py"
 ```
 Equivalent raw MongoDB filter:
 ```json
@@ -190,11 +192,11 @@ Equivalent raw MongoDB filter:
   ]
 }
 ```
-### Nor
+#### Nor
 
 Filter the trees neither named Spruce **NOR** bigger than 2 (size):
 ```python linenums="1" hl_lines="9"
---8<-- "filtering/nor.py"
+--8<-- "querying/nor.py"
 ```
 Equivalent raw MongoDB filter:
 ```json
@@ -219,7 +221,7 @@ Equivalent raw MongoDB filter:
     While it could've been possible to name the NOR operator query.nor, the extra underscore has been kept for consistency in the naming of the logical operators.
 
 
-## Manual filtering
+### Manual filtering
 Raw MongoDB filter expressions can be used as well with the
 [find][odmantic.engine.AIOEngine.find], [find_one][odmantic.engine.AIOEngine.find_one]
 or [count][odmantic.engine.AIOEngine.count] methods.
@@ -227,12 +229,12 @@ or [count][odmantic.engine.AIOEngine.count] methods.
 You can find more details about building raw query filters using the Model in the [Raw
 query usage](raw_query_usage.md) section.
 
-## Embedded documents filters
+### Embedded documents filters
 
-It's possible to build filter based on the content of embedded documents.
+It's possible to build filter based on the content of embedded documents:
 
 ```python linenums="1" hl_lines="4 9 12 15 17"
---8<-- "filtering/embedded.py"
+--8<-- "querying/embedded.py"
 ```
 Equivalent raw MongoDB filters:
 ```json
@@ -245,3 +247,66 @@ Equivalent raw MongoDB filters:
 
 !!! warning "Filtering across References"
     Currently, it is not possible to build filter based on referenced objects.
+
+## Sorting
+
+ODMantic uses [SortExpression][odmantic.query.SortExpression] objects to handle sort
+expressions.
+
+There are multiple ways of building [SortExpression][odmantic.query.SortExpression]
+objects:
+
+1. Using implicit `Model` fields:
+
+    !!! example "Ascending sort"
+        To sort `Publisher` instances by **ascending** `Publisher.founded`:
+
+        ```python
+        await engine.find(Publisher, sort=Publisher.founded)
+        ```
+        This example refers to the code showcased in the [Overview](index.md#define-your-first-model).
+
+2. Using the functions provided by the `odmantic.query` module
+    - [query.asc][odmantic.query.asc]
+    - [query.desc][odmantic.query.desc]
+
+3. Using methods of the model's field and the desired value
+    - `field.asc`
+    - `field.desc`
+
+
+!!! note "Type checkers"
+    Since there is currently not any type checker plugin, the third usage might create
+    some errors with type checkers.
+
+### Ascending
+
+```python linenums="1" hl_lines="14-16"
+--8<-- "querying/asc.py"
+```
+
+### Descending
+
+```python linenums="1" hl_lines="14-15"
+--8<-- "querying/desc.py"
+```
+
+### Sort on multiple fields
+
+We can pass a `tuple` to the `sort` kwarg, this will enable us to make a more complex sort query:
+
+```python linenums="1" hl_lines="14"
+--8<-- "querying/multiple_sort.py"
+```
+
+### Embedded model field as a sort key
+
+We can sort instances based on the content of their embedded models.
+
+!!! example "Sorting by an embedded model field"
+    We can sort the countries by descending order of the population of their capital
+    city:
+
+    ```python linenums="1" hl_lines="5 13 17"
+    --8<-- "querying/embedded_sort.py"
+    ```

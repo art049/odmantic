@@ -136,8 +136,10 @@ def _build_sort_expression(
 
 
 def asc(field: FieldProxyAny) -> SortExpression:
+    """Sort by ascending `field`."""
     return _build_sort_expression(field, 1)
 
 
 def desc(field: FieldProxyAny) -> SortExpression:
+    """Sort by descending `field`."""
     return _build_sort_expression(field, -1)

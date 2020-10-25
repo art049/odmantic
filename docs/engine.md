@@ -90,6 +90,14 @@ specified criteriums or `None` if no instances have been found.
 --8<-- "engine/fetch_find_one.py"
 ```
 
+!!! tip "Fetch using `sort`"
+    We can use the `sort` parameter to fetch the `Player` instance with
+    the first `name` in ascending order:
+    ```python
+    await engine.find_one(Player, sort=Player.name)
+    ```
+    Find out more on `sort` in [the dedicated section](querying.md#sorting).
+
 ### Fetch multiple instances
 
 To get more than one instance from the database at once, you can use the
@@ -102,6 +110,14 @@ used in two different ways.
 ```python linenums="1" hl_lines="11"
 --8<-- "engine/fetch_async_for.py"
 ```
+
+!!! tip "Ordering instances"
+    The `sort` parameter allows to order the query in ascending or descending order on
+    a single or multiple fields.
+    ```python
+    engine.find(Player, sort=(Player.name, Player.game.desc()))
+    ```
+    Find out more on `sort` in [the dedicated section](querying.md#sorting).
 
 #### Usage as an awaitable
 
