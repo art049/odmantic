@@ -154,6 +154,24 @@ async def test_find_invalid_skip(engine: AIOEngine):
         await engine.find(PersonModel, limit=-12)
 
 
+@pytest.mark.usefixtures("person_persisted")
+async def test_skip(engine: AIOEngine):
+    p = await engine.find(PersonModel, skip=1)
+    assert len(p) == 2
+
+
+@pytest.mark.usefixtures("person_persisted")
+async def test_limit(engine: AIOEngine):
+    p = await engine.find(PersonModel, limit=1)
+    assert len(p) == 1
+
+
+@pytest.mark.usefixtures("person_persisted")
+async def test_skip_limit(engine: AIOEngine):
+    p = await engine.find(PersonModel, skip=1, limit=1)
+    assert len(p) == 1
+
+
 async def test_save_multiple_time_same_document(engine: AIOEngine):
     fixed_id = ObjectId()
 
