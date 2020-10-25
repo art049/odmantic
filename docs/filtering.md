@@ -149,6 +149,10 @@ objects with logical operators:
 1. Using python 'bitwise' operators between the field of the model and the desired value
 :   `&`, `|`
 
+!!! warning
+    When using those operators make sure to correctly bracket the expressions
+    to avoid python operator precedence issues.
+
 2. Using the functions provided by the `odmantic.query` module
     - [query.and_][odmantic.query.and_]
     - [query.or_][odmantic.query.or_]
