@@ -5,7 +5,6 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 from odmantic import AIOEngine, Model, ObjectId
-from odmantic.fastapi import AIOEngineDependency
 
 
 class Tree(Model):
@@ -16,11 +15,11 @@ class Tree(Model):
 
 app = FastAPI()
 
-EngineD = AIOEngineDependency()
+engine = AIOEngine()
 
 
 @app.get("/trees/{id}", response_model=Tree)
-async def get_tree_by_id(id: ObjectId, engine: AIOEngine = EngineD):
+async def get_tree_by_id(id: ObjectId):
     tree = await engine.find_one(Tree, Tree.id == id)
     if tree is None:
         raise HTTPException(404)
@@ -34,11 +33,7 @@ class TreePatchSchema(BaseModel):
 
 
 @app.patch("/trees/{id}", response_model=Tree)
-async def update_tree_by_id(
-    id: ObjectId,
-    patch: TreePatchSchema,
-    engine: AIOEngine = EngineD,
-):
+async def update_tree_by_id(id: ObjectId, patch: TreePatchSchema):
     tree = await engine.find_one(Tree, Tree.id == id)
     if tree is None:
         raise HTTPException(404)
@@ -48,7 +43,3 @@ async def update_tree_by_id(
         setattr(tree, name, value)
     await engine.save(tree)
     return tree
-
-
-if __name__ == "__main__":
-    uvicorn.run(app, host="localhost", port=8080)
