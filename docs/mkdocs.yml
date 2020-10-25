@@ -41,6 +41,10 @@ markdown_extensions:
   - pymdownx.tabbed
   - pymdownx.superfences
   - pymdownx.details
+  - pymdownx.magiclink:
+      user: art049
+      repo: odmantic
+      repo_url_shorthand: true
   - pymdownx.emoji:
       emoji_index: !!python/name:pymdownx.emoji.twemoji
 
