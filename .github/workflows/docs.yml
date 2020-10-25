@@ -4,6 +4,7 @@ on:
     types:
       - published
       - edited
+  workflow_dispatch:
 
 jobs:
   deploy-docs:

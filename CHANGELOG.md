@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Added
 
-- [Add sorting support](https://art049.github.io/odmantic/querying#sorting) (#17 by @adriencaccia)
+- [Add sorting support](https://art049.github.io/odmantic/querying/#sorting) (#17 by @adriencaccia)
 - Support motor 2.3.0 (#20 by @art049)
 
 #### Fixed
@@ -30,5 +30,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Initial Release
 
-[0.2.0]: https://github.com/art049/odmantic/releases/compare/v0.1.0...v0.2.0
+[0.2.0]: https://github.com/art049/odmantic/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/art049/odmantic/releases/tag/v0.1.0
