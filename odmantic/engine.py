@@ -208,8 +208,8 @@ class AIOEngine:
             QueryExpression, Dict, bool
         ],  # bool: allow using binary operators with mypy
         sort: Optional[Any] = None,
-        limit: Optional[int] = None,
         skip: int = 0,
+        limit: Optional[int] = None,
     ) -> AIOCursor[ModelType]:
         """Search for Model instances matching the query filter provided
 
@@ -217,8 +217,8 @@ class AIOEngine:
             model: model to perform the operation on
             queries: query filter to apply
             sort: sort expression
-            limit: maximum number of instance fetched
             skip: number of document to skip
+            limit: maximum number of instance fetched
 
 
         Returns:
@@ -241,10 +241,10 @@ class AIOEngine:
         pipeline: List[Dict] = [{"$match": query}]
         if sort_expression is not None:
             pipeline.append({"$sort": sort_expression})
-        if limit is not None and limit > 0:
-            pipeline.append({"$limit": limit})
         if skip > 0:
             pipeline.append({"$skip": skip})
+        if limit is not None and limit > 0:
+            pipeline.append({"$limit": limit})
         pipeline.extend(AIOEngine._cascade_find_pipeline(model))
         motor_cursor = collection.aggregate(pipeline)
         return AIOCursor(model, motor_cursor)
