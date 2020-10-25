@@ -59,3 +59,10 @@ def test_fastapi_dependency_custom_uri(fastapi_app: FastAPI, test_client: TestCl
 
     response = test_client.get("/")
     assert response.status_code == 200
+
+
+def test_fastapi_dependency_deprecation_warning():
+    with pytest.warns(
+        DeprecationWarning, match="the AIOEngineDependency object is deprecated"
+    ):
+        AIOEngineDependency()

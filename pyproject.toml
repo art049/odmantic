@@ -82,6 +82,7 @@ skip = ["docs"]
 [tool.pytest.ini_options]
 filterwarnings = [
     "ignore:\"@coroutine\" decorator is deprecated.*:DeprecationWarning:motor.*",
+    "ignore:the AIOEngineDependency object is deprecated.*:DeprecationWarning:odmantic.*",
 ]
 
 [tool.coverage.run]
