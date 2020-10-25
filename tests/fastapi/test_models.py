@@ -4,7 +4,7 @@ from typing import Type
 import pytest
 from bson import ObjectId as BSONObjectId
 
-from odmantic import Model, ObjectId
+from odmantic import Model, ObjectId, Reference
 from odmantic.bson import BaseBSONModel, Binary, Decimal128, Int64, Regex
 from odmantic.model import EmbeddedModel
 
@@ -150,3 +150,38 @@ def test_pydantic_model_custom_title(base: Type):
             title = "CustomTitle"
 
     assert M.__pydantic_model__.schema()["title"] == "CustomTitle"
+
+
+def test_pydantic_model_references():
+    class Referenced(Model):
+        ...
+
+    class Base(Model):
+        field: Referenced = Reference()
+
+    assert not hasattr(
+        Base.__pydantic_model__, "field"
+    ), "class attribute should be empty"
+    assert not issubclass(
+        Base.__pydantic_model__, Model  # type: ignore
+    ), "the pydantic_model should inherit from Model"
+
+    b_pure = Base.__pydantic_model__(field=Referenced())
+    assert not issubclass(
+        type(b_pure.field), Model  # type: ignore
+    ), "the pure field should not inherit from Model"
+
+
+def test_openapi_json_references(fastapi_app, test_client):
+    class Referenced(Model):
+        ...
+
+    class Base(Model):
+        field: Referenced = Reference()
+
+    @fastapi_app.get("/", response_model=Base)
+    def get():
+        return None
+
+    response = test_client.get("/openapi.json")
+    assert response.status_code == 200
