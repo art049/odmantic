@@ -2,7 +2,6 @@ import uvicorn
 from fastapi import FastAPI, HTTPException
 
 from odmantic import AIOEngine, Model, ObjectId
-from odmantic.fastapi import AIOEngineDependency
 
 
 class Tree(Model):
@@ -13,11 +12,11 @@ class Tree(Model):
 
 app = FastAPI()
 
-EngineD = AIOEngineDependency()
+engine = AIOEngine()
 
 
 @app.get("/trees/{id}", response_model=Tree)
-async def get_tree_by_id(id: ObjectId, engine: AIOEngine = EngineD):
+async def get_tree_by_id(id: ObjectId):
     tree = await engine.find_one(Tree, Tree.id == id)
     if tree is None:
         raise HTTPException(404)
@@ -25,13 +24,9 @@ async def get_tree_by_id(id: ObjectId, engine: AIOEngine = EngineD):
 
 
 @app.delete("/trees/{id}", response_model=Tree)
-async def delete_tree_by_id(id: ObjectId, engine: AIOEngine = EngineD):
+async def delete_tree_by_id(id: ObjectId):
     tree = await engine.find_one(Tree, Tree.id == id)
     if tree is None:
         raise HTTPException(404)
     await engine.delete(tree)
     return tree
-
-
-if __name__ == "__main__":
-    uvicorn.run(app, host="localhost", port=8080)

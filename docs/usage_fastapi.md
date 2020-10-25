@@ -14,10 +14,10 @@ In this example, we create a minimalist REST API describing trees by their name,
 --8<-- "usage_fastapi/base_example.py"
 ```
 
-This script can be run directly:
-
+You can then start the application. For example if you saved the file above in a file
+named `tree_app.py`:
 ```python
-python3 script.py
+uvicorn tree_api:app
 ```
 
 Uvicorn should start serving the API locally:
@@ -36,39 +36,68 @@ at [http://localhost:8080/docs](http://localhost:8080/docs){:target=blank_}.
 
 We'll now dive in the details of this example.
 
+### Defining the model
 
-### Using the engine as a dependency
-After having defined the model, we create the
-[AIOEngineDependency][odmantic.fastapi.AIOEngineDependency]:
-
-```python
-EngineD = AIOEngineDependency()
-```
-
-!!! tip "Custom AIOEngine parameters"
-    It's possible as well to build the dependency with custom parameters (mongo URI,
-    database name).
-
-    See [this section][odmantic.fastapi.AIOEngineDependency] of the API Reference for
-     more details.
-
-This [FastAPI
-dependency](https://fastapi.tiangolo.com/tutorial/dependencies/){:target=blank_}, will
-be used to pass the engine to the routes:
+First, we create our `Tree` model.
 
 ```python
-@app.get("/example")
-async def example(engine: AIOEngine = EngineD):
-    # engine is an AIOEngine instance
-    # you can use it to find, save or delete instances
-    ...
+class Tree(Model):
+    name: str
+    average_size: float
+    discovery_year: int
 ```
 
-!!! tip "Type annotation for the Engine dependency"
-    Even if it's not required to annotate the `engine` argument with its `AIOEngine`
-    type, this will strongly help by enabling your IDE to autocomplete the methods and
-    by making static type analysis possible with the `engine` object.
+This describes our `Tree` instances structure both for JSON serialization and for the
+storage in the MongoDB collection.
 
+### Building the engine
+After having defined the model, we create the [AIOEngine][odmantic.engine.AIOEngine]
+object. This object will be responsible for performing database operations.
+
+```python
+engine = AIOEngine()
+```
+
+It's possible as well to build the engine with custom parameters (mongo URI,
+database name). See [this section](engine.md#creating-the-engine) for more details.
+
+!!! tip "Running the python file directly"
+    If you need to execute the python file directly with the interpreter (to use a
+    debugger for example), some extra steps will be required.
+
+    Run `uvicorn` using the default event loop (if the file is called directly):
+    ```python
+    if __name__ == "__main__":
+        import asyncio
+        import uvicorn
+        loop = asyncio.get_event_loop()
+        config = uvicorn.Config(app=app, port=8080, loop=loop)
+        server = uvicorn.Server(config)
+        loop.run_until_complete(server.serve())
+    ```
+
+    ??? info "`uvicorn.run` behavior with event loops (Advanced)"
+        The usual entrypoint `uvicorn.run(app)` for ASGI apps doesn't work because when
+        called `uvicorn` will create and run a brand **new** event loop.
+
+        Thus, the engine object will be bound to a different event loop that will not be
+        running. In this case, you'll witness `<Future pending> attached to a different
+        loop` errors because the app itself will be running in a different event loop
+        than the engine's driver.
+
+        Anyway, when running directly the app through the `uvicorn` CLI, the default
+        event loop will be the one that will be running later, so no modifications are
+        required.
+
+!!! warning "AIOEngineDependency deprecation (from v0.2.0)"
+    The `AIOEngineDependency` that was used to inject the engine in the API routes is
+    now deprecated (it will be kept for few versions though).
+
+    Using a global engine object should be preferred as it will dramatically reduce the
+    required verbosity to use the engine in an endpoint.
+
+    If you need to run your `app` directly from a python file, see the above **Running the
+    python file directly** section.
 
 ### Creating a tree
 The next step is to define a route enabling us to create a new tree. To that end, we
@@ -77,7 +106,7 @@ persist it to the database and return the created object.
 
 ```python
 @app.put("/trees/", response_model=Tree)
-async def create_tree(tree: Tree, engine: AIOEngine = EngineD):
+async def create_tree(tree: Tree):
     await engine.save(tree)
     return tree
 ```
@@ -264,7 +293,7 @@ instances that we can return directly:
 
 ```python
 @app.get("/trees/", response_model=List[Tree])
-async def get_trees(engine: AIOEngine = EngineD):
+async def get_trees():
     trees = await engine.find(Tree)
     return trees
 ```
@@ -350,7 +379,7 @@ parameters (to directly get the total count of instances).
 
 ```python
 @app.get("/trees/count", response_model=int)
-async def count_trees(engine: AIOEngine = EngineD):
+async def count_trees():
     count = await engine.count(Tree)
     return count
 ```
@@ -387,7 +416,7 @@ async def count_trees(engine: AIOEngine = EngineD):
 
 ```python
 @app.get("/trees/{id}", response_model=Tree)
-async def get_tree_by_id(id: ObjectId, engine: AIOEngine = EngineD):
+async def get_tree_by_id(id: ObjectId, ):
     tree = await engine.find_one(Tree, Tree.id == id)
     if tree is None:
         raise HTTPException(404)
@@ -549,7 +578,7 @@ Unprocessable Entity` error will be returned:
 
 ### Deleting a tree
 
-```python linenums="1" hl_lines="27-33"
+```python linenums="1" hl_lines="26-32"
 --8<-- "usage_fastapi/example_delete.py"
 ```
 
@@ -632,7 +661,7 @@ body.
 In this example, we will define a `PATCH` method that will allow us to modify some
 fields of a Tree instance:
 
-```python linenums="1" hl_lines="30-33 36-50"
+```python linenums="1" hl_lines="29-32 35-45"
 --8<-- "usage_fastapi/example_update.py"
 ```
 First, we define the `TreePatchSchema` this Pydantic model will contain the
@@ -646,8 +675,8 @@ Once all the parameters have been validated properly and the associated instance
 been gathered, we can apply the modifications to the model.
 
 The first step is to create a dictionnary containing only the fields to modify (the
-`exclude_unset` argument help us to gather only the field that have been set in the
-body):
+`exclude_unset` argument helps us to gather only the fields that have been set from the
+request's body):
 
 ```python
 patch_dict = patch.dict(exclude_unset=True)
