@@ -153,13 +153,14 @@ def Field(
         pydantic_field_info=pydantic_field,
         primary_field=primary_field,
         key_name=key_name,
+        default=default,
     )
 
 
 class ODMFieldInfo:
     """Extra data for an ODM field."""
 
-    __slots__ = ("pydantic_field_info", "primary_field", "key_name")
+    __slots__ = ("pydantic_field_info", "primary_field", "key_name", "default")
 
     def __init__(
         self,
@@ -167,10 +168,12 @@ class ODMFieldInfo:
         pydantic_field_info: FieldInfo,
         primary_field: bool,
         key_name: Optional[str],
+        default: Any,
     ):
         self.pydantic_field_info = pydantic_field_info
         self.primary_field = primary_field
         self.key_name = key_name
+        self.default = default
 
 
 class ODMBaseField(metaclass=abc.ABCMeta):
@@ -185,14 +188,20 @@ class ODMBaseField(metaclass=abc.ABCMeta):
 class ODMField(ODMBaseField):
     """Used to interact with the ODM model class."""
 
-    __slots__ = ("primary_field",)
+    __slots__ = ("primary_field", "default")
     __allowed_operators__ = set(
         ("eq", "ne", "in_", "not_in", "lt", "lte", "gt", "gte", "match", "asc", "desc")
     )
 
-    def __init__(self, *, primary_field: bool, key_name: str):
+    def __init__(self, *, primary_field: bool, key_name: str, default: Any = Undefined):
         super().__init__(key_name)
         self.primary_field = primary_field
+        self.default = default
+
+    def get_default_importing_value(self) -> Any:
+        # The default importing value doesn't consider the default_factory setting as it
+        # could result in inconsistent behaviors for datetime.now for example
+        return self.default
 
 
 class ODMReference(ODMBaseField):
@@ -212,9 +221,15 @@ class ODMEmbedded(ODMField):
     __allowed_operators__ = set(("eq", "ne", "in_", "not_in"))
 
     def __init__(
-        self, primary_field: bool, key_name: str, model: Type["EmbeddedModel"]
+        self,
+        primary_field: bool,
+        key_name: str,
+        model: Type["EmbeddedModel"],
+        default: Any,
     ):
-        super().__init__(primary_field=primary_field, key_name=key_name)
+        super().__init__(
+            primary_field=primary_field, key_name=key_name, default=default
+        )
         self.model = model
 
 
