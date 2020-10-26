@@ -547,7 +547,10 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         doc: Dict[str, Any] = {}
         for field_name, field in cls.__odm_fields__.items():
             if isinstance(field, ODMReference):
-                doc[field_name] = field.model.parse_doc(raw_doc[field.key_name])
+                sub_doc = raw_doc.get(field.key_name)
+                if sub_doc is None:
+                    continue  # The error will be handled while parsing the object
+                doc[field_name] = field.model.parse_doc(sub_doc)
             else:
                 field = cast(Union[ODMField, ODMEmbedded], field)
                 value = raw_doc.get(field.key_name, field.get_default_importing_value())

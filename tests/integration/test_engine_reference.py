@@ -1,6 +1,8 @@
 import pytest
 
+from odmantic.bson import ObjectId
 from odmantic.engine import AIOEngine
+from odmantic.exceptions import DocumentParsingError
 from odmantic.model import Model
 from odmantic.reference import Reference
 from tests.zoo.deeply_nested import NestedLevel1, NestedLevel2, NestedLevel3
@@ -80,3 +82,15 @@ async def test_reference_with_key_name(engine: AIOEngine):
     fetched = await engine.find_one(M)
     assert fetched is not None
     assert fetched.r.field == 3
+
+
+async def test_reference_not_set_in_database(engine: AIOEngine):
+    class R(Model):
+        field: int
+
+    class M(Model):
+        r: R = Reference()
+
+    await engine.get_collection(M).insert_one({"_id": ObjectId()})
+    with pytest.raises(DocumentParsingError, match="field required"):
+        await engine.find_one(M)
