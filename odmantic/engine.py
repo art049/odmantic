@@ -146,24 +146,35 @@ class AIOEngine:
         pipeline: List[Dict] = []
         for ref_field_name in model.__references__:
             odm_reference = cast(ODMReference, model.__odm_fields__[ref_field_name])
-            pipeline.append(
-                {
-                    "$lookup": {
-                        "from": odm_reference.model.__collection__,
-                        "let": {"foreign_id": f"${odm_reference.key_name}"},
-                        "pipeline": [
-                            {"$match": {"$expr": {"$eq": ["$_id", "$$foreign_id"]}}},
-                            *AIOEngine._cascade_find_pipeline(
-                                odm_reference.model,
-                                doc_namespace=f"{doc_namespace}{ref_field_name}.",
-                            ),
-                        ],
-                        "as": odm_reference.key_name
-                        # FIXME if ref field name is an existing key_name ?
-                    }
-                }
+            pipeline.extend(
+                [
+                    {
+                        "$lookup": {
+                            "from": odm_reference.model.__collection__,
+                            "let": {"foreign_id": f"${odm_reference.key_name}"},
+                            "pipeline": [
+                                {
+                                    "$match": {
+                                        "$expr": {"$eq": ["$_id", "$$foreign_id"]}
+                                    }
+                                },
+                                *AIOEngine._cascade_find_pipeline(
+                                    odm_reference.model,
+                                    doc_namespace=f"{doc_namespace}{ref_field_name}.",
+                                ),
+                            ],
+                            "as": odm_reference.key_name
+                            # FIXME if ref field name is an existing key_name ?
+                        }
+                    },
+                    {  # Preserves document with unbound references
+                        "$unwind": {
+                            "path": f"${odm_reference.key_name}",
+                            "preserveNullAndEmptyArrays": True,
+                        }
+                    },
+                ]
             )
-            pipeline.append({"$unwind": f"${odm_reference.key_name}"})
         return pipeline
 
     @staticmethod
