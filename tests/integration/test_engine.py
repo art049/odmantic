@@ -1,11 +1,12 @@
-from typing import Dict, List, Tuple
+from typing import Dict, List, Optional, Tuple
 
 import pytest
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from odmantic.bson import ObjectId
 from odmantic.engine import AIOEngine
-from odmantic.exceptions import DocumentNotFoundError
+from odmantic.exceptions import DocumentNotFoundError, DocumentParsingError
+from odmantic.field import Field
 from odmantic.model import EmbeddedModel, Model
 from odmantic.query import asc, desc
 
@@ -475,3 +476,34 @@ async def test_find_one_sort(engine: AIOEngine, person_persisted: List[PersonMod
     person = await engine.find_one(PersonModel, sort=PersonModel.last_name)
     assert person is not None
     assert person.last_name == "Castaldi"
+
+
+async def test_find_document_field_not_set_with_default(engine: AIOEngine):
+    class M(Model):
+        field: Optional[str] = None
+
+    await engine.get_collection(M).insert_one({"_id": ObjectId()})
+    gathered = await engine.find_one(M)
+    assert gathered is not None
+    assert gathered.field is None
+
+
+async def test_find_document_field_not_set_with_default_field_descriptor(
+    engine: AIOEngine,
+):
+    class M(Model):
+        field: str = Field(default="hello world")
+
+    await engine.get_collection(M).insert_one({"_id": ObjectId()})
+    gathered = await engine.find_one(M)
+    assert gathered is not None
+    assert gathered.field == "hello world"
+
+
+async def test_find_document_field_not_set_with_no_default(engine: AIOEngine):
+    class M(Model):
+        field: str
+
+    await engine.get_collection(M).insert_one({"_id": ObjectId()})
+    with pytest.raises(DocumentParsingError, match="field required"):
+        await engine.find_one(M)

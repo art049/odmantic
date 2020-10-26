@@ -44,6 +44,7 @@ from odmantic.bson import (
     _decimalDecimal,
 )
 from odmantic.config import BaseODMConfig, validate_config
+from odmantic.exceptions import DocumentParsingError
 from odmantic.field import (
     FieldProxy,
     ODMBaseField,
@@ -237,12 +238,17 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
                         value.key_name if value.key_name is not None else field_name
                     )
                     primary_field = value.primary_field
+                    default = value.default
                 else:
                     key_name = field_name
                     primary_field = False
+                    default = value
 
                 odm_fields[field_name] = ODMEmbedded(
-                    primary_field=primary_field, model=field_type, key_name=key_name
+                    primary_field=primary_field,
+                    model=field_type,
+                    key_name=key_name,
+                    default=default,
                 )
             elif lenient_issubclass(field_type, Model):
                 if not isinstance(value, ODMReferenceInfo):
@@ -266,7 +272,9 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
                     )
                     raise_on_invalid_key_name(key_name)
                     odm_fields[field_name] = ODMField(
-                        primary_field=value.primary_field, key_name=key_name
+                        primary_field=value.primary_field,
+                        key_name=key_name,
+                        default=value.default,
                     )
                     namespace[field_name] = value.pydantic_field_info
 
@@ -284,7 +292,7 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
                             f" = {repr(value)}"
                         )
                     odm_fields[field_name] = ODMField(
-                        primary_field=False, key_name=field_name
+                        primary_field=False, key_name=field_name, default=value
                     )
 
         duplicate_key = find_duplicate_key(odm_fields.values())
@@ -530,6 +538,9 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         Args:
             raw_doc: document to parse (as Dict)
 
+        Raises:
+            DocumentParsingError: the specified document is invalid
+
         Returns:
             an instance of the Model class this method is called on.
         """
@@ -538,8 +549,16 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
             if isinstance(field, ODMReference):
                 doc[field_name] = field.model.parse_doc(raw_doc[field.key_name])
             else:
-                doc[field_name] = raw_doc[field.key_name]
-        instance = cls.parse_obj(doc)
+                field = cast(Union[ODMField, ODMEmbedded], field)
+                value = raw_doc.get(field.key_name, field.get_default_importing_value())
+                if value is not Undefined:
+                    doc[field_name] = value
+
+        try:
+            instance = cls.parse_obj(doc)
+        except ValidationError as e:
+            raise DocumentParsingError(e)
+
         return instance
 
 
