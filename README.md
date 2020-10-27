@@ -6,7 +6,7 @@
 <a href="https://codecov.io/gh/art049/odmantic" target="_blank">
     <img src="https://codecov.io/gh/art049/odmantic/branch/master/graph/badge.svg?token=3NYZK14STZ" alt="coverage">
 </a>
-<img src="https://img.shields.io/badge/python-3.6%20|%203.7%20|%203.8-informational.svg" alt="python-3.6-3.7-3.8">
+<img src="https://img.shields.io/badge/python-3.6%20|%203.7%20|%203.8%20|%203.9-informational.svg" alt="python-3.6-3.7-3.8">
 <a href="https://pypi.org/project/odmantic" target="_blank">
     <img src="https://img.shields.io/pypi/v/odmantic?color=%2334D058&label=pypi" alt="Package version">
 </a>
@@ -44,7 +44,7 @@ Core features:
 
 ## Requirements
 
-**Python**: 3.6 and later (tested against 3.6, 3.7 and 3.8)
+**Python**: 3.6 and later (tested against 3.6, 3.7, 3.8 and 3.9)
 
 **MongoDB**: 4.0 and later
 
