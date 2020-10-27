@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Unpin pydantic to support 1.7.0 ([#29](https://github.com/art049/odmantic/pull/29) by [@art049](https://github.com/art049))
+
 - Adding the latest change github action ([#30](https://github.com/art049/odmantic/pull/30) by [@art049](https://github.com/art049))
 
 ## [0.2.1] - 2020-10-25
