@@ -38,7 +38,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: "#${{ github.event.number }}: ${{ github.event.pull_request.title }}"
           enable-pull-request-comment: true
-          enable-commit-comment: true
+          enable-commit-comment: false
           overwrites-pull-request-comment: true
           alias: docs-preview-${{ github.event.number }}
         env:
