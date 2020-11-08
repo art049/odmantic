@@ -1,4 +1,5 @@
-from typing import Any, Dict, Optional, Type
+import json
+from typing import Any, Callable, Dict, Optional, Type
 
 from pydantic.main import BaseConfig
 from pydantic.typing import AnyCallable
@@ -8,13 +9,18 @@ from odmantic.utils import is_dunder
 
 
 class BaseODMConfig:
-    """Base class of the Config defined in the Models"""
+    """Base class of the Config defined in the Models
+    Defines as well the fields allowed to be passed.
+    """
 
     collection: Optional[str] = None
 
     # Inherited from pydantic
     title: Optional[str] = None
     json_encoders: Dict[Type[Any], AnyCallable] = {}
+    anystr_strip_whitespace: bool = False
+    json_loads: Callable[[str], Any] = json.loads
+    json_dumps: Callable[..., str] = json.dumps
 
 
 ALLOWED_CONFIG_OPTIONS = {name for name in dir(BaseODMConfig) if not is_dunder(name)}
