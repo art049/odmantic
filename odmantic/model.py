@@ -17,7 +17,6 @@ from typing import (
     Iterable,
     List,
     Optional,
-    Sequence,
     Set,
     Tuple,
     Type,
@@ -552,25 +551,63 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         Returns:
             an instance of the Model class this method is called on.
         """
-        doc: Dict[str, Any] = {}
+        errors, obj = cls._parse_doc_to_obj(raw_doc)
+        if len(errors) > 0:
+            raise DocumentParsingError(
+                errors=[errors],
+                model=cls,
+                primary_value=raw_doc.get("_id", "<unknown>"),
+            )
+        try:
+            instance = cls.parse_obj(obj)
+        except ValidationError as e:
+            raise DocumentParsingError(
+                errors=e.raw_errors,  # type: ignore
+                model=cls,
+                primary_value=raw_doc.get("_id", "<unknown>"),
+            )
+
+        return instance
+
+    @classmethod
+    def _parse_doc_to_obj(
+        cls: Type[TBase], raw_doc: Dict, base_loc: Tuple[str, ...] = ()
+    ) -> Tuple[ErrorList, Dict[str, Any]]:
+        errors: ErrorList = []
+        obj: Dict[str, Any] = {}
         for field_name, field in cls.__odm_fields__.items():
             if isinstance(field, ODMReference):
                 sub_doc = raw_doc.get(field.key_name)
                 if sub_doc is None:
-                    continue  # The error will be handled while parsing the object
-                doc[field_name] = field.model.parse_doc(sub_doc)
+                    errors.append(
+                        ErrorWrapper(
+                            exc=ReferencedDocumentNotFoundError(field.key_name),
+                            loc=base_loc + (field_name,),
+                        )
+                    )
+                else:
+                    sub_errors, sub_obj = field.model._parse_doc_to_obj(
+                        sub_doc, base_loc=base_loc + (field_name,)
+                    )
+                    errors.extend(sub_errors)
+                    obj[field_name] = sub_obj
             else:
                 field = cast(Union[ODMField, ODMEmbedded], field)
-                value = raw_doc.get(field.key_name, field.get_default_importing_value())
-                if value is not Undefined:
-                    doc[field_name] = value
+                value = raw_doc.get(field.key_name, Undefined)
+                if value is Undefined and not field.is_required_in_doc():
+                    value = field.get_default_importing_value()
 
-        try:
-            instance = cls.parse_obj(doc)
-        except ValidationError as e:
-            raise DocumentParsingError(e)
+                if value is Undefined:
+                    errors.append(
+                        ErrorWrapper(
+                            exc=KeyNotFoundInDocumentError(field.key_name),
+                            loc=base_loc + (field_name,),
+                        )
+                    )
+                else:
+                    obj[field_name] = value
 
-        return instance
+        return errors, obj
 
 
 class Model(_BaseODMModel, metaclass=ModelMetaclass):

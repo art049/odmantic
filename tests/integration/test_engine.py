@@ -505,5 +505,39 @@ async def test_find_document_field_not_set_with_no_default(engine: AIOEngine):
         field: str
 
     await engine.get_collection(M).insert_one({"_id": ObjectId()})
-    with pytest.raises(DocumentParsingError, match="field required"):
+    with pytest.raises(
+        DocumentParsingError, match="key not found in document"
+    ) as exc_info:
         await engine.find_one(M)
+    assert (
+        "1 validation error for M\n"
+        "field\n"
+        "  key not found in document "
+        "(type=value_error.keynotfoundindocument; key_name='field')"
+    ) in str(exc_info.value)
+
+
+async def test_find_document_field_not_set_with_default_factory_disabled(
+    engine: AIOEngine,
+):
+    class M(Model):
+        field: str = Field(default_factory=lambda: "hello")
+
+    await engine.get_collection(M).insert_one({"_id": ObjectId()})
+    with pytest.raises(DocumentParsingError, match="key not found in document"):
+        await engine.find_one(M)
+
+
+async def test_find_document_field_not_set_with_default_factory_enabled(
+    engine: AIOEngine,
+):
+    class M(Model):
+        field: str = Field(default_factory=lambda: "hello")
+
+        class Config:
+            parse_doc_with_default_factories = True
+
+    await engine.get_collection(M).insert_one({"_id": ObjectId()})
+    instance = await engine.find_one(M)
+    assert instance is not None
+    assert instance.field == "hello"

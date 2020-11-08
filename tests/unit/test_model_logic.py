@@ -2,6 +2,7 @@ import pytest
 from bson.objectid import ObjectId
 from pydantic.error_wrappers import ValidationError
 
+from odmantic.exceptions import DocumentParsingError
 from odmantic.field import Field
 from odmantic.model import EmbeddedModel, Model
 from tests.zoo.person import PersonModel
@@ -87,6 +88,55 @@ def test_fields_modified_on_document_parsing():
         {"_id": ObjectId(), "first_name": "Jackie", "last_name": "Chan"}
     )
     assert instance.__fields_modified__ == set(["first_name", "last_name", "id"])
+
+
+def test_document_parsing_error_keyname():
+    class M(Model):
+        field: str = Field(key_name="custom")
+
+    id = ObjectId()
+    with pytest.raises(DocumentParsingError) as exc_info:
+        M.parse_doc({"_id": id})
+    assert str(exc_info.value) == (
+        "1 validation error for M\n"
+        "field\n"
+        "  key not found in document "
+        "(type=value_error.keynotfoundindocument; key_name='custom')\n"
+        f"(M instance details: id={repr(id)})"
+    )
+
+
+def test_document_parsing_error_embedded_keyname():
+    class F(EmbeddedModel):
+        a: int
+
+    class E(EmbeddedModel):
+        f: F
+
+    class M(Model):
+        e: E
+
+    with pytest.raises(DocumentParsingError) as exc_info:
+        M.parse_doc({"_id": ObjectId(), "e": {"f": {}}})
+    assert (
+        "1 validation error for M\n"
+        "e -> f -> a\n"
+        "  field required (type=value_error.missing)"
+    ) in str(exc_info.value)
+
+
+def test_embedded_document_parsing_error():
+    class E(EmbeddedModel):
+        f: int
+
+    with pytest.raises(DocumentParsingError) as exc_info:
+        E.parse_doc({})
+    assert str(exc_info.value) == (
+        "1 validation error for E\n"
+        "f\n"
+        "  key not found in document "
+        "(type=value_error.keynotfoundindocument; key_name='f')"
+    )
 
 
 def test_fields_modified_on_object_parsing():

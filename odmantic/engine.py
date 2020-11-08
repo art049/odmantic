@@ -231,6 +231,8 @@ class AIOEngine:
             skip: number of document to skip
             limit: maximum number of instance fetched
 
+        Raises:
+            DocumentParsingError: unable to parse one of the resulting documents
 
         Returns:
             [odmantic.engine.AIOCursor][] of the query
@@ -238,6 +240,7 @@ class AIOEngine:
         <!---
         #noqa: DAR401 ValueError
         #noqa: DAR401 TypeError
+        #noqa: DAR402 DocumentParsingError
         -->
         """
         if not lenient_issubclass(model, Model):
@@ -275,11 +278,15 @@ class AIOEngine:
             queries: query filter to apply
             sort: sort expression
 
+        Raises:
+            DocumentParsingError: unable to parse the resulting document
+
         Returns:
             the fetched instance if found otherwise None
 
         <!---
         #noqa: DAR401 TypeError
+        #noqa: DAR402 DocumentParsingError
         -->
         """
         if not lenient_issubclass(model, Model):

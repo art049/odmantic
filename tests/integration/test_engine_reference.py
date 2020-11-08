@@ -92,5 +92,35 @@ async def test_reference_not_set_in_database(engine: AIOEngine):
         r: R = Reference()
 
     await engine.get_collection(M).insert_one({"_id": ObjectId()})
-    with pytest.raises(DocumentParsingError, match="field required"):
+    with pytest.raises(DocumentParsingError) as exc_info:
         await engine.find_one(M)
+    assert (
+        "1 validation error for M\n"
+        "r\n"
+        "  referenced document not found "
+        "(type=value_error.referenceddocumentnotfound; foreign_key_name='r')"
+    ) in str(exc_info.value)
+
+
+async def test_reference_incorect_reference_structure(engine: AIOEngine):
+    class R(Model):
+        field: int
+
+    class M(Model):
+        r: R = Reference()
+
+    r = R(field=12)
+    r_doc = r.doc()
+    del r_doc["field"]
+    m = M(r=r)
+    await engine.get_collection(R).insert_one(r_doc)
+    await engine.get_collection(M).insert_one(m.doc())
+
+    with pytest.raises(DocumentParsingError) as exc_info:
+        await engine.find_one(M)
+    assert (
+        "1 validation error for M\n"
+        "r -> field\n"
+        "  key not found in document "
+        "(type=value_error.keynotfoundindocument; key_name='field')"
+    ) in str(exc_info.value)
