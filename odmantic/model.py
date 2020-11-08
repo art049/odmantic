@@ -17,6 +17,7 @@ from typing import (
     Iterable,
     List,
     Optional,
+    Sequence,
     Set,
     Tuple,
     Type,
@@ -28,7 +29,7 @@ from typing import (
 
 import bson
 import pydantic
-from pydantic.error_wrappers import ValidationError
+from pydantic.error_wrappers import ErrorWrapper, ValidationError
 from pydantic.fields import Field as PDField
 from pydantic.fields import FieldInfo as PDFieldInfo
 from pydantic.fields import Undefined
@@ -44,7 +45,12 @@ from odmantic.bson import (
     _decimalDecimal,
 )
 from odmantic.config import BaseODMConfig, validate_config
-from odmantic.exceptions import DocumentParsingError
+from odmantic.exceptions import (
+    DocumentParsingError,
+    ErrorList,
+    KeyNotFoundInDocumentError,
+    ReferencedDocumentNotFoundError,
+)
 from odmantic.field import (
     FieldProxy,
     ODMBaseField,
@@ -238,17 +244,15 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
                         value.key_name if value.key_name is not None else field_name
                     )
                     primary_field = value.primary_field
-                    default = value.default
                 else:
                     key_name = field_name
                     primary_field = False
-                    default = value
 
                 odm_fields[field_name] = ODMEmbedded(
                     primary_field=primary_field,
                     model=field_type,
                     key_name=key_name,
-                    default=default,
+                    model_config=config,
                 )
             elif lenient_issubclass(field_type, Model):
                 if not isinstance(value, ODMReferenceInfo):
@@ -259,7 +263,7 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
                 key_name = value.key_name if value.key_name is not None else field_name
                 raise_on_invalid_key_name(key_name)
                 odm_fields[field_name] = ODMReference(
-                    model=field_type, key_name=key_name
+                    model=field_type, key_name=key_name, model_config=config
                 )
                 references.append(field_name)
                 del namespace[field_name]  # Remove default ODMReferenceInfo value
@@ -274,13 +278,13 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
                     odm_fields[field_name] = ODMField(
                         primary_field=value.primary_field,
                         key_name=key_name,
-                        default=value.default,
+                        model_config=config,
                     )
                     namespace[field_name] = value.pydantic_field_info
 
                 elif value is Undefined:
                     odm_fields[field_name] = ODMField(
-                        primary_field=False, key_name=field_name
+                        primary_field=False, key_name=field_name, model_config=config
                     )
 
                 else:
@@ -292,7 +296,7 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
                             f" = {repr(value)}"
                         )
                     odm_fields[field_name] = ODMField(
-                        primary_field=False, key_name=field_name, default=value
+                        primary_field=False, key_name=field_name, model_config=config
                     )
 
         duplicate_key = find_duplicate_key(odm_fields.values())
@@ -322,6 +326,7 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
             "Model",
             "EmbeddedModel",
         )
+
         if is_custom_cls:
             # Handle calls from pydantic.main.create_model (used internally by FastAPI)
             patched_bases = []
@@ -354,9 +359,10 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
             # Change the title to generate clean JSON schemas from this "pure" model
             if config.title is None:
                 pydantic_cls.__config__.title = name
-
             cls.__pydantic_model__ = pydantic_cls
+
             for name, field in cls.__odm_fields__.items():
+                field.bind_pydantic_field(cls.__fields__[name])
                 setattr(cls, name, FieldProxy(parent=None, field=field))
 
         return cls
@@ -375,6 +381,7 @@ class ModelMetaclass(BaseModelMetaclass):
             "__qualname__"
         ) not in ("_BaseODMModel", "Model"):
             mcs.__validate_cls_namespace__(name, namespace)
+            config: BaseODMConfig = namespace["Config"]
             primary_field: Optional[str] = None
             odm_fields: Dict[str, ODMBaseField] = namespace["__odm_fields__"]
 
@@ -390,13 +397,14 @@ class ModelMetaclass(BaseModelMetaclass):
                         "field already exists"
                     )
                 primary_field = "id"
-                odm_fields["id"] = ODMField(primary_field=True, key_name="_id")
+                odm_fields["id"] = ODMField(
+                    primary_field=True, key_name="_id", model_config=config
+                )
                 namespace["id"] = PDField(default_factory=ObjectId)
                 namespace["__annotations__"]["id"] = ObjectId
 
             namespace["__primary_field__"] = primary_field
 
-            config: BaseODMConfig = namespace["Config"]
             if config.collection is not None:
                 collection_name = config.collection
             elif "__collection__" in namespace:
