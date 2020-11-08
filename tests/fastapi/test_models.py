@@ -162,7 +162,7 @@ def test_pydantic_model_references():
         Base.__pydantic_model__, "field"
     ), "class attribute should be empty"
     assert not issubclass(
-        Base.__pydantic_model__, Model  # type: ignore
+        Base.__pydantic_model__, Model
     ), "the pydantic_model should inherit from Model"
 
     b_pure = Base.__pydantic_model__(field=Referenced())

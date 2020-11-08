@@ -94,6 +94,6 @@ def test_field_required_in_doc_default_factory_enabled():
         field: str = Field(default_factory=lambda: "hi")
 
         class Config:
-            from_doc_uses_default_factory = True
+            parse_doc_with_default_factories = True
 
     assert not M.__odm_fields__["field"].is_required_in_doc()

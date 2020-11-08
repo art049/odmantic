@@ -184,16 +184,16 @@ class ODMBaseField(metaclass=abc.ABCMeta):
         self.key_name = key_name
         self.model_config = model_config
 
-    def bind_pydantic_field(self, field: ModelField):
+    def bind_pydantic_field(self, field: ModelField) -> None:
         self.pydantic_field = field
 
     def is_required_in_doc(self) -> bool:
-        if self.model_config.from_doc_uses_default_factory:
-            return self.pydantic_field.required
+        if self.model_config.parse_doc_with_default_factories:
+            return self.pydantic_field.required  # type: ignore
         else:
             return (
                 self.pydantic_field.default_factory is not None
-                or self.pydantic_field.required
+                or self.pydantic_field.required  # type: ignore
             )
 
 
@@ -206,11 +206,7 @@ class ODMField(ODMBaseField):
     )
 
     def __init__(
-        self,
-        *,
-        primary_field: bool,
-        key_name: str,
-        model_config: Type["BaseODMConfig"],
+        self, *, primary_field: bool, key_name: str, model_config: Type["BaseODMConfig"]
     ):
         super().__init__(key_name, model_config)
         self.primary_field = primary_field
@@ -220,7 +216,7 @@ class ODMField(ODMBaseField):
         # The default importing value doesn't consider the default_factory setting by
         # default as it could result in inconsistent behaviors for datetime.now
         # factories for example
-        if self.model_config.from_doc_uses_default_factory:
+        if self.model_config.parse_doc_with_default_factories:
             return self.pydantic_field.get_default()
 
         if self.pydantic_field.default is None:
@@ -238,10 +234,7 @@ class ODMReference(ODMBaseField):
     __allowed_operators__ = set(("eq", "ne", "in_", "not_in"))
 
     def __init__(
-        self,
-        key_name: str,
-        model_config: Type[BaseODMConfig],
-        model: Type["Model"],
+        self, key_name: str, model_config: Type[BaseODMConfig], model: Type["Model"]
     ):
         super().__init__(key_name, model_config)
         self.model = model

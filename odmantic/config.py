@@ -14,7 +14,7 @@ class BaseODMConfig:
     """
 
     collection: Optional[str] = None
-    from_doc_uses_default_factory: bool = False
+    parse_doc_with_default_factories: bool = False
 
     # Inherited from pydantic
     title: Optional[str] = None
