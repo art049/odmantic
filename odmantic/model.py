@@ -38,7 +38,6 @@ from pydantic.utils import lenient_issubclass
 
 from odmantic.bson import (
     _BSON_SUBSTITUTED_FIELDS,
-    BSON_TYPES_ENCODERS,
     BaseBSONModel,
     ObjectId,
     _decimalDecimal,
@@ -472,11 +471,6 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         __fields_modified__: Set[str] = set()
 
     __slots__ = ("__fields_modified__",)
-
-    class Config:
-        validate_all = True
-        validate_assignment = True
-        json_encoders = BSON_TYPES_ENCODERS
 
     @classmethod
     def validate(cls: Type[TBase], value: Any) -> TBase:
