@@ -10,8 +10,9 @@
       
       
       
+      
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.0">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.4">
     
     
       
@@ -19,10 +20,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.bc7e593a.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.358818c7.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.ab28b872.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.f0267088.min.css">
         
           
           
@@ -461,6 +462,33 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#unreleased" class="md-nav__link">
+    Unreleased
+  </a>
+  
+    <nav class="md-nav" aria-label="Unreleased">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deprecated" class="md-nav__link">
+    Deprecated
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#added" class="md-nav__link">
+    Added
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#021-2020-10-25" class="md-nav__link">
     0.2.1 - 2020-10-25
   </a>
@@ -489,14 +517,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#deprecated" class="md-nav__link">
+  <a href="#deprecated_1" class="md-nav__link">
     Deprecated
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#added" class="md-nav__link">
+  <a href="#added_1" class="md-nav__link">
     Added
   </a>
   
@@ -572,6 +600,33 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#unreleased" class="md-nav__link">
+    Unreleased
+  </a>
+  
+    <nav class="md-nav" aria-label="Unreleased">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deprecated" class="md-nav__link">
+    Deprecated
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#added" class="md-nav__link">
+    Added
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#021-2020-10-25" class="md-nav__link">
     0.2.1 - 2020-10-25
   </a>
@@ -600,14 +655,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#deprecated" class="md-nav__link">
+  <a href="#deprecated_1" class="md-nav__link">
     Deprecated
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#added" class="md-nav__link">
+  <a href="#added_1" class="md-nav__link">
     Added
   </a>
   
@@ -672,19 +727,49 @@
                 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h1>
 <p><sub>The format is based on <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>,
 and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</sub></p>
+<h2 id="unreleased"><a href="https://github.com/art049/odmantic/compare/v0.2.1...HEAD">Unreleased</a><a class="headerlink" href="#unreleased" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Use a Config class to configure models (<a href="https://github.com/art049/odmantic/pull/37">#37</a> by <a href="https://github.com/art049">@art049</a>)</li>
+</ul>
+<h4 id="deprecated">Deprecated<a class="headerlink" href="#deprecated" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Usage of <code>__collection__</code> to customize the collection name. Prefer the <code>collection</code>
+  Config option (<a href="https://art049.github.io/odmantic/modeling/#collection">more details</a>)</li>
+</ul>
+<h4 id="added">Added<a class="headerlink" href="#added" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p>Integration with Pydantic <code>Config</code> class:</p>
+</li>
+<li>
+<p>It's now possible to define custom <code>json_encoders</code> on the Models</p>
+</li>
+<li>
+<p>Some other <code>Config</code> options provided by Pydantic are now available (<a href="https://art049.github.io/odmantic/modeling/#advanced-configuration">more
+    details</a>)</p>
+</li>
+<li>
+<p>Support CPython 3.9 (<a href="https://github.com/art049/odmantic/pull/32">#32</a> by
+  <a href="https://github.com/art049">@art049</a>)</p>
+</li>
+<li>
+<p>Unpin pydantic to support 1.7.0 (<a href="https://github.com/art049/odmantic/pull/29">#29</a> by
+  <a href="https://github.com/art049">@art049</a>)</p>
+</li>
+</ul>
 <h2 id="021-2020-10-25"><a href="https://github.com/art049/odmantic/compare/v0.2.0...v0.2.1">0.2.1</a> - 2020-10-25<a class="headerlink" href="#021-2020-10-25" title="Permanent link">&para;</a></h2>
 <h4 id="fixed">Fixed<a class="headerlink" href="#fixed" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Fix combined use of <code>skip</code> and <code>limit</code> with <code>engine.find</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/art049/odmantic/issues/25" title="GitHub Issue: art049/odmantic#25">#25</a> by <a class="magiclink magiclink-github magiclink-mention" href="https://github.com/art049" title="GitHub User: art049">@art049</a>)</li>
 </ul>
 <h2 id="020-2020-10-25"><a href="https://github.com/art049/odmantic/compare/v0.1.0...v0.2.0">0.2.0</a> - 2020-10-25<a class="headerlink" href="#020-2020-10-25" title="Permanent link">&para;</a></h2>
-<h4 id="deprecated">Deprecated<a class="headerlink" href="#deprecated" title="Permanent link">&para;</a></h4>
+<h4 id="deprecated_1">Deprecated<a class="headerlink" href="#deprecated_1" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Deprecate <code>AIOEngineDependency</code> to prefer a global engine object, <a href="https://art049.github.io/odmantic/usage_fastapi/#building-the-engine">more
   details</a> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/art049/odmantic/issues/21" title="GitHub Issue: art049/odmantic#21">#21</a> by
   <a class="magiclink magiclink-github magiclink-mention" href="https://github.com/art049" title="GitHub User: art049">@art049</a>)</li>
 </ul>
-<h4 id="added">Added<a class="headerlink" href="#added" title="Permanent link">&para;</a></h4>
+<h4 id="added_1">Added<a class="headerlink" href="#added_1" title="Permanent link">&para;</a></h4>
 <ul>
 <li><a href="https://art049.github.io/odmantic/querying/#sorting">Add sorting support</a> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/art049/odmantic/issues/17" title="GitHub Issue: art049/odmantic#17">#17</a> by <a class="magiclink magiclink-github magiclink-mention" href="https://github.com/adriencaccia" title="GitHub User: adriencaccia">@adriencaccia</a>)</li>
 <li>Support motor 2.3.0 (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/art049/odmantic/issues/20" title="GitHub Issue: art049/odmantic#20">#20</a> by <a class="magiclink magiclink-github magiclink-mention" href="https://github.com/art049" title="GitHub User: art049">@art049</a>)</li>
@@ -784,8 +869,8 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
       
     </div>
     
-      <script src="../assets/javascripts/vendor.6a3d08fc.min.js"></script>
-      <script src="../assets/javascripts/bundle.71201edf.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      <script src="../assets/javascripts/vendor.7e0ee788.min.js"></script>
+      <script src="../assets/javascripts/bundle.b3a72adc.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({
