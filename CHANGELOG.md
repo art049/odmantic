@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Use a Config class to configure models ([#37](https://github.com/art049/odmantic/pull/37) by [@art049](https://github.com/art049))
+
 #### Deprecated
 
 - Usage of `__collection__` to customize the collection name. Prefer the `collection`
