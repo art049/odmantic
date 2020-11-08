@@ -15,3 +15,6 @@ if sys.version_info < (3, 8):
     from typing_extensions import Literal
 else:
     from typing import Literal  # noqa: F401
+
+
+USES_OLD_TYPING_INTERFACE = sys.version_info[:3] < (3, 7, 0)  # PEP 560

@@ -142,7 +142,6 @@ def test_pydantic_model_title(base: Type):
     assert M.__pydantic_model__.schema()["title"] == "M"
 
 
-@pytest.mark.skip("Not handled yet. Move all model config to the Config object")
 @pytest.mark.parametrize("base", (Model, EmbeddedModel))
 def test_pydantic_model_custom_title(base: Type):
     class M(base):  # type: ignore

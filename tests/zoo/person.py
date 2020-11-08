@@ -2,7 +2,8 @@ from odmantic.model import Model
 
 
 class PersonModel(Model):
-    __collection__ = "people"
+    class Config:
+        collection = "people"
 
     first_name: str
     last_name: str
