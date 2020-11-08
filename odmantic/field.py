@@ -1,4 +1,5 @@
 import abc
+from copy import deepcopy
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -12,8 +13,9 @@ from typing import (
 )
 
 from pydantic.fields import Field as PDField
-from pydantic.fields import FieldInfo, Undefined
+from pydantic.fields import FieldInfo, ModelField, Undefined
 
+from odmantic.config import BaseODMConfig
 from odmantic.query import (
     QueryExpression,
     SortExpression,
@@ -153,7 +155,6 @@ def Field(
         pydantic_field_info=pydantic_field,
         primary_field=primary_field,
         key_name=key_name,
-        default=default,
     )
 
 
@@ -168,40 +169,66 @@ class ODMFieldInfo:
         pydantic_field_info: FieldInfo,
         primary_field: bool,
         key_name: Optional[str],
-        default: Any,
     ):
         self.pydantic_field_info = pydantic_field_info
         self.primary_field = primary_field
         self.key_name = key_name
-        self.default = default
 
 
 class ODMBaseField(metaclass=abc.ABCMeta):
 
-    __slots__ = ("key_name",)
+    __slots__ = ("key_name", "model_config", "pydantic_field")
     __allowed_operators__: Set[str]
 
-    def __init__(self, key_name: str):
+    def __init__(self, key_name: str, model_config: Type[BaseODMConfig]):
         self.key_name = key_name
+        self.model_config = model_config
+
+    def bind_pydantic_field(self, field: ModelField):
+        self.pydantic_field = field
+
+    def is_required_in_doc(self) -> bool:
+        if self.model_config.from_doc_uses_default_factory:
+            return self.pydantic_field.required
+        else:
+            return (
+                self.pydantic_field.default_factory is not None
+                or self.pydantic_field.required
+            )
 
 
 class ODMField(ODMBaseField):
     """Used to interact with the ODM model class."""
 
-    __slots__ = ("primary_field", "default")
+    __slots__ = ("primary_field",)
     __allowed_operators__ = set(
         ("eq", "ne", "in_", "not_in", "lt", "lte", "gt", "gte", "match", "asc", "desc")
     )
 
-    def __init__(self, *, primary_field: bool, key_name: str, default: Any = Undefined):
-        super().__init__(key_name)
+    def __init__(
+        self,
+        *,
+        primary_field: bool,
+        key_name: str,
+        model_config: Type["BaseODMConfig"],
+    ):
+        super().__init__(key_name, model_config)
         self.primary_field = primary_field
-        self.default = default
+        self.model_config = model_config
 
     def get_default_importing_value(self) -> Any:
-        # The default importing value doesn't consider the default_factory setting as it
-        # could result in inconsistent behaviors for datetime.now for example
-        return self.default
+        # The default importing value doesn't consider the default_factory setting by
+        # default as it could result in inconsistent behaviors for datetime.now
+        # factories for example
+        if self.model_config.from_doc_uses_default_factory:
+            return self.pydantic_field.get_default()
+
+        if self.pydantic_field.default is None:
+            # deepcopy is quite slow on None
+            value = None
+        else:
+            value = deepcopy(self.pydantic_field.default)
+        return value
 
 
 class ODMReference(ODMBaseField):
@@ -210,8 +237,13 @@ class ODMReference(ODMBaseField):
     __slots__ = ("model",)
     __allowed_operators__ = set(("eq", "ne", "in_", "not_in"))
 
-    def __init__(self, key_name: str, model: Type["Model"]):
-        super().__init__(key_name)
+    def __init__(
+        self,
+        key_name: str,
+        model_config: Type[BaseODMConfig],
+        model: Type["Model"],
+    ):
+        super().__init__(key_name, model_config)
         self.model = model
 
 
@@ -224,11 +256,11 @@ class ODMEmbedded(ODMField):
         self,
         primary_field: bool,
         key_name: str,
+        model_config: Type[BaseODMConfig],
         model: Type["EmbeddedModel"],
-        default: Any,
     ):
         super().__init__(
-            primary_field=primary_field, key_name=key_name, default=default
+            primary_field=primary_field, key_name=key_name, model_config=model_config
         )
         self.model = model
 
