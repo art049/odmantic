@@ -16,17 +16,19 @@ If the class name ends with `Model`, ODMantic will remove it to create the colle
 name. For example, a model class named `PersonModel` will belong in the `person`
 collection.
 
-It's possible to change the collection name of a model by specifying the `__collection__`
-class variable in the class body.
+It's possible to customize the collection name of a model by specifying the `collection`
+option in the `Config` class.
 
 !!! example "Custom collection name example"
-    ```python
+    ```python hl_lines="7-8"
     from odmantic import Model
 
     class CapitalCity(Model):
-        __collection__ = "city"
         name: str
         population: int
+
+        class Config:
+            collection = "city"
     ```
     Now, when `CapitalCity` instances will be persisted to the database, they will
     belong in the `city` collection instead of `capital_city`.
@@ -53,6 +55,48 @@ ensure that the area of the rectangle is less or equal to 9.
     You can define class variables in the Models using the `typing.ClassVar` type
     construct, as done in this example with `MAX_AREA`. Those class variables will be
     completely ignored by ODMantic while persisting instances to the database.
+
+### Advanced Configuration
+
+The model configuration is done in the same way as with Pydantic models, using a [Config
+class](https://pydantic-docs.helpmanual.io/usage/model_config/){:target=blank_} defined
+in the model body.
+
+
+
+`#!python collection: str`
+:    The collection name associated to the model. see [this
+     section](modeling.md#collection) for more details about collection naming.
+
+
+
+`#!python title: str` *(inherited from Pydantic)*
+:    The name generated in the JSON schema.
+
+
+
+`#!python json_encoders: dict` *(inherited from Pydantic)*
+:    Customize the way types used in the model are encoded.
+
+    ??? example "`json_encoders` example"
+
+        For example, in order to serialize `datetime` fields as timestamp values:
+        ```python
+        class Event(Model):
+            date: datetime
+
+            class Config:
+                json_encoders = {
+                    datetime: lambda v: v.timestamp()
+                }
+        ```
+
+!!! warning
+    Only the options described above are supported and other options from Pydantic can't
+    be used with ODMantic.
+
+    If you feel the need to have an additional option inherited from Pydantic, you can
+    [open an issue](https://github.com/art049/odmantic/issues/new){:target=blank}.
 
 ## Embedded Models
 

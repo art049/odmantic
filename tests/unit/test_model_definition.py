@@ -34,7 +34,8 @@ class TheClassNameModel(Model):
 
 
 class TheClassNameOverriden(Model):
-    __collection__ = "collection_name"
+    class Config:
+        collection = "collection_name"
 
 
 def test_auto_collection_name():
@@ -53,7 +54,8 @@ def test_auto_collection_name_nested():
     assert theNestedClassName.__collection__ == "the_nested_class_name"
 
     class TheNestedClassNameOverriden(Model):
-        __collection__ = "collection_name"
+        class Config:
+            collection = "collection_name"
 
     assert TheNestedClassNameOverriden.__collection__ == "collection_name"
 
@@ -272,21 +274,36 @@ def test_invalid_collection_name_dollar():
     with pytest.raises(TypeError, match=r"cannot contain '\$'"):
 
         class A(Model):
-            __collection__ = "hello$world"
+            class Config:
+                collection = "hello$world"
 
 
 def test_invalid_collection_name_empty():
     with pytest.raises(TypeError, match="cannot be empty"):
 
         class A(Model):
-            __collection__ = ""
+            class Config:
+                collection = ""
 
 
 def test_invalid_collection_name_contain_system_dot():
     with pytest.raises(TypeError, match="cannot start with 'system.'"):
 
         class A(Model):
-            __collection__ = "system.hi"
+            class Config:
+                collection = "system.hi"
+
+
+def test_legacy_custom_collection_name():
+    with pytest.warns(
+        DeprecationWarning,
+        match="Defining the collection name with `__collection__` is deprecated",
+    ):
+
+        class M(Model):
+            __collection__ = "collection_name"
+
+    assert M.__collection__ == "collection_name"
 
 
 def test_embedded_model_key_name():
@@ -358,3 +375,21 @@ def test_model_with_class_var():
     assert m.cls_var == "theclassvar"
     assert m.field == 5
     assert "cls_var" not in m.doc().keys()
+
+
+def test_forbidden_config_parameter_validate_all():
+    with pytest.raises(ValueError, match="'Config.validate_all' is not supported"):
+
+        class M(Model):
+            class Config:
+                validate_all = False
+
+
+def test_forbidden_config_parameter_validate_assignment():
+    with pytest.raises(
+        ValueError, match="'Config.validate_assignment' is not supported"
+    ):
+
+        class M(Model):
+            class Config:
+                validate_assignment = False

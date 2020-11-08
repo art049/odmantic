@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from typing import Dict
 
 import pytest
@@ -117,3 +118,27 @@ def test_zoo_serialization_no_id(instance: Model, expected_parsed_json: Dict):
     parsed_data = json.loads(instance.json())
     del parsed_data["id"]
     assert parsed_data == expected_parsed_json
+
+
+def test_custom_json_encoders():
+    class M(Model):
+        a: datetime = datetime.now()
+
+        class Config:
+            json_encoders = {datetime: lambda _: "encoded"}
+
+    instance = M()
+    parsed = json.loads(instance.json())
+    assert parsed == {"id": str(instance.id), "a": "encoded"}
+
+
+def test_custom_json_encoders_override_builtin_bson():
+    class M(Model):
+        ...
+
+        class Config:
+            json_encoders = {ObjectId: lambda _: "encoded"}
+
+    instance = M()
+    parsed = json.loads(instance.json())
+    assert parsed == {"id": "encoded"}

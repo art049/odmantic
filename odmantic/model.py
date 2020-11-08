@@ -2,9 +2,8 @@ import datetime
 import decimal
 import enum
 import pathlib
-import re
-import sys
 import uuid
+import warnings
 from abc import ABCMeta
 from collections.abc import Callable as abcCallable
 from types import FunctionType
@@ -44,6 +43,7 @@ from odmantic.bson import (
     ObjectId,
     _decimalDecimal,
 )
+from odmantic.config import BaseODMConfig, validate_config
 from odmantic.field import (
     FieldProxy,
     ODMBaseField,
@@ -53,6 +53,13 @@ from odmantic.field import (
     ODMReference,
 )
 from odmantic.reference import ODMReferenceInfo
+from odmantic.typing import USES_OLD_TYPING_INTERFACE
+from odmantic.utils import (
+    is_dunder,
+    raise_on_invalid_collection_name,
+    raise_on_invalid_key_name,
+    to_snake_case,
+)
 
 if TYPE_CHECKING:
 
@@ -63,12 +70,11 @@ if TYPE_CHECKING:
         ReprArgs,
     )
 
-USES_OLD_TYPING_INTERFACE = sys.version_info[:3] < (3, 7, 0)  # PEP 560
 if USES_OLD_TYPING_INTERFACE:
     from typing import _subs_tree  # type: ignore  # noqa
 
 
-UNTOUCHED_TYPES = FunctionType, property, classmethod, staticmethod
+UNTOUCHED_TYPES = FunctionType, property, classmethod, staticmethod, type
 
 
 def should_touch_field(value: Any = None, type_: Optional[Type] = None) -> bool:
@@ -77,23 +83,6 @@ def should_touch_field(value: Any = None, type_: Optional[Type] = None) -> bool:
         or isinstance(value, UNTOUCHED_TYPES)
         or (type_ is not None and is_classvar(type_))
     )
-
-
-def is_valid_odm_field_name(name: str) -> bool:
-    return not name.startswith("__") and not name.endswith("__")
-
-
-def raise_on_invalid_key_name(name: str) -> None:
-    # https://docs.mongodb.com/manual/reference/limits/#Restrictions-on-Field-Names
-    if name.startswith("$"):
-        raise TypeError("key_name cannot start with the dollar sign ($) character")
-    if "." in name:
-        raise TypeError("key_name cannot contain the dot (.) character")
-
-
-def to_snake_case(s: str) -> str:
-    tmp = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", s)
-    return re.sub("([a-z0-9])([A-Z])", r"\1_\2", tmp).lower()
 
 
 def find_duplicate_key(fields: Iterable[ODMBaseField]) -> Optional[str]:
@@ -202,6 +191,7 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
         annotations = resolve_annotations(
             namespace.get("__annotations__", {}), namespace.get("__module__")
         )
+        config = validate_config(namespace.get("Config", BaseODMConfig), name)
         odm_fields: Dict[str, ODMBaseField] = {}
         references: List[str] = []
         bson_serialized_fields: Set[str] = set()
@@ -211,7 +201,7 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
         for field_name, value in namespace.items():
             if (
                 should_touch_field(value=value)
-                and is_valid_odm_field_name(field_name)
+                and not is_dunder(field_name)
                 and field_name not in annotations
             ):
                 raise TypeError(
@@ -220,9 +210,7 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
 
         # Validate fields types and substitute bson fields
         for (field_name, field_type) in annotations.items():
-            if is_valid_odm_field_name(field_name) and should_touch_field(
-                type_=field_type
-            ):
+            if not is_dunder(field_name) and should_touch_field(type_=field_type):
                 substituted_type = validate_type(field_type)
                 # Handle BSON serialized fields after substitution to allow some
                 # builtin substitution
@@ -235,9 +223,7 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
         for (field_name, field_type) in annotations.items():
             value = namespace.get(field_name, Undefined)
 
-            if not is_valid_odm_field_name(field_name) or not should_touch_field(
-                value, field_type
-            ):
+            if is_dunder(field_name) or not should_touch_field(value, field_type):
                 continue  # pragma: no cover
                 # https://github.com/nedbat/coveragepy/issues/198
 
@@ -311,6 +297,7 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
         namespace["__references__"] = tuple(references)
         namespace["__bson_serialized_fields__"] = frozenset(bson_serialized_fields)
         namespace["__mutable_fields__"] = frozenset(mutable_fields)
+        namespace["Config"] = config
 
     @no_type_check
     def __new__(
@@ -344,6 +331,7 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
         cls = super().__new__(mcs, name, bases, namespace, **kwargs)
 
         if is_custom_cls:
+            config: BaseODMConfig = namespace["Config"]
             # Patch Model related fields to build a "pure" pydantic model
             odm_fields: Dict[str, ODMBaseField] = namespace["__odm_fields__"]
             for field_name, field in odm_fields.items():
@@ -356,7 +344,8 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
                 mcs, f"{name}.__pydantic_model__", (BaseBSONModel,), namespace, **kwargs
             )
             # Change the title to generate clean JSON schemas from this "pure" model
-            pydantic_cls.__config__.title = name
+            if config.title is None:
+                pydantic_cls.__config__.title = name
 
             cls.__pydantic_model__ = pydantic_cls
             for name, field in cls.__odm_fields__.items():
@@ -399,29 +388,24 @@ class ModelMetaclass(BaseModelMetaclass):
 
             namespace["__primary_field__"] = primary_field
 
-            if "__collection__" in namespace:
+            config: BaseODMConfig = namespace["Config"]
+            if config.collection is not None:
+                collection_name = config.collection
+            elif "__collection__" in namespace:
                 collection_name = namespace["__collection__"]
+                warnings.warn(
+                    "Defining the collection name with `__collection__` is deprecated. "
+                    "Please use `collection` config attribute instead.",
+                    DeprecationWarning,
+                )
             else:
                 cls_name = name
                 if cls_name.endswith("Model"):
                     # TODO document this
                     cls_name = cls_name[:-5]  # Strip Model in the class name
                 collection_name = to_snake_case(cls_name)
-                namespace["__collection__"] = collection_name
-
-            # Validate the collection name
-            # https://docs.mongodb.com/manual/reference/limits/#Restriction-on-Collection-Names
-            if "$" in collection_name:
-                raise TypeError(
-                    f"Invalid collection name for {name}: cannot contain '$'"
-                )
-            if collection_name == "":
-                raise TypeError(f"Invalid collection name for {name}: cannot be empty")
-            if collection_name.startswith("system."):
-                raise TypeError(
-                    f"Invalid collection name for {name}:"
-                    " cannot start with 'system.'"
-                )
+            raise_on_invalid_collection_name(collection_name, cls_name=name)
+            namespace["__collection__"] = collection_name
 
         return super().__new__(mcs, name, bases, namespace, **kwargs)
 

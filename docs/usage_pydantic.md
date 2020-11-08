@@ -10,6 +10,17 @@ Also, you will have to use the `bson` equivalent types defined in the
 [odmantic.bson](api_reference/bson.md) module. Those types, add a validation logic to
 the native types from the `bson` module.
 
+!!! note "Custom `json_encoders` with `BaseBSONModel`"
+    If you want to specify additional json encoders, with a Pydantic model containing
+    `BSON` fields, you will need to pass as well the ODMantic encoders
+    ([BSON_TYPES_ENCODERS][odmantic.bson.BSON_TYPES_ENCODERS]).
+
+    ??? example "Custom encoders example"
+        ```python linenums="1" hl_lines="11-14 18"
+        --8<-- "usage_pydantic/custom_encoders.py"
+        ```
+
+    An issue that would simplify this behavior has been opened: [pydantic#2024](https://github.com/samuelcolvin/pydantic/issues/2024){:target=blank_}
 ## Accessing the underlying pydantic model
 
 Each ODMantic Model contain a pure version of the pydantic model used to build the

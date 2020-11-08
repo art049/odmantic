@@ -58,9 +58,8 @@ jobs:
 
       - uses: codecov/codecov-action@v1
         with:
-          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-          file: ./coverage.xml # optional
-          flags: tests-${{ matrix.python-version }}-${{ matrix.mongo-version }} # optional
+          file: ./coverage.xml
+          flags: tests-${{ matrix.python-version }}-${{ matrix.mongo-version }}
           fail_ci_if_error: true
 
     services:
