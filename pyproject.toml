@@ -94,4 +94,5 @@ filterwarnings = [
 branch = true
 [tool.coverage.report]
 include = ["odmantic/*", "tests/*"]
+omit = ["**/conftest.py"]
 exclude_lines = ["pragma: no cover", "if TYPE_CHECKING:", "@pytest.mark.skip"]
