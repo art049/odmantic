@@ -33,24 +33,57 @@ field reference name.
 ```python linenums="1"
 --8<-- "raw_query_usage/field_key_name.py"
 ```
-
-## Creating instances from raw documents
+## Raw MongoDB documents
+### Parsing documents
 You can parse MongoDB document to instances using the
 [parse_doc][odmantic.model._BaseODMModel.parse_doc] method.
 
-!!! note
+!!! tip
     If the provided documents contain extra fields, ODMantic will ignore them. This can
     be especially useful in aggregation pipelines.
 
 ```python linenums="1" hl_lines="20 27 38-39 44"
 --8<-- "raw_query_usage/create_from_raw.py"
 ```
-## Extract documents from existing instances
+
+
+### Dumping documents
 You can generate a document from instances using the
 [doc][odmantic.model._BaseODMModel.doc] method.
 ```python linenums="1" hl_lines="20 27 38-39 44"
 --8<-- "raw_query_usage/extract_from_existing.py"
 ```
+
+### Advanced parsing behavior
+
+#### Default values
+While parsing documents, ODMantic will use the default values provided in the Models to populate the missing fields from the documents:
+
+```python linenums="1" hl_lines="8 11 18"
+--8<-- "raw_query_usage/parse_with_unset_default.py"
+```
+
+#### Default factories
+
+For the field with default factories provided through the Field descriptor though, by
+default they wont be populated.
+
+```python linenums="1" hl_lines="12 15 21-24"
+--8<-- "raw_query_usage/parse_with_unset_default_factory.py"
+```
+
+In the previous example, using the default factories could create data inconsistencies
+and in this case, it would probably be more suitable to perform a manual migration to
+provide the correct values.
+
+Still, the `parse_doc_with_default_factories`
+[Config](modeling.md#advanced-configuration) option can be used to allow the use of the
+default factories while parsing documents:
+
+```python linenums="1" hl_lines="12 15 18 25"
+--8<-- "raw_query_usage/parse_with_unset_default_factory_enabled.py"
+```
+
 ## Aggregation example
 In the following example, we will demonstrate the use of the previous helpers to build
 an aggregation pipeline. We will first consider a `Rectangle` model with two float

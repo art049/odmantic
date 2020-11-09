@@ -64,45 +64,53 @@ in the model body.
 
 **Available options**:
 
-> `#!python collection: str`
-> :    Customize the collection name associated to the model. see [this
->      section](modeling.md#collection) for more details about default collection naming.
->
-> `#!python title: str` *(inherited from Pydantic)*
-> :    Title inferred in the JSON schema.
->
->      Default: name of the model class
->
-> `#!python anystr_strip_whitespace: bool` *(inherited from Pydantic)*
-> :    Whether to strip leading and trailing whitespaces for str & byte types.
->
->      Default: `#!python False`
->
-> `#!python json_encoders: dict` *(inherited from Pydantic)*
-> :    Customize the way types used in the model are encoded to JSON.
->
->     ??? example "`json_encoders` example"
->
->         For example, in order to serialize `datetime` fields as timestamp values:
->         ```python
->         class Event(Model):
->             date: datetime
->
->             class Config:
->                 json_encoders = {
->                     datetime: lambda v: v.timestamp()
->                 }
->         ```
->
-> `#!python json_loads` *(inherited from Pydantic)*
-> :    Function used to decode JSON data
->
->      Default: `#!python json.loads`
->
-> `#!python json_dumps` *(inherited from Pydantic)*
-> :    Function used to encode JSON data
->
->      Default: `#!python json.dumps`
+ `#!python collection: str`
+ :    Customize the collection name associated to the model. see [this
+      section](modeling.md#collection) for more details about default collection naming.
+
+ `#!python parse_doc_with_default_factories: bool`
+ :    Wether to allow populating field values with default factories while parsing
+      documents from the database. See [this
+      section](raw_query_usage.md#advanced-parsing-behavior) for more details.
+
+      Default: `#!python False`
+
+ `#!python title: str` *(inherited from Pydantic)*
+ :    Title inferred in the JSON schema.
+
+      Default: name of the model class
+
+ `#!python anystr_strip_whitespace: bool` *(inherited from Pydantic)*
+ :    Whether to strip leading and trailing whitespaces for str & byte types.
+
+      Default: `#!python False`
+
+`#!python json_encoders: dict` *(inherited from Pydantic)*
+:    Customize the way types used in the model are encoded to JSON.
+
+    ??? example "`json_encoders` example"
+
+        For example, in order to serialize `datetime` fields as timestamp values:
+
+        ```python
+        class Event(Model):
+            date: datetime
+
+            class Config:
+                json_encoders = {
+                    datetime: lambda v: v.timestamp()
+                }
+        ```
+
+ `#!python json_loads` *(inherited from Pydantic)*
+ :    Function used to decode JSON data
+
+      Default: `#!python json.loads`
+
+ `#!python json_dumps` *(inherited from Pydantic)*
+ :    Function used to encode JSON data
+
+      Default: `#!python json.dumps`
 
 For more details and examples about the options inherited from Pydantic, you can have a
 look to [Pydantic: Model
