@@ -90,6 +90,12 @@ specified criteriums or `None` if no instances have been found.
 --8<-- "engine/fetch_find_one.py"
 ```
 
+!!! info "Missing values in documents"
+    While parsing the MongoDB documents into Model instances, ODMantic will use the
+    provided default values to populate the missing fields.
+
+    See [this section](raw_query_usage.md#advanced-parsing-behavior) for more details about document parsing.
+
 !!! tip "Fetch using `sort`"
     We can use the `sort` parameter to fetch the `Player` instance with
     the first `name` in ascending order:

@@ -195,9 +195,13 @@ descriptor using the `default` keyword argument.
 --8<-- "fields/default_value_field.py"
 ```
 
-!!! tip "Default factory"
+!!! info "Default factory"
     You may as well define a factory function instead of a value using the
     `default_factory` argument of the [Field][odmantic.field.Field] descriptor.
+
+    By default, the default factories won't be used while parsing MongoDB documents.
+    It's possible to enable this behavior with the `parse_doc_with_default_factories`
+    [Config](modeling.md#advanced-configuration) option.
 
 !!! tip
     For `typing.Optional` fields, `None` is already set as the default value
