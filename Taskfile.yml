@@ -24,6 +24,14 @@ tasks:
     cmds:
       - poetry run pytest -rs
 
+  default:
+    desc: |
+      Run the tests related to changes with the current version.
+    deps:
+      - task: mongodb
+    cmds:
+      - poetry run pytest -rs --testmon
+
   coverage:
     desc: Get the test coverage (xml and html) with the current version.
     deps:
