@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Added
 
-- Allow parsing document with unset fields defaults ([#28](https://github.com/art049/odmantic/pull/28) by [@art049](https://github.com/art049))
+- Allow parsing document with unset fields defaults ([documentation](https://art049.github.io/odmantic/raw_query_usage/#advanced-parsing-behavior)) ([#28](https://github.com/art049/odmantic/pull/28) by [@art049](https://github.com/art049))
 
 - Integration with Pydantic `Config` class ([#37](https://github.com/art049/odmantic/pull/37) by [@art049](https://github.com/art049)):
 
