@@ -1,0 +1,46 @@
+version: "3"
+
+silent: false
+
+vars:
+  VERSION_FILE: ./__version__.txt
+  RELEASE_NOTE_FILE: ./__release_notes__.md
+  RELEASE_BRANCH: "master"
+  CURRENT_BRANCH:
+    sh: git rev-parse --symbolic-full-name --abbrev-ref HEAD
+  RELEASE_COMMIT_FILES: "pyproject.toml CHANGELOG.md"
+
+tasks:
+  default:
+    preconditions:
+      - sh: which hub
+        msg: hub not found
+      - sh: "[ {{.CURRENT_BRANCH}} = {{.RELEASE_BRANCH}} ]"
+        msg: "Please switch to {{.RELEASE_BRANCH}} to create a release"
+    cmds:
+      - task: prepare-workspace
+      - task: publish-release
+      - task: clean
+
+  prepare-workspace:
+    cmds:
+      - poetry run python .github/release.py
+  publish-release:
+    vars:
+      RELEASE_NOTE:
+        sh: cat {{.RELEASE_NOTE_FILE}}
+      NEW_VERSION:
+        sh: cat {{.VERSION_FILE}}
+    cmds:
+      - git add {{.RELEASE_COMMIT_FILES}}
+      - git commit -m "Release {{.NEW_VERSION}} 🚀"
+      - git push
+      - git tag v{{.NEW_VERSION}}
+      - git push --tags
+      - hub release create -d -t {{.RELEASE_BRANCH}} -m v{{.NEW_VERSION}} -m "$(cat {{.RELEASE_NOTE_FILE}} )" v{{.NEW_VERSION}}
+      - poetry publish --build
+
+  clean:
+    cmds:
+      - rm -f {{.VERSION_FILE}}
+      - rm -f {{.RELEASE_NOTE_FILE}}
