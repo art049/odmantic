@@ -329,7 +329,7 @@ def test_embedded_model_as_primary_field():
 
 
 def test_untouched_types_function():
-    def id_str(self) -> str:
+    def id_str(self) -> str:  # pragma: no cover
         return str(self.id)
 
     class M(Model):
