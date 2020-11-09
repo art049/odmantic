@@ -68,6 +68,7 @@ fastapi = ">=0.61.1,<0.64.0"
 requests = "^2.24.0"
 typer = "^0.3.2"
 semver = "^2.13.0"
+pytest-testmon = "^1.0.3"
 
 [build-system]
 requires = ["poetry>=0.12"]
@@ -79,7 +80,7 @@ multi_line_output = 3
 include_trailing_comma = true
 use_parentheses = true
 force_grid_wrap = 0
-known_third_party = ["bson", "click", "fastapi", "motor", "pydantic", "pytest", "pytz", "semver", "typer", "uvicorn"]
+float_to_top = true
 known_first_party = ["odmantic", "tests"]
 skip = ["docs"]
 
@@ -92,5 +93,5 @@ filterwarnings = [
 [tool.coverage.run]
 branch = true
 [tool.coverage.report]
-include = ["odmantic/*"]
-exclude_lines = ["pragma: no cover", "if TYPE_CHECKING:"]
+include = ["odmantic/*", "tests/*"]
+exclude_lines = ["pragma: no cover", "if TYPE_CHECKING:", "@pytest.mark.skip"]
