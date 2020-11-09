@@ -21,7 +21,7 @@ repos:
     rev: 19.3b0
     hooks:
       - id: black
-        exclude: "^docs/.*"
+        exclude: "^docs/.*|.github/release.py"
   - repo: https://github.com/asottile/seed-isort-config
     rev: v2.2.0
     hooks:
@@ -43,7 +43,7 @@ repos:
     rev: "3.8.3"
     hooks:
       - id: flake8
-        exclude: "^docs/.*"
+        exclude: "^docs/.*|.github/release.py"
         additional_dependencies:
           - darglint~=1.5.4
   - repo: https://github.com/pycqa/pydocstyle

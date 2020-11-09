@@ -4,6 +4,9 @@ version: "3"
 
 silent: true
 
+includes:
+  release: ./.github
+
 tasks:
   mongodb:
     desc: Start the local MongoDB server.
