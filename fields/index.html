@@ -1099,13 +1099,10 @@ descriptor using the <code>default</code> keyword argument.</p>
 <span class="c1">#&gt; Player(id=ObjectId('5f7cdbfbb54a94e9e8717c77'), name='Dash', level=1)</span>
 </code></pre></div>
 </td></tr></table>
-<div class="admonition info">
+<div class="admonition tip">
 <p class="admonition-title">Default factory</p>
 <p>You may as well define a factory function instead of a value using the
 <code>default_factory</code> argument of the <a href="../api_reference/field/#odmantic.field.Field">Field</a> descriptor.</p>
-<p>By default, the default factories won't be used while parsing MongoDB documents.
-It's possible to enable this behavior with the <code>parse_doc_with_default_factories</code>
-<a href="../modeling/#advanced-configuration">Config</a> option.</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>

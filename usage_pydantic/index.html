@@ -285,51 +285,6 @@ Pydantic models. This class adds the JSON encoders required to handle the <code>
 <p>Also, you will have to use the <code>bson</code> equivalent types defined in the
 <a href="../api_reference/bson/">odmantic.bson</a> module. Those types, add a validation logic to
 the native types from the <code>bson</code> module.</p>
-<div class="admonition note">
-<p class="admonition-title">Custom <code>json_encoders</code> with <code>BaseBSONModel</code></p>
-<p>If you want to specify additional json encoders, with a Pydantic model containing
-<code>BSON</code> fields, you will need to pass as well the ODMantic encoders
-(<a href="../api_reference/bson/#odmantic.bson.BSON_TYPES_ENCODERS">BSON_TYPES_ENCODERS</a>).</p>
-<details class="example"><summary>Custom encoders example</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
-
-<span class="kn">from</span> <span class="nn">odmantic.bson</span> <span class="kn">import</span> <span class="n">BSON_TYPES_ENCODERS</span><span class="p">,</span> <span class="n">BaseBSONModel</span><span class="p">,</span> <span class="n">ObjectId</span>
-
-
-<span class="k">class</span> <span class="nc">M</span><span class="p">(</span><span class="n">BaseBSONModel</span><span class="p">):</span>
-    <span class="nb">id</span><span class="p">:</span> <span class="n">ObjectId</span>
-    <span class="n">date</span><span class="p">:</span> <span class="n">datetime</span>
-
-    <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
-<span class="hll">        <span class="n">json_encoders</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class="hll">            <span class="o">**</span><span class="n">BSON_TYPES_ENCODERS</span><span class="p">,</span>
-</span><span class="hll">            <span class="n">datetime</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">dt</span><span class="p">:</span> <span class="n">dt</span><span class="o">.</span><span class="n">year</span><span class="p">,</span>
-</span><span class="hll">        <span class="p">}</span>
-</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">M</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">ObjectId</span><span class="p">(),</span> <span class="n">date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">())</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
-<span class="hll"><span class="c1">#&gt; {"id": "5fa3378c8fde3766574d874d", "date": 2020}</span>
-</span></code></pre></div>
-</td></tr></table>
-</details>
-<p>An issue that would simplify this behavior has been opened: <a href="https://github.com/samuelcolvin/pydantic/issues/2024" target="blank_">pydantic#2024</a></p>
-</div>
 <h2 id="accessing-the-underlying-pydantic-model">Accessing the underlying pydantic model<a class="headerlink" href="#accessing-the-underlying-pydantic-model" title="Permanent link">¶</a></h2>
 <p>Each ODMantic Model contain a pure version of the pydantic model used to build the
 ODMantic Model. This Pydantic model can be accessed in the <code>__pydantic_model__</code> class

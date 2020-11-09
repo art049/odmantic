@@ -41,7 +41,6 @@ markdown_extensions:
   - pymdownx.tabbed
   - pymdownx.superfences
   - pymdownx.details
-  - pymdownx.inlinehilite
   - pymdownx.magiclink:
       user: art049
       repo: odmantic
