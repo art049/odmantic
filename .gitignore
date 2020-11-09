@@ -107,3 +107,4 @@ poetry.lock
 .task
 __release_notes__.md
 __version__.txt
+.testmondata
