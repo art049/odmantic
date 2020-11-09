@@ -444,6 +444,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#odmantic.exceptions.DocumentParsingError" class="md-nav__link">
+    DocumentParsingError
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -515,6 +522,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#odmantic.exceptions.DocumentParsingError" class="md-nav__link">
+    DocumentParsingError
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -542,7 +556,7 @@
 
       <a class="headerlink" href="#odmantic.exceptions.BaseEngineException" title="Permanent link">&para;</a></h2>
 <div class="doc doc-contents first">
-<p>Base Exception raised by the engine while operating on a model.</p>
+<p>Base Exception raised by the engine while operating with the database.</p>
 <div class="doc doc-children">
 
 
@@ -599,6 +613,38 @@
 
 
   </div>
+</div>
+</div>
+<div class="doc doc-object doc-class">
+<h2 class="doc doc-heading" id="odmantic.exceptions.DocumentParsingError">
+
+        <code>odmantic.exceptions.DocumentParsingError</code>
+
+
+      <a class="headerlink" href="#odmantic.exceptions.DocumentParsingError" title="Permanent link">&para;</a></h2>
+<div class="doc doc-contents first">
+<p>Unable to parse the document into an instance.</p>
+<p>Inherits from the <code>ValidationError</code> defined by Pydantic.</p>
+<p><strong>Attributes:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>model</code></td>
+<td><code>Union[Type[Model],Type[EmbeddedModel]]</code></td>
+<td>
+<p>model which could not be
+instanciated</p>
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
                 

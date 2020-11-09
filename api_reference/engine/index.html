@@ -674,6 +674,23 @@ find<span class="p">(</span><span class="bp">self</span><span class="p">,</span>
 </tr>
 </tbody>
 </table>
+<p><strong>Exceptions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DocumentParsingError</code></td>
+<td>
+<p>unable to parse one of the resulting documents</p>
+</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Returns:</strong></p>
 <table>
 <thead>
@@ -714,6 +731,8 @@ find<span class="p">(</span><span class="bp">self</span><span class="p">,</span>
 <span class="sd">        skip: number of document to skip</span>
 <span class="sd">        limit: maximum number of instance fetched</span>
 
+<span class="sd">    Raises:</span>
+<span class="sd">        DocumentParsingError: unable to parse one of the resulting documents</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        [odmantic.engine.AIOCursor][] of the query</span>
@@ -721,6 +740,7 @@ find<span class="p">(</span><span class="bp">self</span><span class="p">,</span>
 <span class="sd">    &lt;!---</span>
 <span class="sd">    #noqa: DAR401 ValueError</span>
 <span class="sd">    #noqa: DAR401 TypeError</span>
+<span class="sd">    #noqa: DAR402 DocumentParsingError</span>
 <span class="sd">    --&gt;</span>
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">lenient_issubclass</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">Model</span><span class="p">):</span>
@@ -796,6 +816,23 @@ find_one<span class="p">(</span><span class="bp">self</span><span class="p">,</s
 </tr>
 </tbody>
 </table>
+<p><strong>Exceptions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DocumentParsingError</code></td>
+<td>
+<p>unable to parse the resulting document</p>
+</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Returns:</strong></p>
 <table>
 <thead>
@@ -832,11 +869,15 @@ find_one<span class="p">(</span><span class="bp">self</span><span class="p">,</s
 <span class="sd">        queries: query filter to apply</span>
 <span class="sd">        sort: sort expression</span>
 
+<span class="sd">    Raises:</span>
+<span class="sd">        DocumentParsingError: unable to parse the resulting document</span>
+
 <span class="sd">    Returns:</span>
 <span class="sd">        the fetched instance if found otherwise None</span>
 
 <span class="sd">    &lt;!---</span>
 <span class="sd">    #noqa: DAR401 TypeError</span>
+<span class="sd">    #noqa: DAR402 DocumentParsingError</span>
 <span class="sd">    --&gt;</span>
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">lenient_issubclass</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">Model</span><span class="p">):</span>

@@ -567,11 +567,17 @@ completely ignored by ODMantic while persisting instances to the database.</p>
 class</a> defined
 in the model body.</p>
 <p><strong>Available options</strong>:</p>
-<blockquote>
 <dl>
 <dt><code class="highlight"><span class="n">collection</span><span class="p">:</span> <span class="nb">str</span></code></dt>
 <dd>Customize the collection name associated to the model. see <a href="./#collection">this
- section</a> for more details about default collection naming.</dd>
+  section</a> for more details about default collection naming.</dd>
+<dt><code class="highlight"><span class="n">parse_doc_with_default_factories</span><span class="p">:</span> <span class="nb">bool</span></code></dt>
+<dd>
+<p>Wether to allow populating field values with default factories while parsing
+  documents from the database. See <a href="../raw_query_usage/#advanced-parsing-behavior">this
+  section</a> for more details.</p>
+<p>Default: <code class="highlight"><span class="kc">False</span></code></p>
+</dd>
 <dt><code class="highlight"><span class="n">title</span><span class="p">:</span> <span class="nb">str</span></code> <em>(inherited from Pydantic)</em></dt>
 <dd>
 <p>Title inferred in the JSON schema.</p>
@@ -585,7 +591,7 @@ in the model body.</p>
 <dt><code class="highlight"><span class="n">json_encoders</span><span class="p">:</span> <span class="nb">dict</span></code> <em>(inherited from Pydantic)</em></dt>
 <dd>
 <p>Customize the way types used in the model are encoded to JSON.</p>
-<details class="example"><summary><code>json_encoders</code> example</summary><p>For example, in order to serialize <code>datetime</code> fields as timestamp values:
+<details class="example"><summary><code>json_encoders</code> example</summary><p>For example, in order to serialize <code>datetime</code> fields as timestamp values:</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Event</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">date</span><span class="p">:</span> <span class="n">datetime</span>
 
@@ -593,7 +599,7 @@ in the model body.</p>
         <span class="n">json_encoders</span> <span class="o">=</span> <span class="p">{</span>
             <span class="n">datetime</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()</span>
         <span class="p">}</span>
-</code></pre></div></p>
+</code></pre></div>
 </details>
 </dd>
 <dt><code class="highlight"><span class="n">json_loads</span></code> <em>(inherited from Pydantic)</em></dt>
@@ -607,7 +613,6 @@ in the model body.</p>
 <p>Default: <code class="highlight"><span class="n">json</span><span class="o">.</span><span class="n">dumps</span></code></p>
 </dd>
 </dl>
-</blockquote>
 <p>For more details and examples about the options inherited from Pydantic, you can have a
 look to <a href="https://pydantic-docs.helpmanual.io/usage/model_config/" target="blank_">Pydantic: Model
 Config</a></p>

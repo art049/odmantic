@@ -180,14 +180,42 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#creating-instances-from-raw-documents">
-    Creating instances from raw documents
+<a class="md-nav__link" href="#raw-mongodb-documents">
+    Raw MongoDB documents
+  </a>
+<nav aria-label="Raw MongoDB documents" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#parsing-documents">
+    Parsing documents
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#extract-documents-from-existing-instances">
-    Extract documents from existing instances
+<a class="md-nav__link" href="#dumping-documents">
+    Dumping documents
   </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-parsing-behavior">
+    Advanced parsing behavior
+  </a>
+<nav aria-label="Advanced parsing behavior" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#default-values">
+    Default values
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#default-factories">
+    Default factories
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#aggregation-example">
@@ -311,14 +339,42 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#creating-instances-from-raw-documents">
-    Creating instances from raw documents
+<a class="md-nav__link" href="#raw-mongodb-documents">
+    Raw MongoDB documents
+  </a>
+<nav aria-label="Raw MongoDB documents" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#parsing-documents">
+    Parsing documents
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#extract-documents-from-existing-instances">
-    Extract documents from existing instances
+<a class="md-nav__link" href="#dumping-documents">
+    Dumping documents
   </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-parsing-behavior">
+    Advanced parsing behavior
+  </a>
+<nav aria-label="Advanced parsing behavior" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#default-values">
+    Default values
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#default-factories">
+    Default factories
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#aggregation-example">
@@ -451,11 +507,12 @@ field reference name.</p>
 <span class="c1">#&gt; $username</span>
 </code></pre></div>
 </td></tr></table>
-<h2 id="creating-instances-from-raw-documents">Creating instances from raw documents<a class="headerlink" href="#creating-instances-from-raw-documents" title="Permanent link">¶</a></h2>
+<h2 id="raw-mongodb-documents">Raw MongoDB documents<a class="headerlink" href="#raw-mongodb-documents" title="Permanent link">¶</a></h2>
+<h3 id="parsing-documents">Parsing documents<a class="headerlink" href="#parsing-documents" title="Permanent link">¶</a></h3>
 <p>You can parse MongoDB document to instances using the
 <a href="../api_reference/model/#odmantic.model._BaseODMModel.parse_doc">parse_doc</a> method.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
 <p>If the provided documents contain extra fields, ODMantic will ignore them. This can
 be especially useful in aggregation pipelines.</p>
 </div>
@@ -484,11 +541,11 @@ be especially useful in aggregation pipelines.</p>
 <span class="n">document</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"username"</span><span class="p">:</span> <span class="s2">"John"</span><span class="p">,</span> <span class="s2">"_id"</span><span class="p">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s2">"5f8352a87a733b8b18b0cb27"</span><span class="p">)}</span>
 
 <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">parse_doc</span><span class="p">(</span><span class="n">document</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
-<span class="c1">#&gt; id=ObjectId('5f8352a87a733b8b18b0cb27') name='John'</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">user</span><span class="p">))</span>
+<span class="c1">#&gt; User(id=ObjectId('5f8352a87a733b8b18b0cb27'), name='John')</span>
 </code></pre></div>
 </td></tr></table>
-<h2 id="extract-documents-from-existing-instances">Extract documents from existing instances<a class="headerlink" href="#extract-documents-from-existing-instances" title="Permanent link">¶</a></h2>
+<h3 id="dumping-documents">Dumping documents<a class="headerlink" href="#dumping-documents" title="Permanent link">¶</a></h3>
 <p>You can generate a document from instances using the
 <a href="../api_reference/model/#odmantic.model._BaseODMModel.doc">doc</a> method.
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
@@ -512,6 +569,159 @@ be especially useful in aggregation pipelines.</p>
 <span class="c1">#&gt; {'username': 'John', '_id': ObjectId('5f8352a87a733b8b18b0cb27')}</span>
 </code></pre></div>
 </td></tr></table></p>
+<h3 id="advanced-parsing-behavior">Advanced parsing behavior<a class="headerlink" href="#advanced-parsing-behavior" title="Permanent link">¶</a></h3>
+<h4 id="default-values">Default values<a class="headerlink" href="#default-values" title="Permanent link">¶</a></h4>
+<p>While parsing documents, ODMantic will use the default values provided in the Models to populate the missing fields from the documents:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">bson</span> <span class="kn">import</span> <span class="n">ObjectId</span>
+
+<span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">Model</span>
+
+
+<span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+<span class="hll">    <span class="n">level</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+</span>
+
+<span class="hll"><span class="n">document</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Leeroy"</span><span class="p">,</span> <span class="s2">"_id"</span><span class="p">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s2">"5f8352a87a733b8b18b0cb27"</span><span class="p">)}</span>
+</span>
+<span class="n">user</span> <span class="o">=</span> <span class="n">Player</span><span class="o">.</span><span class="n">parse_doc</span><span class="p">(</span><span class="n">document</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">user</span><span class="p">))</span>
+<span class="c1">#&gt; Player(</span>
+<span class="c1">#&gt;     id=ObjectId("5f8352a87a733b8b18b0cb27"),</span>
+<span class="c1">#&gt;     name="Leeroy",</span>
+<span class="hll"><span class="c1">#&gt;     level=1,</span>
+</span><span class="c1">#&gt; )</span>
+</code></pre></div>
+</td></tr></table>
+<h4 id="default-factories">Default factories<a class="headerlink" href="#default-factories" title="Permanent link">¶</a></h4>
+<p>For the field with default factories provided through the Field descriptor though, by
+default they wont be populated.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="kn">from</span> <span class="nn">bson</span> <span class="kn">import</span> <span class="n">ObjectId</span>
+
+<span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="kn">from</span> <span class="nn">odmantic.exceptions</span> <span class="kn">import</span> <span class="n">DocumentParsingError</span>
+<span class="kn">from</span> <span class="nn">odmantic.field</span> <span class="kn">import</span> <span class="n">Field</span>
+
+
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+<span class="hll">    <span class="n">created_at</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">)</span>
+</span>
+
+<span class="hll"><span class="n">document</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Leeroy"</span><span class="p">,</span> <span class="s2">"_id"</span><span class="p">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s2">"5f8352a87a733b8b18b0cb27"</span><span class="p">)}</span>
+</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">User</span><span class="o">.</span><span class="n">parse_doc</span><span class="p">(</span><span class="n">document</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">DocumentParsingError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<span class="hll">    <span class="c1">#&gt; 1 validation error for User</span>
+</span><span class="hll">    <span class="c1">#&gt; created_at</span>
+</span><span class="hll">    <span class="c1">#&gt;   key not found in document (type=value_error.keynotfoundindocument; key_name='created_at')</span>
+</span><span class="hll">    <span class="c1">#&gt; (User instance details: id=ObjectId('5f8352a87a733b8b18b0cb27'))</span>
+</span></code></pre></div>
+</td></tr></table>
+<p>In the previous example, using the default factories could create data inconsistencies
+and in this case, it would probably be more suitable to perform a manual migration to
+provide the correct values.</p>
+<p>Still, the <code>parse_doc_with_default_factories</code>
+<a href="../modeling/#advanced-configuration">Config</a> option can be used to allow the use of the
+default factories while parsing documents:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="kn">from</span> <span class="nn">bson</span> <span class="kn">import</span> <span class="n">ObjectId</span>
+
+<span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="kn">from</span> <span class="nn">odmantic.exceptions</span> <span class="kn">import</span> <span class="n">DocumentParsingError</span>
+<span class="kn">from</span> <span class="nn">odmantic.field</span> <span class="kn">import</span> <span class="n">Field</span>
+
+
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+<span class="hll">    <span class="n">updated_at</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">)</span>
+</span>
+    <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
+<span class="hll">        <span class="n">parse_doc_with_default_factories</span> <span class="o">=</span> <span class="kc">True</span>
+</span>
+
+<span class="hll"><span class="n">document</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Leeroy"</span><span class="p">,</span> <span class="s2">"_id"</span><span class="p">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s2">"5f8352a87a733b8b18b0cb27"</span><span class="p">)}</span>
+</span>
+<span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">parse_doc</span><span class="p">(</span><span class="n">document</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">user</span><span class="p">))</span>
+<span class="c1">#&gt; User(</span>
+<span class="c1">#&gt;     id=ObjectId("5f8352a87a733b8b18b0cb27"),</span>
+<span class="c1">#&gt;     name="Leeroy",</span>
+<span class="hll"><span class="c1">#&gt;     updated_at=datetime.datetime(2020, 11, 8, 23, 28, 19, 980000),</span>
+</span><span class="c1">#&gt; )</span>
+</code></pre></div>
+</td></tr></table>
 <h2 id="aggregation-example">Aggregation example<a class="headerlink" href="#aggregation-example" title="Permanent link">¶</a></h2>
 <p>In the following example, we will demonstrate the use of the previous helpers to build
 an aggregation pipeline. We will first consider a <code>Rectangle</code> model with two float
