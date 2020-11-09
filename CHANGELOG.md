@@ -5,22 +5,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Allow parsing document with unset fields defaults ([#28](https://github.com/art049/odmantic/pull/28) by [@art049](https://github.com/art049))
-
-- Use a Config class to configure models ([#37](https://github.com/art049/odmantic/pull/37) by [@art049](https://github.com/art049))
+## [0.3.0] - 2020-11-09
 
 #### Deprecated
 
-- Usage of `__collection__` to customize the collection name. Prefer the `collection`
-  Config option ([more details](https://art049.github.io/odmantic/modeling/#collection))
+- Deprecate usage of `__collection__` to customize the collection name. Prefer the
+  `collection` Config option ([more
+  details](https://art049.github.io/odmantic/modeling/#collection))
 
 #### Added
 
-- Integration with Pydantic `Config` class:
+- Allow parsing document with unset fields defaults ([#28](https://github.com/art049/odmantic/pull/28) by [@art049](https://github.com/art049))
 
-  - It's now possible to define custom `json_encoders` on the Models
-  - Some other `Config` options provided by Pydantic are now available ([more
-    details](https://art049.github.io/odmantic/modeling/#advanced-configuration))
+- Integration with Pydantic `Config` class ([#37](https://github.com/art049/odmantic/pull/37) by [@art049](https://github.com/art049)):
+
+    - It's now possible to define custom `json_encoders` on the Models
+    - Some other `Config` options provided by Pydantic are now available ([more
+      details](https://art049.github.io/odmantic/modeling/#advanced-configuration))
 
 - Support CPython 3.9 ([#32](https://github.com/art049/odmantic/pull/32) by
   [@art049](https://github.com/art049))
@@ -64,4 +65,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.1.0]: https://github.com/art049/odmantic/releases/tag/v0.1.0
 [0.2.0]: https://github.com/art049/odmantic/compare/v0.1.0...v0.2.0
 [0.2.1]: https://github.com/art049/odmantic/compare/v0.2.0...v0.2.1
-[unreleased]: https://github.com/art049/odmantic/compare/v0.2.1...HEAD
+[0.3.0]: https://github.com/art049/odmantic/compare/v0.2.1...v0.3.0
+[unreleased]: https://github.com/art049/odmantic/compare/v0.3.0...HEAD
