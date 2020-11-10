@@ -472,6 +472,10 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
 
     __slots__ = ("__fields_modified__",)
 
+    def __init__(self, **data: Any):
+        super().__init__(**data)
+        object.__setattr__(self, "__fields_modified__", set(self.__odm_fields__.keys()))
+
     @classmethod
     def validate(cls: Type[TBase], value: Any) -> TBase:
         if isinstance(value, cls):
@@ -616,16 +620,6 @@ class Model(_BaseODMModel, metaclass=ModelMetaclass):
         __primary_field__: ClassVar[str] = ""
 
         id: Union[ObjectId, Any]  # TODO fix basic id field typing
-
-    def __init__(__odmantic_self__, **data: Any):
-        super().__init__(**data)
-        # Uses something other than `self` the first arg to allow "self" as a settable
-        # attribute
-        object.__setattr__(
-            __odmantic_self__,
-            "__fields_modified__",
-            set(__odmantic_self__.__odm_fields__.keys()),
-        )
 
     def __setattr__(self, name: str, value: Any) -> None:
         if name == self.__primary_field__:
