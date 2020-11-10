@@ -156,6 +156,11 @@
     Custom model validators
   </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-configuration">
+    Advanced Configuration
+  </a>
+</li>
 </ul>
 </nav>
 </li>
@@ -325,6 +330,11 @@
     Custom model validators
   </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-configuration">
+    Advanced Configuration
+  </a>
+</li>
 </ul>
 </nav>
 </li>
@@ -393,17 +403,19 @@ created from the chosen class name and converted to
 <p>If the class name ends with <code>Model</code>, ODMantic will remove it to create the collection
 name. For example, a model class named <code>PersonModel</code> will belong in the <code>person</code>
 collection.</p>
-<p>It's possible to change the collection name of a model by specifying the <code>__collection__</code>
-class variable in the class body.</p>
+<p>It's possible to customize the collection name of a model by specifying the <code>collection</code>
+option in the <code>Config</code> class.</p>
 <div class="admonition example">
 <p class="admonition-title">Custom collection name example</p>
 <p><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">Model</span>
 
 <span class="k">class</span> <span class="nc">CapitalCity</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">__collection__</span> <span class="o">=</span> <span class="s2">"city"</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">population</span><span class="p">:</span> <span class="nb">int</span>
-</code></pre></div>
+
+<span class="hll">    <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
+</span><span class="hll">        <span class="n">collection</span> <span class="o">=</span> <span class="s2">"city"</span>
+</span></code></pre></div>
 Now, when <code>CapitalCity</code> instances will be persisted to the database, they will
 belong in the <code>city</code> collection instead of <code>capital_city</code>.</p>
 </div>
@@ -549,6 +561,67 @@ ensure that the area of the rectangle is less or equal to 9.</p>
 <p>You can define class variables in the Models using the <code>typing.ClassVar</code> type
 construct, as done in this example with <code>MAX_AREA</code>. Those class variables will be
 completely ignored by ODMantic while persisting instances to the database.</p>
+</div>
+<h3 id="advanced-configuration">Advanced Configuration<a class="headerlink" href="#advanced-configuration" title="Permanent link">¶</a></h3>
+<p>The model configuration is done in the same way as with Pydantic models: using a <a href="https://pydantic-docs.helpmanual.io/usage/model_config/" target="blank_">Config
+class</a> defined
+in the model body.</p>
+<p><strong>Available options</strong>:</p>
+<dl>
+<dt><code class="highlight"><span class="n">collection</span><span class="p">:</span> <span class="nb">str</span></code></dt>
+<dd>Customize the collection name associated to the model. see <a href="./#collection">this
+  section</a> for more details about default collection naming.</dd>
+<dt><code class="highlight"><span class="n">parse_doc_with_default_factories</span><span class="p">:</span> <span class="nb">bool</span></code></dt>
+<dd>
+<p>Wether to allow populating field values with default factories while parsing
+  documents from the database. See <a href="../raw_query_usage/#advanced-parsing-behavior">this
+  section</a> for more details.</p>
+<p>Default: <code class="highlight"><span class="kc">False</span></code></p>
+</dd>
+<dt><code class="highlight"><span class="n">title</span><span class="p">:</span> <span class="nb">str</span></code> <em>(inherited from Pydantic)</em></dt>
+<dd>
+<p>Title inferred in the JSON schema.</p>
+<p>Default: name of the model class</p>
+</dd>
+<dt><code class="highlight"><span class="n">anystr_strip_whitespace</span><span class="p">:</span> <span class="nb">bool</span></code> <em>(inherited from Pydantic)</em></dt>
+<dd>
+<p>Whether to strip leading and trailing whitespaces for str &amp; byte types.</p>
+<p>Default: <code class="highlight"><span class="kc">False</span></code></p>
+</dd>
+<dt><code class="highlight"><span class="n">json_encoders</span><span class="p">:</span> <span class="nb">dict</span></code> <em>(inherited from Pydantic)</em></dt>
+<dd>
+<p>Customize the way types used in the model are encoded to JSON.</p>
+<details class="example"><summary><code>json_encoders</code> example</summary><p>For example, in order to serialize <code>datetime</code> fields as timestamp values:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Event</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">date</span><span class="p">:</span> <span class="n">datetime</span>
+
+    <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
+        <span class="n">json_encoders</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">datetime</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()</span>
+        <span class="p">}</span>
+</code></pre></div>
+</details>
+</dd>
+<dt><code class="highlight"><span class="n">json_loads</span></code> <em>(inherited from Pydantic)</em></dt>
+<dd>
+<p>Function used to decode JSON data</p>
+<p>Default: <code class="highlight"><span class="n">json</span><span class="o">.</span><span class="n">loads</span></code></p>
+</dd>
+<dt><code class="highlight"><span class="n">json_dumps</span></code> <em>(inherited from Pydantic)</em></dt>
+<dd>
+<p>Function used to encode JSON data</p>
+<p>Default: <code class="highlight"><span class="n">json</span><span class="o">.</span><span class="n">dumps</span></code></p>
+</dd>
+</dl>
+<p>For more details and examples about the options inherited from Pydantic, you can have a
+look to <a href="https://pydantic-docs.helpmanual.io/usage/model_config/" target="blank_">Pydantic: Model
+Config</a></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Only the options described above are supported and other options from Pydantic can't
+be used with ODMantic.</p>
+<p>If you feel the need to have an additional option inherited from Pydantic, you can
+<a href="https://github.com/art049/odmantic/issues/new" target="blank">open an issue</a>.</p>
 </div>
 <h2 id="embedded-models">Embedded Models<a class="headerlink" href="#embedded-models" title="Permanent link">¶</a></h2>
 <p>Using an embedded model will store it directly in the root model it's integrated

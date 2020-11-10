@@ -445,6 +445,23 @@ parse_doc<span class="p">(</span><span class="n">raw_doc</span><span class="p">)
 </tr>
 </tbody>
 </table>
+<p><strong>Exceptions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DocumentParsingError</code></td>
+<td>
+<p>the specified document is invalid</p>
+</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Returns:</strong></p>
 <table>
 <thead>
@@ -472,16 +489,28 @@ parse_doc<span class="p">(</span><span class="n">raw_doc</span><span class="p">)
 <span class="sd">    Args:</span>
 <span class="sd">        raw_doc: document to parse (as Dict)</span>
 
+<span class="sd">    Raises:</span>
+<span class="sd">        DocumentParsingError: the specified document is invalid</span>
+
 <span class="sd">    Returns:</span>
 <span class="sd">        an instance of the Model class this method is called on.</span>
 <span class="sd">    """</span>
-    <span class="n">doc</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">field</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__odm_fields__</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">ODMReference</span><span class="p">):</span>
-            <span class="n">doc</span><span class="p">[</span><span class="n">field_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">parse_doc</span><span class="p">(</span><span class="n">raw_doc</span><span class="p">[</span><span class="n">field</span><span class="o">.</span><span class="n">key_name</span><span class="p">])</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">doc</span><span class="p">[</span><span class="n">field_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_doc</span><span class="p">[</span><span class="n">field</span><span class="o">.</span><span class="n">key_name</span><span class="p">]</span>
-    <span class="n">instance</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">parse_obj</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+    <span class="n">errors</span><span class="p">,</span> <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_parse_doc_to_obj</span><span class="p">(</span><span class="n">raw_doc</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">DocumentParsingError</span><span class="p">(</span>
+            <span class="n">errors</span><span class="o">=</span><span class="p">[</span><span class="n">errors</span><span class="p">],</span>
+            <span class="n">model</span><span class="o">=</span><span class="bp">cls</span><span class="p">,</span>
+            <span class="n">primary_value</span><span class="o">=</span><span class="n">raw_doc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"_id"</span><span class="p">,</span> <span class="s2">"&lt;unknown&gt;"</span><span class="p">),</span>
+        <span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">instance</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">parse_obj</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">ValidationError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">DocumentParsingError</span><span class="p">(</span>
+            <span class="n">errors</span><span class="o">=</span><span class="n">e</span><span class="o">.</span><span class="n">raw_errors</span><span class="p">,</span>  <span class="c1"># type: ignore</span>
+            <span class="n">model</span><span class="o">=</span><span class="bp">cls</span><span class="p">,</span>
+            <span class="n">primary_value</span><span class="o">=</span><span class="n">raw_doc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"_id"</span><span class="p">,</span> <span class="s2">"&lt;unknown&gt;"</span><span class="p">),</span>
+        <span class="p">)</span>
+
     <span class="k">return</span> <span class="n">instance</span>
 </code></pre>
 </div>

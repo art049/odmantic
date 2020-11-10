@@ -721,9 +721,13 @@ python3 -m pipx ensurepath
 install them manually.</p>
 <p>You can use <a href="https://github.com/pyenv/pyenv" target="blank_">pyenv</a> to
  install them easily.</p>
-<div class="highlight"><pre><span></span><code>pyenv install <span class="s2">&quot;3.6.12&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Install the versions</span>
+pyenv install <span class="s2">&quot;3.6.12&quot;</span>
 pyenv install <span class="s2">&quot;3.7.9&quot;</span>
 pyenv install <span class="s2">&quot;3.8.9&quot;</span>
+pyenv install <span class="s2">&quot;3.9.0&quot;</span>
+<span class="c1"># Make the versions available locally in the project</span>
+pyenv <span class="nb">local</span> <span class="m">3</span>.8.6 <span class="m">3</span>.7.9 <span class="m">3</span>.6.12 <span class="m">3</span>.9.0
 </code></pre></div>
 </div>
 <h4 id="configuring-the-local-environment">Configuring the local environment<a class="headerlink" href="#configuring-the-local-environment" title="Permanent link">&para;</a></h4>
