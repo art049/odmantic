@@ -32,6 +32,14 @@ def test_fields_modified_no_modification():
     assert instance.__fields_modified__ == set(["f", "id"])
 
 
+def test_fields_embedded_modified_no_modification():
+    class M(EmbeddedModel):
+        f: int
+
+    instance = M(f=0)
+    assert instance.__fields_modified__ == set(["f"])
+
+
 def test_fields_modified_with_default():
     class M(Model):
         f: int = 5
@@ -40,13 +48,15 @@ def test_fields_modified_with_default():
     assert instance.__fields_modified__ == set(["f", "id"])
 
 
-def test_fields_modified_one_update():
-    class M(Model):
+@pytest.mark.parametrize("model_cls", [Model, EmbeddedModel])
+def test_fields_modified_one_update(model_cls):
+    class M(model_cls):  # type: ignore
         f: int
 
     instance = M(f=0)
+    instance.__fields_modified__.clear()
     instance.f = 1
-    assert instance.__fields_modified__ == set(["f", "id"])
+    assert instance.__fields_modified__ == set(["f"])
 
 
 def test_field_update_with_invalid_data_type():
