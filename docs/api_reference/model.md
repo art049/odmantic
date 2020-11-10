@@ -3,6 +3,7 @@
         members:
           - parse_doc
           - doc
+          - copy
 
 ::: odmantic.model.Model
     selection:
