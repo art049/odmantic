@@ -456,7 +456,7 @@ class EmbeddedModelMetaclass(BaseModelMetaclass):
         return super().__new__(mcs, name, bases, namespace, **kwargs)
 
 
-TBase = TypeVar("TBase", bound="_BaseODMModel")
+BaseT = TypeVar("BaseT", bound="_BaseODMModel")
 
 
 class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
@@ -482,7 +482,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         object.__setattr__(self, "__fields_modified__", set(self.__odm_fields__.keys()))
 
     @classmethod
-    def validate(cls: Type[TBase], value: Any) -> TBase:
+    def validate(cls: Type[BaseT], value: Any) -> BaseT:
         if isinstance(value, cls):
             # Do not copy the object as done in pydantic
             # This enable to keep the same python object
@@ -500,16 +500,40 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         return args
 
     def copy(
-        self: TBase,
+        self: BaseT,
         *,
         include: Union[None, "AbstractSetIntStr", "MappingIntStrAny"] = None,
         exclude: Union[None, "AbstractSetIntStr", "MappingIntStrAny"] = None,
         update: Optional["DictStrAny"] = None,
         deep: bool = False,
-    ) -> TBase:
-        """WARNING: Not Implemented"""
-        # TODO implement
-        raise NotImplementedError
+    ) -> BaseT:
+        """Duplicate a model, optionally choose which fields to include, exclude and
+        change.
+
+        Danger:
+            The data is not validated before creating the new model: **you should trust
+            this data**.
+
+        Arguments:
+            include: fields to include in new model
+            exclude: fields to exclude from new model, as with values this takes
+                precedence over include
+            update: values to change/add in the new model.
+            deep: set to `True` to make a deep copy of the model
+
+        Note:
+            The `include` and `exclude` kwargs are only affecting the copied data,
+            not filtering the update object.
+
+        Returns:
+            new model instance
+
+        """
+        copied = super().copy(
+            include=include, exclude=exclude, update=update, deep=deep  # type: ignore
+        )
+        object.__setattr__(copied, "__fields_modified__", set(copied.__fields__))
+        return copied
 
     def __setattr__(self, name: str, value: Any) -> None:
         super().__setattr__(name, value)
@@ -542,7 +566,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         return doc
 
     @classmethod
-    def parse_doc(cls: Type[TBase], raw_doc: Dict) -> TBase:
+    def parse_doc(cls: Type[BaseT], raw_doc: Dict) -> BaseT:
         """Parse a BSON document into an instance of the Model
 
         Args:
@@ -574,7 +598,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
 
     @classmethod
     def _parse_doc_to_obj(
-        cls: Type[TBase], raw_doc: Dict, base_loc: Tuple[str, ...] = ()
+        cls: Type[BaseT], raw_doc: Dict, base_loc: Tuple[str, ...] = ()
     ) -> Tuple[ErrorList, Dict[str, Any]]:
         errors: ErrorList = []
         obj: Dict[str, Any] = {}
