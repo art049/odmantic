@@ -1,7 +1,7 @@
 import json
-from typing import Any, Callable, Dict, Optional, Type
+from typing import Any, Callable, Dict, Optional, Type, Union
 
-from pydantic.main import BaseConfig
+from pydantic.main import BaseConfig, SchemaExtraCallable
 from pydantic.typing import AnyCallable
 
 from odmantic.bson import BSON_TYPES_ENCODERS
@@ -19,6 +19,7 @@ class BaseODMConfig:
     # Inherited from pydantic
     title: Optional[str] = None
     json_encoders: Dict[Type[Any], AnyCallable] = {}
+    schema_extra: Union[Dict[str, Any], "SchemaExtraCallable"] = {}
     anystr_strip_whitespace: bool = False
     json_loads: Callable[[str], Any] = json.loads
     json_dumps: Callable[..., str] = json.dumps

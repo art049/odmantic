@@ -80,6 +80,12 @@ in the model body.
 
       Default: name of the model class
 
+`#!python schema_extra: dict` *(inherited from Pydantic)*
+ :    A dict used to extend/update the generated JSON Schema, or a callable to
+      post-process it. See [Pydantic: Schema customization](https://pydantic-docs.helpmanual.io/usage/schema/#schema-customization){:target=_blank} for more details.
+
+      Default: `#!python {}`
+
  `#!python anystr_strip_whitespace: bool` *(inherited from Pydantic)*
  :    Whether to strip leading and trailing whitespaces for str & byte types.
 
