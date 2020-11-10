@@ -5,6 +5,7 @@ from pydantic.error_wrappers import ValidationError
 from odmantic.exceptions import DocumentParsingError
 from odmantic.field import Field
 from odmantic.model import EmbeddedModel, Model
+from odmantic.reference import Reference
 from tests.zoo.person import PersonModel
 
 
@@ -165,10 +166,88 @@ def test_change_primary_key_value():
         instance.id = 12
 
 
-def test_model_copy_not_implemented():
-    class M(Model):
-        ...
+def test_model_copy_without_update():
+    instance = PersonModel(first_name="Jean", last_name="Valjean")
+    copied = instance.copy()
+    assert instance == copied
 
-    instance = M()
-    with pytest.raises(NotImplementedError):
-        instance.copy()
+
+def test_model_copy_with_update():
+    instance = PersonModel(first_name="Jean", last_name="Valjean")
+    copied = instance.copy(update={"last_name": "Pierre"})
+    assert instance.id == copied.id
+    assert instance.first_name == copied.first_name
+    assert copied.last_name == "Pierre"
+
+
+def test_model_copy_with_update_primary_key():
+    instance = PersonModel(first_name="Jean", last_name="Valjean")
+    copied = instance.copy(update={"id": ObjectId()})
+    assert instance.first_name == copied.first_name
+    assert copied.last_name == copied.last_name
+    assert instance.id != copied.id
+
+
+def test_model_copy_deep_embedded():
+    class E(EmbeddedModel):
+        f: int
+
+    class M(Model):
+        e: E
+
+    instance = M(e=E(f=1))
+    copied = instance.copy(deep=True)
+    assert instance.e is not copied.e
+
+
+def test_model_copy_not_deep_embedded():
+    class E(EmbeddedModel):
+        f: int
+
+    class M(Model):
+
+        e: E
+
+    instance = M(e=E(f=1))
+    copied = instance.copy(deep=False)
+    assert instance.e is copied.e
+
+
+@pytest.mark.parametrize("deep", [True, False])
+def test_model_copy_with_reference(deep: bool):
+    class R(Model):
+        f: int
+
+    class M(Model):
+        r: R = Reference()
+
+    ref_instance = R(f=12)
+    instance = M(r=ref_instance)
+    copied = instance.copy(deep=deep)
+    assert instance.doc() == copied.doc()
+    assert instance.r == copied.r
+
+
+@pytest.mark.parametrize("deep", [True, False])
+def test_model_copy_field_modified(deep: bool):
+    class M(Model):
+        f: int
+
+    instance = M(f=5)
+    object.__setattr__(instance, "__fields_modified__", set())
+    copied = instance.copy(update={"f": 12}, deep=deep)
+    assert "f" in copied.__fields_modified__
+
+
+@pytest.mark.parametrize("deep", [True, False])
+def test_model_copy_field_modified_on_primary_field_change(deep: bool):
+    class M(Model):
+        f0: int
+        f1: int
+        f2: int
+
+    instance = M(f0=12, f1=5, f2=6)
+    object.__setattr__(instance, "__fields_modified__", set())
+    copied = instance.copy(deep=deep)
+    assert {"id", "f0", "f1", "f2"} == copied.__fields_modified__
+
