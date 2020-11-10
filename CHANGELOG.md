@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Add schema_extra config option ([#41](https://github.com/art049/odmantic/pull/41) by [@art049](https://github.com/art049))
+
 - Fix setattr error on a manually initialized EmbeddedModel ([#40](https://github.com/art049/odmantic/pull/40) by [@art049](https://github.com/art049))
 
 ## [0.3.0] - 2020-11-09
