@@ -32,6 +32,7 @@ from pydantic.error_wrappers import ErrorWrapper, ValidationError
 from pydantic.fields import Field as PDField
 from pydantic.fields import FieldInfo as PDFieldInfo
 from pydantic.fields import Undefined
+from pydantic.main import BaseModel
 from pydantic.tools import parse_obj_as
 from pydantic.typing import is_classvar, resolve_annotations
 from pydantic.utils import lenient_issubclass
@@ -534,6 +535,71 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         )
         object.__setattr__(copied, "__fields_modified__", set(copied.__fields__))
         return copied
+
+    def patch(
+        self,
+        patch_object: Union[BaseModel, Dict[str, Any]],
+        *,
+        include: Union[None, "AbstractSetIntStr", "MappingIntStrAny"] = None,
+        exclude: Union[None, "AbstractSetIntStr", "MappingIntStrAny"] = None,
+        exclude_unset: bool = True,
+        exclude_defaults: bool = False,
+        exclude_none: bool = False,
+    ) -> None:
+        """Patch instance fields from a Pydantic model or a dictionary.
+
+        If a pydantic model is provided, only the **fields set** will be
+        applied by default.
+
+        Args:
+            patch_object: object containing the values to update
+            include: fields to include from the `patch_object` (include all fields if
+                `None`)
+            exclude: fields to exclude from the `patch_object`, this takes
+                precedence over include
+            exclude_unset: only patch fields explicitly set in the patch object (only
+                applies to Pydantic models)
+            exclude_defaults: only patch fields that are different from their default
+                value in the patch object (only applies to Pydantic models)
+            exclude_none: only patch fields different from None in the patch object
+                (only applies to Pydantic models)
+
+        Raises:
+            ValidationError: the modifications would make the instance invalid
+
+        <!--
+        #noqa: DAR402 ValidationError
+        -->
+        """
+        if isinstance(patch_object, BaseModel):
+            patch_dict = patch_object.dict(
+                include=include,  # type: ignore
+                exclude=exclude,  # type: ignore
+                exclude_unset=exclude_unset,
+                exclude_defaults=exclude_defaults,
+                exclude_none=exclude_none,
+            )
+        else:
+            odm_fields = set(self.__odm_fields__.keys())
+            patch_dict = {}
+            for k, v in patch_object.items():
+                if include is not None and k not in include:
+                    continue
+                if exclude is not None and k in exclude:
+                    continue
+                if k not in odm_fields:
+                    continue
+                patch_dict[k] = v
+        patched_instance_dict = {**self.dict(), **patch_dict}
+        # FIXME: improve performance by only running updated field validators and then
+        # model validators
+        patched_instance = self.validate(patched_instance_dict)
+        for name, new_value in patched_instance.__dict__.items():
+            if self.__dict__[name] != new_value:
+                # Manually change the field to avoid running the validators again
+                self.__dict__[name] = new_value
+                self.__fields_set__.add(name)
+                self.__fields_modified__.add(name)
 
     def __setattr__(self, name: str, value: Any) -> None:
         super().__setattr__(name, value)
