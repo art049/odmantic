@@ -3,6 +3,7 @@
         members:
           - parse_doc
           - doc
+          - patch
           - copy
 
 ::: odmantic.model.Model
