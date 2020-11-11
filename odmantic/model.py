@@ -605,11 +605,44 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         super().__setattr__(name, value)
         self.__fields_modified__.add(name)
 
+    def dict(  # type: ignore # Missing deprecated/ unsupported parameters
+        self,
+        *,
+        include: Union["AbstractSetIntStr", "MappingIntStrAny"] = None,  # type: ignore
+        exclude: Union["AbstractSetIntStr", "MappingIntStrAny"] = None,  # type: ignore
+        exclude_unset: bool = False,
+        exclude_defaults: bool = False,
+        exclude_none: bool = False,
+        by_alias: bool = False,  # FIXME when aliases are supported
+    ) -> "DictStrAny":
+        """Generate a dictionary representation of the model, optionally specifying
+        which fields to include or exclude.
+
+        Args:
+            include: fields to include (include all fields if `None`)
+            exclude: fields to exclude this takes precedence over include
+            exclude_unset: only include fields explicitly set
+            exclude_defaults: only include fields that are different from their default
+                value
+            exclude_none: only include fields different from `None`
+            by_alias: **not supported yet**
+
+        Returns:
+            the dictionary representation of the instance
+        """
+        return super().dict(
+            include=include,
+            exclude=exclude,
+            exclude_unset=exclude_unset,
+            exclude_defaults=exclude_defaults,
+            exclude_none=exclude_none,
+        )
+
     def doc(self, include: Optional["AbstractSetIntStr"] = None) -> Dict[str, Any]:
         """Generate a document representation of the instance (as a dictionary).
 
         Args:
-            include: field that should be included; if None, all the field will be
+            include: field that should be included; if None, every fields will be
                 included
 
         Returns:
