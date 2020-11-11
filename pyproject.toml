@@ -69,6 +69,7 @@ requests = "^2.24.0"
 typer = "^0.3.2"
 semver = "^2.13.0"
 pytest-testmon = "^1.0.3"
+async-asgi-testclient = "^1.4.4"
 
 [build-system]
 requires = ["poetry>=0.12"]
