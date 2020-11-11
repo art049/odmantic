@@ -5,6 +5,7 @@
           - doc
           - patch
           - copy
+          - dict
 
 ::: odmantic.model.Model
     selection:
