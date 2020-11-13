@@ -10,6 +10,8 @@
       
       
       
+        <link rel="canonical" href="https://art049.github.io/odmantic/">
+      
       
       <link rel="shortcut icon" href="assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.4">
@@ -84,7 +86,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid" aria-label="Header">
-    <a href="." title="ODMantic" class="md-header-nav__button md-logo" aria-label="ODMantic">
+    <a href="https://art049.github.io/odmantic/" title="ODMantic" class="md-header-nav__button md-logo" aria-label="ODMantic">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 9.63c-.19-2.79-1.32-5.51-3.44-7.63A12.253 12.253 0 008.5 9.63c1.29.68 2.47 1.56 3.5 2.63a14.22 14.22 0 013.5-2.63M12 15.45C9.85 12.17 6.18 10 2 10c0 10 9.32 11.89 10 12 .68-.12 10-2 10-12-4.18 0-7.85 2.17-10 5.45z"/></svg>
@@ -171,7 +173,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="ODMantic" class="md-nav__button md-logo" aria-label="ODMantic">
+    <a href="https://art049.github.io/odmantic/" title="ODMantic" class="md-nav__button md-logo" aria-label="ODMantic">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 9.63c-.19-2.79-1.32-5.51-3.44-7.63A12.253 12.253 0 008.5 9.63c1.29.68 2.47 1.56 3.5 2.63a14.22 14.22 0 013.5-2.63M12 15.45C9.85 12.17 6.18 10 2 10c0 10 9.32 11.89 10 12 .68-.12 10-2 10-12-4.18 0-7.85 2.17-10 5.45z"/></svg>
@@ -675,9 +677,10 @@
 <hr />
 <p><strong>Documentation</strong>: <a href="https://art049.github.io/odmantic/">https://art049.github.io/odmantic/</a></p>
 <hr />
-<p>ODMantic is an Object Document Mapper (a kind of ORM but for NoSQL databases) for
-MongoDB based on standard python type hints. It's built on top of
-<a href="https://pydantic-docs.helpmanual.io/" target="_blank">pydantic</a> for model definition and validation.</p>
+<p>Asynchronous ODM(Object Document Mapper) for <a href="https://www.mongodb.com/"
+target="_blank">MongoDB</a> based on standard python type hints. It's built on top of <a
+href="https://pydantic-docs.helpmanual.io/" target="_blank">pydantic</a> for model
+definition and validation.</p>
 <p>Core features:</p>
 <ul>
 <li>
@@ -686,14 +689,16 @@ MongoDB based on standard python type hints. It's built on top of
 </li>
 <li>
 <p><strong>Developer experience</strong>: field/method autocompletion, type hints, data validation,
-  perform database operations in a functional way</p>
+  perform database operations with a functional API</p>
 </li>
 <li>
 <p><strong>Fully typed</strong>: leverage static analysis to reduce runtime issues</p>
 </li>
 <li>
 <p><strong>AsyncIO</strong>: works well with ASGI frameworks (<a href="https://fastapi.tiangolo.com/"
-  target="_blank">FastAPI</a>, <a href="https://www.starlette.io/"
+  target="_blank">FastAPI</a>, <a href="https://pgjones.gitlab.io/quart/"
+  target="_blank">quart</a>, <a href="https://sanicframework.org/"
+  target="_blank">sanic</a>, <a href="https://www.starlette.io/"
   target="_blank">Starlette</a>, ...)</p>
 </li>
 <li>
