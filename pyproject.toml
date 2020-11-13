@@ -37,11 +37,11 @@ classifiers = [
 include = ["LICENSE", "README.md"]
 
 [tool.poetry.dependencies]
-python = ">=3.6 <4.0"
+python = ">=3.6,<4.0"
 importlib-metadata = { version = "^1.0", python = "<3.8" }
 typing-extensions = { version = "^3.7.4.3", python = "<3.8" }
-pydantic = ">=1.6.0 < 1.8.0"
-motor = ">=2.1.0 <2.4.0"
+pydantic = ">=1.6.0,< 1.8.0"
+motor = ">=2.1.0,<2.4.0"
 fastapi = { version = "^0.61.1", optional = true }
 
 [tool.poetry.extras]
@@ -79,7 +79,18 @@ multi_line_output = 3
 include_trailing_comma = true
 use_parentheses = true
 force_grid_wrap = 0
-known_third_party = ["bson", "click", "fastapi", "motor", "pydantic", "pytest", "pytz", "semver", "typer", "uvicorn"]
+known_third_party = [
+    "bson",
+    "click",
+    "fastapi",
+    "motor",
+    "pydantic",
+    "pytest",
+    "pytz",
+    "semver",
+    "typer",
+    "uvicorn",
+]
 known_first_party = ["odmantic", "tests"]
 skip = ["docs"]
 
