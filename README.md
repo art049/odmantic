@@ -22,9 +22,10 @@
 
 ---
 
-ODMantic is an Object Document Mapper (a kind of ORM but for NoSQL databases) for
-MongoDB based on standard python type hints. It's built on top of
-<a href="https://pydantic-docs.helpmanual.io/" target="_blank">pydantic</a> for model definition and validation.
+Asynchronous ODM(Object Document Mapper) for <a href="https://www.mongodb.com/"
+target="_blank">MongoDB</a> based on standard python type hints. It's built on top of <a
+href="https://pydantic-docs.helpmanual.io/" target="_blank">pydantic</a> for model
+definition and validation.
 
 Core features:
 
@@ -32,12 +33,14 @@ Core features:
   using python comparison operators
 
 - **Developer experience**: field/method autocompletion, type hints, data validation,
-  perform database operations in a functional way
+  perform database operations with a functional API
 
 - **Fully typed**: leverage static analysis to reduce runtime issues
 
 - **AsyncIO**: works well with ASGI frameworks (<a href="https://fastapi.tiangolo.com/"
-  target="_blank">FastAPI</a>, <a href="https://www.starlette.io/"
+  target="_blank">FastAPI</a>, <a href="https://pgjones.gitlab.io/quart/"
+  target="_blank">quart</a>, <a href="https://sanicframework.org/"
+  target="_blank">sanic</a>, <a href="https://www.starlette.io/"
   target="_blank">Starlette</a>, ...)
 
 - **Serialization**: built in JSON serialization and JSON schema generation
