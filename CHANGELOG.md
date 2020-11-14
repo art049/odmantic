@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Create Dependabot config file ([#44](https://github.com/art049/odmantic/pull/44) by [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+
 - Add schema_extra config option ([#41](https://github.com/art049/odmantic/pull/41) by [@art049](https://github.com/art049))
 
 - Fix setattr error on a manually initialized EmbeddedModel ([#40](https://github.com/art049/odmantic/pull/40) by [@art049](https://github.com/art049))
