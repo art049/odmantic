@@ -1,75 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url>
      <loc>https://art049.github.io/odmantic/</loc>
-     <lastmod>2020-11-13</lastmod>
+     <lastmod>2020-11-16</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://art049.github.io/odmantic/fields/</loc>
-     <lastmod>2020-11-13</lastmod>
+     <lastmod>2020-11-16</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://art049.github.io/odmantic/modeling/</loc>
-     <lastmod>2020-11-13</lastmod>
+     <lastmod>2020-11-16</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://art049.github.io/odmantic/engine/</loc>
-     <lastmod>2020-11-13</lastmod>
+     <lastmod>2020-11-16</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://art049.github.io/odmantic/querying/</loc>
-     <lastmod>2020-11-13</lastmod>
+     <lastmod>2020-11-16</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://art049.github.io/odmantic/raw_query_usage/</loc>
-     <lastmod>2020-11-13</lastmod>
+     <lastmod>2020-11-16</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://art049.github.io/odmantic/usage_fastapi/</loc>
-     <lastmod>2020-11-13</lastmod>
+     <lastmod>2020-11-16</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://art049.github.io/odmantic/usage_pydantic/</loc>
-     <lastmod>2020-11-13</lastmod>
+     <lastmod>2020-11-16</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://art049.github.io/odmantic/api_reference/model/</loc>
-     <lastmod>2020-11-13</lastmod>
+     <lastmod>2020-11-16</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://art049.github.io/odmantic/api_reference/engine/</loc>
-     <lastmod>2020-11-13</lastmod>
+     <lastmod>2020-11-16</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://art049.github.io/odmantic/api_reference/query/</loc>
-     <lastmod>2020-11-13</lastmod>
+     <lastmod>2020-11-16</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://art049.github.io/odmantic/api_reference/field/</loc>
-     <lastmod>2020-11-13</lastmod>
+     <lastmod>2020-11-16</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://art049.github.io/odmantic/api_reference/reference/</loc>
-     <lastmod>2020-11-13</lastmod>
+     <lastmod>2020-11-16</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://art049.github.io/odmantic/api_reference/bson/</loc>
-     <lastmod>2020-11-13</lastmod>
+     <lastmod>2020-11-16</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://art049.github.io/odmantic/api_reference/fastapi/</loc>
-     <lastmod>2020-11-13</lastmod>
+     <lastmod>2020-11-16</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://art049.github.io/odmantic/api_reference/exceptions/</loc>
-     <lastmod>2020-11-13</lastmod>
+     <lastmod>2020-11-16</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://art049.github.io/odmantic/contributing/</loc>
-     <lastmod>2020-11-13</lastmod>
+     <lastmod>2020-11-16</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://art049.github.io/odmantic/changelog/</loc>
-     <lastmod>2020-11-13</lastmod>
+     <lastmod>2020-11-16</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>
