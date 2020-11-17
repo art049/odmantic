@@ -5,11 +5,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Create Dependabot config file ([#44](https://github.com/art049/odmantic/pull/44) by [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+## [0.3.1] - 2020-11-16
 
-- Add schema_extra config option ([#41](https://github.com/art049/odmantic/pull/41) by [@art049](https://github.com/art049))
+#### Added
 
-- Fix setattr error on a manually initialized EmbeddedModel ([#40](https://github.com/art049/odmantic/pull/40) by [@art049](https://github.com/art049))
+- Add `schema_extra` config option ([#41](https://github.com/art049/odmantic/pull/41) by [@art049](https://github.com/art049))
+
+#### Fixed
+
+- Fix `setattr` error on a manually initialized EmbeddedModel ([#40](https://github.com/art049/odmantic/pull/40) by [@art049](https://github.com/art049))
 
 ## [0.3.0] - 2020-11-09
 
@@ -72,4 +76,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.2.0]: https://github.com/art049/odmantic/compare/v0.1.0...v0.2.0
 [0.2.1]: https://github.com/art049/odmantic/compare/v0.2.0...v0.2.1
 [0.3.0]: https://github.com/art049/odmantic/compare/v0.2.1...v0.3.0
-[unreleased]: https://github.com/art049/odmantic/compare/v0.3.0...HEAD
+[0.3.1]: https://github.com/art049/odmantic/compare/v0.3.0...v0.3.1
+[unreleased]: https://github.com/art049/odmantic/compare/v0.3.1...HEAD
