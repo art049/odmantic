@@ -189,6 +189,16 @@ def validate_type(type_: Type) -> Type:
     return type_
 
 
+def get_annotations(type_: type) -> dict:
+    """Get type annotations of class hierarchy"""
+    d = {}
+    if issubclass(type_, pydantic.BaseModel) and type_ != pydantic.BaseModel:
+        for base in type_.__bases__:
+            d.update(get_annotations(base))
+        d.update(type_.__annotations__)
+    return d
+
+
 class BaseModelMetaclass(pydantic.main.ModelMetaclass):
     @staticmethod
     def __validate_cls_namespace__(name: str, namespace: Dict) -> None:  # noqa C901
@@ -317,6 +327,9 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
         namespace: Dict[str, Any],
         **kwargs: Any,
     ):
+        base = namespace.get('__base__')
+        if base:   # Allow write pydantic models first and derive fields
+            namespace['__annotations__'] = get_annotations(base)
         is_custom_cls = namespace.get(
             "__module__"
         ) != "odmantic.model" and namespace.get("__qualname__") not in (
@@ -363,6 +376,10 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
                 field.bind_pydantic_field(cls.__fields__[name])
                 setattr(cls, name, FieldProxy(parent=None, field=field))
 
+        cls = super().__new__(mcs, name, bases, namespace, **kwargs)
+        if base:    # restore original pydantic fields
+            cls.__fields__.update(base.__fields__)
+            cls.__pydantic_model__ = base
         return cls
 
 
