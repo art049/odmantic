@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- ⬆️ Update fastapi requirement from ^0.61.1 to >=0.61.1,<0.63.0 ([#59](https://github.com/art049/odmantic/pull/59) by [@dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [0.3.1] - 2020-11-16
 
 #### Added
