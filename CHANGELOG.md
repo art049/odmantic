@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Update mypy requirement from ^0.782 to ^0.790 ([#48](https://github.com/art049/odmantic/pull/48) by [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+
 - ⬆️ Update importlib-metadata requirement from ^1.0 to >=1,<4 ([#54](https://github.com/art049/odmantic/pull/54) by [@dependabot[bot]](https://github.com/apps/dependabot))
 
 - Update flake8 requirement from ==3.8.3 to ==3.8.4 ([#47](https://github.com/art049/odmantic/pull/47) by [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
