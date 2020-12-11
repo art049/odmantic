@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Fix tox dependency install ([#72](https://github.com/art049/odmantic/pull/72) by [@art049](https://github.com/art049))
+
 - Update mypy requirement from ^0.782 to ^0.790 ([#48](https://github.com/art049/odmantic/pull/48) by [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 
 - ⬆️ Update importlib-metadata requirement from ^1.0 to >=1,<4 ([#54](https://github.com/art049/odmantic/pull/54) by [@dependabot[bot]](https://github.com/apps/dependabot))
