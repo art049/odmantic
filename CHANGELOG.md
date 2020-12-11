@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- ⬆️ Update uvicorn requirement from ^0.12.1 to ^0.13.0 ([#67](https://github.com/art049/odmantic/pull/67) by [@dependabot[bot]](https://github.com/apps/dependabot))
+
 - Migrate to the updated prettier precommit hook ([#74](https://github.com/art049/odmantic/pull/74) by [@art049](https://github.com/art049))
 
 - Fix tox dependency install ([#72](https://github.com/art049/odmantic/pull/72) by [@art049](https://github.com/art049))
