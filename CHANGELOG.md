@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Migrate to the updated prettier precommit hook ([#74](https://github.com/art049/odmantic/pull/74) by [@art049](https://github.com/art049))
+
 - Fix tox dependency install ([#72](https://github.com/art049/odmantic/pull/72) by [@art049](https://github.com/art049))
 
 - Update mypy requirement from ^0.782 to ^0.790 ([#48](https://github.com/art049/odmantic/pull/48) by [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
