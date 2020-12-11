@@ -18,6 +18,7 @@ from typing import (
     cast,
 )
 
+from bson import CodecOptions
 from motor.motor_asyncio import (
     AsyncIOMotorClient,
     AsyncIOMotorClientSession,
@@ -25,6 +26,8 @@ from motor.motor_asyncio import (
     AsyncIOMotorCursor,
 )
 from pydantic.utils import lenient_issubclass
+from pymongo.write_concern import WriteConcern
+from pymongo.read_concern import ReadConcern
 
 from odmantic.exceptions import DocumentNotFoundError
 from odmantic.field import FieldProxy, ODMReference
@@ -89,13 +92,20 @@ class AIOEngine:
     in an asynchronous way using motor.
     """
 
-    def __init__(self, motor_client: AsyncIOMotorClient = None, database: str = "test"):
+    def __init__(self, motor_client: AsyncIOMotorClient = None, database: str = "test",
+                 codec_options: CodecOptions = None, read_preference: str = None,
+                 write_concern: WriteConcern = None, read_concern: ReadConcern = None,
+                 ):
         """Engine constructor.
 
         Args:
             motor_client: instance of an AsyncIO motor client. If None, a default one
                     will be created
             database: name of the database to use
+            codec_options: An instance of CodecOptions.
+            read_preference: The read preference to use.
+            write_concern: An instance of WriteConcern.
+            read_concern: An instance of ReadConcern.
 
         <!---
         #noqa: DAR401 ValueError
@@ -113,7 +123,13 @@ class AIOEngine:
             motor_client = AsyncIOMotorClient()
         self.client = motor_client
         self.database_name = database
-        self.database = motor_client[self.database_name]
+        self.database = motor_client.get_database(
+            name=self.database_name,
+            codec_options=codec_options,
+            read_preference=read_preference,
+            write_concern=write_concern,
+            read_concern=read_concern,
+        )
 
     def get_collection(self, model: Type[ModelType]) -> AsyncIOMotorCollection:
         """Get the motor collection associated to a Model.
