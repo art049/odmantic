@@ -92,9 +92,13 @@ class AIOEngine:
     in an asynchronous way using motor.
     """
 
-    def __init__(self, motor_client: AsyncIOMotorClient = None, database: str = "test",
-                 codec_options: CodecOptions = None, read_preference: str = None,
-                 write_concern: WriteConcern = None, read_concern: ReadConcern = None,
+    def __init__(self,
+                 motor_client: Optional[AsyncIOMotorClient] = None,
+                 database: str = "test",
+                 codec_options: Optional[CodecOptions] = None,
+                 read_preference: Optional[str] = None,
+                 write_concern: Optional[WriteConcern] = None,
+                 read_concern: Optional[ReadConcern] = None,
                  ):
         """Engine constructor.
 
