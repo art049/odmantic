@@ -1,3 +1,4 @@
+from datetime import datetime
 from inspect import getdoc
 from typing import Type
 
@@ -98,6 +99,7 @@ def test_openapi_json_with_bson_fields(fastapi_app, test_client):
         decimal: Decimal128
         binary: Binary
         regex: Regex
+        datetime_: datetime
 
     @fastapi_app.get("/", response_model=ODMModel)
     def get():
