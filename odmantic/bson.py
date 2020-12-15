@@ -130,7 +130,7 @@ class _Pattern:
         return a
 
 
-class _datetime:
+class _datetime(datetime):
     @classmethod
     def __get_validators__(cls):  # type: ignore
         yield cls.validate
