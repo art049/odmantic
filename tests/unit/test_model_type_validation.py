@@ -22,7 +22,7 @@ from odmantic.bson import (
     ObjectId,
     Regex,
 )
-from odmantic.model import EmbeddedModel, is_type_mutable, validate_type
+from odmantic.model import EmbeddedModel, Model, is_type_mutable, validate_type
 
 
 @pytest.mark.parametrize("base, replacement", _BSON_SUBSTITUTED_FIELDS.items())
@@ -65,6 +65,10 @@ class DummyEmbedded(EmbeddedModel):
     field: str
 
 
+class DummyModel(Model):
+    field: str
+
+
 @pytest.mark.parametrize(
     "t",
     (
@@ -77,7 +81,7 @@ class DummyEmbedded(EmbeddedModel):
         Tuple[int, ...],
         FrozenSet[int],
         Union[FrozenSet[int], Tuple[int, str]],
-        DummyEmbedded,
+        DummyModel,
     ),
 )
 def test_mutable_types_immutables(t: Type):
@@ -93,6 +97,7 @@ def test_mutable_types_immutables(t: Type):
         Tuple[List[int]],
         FrozenSet[Set[int]],
         Dict[Tuple[int, ...], str],
+        DummyEmbedded,
         Tuple[DummyEmbedded, ...],
         Dict[str, DummyEmbedded],
         FrozenSet[DummyEmbedded],
@@ -107,3 +112,13 @@ def test_mutable_types_unknown_type():
         ...
 
     assert is_type_mutable(T)
+
+
+def test_mutable_field_embedded_model():
+    class E(EmbeddedModel):
+        f: int
+
+    class M(Model):
+        e: E
+
+    assert "e" in M.__mutable_fields__

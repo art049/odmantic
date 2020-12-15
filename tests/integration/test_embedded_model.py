@@ -91,3 +91,20 @@ async def test_query_filter_on_embedded_nested(engine: AIOEngine):
 
     assert len(fetched_instances) == 1
     assert fetched_instances[0] == instance_0
+
+
+async def test_fields_modified_embedded_model_modification(engine: AIOEngine):
+    class E(EmbeddedModel):
+        f: int
+
+    class M(Model):
+        e: E
+
+    e = E(f=0)
+    m = M(e=e)
+    await engine.save(m)
+    e.f = 1
+    await engine.save(m)
+    fetched = await engine.find_one(M)
+    assert fetched is not None
+    assert fetched.e.f == 1
