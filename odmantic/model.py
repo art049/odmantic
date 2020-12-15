@@ -141,7 +141,11 @@ def is_type_mutable(type_: Type) -> bool:
         return not lenient_issubclass(type_origin, _IMMUTABLE_TYPES)
     else:
         return not (
-            type_ is None or lenient_issubclass(type_, _IMMUTABLE_TYPES)  # type:ignore
+            type_ is None  # type:ignore
+            or (
+                lenient_issubclass(type_, _IMMUTABLE_TYPES)
+                and not lenient_issubclass(type_, EmbeddedModel)
+            )
         )
 
 
@@ -235,6 +239,9 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
             if isinstance(value, PDFieldInfo):
                 raise TypeError("please use odmantic.Field instead of pydantic.Field")
 
+            if is_type_mutable(field_type):
+                mutable_fields.add(field_name)
+
             if lenient_issubclass(field_type, EmbeddedModel):
                 if isinstance(value, ODMFieldInfo):
                     namespace[field_name] = value.pydantic_field_info
@@ -266,8 +273,6 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
                 references.append(field_name)
                 del namespace[field_name]  # Remove default ODMReferenceInfo value
             else:
-                if is_type_mutable(field_type):
-                    mutable_fields.add(field_name)
                 if isinstance(value, ODMFieldInfo):
                     key_name = (
                         value.key_name if value.key_name is not None else field_name
