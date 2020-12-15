@@ -8,9 +8,9 @@
 <meta content="AsyncIO MongoDB ODM (Object Document Mapper) using python type hinting" name="description"/>
 <link href="https://art049.github.io/odmantic/fields/" rel="canonical"/>
 <link href="../assets/images/favicon.png" rel="shortcut icon"/>
-<meta content="mkdocs-1.1.2, mkdocs-material-6.1.5" name="generator"/>
+<meta content="mkdocs-1.1.2, mkdocs-material-6.1.7" name="generator"/>
 <title>Fields - ODMantic</title>
-<link href="../assets/stylesheets/main.21aed14c.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/main.19753c6b.min.css" rel="stylesheet"/>
 <link href="../assets/stylesheets/palette.196e0c26.min.css" rel="stylesheet"/>
 <meta content="#8bc34b" name="theme-color"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -630,8 +630,8 @@ practice, <code>None</code> is used directly in type annotations (<a href="https
 </td></tr></table>
 <div class="admonition abstract">
 <p class="admonition-title">Resulting documents in the collection <code>tree</code> after execution</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span> <span class="nt">"_id"</span> <span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f818f2dd5708527282c49b6"</span><span class="err">)</span><span class="p">,</span> <span class="nt">"kind"</span> <span class="p">:</span> <span class="s2">"big"</span><span class="p">,</span> <span class="nt">"name"</span> <span class="p">:</span> <span class="s2">"Sequoia"</span> <span class="p">}</span>
-<span class="p">{</span> <span class="nt">"_id"</span> <span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f818f2dd5708527282c49b7"</span><span class="err">)</span><span class="p">,</span> <span class="nt">"kind"</span> <span class="p">:</span> <span class="s2">"small"</span><span class="p">,</span> <span class="nt">"name"</span> <span class="p">:</span> <span class="s2">"Spruce"</span> <span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span> <span class="nt">"_id"</span> <span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f818f2dd5708527282c49b6"</span><span class="err">)</span><span class="p">,</span> <span class="nt">"kind"</span> <span class="p">:</span> <span class="s2">"big"</span><span class="p">,</span> <span class="nt">"name"</span> <span class="p">:</span> <span class="s2">"Sequoia"</span> <span class="p">}</span>
+<span class="p">{</span> <span class="nt">"_id"</span> <span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f818f2dd5708527282c49b7"</span><span class="err">)</span><span class="p">,</span> <span class="nt">"kind"</span> <span class="p">:</span> <span class="s2">"small"</span><span class="p">,</span> <span class="nt">"name"</span> <span class="p">:</span> <span class="s2">"Spruce"</span> <span class="p">}</span>
 </code></pre></div>
 </div>
 <p>If you try to use a value not present in the allowed choices, a <a href="https://pydantic-docs.helpmanual.io/usage/models/#error-handling" target="blank_">ValidationError</a> exception will be raised.</p>
@@ -1145,7 +1145,7 @@ possible to override this naming policy by using the <code>key_name</code> argum
 <div class="admonition abstract">
 <p class="admonition-title">Resulting documents in the collection <code>player</code> after execution</p>
 <p><div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5ed50fcad11d1975aa3d7a28"</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5ed50fcad11d1975aa3d7a28"</span><span class="err">)</span><span class="p">,</span>
 <span class="hll">  <span class="nt">"username"</span><span class="p">:</span> <span class="s2">"Jack"</span><span class="p">,</span>
 </span><span class="p">}</span>
 </code></pre></div>
@@ -1478,8 +1478,8 @@ decoding by attempting to decode <code>bytes</code> object in the <code>validate
 <div class="admonition abstract">
 <p class="admonition-title">Resulting documents in the collection <code>example</code> after execution</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">"_id"</span> <span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f81fa5e8adaf4bf33f05035"</span><span class="err">)</span><span class="p">,</span>
-<span class="hll">  <span class="nt">"field"</span> <span class="p">:</span> <span class="err">BinData(</span><span class="mi">0</span><span class="p">,</span><span class="nt">"aGVsbG8gd29ybGQ="</span><span class="err">)</span>
+  <span class="nt">"_id"</span> <span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f81fa5e8adaf4bf33f05035"</span><span class="err">)</span><span class="p">,</span>
+<span class="hll">  <span class="nt">"field"</span> <span class="p">:</span> <span class="err">Bi</span><span class="kc">n</span><span class="err">Da</span><span class="kc">ta</span><span class="err">(</span><span class="mi">0</span><span class="p">,</span><span class="s2">"aGVsbG8gd29ybGQ="</span><span class="err">)</span>
 </span><span class="p">}</span>
 </code></pre></div>
 </div>
@@ -1548,8 +1548,8 @@ handling <code>bytes</code> objects in the validate method.</p>
 </div>
 </footer>
 </div>
-<script src="../assets/javascripts/vendor.7e0ee788.min.js"></script>
-<script src="../assets/javascripts/bundle.b3a72adc.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+<script src="../assets/javascripts/vendor.0ac82a11.min.js"></script>
+<script src="../assets/javascripts/bundle.f81dfb4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
 <script>
         app = initialize({
           base: "..",

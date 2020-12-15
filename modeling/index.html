@@ -8,9 +8,9 @@
 <meta content="AsyncIO MongoDB ODM (Object Document Mapper) using python type hinting" name="description"/>
 <link href="https://art049.github.io/odmantic/modeling/" rel="canonical"/>
 <link href="../assets/images/favicon.png" rel="shortcut icon"/>
-<meta content="mkdocs-1.1.2, mkdocs-material-6.1.5" name="generator"/>
+<meta content="mkdocs-1.1.2, mkdocs-material-6.1.7" name="generator"/>
 <title>Modeling - ODMantic</title>
-<link href="../assets/stylesheets/main.21aed14c.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/main.19753c6b.min.css" rel="stylesheet"/>
 <link href="../assets/stylesheets/palette.196e0c26.min.css" rel="stylesheet"/>
 <meta content="#8bc34b" name="theme-color"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -716,7 +716,7 @@ relation as a One-to-One relationship. We will use an Embedded Model in this cas
 <p>The <a href="../api_reference/field/#odmantic.field.Field">Field</a> descriptor can be used as well for Embedded
 Models in order to bring more flexibility (default values, Mongo key name, ...).</p>
 <details class="abstract" open="open"><summary>Content of the <code>country</code> collection after execution</summary><div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f79d7e8b305f24ca43593e2"</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f79d7e8b305f24ca43593e2"</span><span class="err">)</span><span class="p">,</span>
   <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Sweden"</span><span class="p">,</span>
   <span class="nt">"currency"</span><span class="p">:</span> <span class="s2">"Swedish krona"</span><span class="p">,</span>
 <span class="hll">  <span class="nt">"capital_city"</span><span class="p">:</span> <span class="p">{</span>
@@ -725,7 +725,7 @@ Models in order to bring more flexibility (default values, Mongo key name, ...).
 </span><span class="hll">  <span class="p">}</span>
 </span><span class="p">}</span>
 <span class="p">{</span>
-  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f79d7e8b305f24ca43593e1"</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f79d7e8b305f24ca43593e1"</span><span class="err">)</span><span class="p">,</span>
   <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Switzerland"</span><span class="p">,</span>
   <span class="nt">"currency"</span><span class="p">:</span> <span class="s2">"Swiss franc"</span><span class="p">,</span>
 <span class="hll">  <span class="nt">"capital_city"</span><span class="p">:</span> <span class="p">{</span>
@@ -836,7 +836,7 @@ should not be linked together).</p>
 Embedded Models is done exactly as defining a field with its type being a sequence of
 <code>Address</code> objects.</p>
 <details class="abstract" open="open"><summary>Content of the <code>customer</code> collection after execution</summary><div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f79eb116371e09b16e4fae4"</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f79eb116371e09b16e4fae4"</span><span class="err">)</span><span class="p">,</span>
   <span class="nt">"name"</span><span class="p">:</span><span class="s2">"John Doe"</span><span class="p">,</span>
 <span class="hll">  <span class="nt">"addresses"</span><span class="p">:[</span>
 </span><span class="hll">    <span class="p">{</span>
@@ -970,13 +970,13 @@ distinction since it would make more sense than having to set a descriptor for e
 reference.</p>
 </details>
 <details class="abstract" open="open"><summary>Content of the <code>publisher</code> collection after execution</summary><p><div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="hll">  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f7a0dc48a73b20f16e2a364"</span><span class="err">)</span><span class="p">,</span>
+<span class="hll">  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a0dc48a73b20f16e2a364"</span><span class="err">)</span><span class="p">,</span>
 </span>  <span class="nt">"founded"</span><span class="p">:</span> <span class="mi">1826</span><span class="p">,</span>
   <span class="nt">"location"</span><span class="p">:</span> <span class="s2">"FR"</span><span class="p">,</span>
   <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Hachette Livre"</span>
 <span class="p">}</span>
 <span class="p">{</span>
-<span class="hll">  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f7a0dc48a73b20f16e2a365"</span><span class="err">)</span><span class="p">,</span>
+<span class="hll">  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a0dc48a73b20f16e2a365"</span><span class="err">)</span><span class="p">,</span>
 </span>  <span class="nt">"founded"</span><span class="p">:</span> <span class="mi">1989</span><span class="p">,</span>
   <span class="nt">"location"</span><span class="p">:</span> <span class="s2">"US"</span><span class="p">,</span>
   <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"HarperCollins"</span>
@@ -989,21 +989,21 @@ will persist automatically the referenced documents.</p>
 <p>While fetching instances, the engine will as well resolve <strong>every</strong> reference.</p>
 </details>
 <details class="abstract" open="open"><summary>Content of the <code>book</code> collection after execution</summary><p><div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f7a0dc48a73b20f16e2a366"</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a0dc48a73b20f16e2a366"</span><span class="err">)</span><span class="p">,</span>
   <span class="nt">"pages"</span><span class="p">:</span> <span class="mi">304</span><span class="p">,</span>
-<span class="hll">  <span class="nt">"publisher"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f7a0dc48a73b20f16e2a364"</span><span class="err">)</span><span class="p">,</span>
+<span class="hll">  <span class="nt">"publisher"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a0dc48a73b20f16e2a364"</span><span class="err">)</span><span class="p">,</span>
 </span>  <span class="nt">"title"</span><span class="p">:</span> <span class="s2">"They Didn't See Us Coming"</span>
 <span class="p">}</span>
 <span class="p">{</span>
-  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f7a0dc48a73b20f16e2a367"</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a0dc48a73b20f16e2a367"</span><span class="err">)</span><span class="p">,</span>
   <span class="nt">"pages"</span><span class="p">:</span> <span class="mi">256</span><span class="p">,</span>
-<span class="hll">  <span class="nt">"publisher"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f7a0dc48a73b20f16e2a364"</span><span class="err">)</span><span class="p">,</span>
+<span class="hll">  <span class="nt">"publisher"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a0dc48a73b20f16e2a364"</span><span class="err">)</span><span class="p">,</span>
 </span>  <span class="nt">"title"</span><span class="p">:</span> <span class="s2">"This Isn't Happening"</span>
 <span class="p">}</span>
 <span class="p">{</span>
-  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f7a0dc48a73b20f16e2a368"</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a0dc48a73b20f16e2a368"</span><span class="err">)</span><span class="p">,</span>
   <span class="nt">"pages"</span><span class="p">:</span> <span class="mi">464</span><span class="p">,</span>
-<span class="hll">  <span class="nt">"publisher"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f7a0dc48a73b20f16e2a365"</span><span class="err">)</span><span class="p">,</span>
+<span class="hll">  <span class="nt">"publisher"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a0dc48a73b20f16e2a365"</span><span class="err">)</span><span class="p">,</span>
 </span>  <span class="nt">"title"</span><span class="p">:</span> <span class="s2">"Prodigal Summer"</span>
 <span class="p">}</span>
 </code></pre></div>
@@ -1091,30 +1091,30 @@ define the relationship in a manual way.</p>
 <p>Since this multi-reference is not mapped by the ODM, we have to persist the authors
 manually.</p>
 <details class="abstract" open="open"><summary>Content of the <code>author</code> collection after execution</summary><div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="hll">  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f7a37dc7311be1362e1da4e"</span><span class="err">)</span><span class="p">,</span>
+<span class="hll">  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a37dc7311be1362e1da4e"</span><span class="err">)</span><span class="p">,</span>
 </span>  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"David Beazley"</span>
 <span class="p">}</span>
 <span class="p">{</span>
-<span class="hll">  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f7a37dc7311be1362e1da4f"</span><span class="err">)</span><span class="p">,</span>
+<span class="hll">  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a37dc7311be1362e1da4f"</span><span class="err">)</span><span class="p">,</span>
 </span>  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Brian K. Jones"</span>
 <span class="p">}</span>
 </code></pre></div>
 </details>
 <details class="abstract" open="open"><summary>Content of the <code>book</code> collection after execution</summary><div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f7a37dc7311be1362e1da50"</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">"title"</span><span class="p">:</span><span class="s2">"Python Cookbook"</span>
-  <span class="s2">"pages"</span><span class="p">:</span><span class="mi">706</span><span class="p">,</span>
+  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a37dc7311be1362e1da50"</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">"title"</span><span class="p">:</span><span class="nt">"Python Cookbook"</span>
+  <span class="nt">"pages"</span><span class="p">:</span><span class="mi">706</span><span class="p">,</span>
 <span class="hll">  <span class="nt">"author_ids"</span><span class="p">:[</span>
-</span><span class="hll">    <span class="err">ObjectId(</span><span class="s2">"5f7a37dc7311be1362e1da4e"</span><span class="err">)</span><span class="p">,</span>
-</span><span class="hll">    <span class="err">ObjectId(</span><span class="s2">"5f7a37dc7311be1362e1da4f"</span><span class="err">)</span>
+</span><span class="hll">    <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a37dc7311be1362e1da4e"</span><span class="err">)</span><span class="p">,</span>
+</span><span class="hll">    <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a37dc7311be1362e1da4f"</span><span class="err">)</span>
 </span><span class="hll">  <span class="p">],</span>
 </span><span class="p">}</span>
 <span class="p">{</span>
-  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">ObjectId(</span><span class="s2">"5f7a37dc7311be1362e1da51"</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">"title"</span><span class="p">:</span><span class="s2">"Python Essential Reference"</span>
-  <span class="s2">"pages"</span><span class="p">:</span><span class="mi">717</span><span class="p">,</span>
+  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a37dc7311be1362e1da51"</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">"title"</span><span class="p">:</span><span class="nt">"Python Essential Reference"</span>
+  <span class="nt">"pages"</span><span class="p">:</span><span class="mi">717</span><span class="p">,</span>
 <span class="hll">  <span class="nt">"author_ids"</span><span class="p">:[</span>
-</span><span class="hll">    <span class="err">ObjectId(</span><span class="s2">"5f7a37dc7311be1362e1da4f"</span><span class="err">)</span>
+</span><span class="hll">    <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a37dc7311be1362e1da4f"</span><span class="err">)</span>
 </span><span class="hll">  <span class="p">],</span>
 </span><span class="p">}</span>
 </code></pre></div>
@@ -1198,8 +1198,8 @@ manually.</p>
 </div>
 </footer>
 </div>
-<script src="../assets/javascripts/vendor.7e0ee788.min.js"></script>
-<script src="../assets/javascripts/bundle.b3a72adc.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+<script src="../assets/javascripts/vendor.0ac82a11.min.js"></script>
+<script src="../assets/javascripts/bundle.f81dfb4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
 <script>
         app = initialize({
           base: "..",
