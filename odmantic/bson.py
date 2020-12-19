@@ -27,8 +27,7 @@ class ObjectId(bson.ObjectId):
     def __modify_schema__(cls, field_schema: Dict) -> None:
         field_schema.update(
             examples=["5f85f36d6dfecacc68428a46", "ffffffffffffffffffffffff"],
-            example="ffffffffffffffffffffffff",
-            description="MongoDB ObjectId string",
+            example="5f85f36d6dfecacc68428a46",
             type="string",
         )
 
