@@ -300,7 +300,6 @@ class AIOEngine:
         self, instance: ModelType, session: AsyncIOMotorClientSession, **kwargs: Any
     ) -> ModelType:
         """Perform an atomic save operation in the specified session"""
-
         # recursive saving for embedded instances
         save_tasks = []
         for ref_field_name in instance.__references__:
