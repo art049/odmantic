@@ -310,23 +310,27 @@ class AIOEngine:
             By default `filter`, `update`, `upsert` and `session` already provided.
 
         """
+        # recursive saving for embedded instances
         save_tasks = []
         for ref_field_name in instance.__references__:
             sub_instance = cast(Model, getattr(instance, ref_field_name))
             save_tasks.append(self._save(sub_instance, session, **kwargs))
-
         await gather(*save_tasks)
+
+        # get updated fields
         fields_to_update = (
             instance.__fields_modified__ | instance.__mutable_fields__
         ) - {instance.__primary_field__}
-        if len(fields_to_update) > 0:
+
+        # save if updated fields exist
+        if fields_to_update:
             doc = instance.doc(include=fields_to_update)
             collection = self.get_collection(type(instance))
             query_params = {
-                'filter': {"_id": getattr(instance, instance.__primary_field__)},
-                'update': {"$set": doc},
-                'upsert': True,
-                'session': session,
+                "filter": {"_id": getattr(instance, instance.__primary_field__)},
+                "update": {"$set": doc},
+                "upsert": True,
+                "session": session,
             }
             query_params.update(kwargs)
             await collection.update_one(**query_params)
