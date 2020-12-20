@@ -297,27 +297,39 @@ class AIOEngine:
         return results[0]
 
     async def _save(
-        self, instance: ModelType, session: AsyncIOMotorClientSession
+        self, instance: ModelType, session: AsyncIOMotorClientSession, **kwargs
     ) -> ModelType:
-        """Perform an atomic save operation in the specified session"""
+        """Perform an atomic save operation in the specified session
+
+         Args:
+            instance: model to perform the operation on
+            session: motor session
+
+         Kwargs:
+            Pass kwarg to overwrite any `collection.update_one(...)` parameter.
+            By default `filter`, `update`, `upsert` and `session` already provided.
+
+        """
         save_tasks = []
         for ref_field_name in instance.__references__:
             sub_instance = cast(Model, getattr(instance, ref_field_name))
-            save_tasks.append(self._save(sub_instance, session))
+            save_tasks.append(self._save(sub_instance, session, **kwargs))
 
         await gather(*save_tasks)
         fields_to_update = (
             instance.__fields_modified__ | instance.__mutable_fields__
-        ) - set([instance.__primary_field__])
+        ) - {instance.__primary_field__}
         if len(fields_to_update) > 0:
             doc = instance.doc(include=fields_to_update)
             collection = self.get_collection(type(instance))
-            await collection.update_one(
-                {"_id": getattr(instance, instance.__primary_field__)},
-                {"$set": doc},
-                upsert=True,
-                bypass_document_validation=True,
-            )
+            query_params = {
+                'filter': {"_id": getattr(instance, instance.__primary_field__)},
+                'update': {"$set": doc},
+                'upsert': True,
+                'session': session,
+            }
+            query_params.update(kwargs)
+            await collection.update_one(**query_params)
         return instance
 
     async def save(self, instance: ModelType) -> ModelType:
