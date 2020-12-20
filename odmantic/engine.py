@@ -299,17 +299,8 @@ class AIOEngine:
     async def _save(
         self, instance: ModelType, session: AsyncIOMotorClientSession, **kwargs
     ) -> ModelType:
-        """Perform an atomic save operation in the specified session
+        """Perform an atomic save operation in the specified session"""
 
-         Args:
-            instance: model to perform the operation on
-            session: motor session
-
-         Kwargs:
-            Pass kwarg to overwrite any `collection.update_one(...)` parameter.
-            By default `filter`, `update`, `upsert` and `session` already provided.
-
-        """
         # recursive saving for embedded instances
         save_tasks = []
         for ref_field_name in instance.__references__:
@@ -334,9 +325,10 @@ class AIOEngine:
             }
             query_params.update(kwargs)
             await collection.update_one(**query_params)
+            object.__setattr__(instance, "__fields_modified__", set())
         return instance
 
-    async def save(self, instance: ModelType) -> ModelType:
+    async def save(self, instance: ModelType, **kwargs) -> ModelType:
         """Persist an instance to the database
 
         This method behaves as an 'upsert' operation. If a document already exists
@@ -346,6 +338,10 @@ class AIOEngine:
 
         Args:
             instance: instance to persist
+
+        Kwargs:
+            Pass kwarg to overwrite any `collection.update_one(...)` parameter.
+            By default `filter`, `update`, `upsert` and `session` already provided.
 
         Returns:
             the saved instance
@@ -363,8 +359,7 @@ class AIOEngine:
 
         async with await self.client.start_session() as s:
             async with s.start_transaction():
-                await self._save(instance, s)
-        object.__setattr__(instance, "__fields_modified__", set())
+                await self._save(instance, s, **kwargs)
         return instance
 
     async def save_all(self, instances: Sequence[ModelType]) -> List[ModelType]:
