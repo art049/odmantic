@@ -337,10 +337,8 @@ class AIOEngine:
 
         Args:
             instance: instance to persist
-
-        Kwargs:
-            Pass kwarg to overwrite any `collection.update_one(...)` parameter.
-            By default `filter`, `update`, `upsert` and `session` already provided.
+            kwargs: pass kwarg to overwrite any `.update_one(...)` parameter. By
+                default `filter`, `update`, `upsert` and `session` already provided.
 
         Returns:
             the saved instance
