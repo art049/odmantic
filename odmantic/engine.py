@@ -297,7 +297,7 @@ class AIOEngine:
         return results[0]
 
     async def _save(
-        self, instance: ModelType, session: AsyncIOMotorClientSession, **kwargs
+        self, instance: ModelType, session: AsyncIOMotorClientSession, **kwargs: Any
     ) -> ModelType:
         """Perform an atomic save operation in the specified session"""
 
@@ -328,7 +328,7 @@ class AIOEngine:
             object.__setattr__(instance, "__fields_modified__", set())
         return instance
 
-    async def save(self, instance: ModelType, **kwargs) -> ModelType:
+    async def save(self, instance: ModelType, **kwargs: Any) -> ModelType:
         """Persist an instance to the database
 
         This method behaves as an 'upsert' operation. If a document already exists
