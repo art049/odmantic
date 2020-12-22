@@ -316,7 +316,6 @@ class AIOEngine:
                 {"_id": getattr(instance, instance.__primary_field__)},
                 {"$set": doc},
                 upsert=True,
-                bypass_document_validation=True,
             )
         return instance
 
