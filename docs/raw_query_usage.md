@@ -33,6 +33,22 @@ field reference name.
 ```python linenums="1"
 --8<-- "raw_query_usage/field_key_name.py"
 ```
+
+## Using raw MongoDB filters
+Any [QueryExpression][odmantic.query.QueryExpression] can be replaced by its raw filter
+equivalent.
+
+For example, with a Tree model:
+
+```python linenums="1"
+--8<-- "raw_query_usage/raw_query_filters.py"
+```
+
+All the following find queries would give exactly the same results:
+```python
+--8<-- "raw_query_usage/raw_query_filters_1.py"
+```
+
 ## Raw MongoDB documents
 ### Parsing documents
 You can parse MongoDB document to instances using the

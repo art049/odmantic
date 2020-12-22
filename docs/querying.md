@@ -220,15 +220,6 @@ Equivalent raw MongoDB filter:
     an extra underscore to avoid overlapping with the python keywords.
     While it could've been possible to name the NOR operator query.nor, the extra underscore has been kept for consistency in the naming of the logical operators.
 
-
-### Manual filtering
-Raw MongoDB filter expressions can be used as well with the
-[find][odmantic.engine.AIOEngine.find], [find_one][odmantic.engine.AIOEngine.find_one]
-or [count][odmantic.engine.AIOEngine.count] methods.
-
-You can find more details about building raw query filters using the Model in the [Raw
-query usage](raw_query_usage.md) section.
-
 ### Embedded documents filters
 
 It's possible to build filter based on the content of embedded documents:
@@ -247,6 +238,16 @@ Equivalent raw MongoDB filters:
 
 !!! warning "Filtering across References"
     Currently, it is not possible to build filter based on referenced objects.
+
+### Raw MongoDB filters
+
+Any [QueryExpression][odmantic.query.QueryExpression] can be replaced with raw MongoDB filters.
+Thus, it's completely possible to use traditional filters with the
+[find][odmantic.engine.AIOEngine.find], [find_one][odmantic.engine.AIOEngine.find_one]
+or [count][odmantic.engine.AIOEngine.count] methods.
+
+You can find more details about building raw query filters using the Model in the [Raw
+query usage](raw_query_usage.md#using-raw-mongodb-filters) section.
 
 ## Sorting
 
