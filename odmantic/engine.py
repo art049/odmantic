@@ -318,6 +318,7 @@ class AIOEngine:
                 upsert=True,
                 bypass_document_validation=True,
             )
+            object.__setattr__(instance, "__fields_modified__", set())
         return instance
 
     async def save(self, instance: ModelType) -> ModelType:
@@ -348,7 +349,6 @@ class AIOEngine:
         async with await self.client.start_session() as s:
             async with s.start_transaction():
                 await self._save(instance, s)
-        object.__setattr__(instance, "__fields_modified__", set())
         return instance
 
     async def save_all(self, instances: Sequence[ModelType]) -> List[ModelType]:
