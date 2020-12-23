@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Remove `bypass_document_validation` save option to avoid `Not Authorized` errors ([#85](https://github.com/art049/odmantic/pull/85) by [@Olegt0rr](https://github.com/Olegt0rr))
+
 - ⬆️ Update fastapi requirement from >=0.61.1,<0.63.0 to >=0.61.1,<0.64.0 ([#84](https://github.com/art049/odmantic/pull/84) by [@dependabot[bot]](https://github.com/apps/dependabot))
 
 ## [0.3.2] - 2020-12-15
