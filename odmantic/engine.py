@@ -321,7 +321,7 @@ class AIOEngine:
             )
             object.__setattr__(instance, "__fields_modified__", set())
         return instance
-    
+
     async def get_server_type(self) -> Optional[str]:
         # cached by instance after first call.
         if self._server_type is not None:
