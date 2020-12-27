@@ -344,7 +344,7 @@ class AIOEngine:
 
         return self._server_type
 
-    async def get_server_version(self) -> Optional[Tuple[int]]:
+    async def get_server_version(self) -> Optional[tuple]:
         # cached by instance after first call.
         if self._server_version is not None:
             return self._server_version
