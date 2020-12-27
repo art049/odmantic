@@ -114,6 +114,8 @@ class AIOEngine:
         self.client = motor_client
         self.database_name = database
         self.database = motor_client[self.database_name]
+        self._server_type: Optional[str] = None
+        self._server_version: Optional[tuple] = None
 
     def get_collection(self, model: Type[ModelType]) -> AsyncIOMotorCollection:
         """Get the motor collection associated to a Model.
@@ -317,7 +319,46 @@ class AIOEngine:
                 {"$set": doc},
                 upsert=True,
             )
+            object.__setattr__(instance, "__fields_modified__", set())
         return instance
+    
+    async def get_server_type(self) -> Optional[str]:
+        # cached by instance after first call.
+        if self._server_type is not None:
+            return self._server_type
+
+        # to check the server type, let's call the `isMaster` command
+        result = await self.database.command("isMaster")
+
+        # if the `msg` field is set to `isdbgrid` we're connected to a mongos
+        if result and result.get("msg") == "isdbgrid":
+            self._server_type = "mongos"
+
+        # if the `setname` field is set we're connected to a replica set member.
+        elif result and result.get("setName") is not None:
+            self._server_type = "replica_set"
+
+        # otherwise we're connected to a standalone.
+        else:
+            self._server_type = "standalone"
+
+        return self._server_type
+
+    async def get_server_version(self) -> Optional[Tuple[int]]:
+        # cached by instance after first call.
+        if self._server_version is not None:
+            return self._server_version
+
+        result = await self.client.server_info()
+        if result is None:
+            return None
+
+        version_str = result.get("version")
+        if version_str is None:
+            return None
+
+        self._server_version = tuple(int(value) for value in version_str.split("."))
+        return self._server_version
 
     async def save(self, instance: ModelType) -> ModelType:
         """Persist an instance to the database
@@ -344,10 +385,20 @@ class AIOEngine:
         if not isinstance(instance, Model):
             raise TypeError("Can only call find_one with a Model class")
 
+        server_type = await self.get_server_type()
+        if server_type == "standalone":
+            await self._save(instance, None)
+            return instance
+
+        version = await self.get_server_version()
+        if server_type == "mongos" and version is not None and version < (4, 2, 0):
+            await self._save(instance, None)
+            return instance
+
         async with await self.client.start_session() as s:
             async with s.start_transaction():
                 await self._save(instance, s)
-        object.__setattr__(instance, "__fields_modified__", set())
+
         return instance
 
     async def save_all(self, instances: Sequence[ModelType]) -> List[ModelType]:
