@@ -541,3 +541,13 @@ async def test_find_document_field_not_set_with_default_factory_enabled(
     instance = await engine.find_one(M)
     assert instance is not None
     assert instance.field == "hello"
+
+    
+async def test_get_server_type(engine: AIOEngine):
+    server_type = await engine.get_server_type()
+    assert server_type in ("mongos", "replica_set", "standalone", None)
+
+
+async def test_get_server_version(engine: AIOEngine):
+    server_version = await engine.get_server_version()
+    assert isinstance(server_version, tuple) or server_version is None
