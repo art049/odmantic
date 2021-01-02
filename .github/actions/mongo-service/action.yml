@@ -1,0 +1,49 @@
+name: "CI Mongo Service"
+description: "Create a Mongo service with multiple clustering options"
+inputs:
+  version:
+    description: "MongoDB version"
+    required: true
+  mode:
+    description: |
+      Cluster settings: either 'standalone', 'replicaSet' or 'sharded'
+    required: false
+    default: "standalone"
+outputs:
+  connection-string:
+    description: "Mongo connection string"
+    value: ${{ steps.main.outputs.connection-string }}
+runs:
+  using: "composite"
+  steps:
+    - shell: bash
+      id: main
+      run: |
+        if [[ "${{ inputs.mode }}" == "standalone" ]];then
+          echo "Creating a standalone MongoDB instance"
+          docker run --name odmantic-mongo-test \
+            -p 27017:27017 \
+            -d mongo:${{ inputs.version }}
+          MONGOCSTRING=mongodb://localhost:27017/
+        elif [[ "${{ inputs.mode }}" == "replicaSet" ]]; then
+          echo "Creating a ReplicaSet MongoDB cluster"
+          cd .github/actions/mongo-service/replica
+          export VERSION=${{ inputs.version }}
+          docker-compose  up -d
+          echo "Initializing the replicaSet"
+          ./start.sh
+          MONGOCSTRING=mongodb://172.16.17.11:27017,172.16.17.12:27017,172.16.17.13:27017/?replicaSet=odmantic-replica-set
+        elif [[ "${{ inputs.mode }}" == "sharded" ]]; then
+          echo "Creating a Sharded MongoDB cluster"
+          cd .github/actions/mongo-service/sharded
+          export VERSION=${{ inputs.version }}
+          docker-compose  up -d
+          echo "Initializing the sharded cluster"
+          ./start.sh
+          MONGOCSTRING=mongodb://172.16.17.10:27017/
+        else
+          echo "Unknown service mode: ${{ inputs.mode }}"
+          exit 1
+        fi
+        echo "Service: $(echo $MONGOCSTRING)"
+        echo "::set-output name=connection-string::$(echo $MONGOCSTRING)"

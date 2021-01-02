@@ -31,12 +31,28 @@ jobs:
           - 4.0
           - 4.2
           - 4.4
+        mongo-mode:
+          - standalone
+        include:
+          - python-version: 3.8
+            mongo-version: 4.0
+            mongo-mode: replicaSet
+          - python-version: 3.8
+            mongo-version: 4.2
+            mongo-mode: sharded
+
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Mongo Service
+        id: mongo-service
+        uses: ./.github/actions/mongo-service
+        with:
+          version: ${{ matrix.mongo-version }}
+          mode: ${{ matrix.mongo-mode }}
       - name: Cache environment
         uses: actions/cache@v2
         with:
@@ -48,22 +64,17 @@ jobs:
           poetry config virtualenvs.in-project true
           poetry config experimental.new-installer false
           poetry install
-
       - name: Run all tests
         run: |
           set -e
           poetry run coverage run -m pytest -v
           poetry run coverage report -m
           poetry run coverage xml
+        env:
+          TEST_MONGO_URI: ${{ steps.mongo-service.outputs.connection-string }}
 
       - uses: codecov/codecov-action@v1
         with:
           file: ./coverage.xml
-          flags: tests-${{ matrix.python-version }}-${{ matrix.mongo-version }}
+          flags: tests-${{ matrix.python-version }}-${{ matrix.mongo-version }}-${{ matrix.mongo-mode }}
           fail_ci_if_error: true
-
-    services:
-      mongo:
-        image: mongo:${{ matrix.mongo-version }}
-        ports:
-          - 27017:27017

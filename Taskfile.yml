@@ -21,6 +21,38 @@ tasks:
       - docker run --rm -p 27017:27017 --name odmantic-mongo-test -d mongo:4
     status:
       - docker container inspect odmantic-mongo-test
+  mongodb:replica-compose:
+    cmds:
+      - echo "Starting replica mongo cluster"
+      - docker-compose up -d
+      - ./.github/actions/mongo-service/replica/start.sh
+    status:
+      - test -n "$(docker-compose ps -q)"
+    env:
+      VERSION: 4.0
+      COMPOSE_FILE: .github/actions/mongo-service/replica/docker-compose.yml
+  mongodb:replica-compose:down:
+    cmds:
+      - docker-compose down
+    env:
+      VERSION: 4.0
+      COMPOSE_FILE: .github/actions/mongo-service/replica/docker-compose.yml
+  mongodb:sharded-compose:
+    cmds:
+      - echo "Starting sharded mongo cluster"
+      - docker-compose up -d
+      - ./.github/actions/mongo-service/sharded/start.sh
+    status:
+      - test -n "$(docker-compose ps -q)"
+    env:
+      VERSION: 4.0
+      COMPOSE_FILE: .github/actions/mongo-service/sharded/docker-compose.yml
+  mongodb:sharded-compose:down:
+    cmds:
+      - docker-compose down
+    env:
+      VERSION: 4.0
+      COMPOSE_FILE: .github/actions/mongo-service/sharded/docker-compose.yml
 
   full-test:
     desc: Run the tests against all supported versions.

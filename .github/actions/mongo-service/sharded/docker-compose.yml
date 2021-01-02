@@ -1,0 +1,42 @@
+version: "3.4"
+
+networks:
+  main-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: "172.16.17.0/24"
+
+x-mongo-base: &mongo-base
+  image: "mongo:${VERSION}"
+  volumes:
+    - ./:/scripts
+
+services:
+  router:
+    <<: *mongo-base
+    command: mongos --configdb config-rs/172.16.17.11:27019 --bind_ip_all
+    networks:
+      main-net:
+        ipv4_address: 172.16.17.10
+
+  configsvr:
+    <<: *mongo-base
+    command: mongod --configsvr  --replSet config-rs #Port 27019
+    networks:
+      main-net:
+        ipv4_address: 172.16.17.11
+
+  shard0:
+    <<: *mongo-base
+    command: mongod --shardsvr # Port: 27018
+    networks:
+      main-net:
+        ipv4_address: 172.16.17.20
+
+  shard1:
+    <<: *mongo-base
+    command: mongod --shardsvr # Port: 27018
+    networks:
+      main-net:
+        ipv4_address: 172.16.17.21
