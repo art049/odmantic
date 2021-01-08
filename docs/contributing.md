@@ -66,6 +66,7 @@ Here are the steps:
 
 - [Git LFS](https://git-lfs.github.com/){:target=blank_}: used to store documentation assets in the repository
 - [Docker](https://docs.docker.com/get-docker/){:target=blank_}: used to run a local MongoDB instance
+- [Docker Compose](https://docs.docker.com/compose/install/){:target=blank_} (Optional): used to run a local MongoDB cluster (replica set or shards)
 - [Task](https://taskfile.dev){:target=blank_}: task manager
 
 !!! tip "Installing python based development tools"
@@ -118,18 +119,28 @@ Here are the steps:
 
 The following tasks are available for the project:
 
-* `task setup`:                Configure the development environment.
+* `task setup`: Configure the development environment.
 
-* `task lint`:                 Run the linting checks.
+* `task lint`: Run the linting checks.
 
-* `task format`:               Format the code (and imports).
+* `task format`: Format the code (and imports).
 
-* `task mongodb`:              Start the local MongoDB server.
+* `mongodb:standalone-docker`: Start a standalone MongoDB instance using a docker container
 
-* `task test`:                 Run the tests with the current version.
+* `mongodb:standalone-docker:down`: Stop the standalone instance
 
-* `task full-test`:            Run the tests against all supported versions.
+* `mongodb:replica-compose`: Start a replica set MongoDB cluster using docker-compose
 
-* `task coverage`:             Get the test coverage (xml and html) with the current version.
+* `mongodb:replica-compose:down`: Stop the replica set cluster
 
-* `task docs`:                 Start the local documentation server.
+* `mongodb:sharded-compose`: Start a sharded MongoDB cluster using docker-compose
+
+* `mongodb:sharded-compose:down`: Stop the sharded MongoDB cluster
+
+* `task test`: Run the tests with the current version.
+
+* `task full-test`: Run the tests against all supported versions.
+
+* `task coverage`: Get the test coverage (xml and html) with the current version.
+
+* `task docs`: Start the local documentation server.

@@ -40,7 +40,7 @@ runs:
           docker-compose  up -d
           echo "Initializing the sharded cluster"
           ./start.sh
-          MONGOCSTRING=mongodb://172.16.17.10:27017/
+          MONGOCSTRING=mongodb://172.16.17.10:27017/?retryWrites=false
         else
           echo "Unknown service mode: ${{ inputs.mode }}"
           exit 1

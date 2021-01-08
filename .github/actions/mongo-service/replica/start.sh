@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 printf "Waiting for an instance ."
-while ! docker-compose exec -T mongo0 mongo --eval "db.getMongo()" > /dev/null
+while ! docker-compose exec -T mongo0 mongo --eval "db.getMongo()" > /dev/null 2>&1
 do
   printf "."
   sleep 1;
