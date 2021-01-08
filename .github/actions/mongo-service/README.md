@@ -34,7 +34,7 @@ Servers:
   - `172.16.17.20:27018`
   - `172.16.17.21:27018`
 
-Connection string: `mongodb://172.16.17.10:27017/`
+Connection string: `mongodb://172.16.17.10:27017/?retryWrites=false`
 
 [Source](https://docs.mongodb.com/manual/core/sharded-cluster-components/#development-configuration)
 

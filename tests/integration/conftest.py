@@ -1,5 +1,6 @@
 import asyncio
 import os
+from enum import Enum
 from unittest.mock import Mock
 from uuid import uuid4
 
@@ -13,6 +14,18 @@ try:
 except ImportError:
     from mock import AsyncMock
 
+TEST_MONGO_URI: str = os.getenv("TEST_MONGO_URI", "mongodb://localhost:27017/")
+
+
+class MongoMode(str, Enum):
+    REPLICA = "replicaSet"
+    SHARDED = "sharded"
+    STANDALONE = "standalone"
+    DEFAULT = "default"
+
+
+TEST_MONGO_MODE = MongoMode(os.getenv("TEST_MONGO_MODE", "default"))
+
 
 @pytest.fixture(scope="session")
 def event_loop():
@@ -23,7 +36,7 @@ def event_loop():
 
 @pytest.fixture(scope="session")
 def motor_client(event_loop):
-    mongo_uri = os.getenv("TEST_MONGO_URI")
+    mongo_uri = TEST_MONGO_URI
     client = AsyncIOMotorClient(mongo_uri, io_loop=event_loop)
     yield client
     client.close()

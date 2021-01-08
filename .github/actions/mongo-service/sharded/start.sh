@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 printf "Waiting for the configsvr "
-while ! docker-compose exec -T configsvr mongo --port 27019 --eval "db.getMongo()" > /dev/null
+while ! docker-compose exec -T configsvr mongo --port 27019 --eval "db.getMongo()" > /dev/null 2>&1
 do
   printf "."
   sleep 1;
@@ -12,7 +12,7 @@ docker-compose exec -T configsvr mongo --quiet --port 27019 /scripts/init-config
 printf "OK\n"
 
 printf "Waiting for the router "
-while ! docker-compose exec -T router mongo --eval "db.getMongo()" > /dev/null
+while ! docker-compose exec -T router mongo --eval "db.getMongo()" > /dev/null 2>&1
 do
   printf "."
   sleep 1;
