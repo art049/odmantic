@@ -52,7 +52,7 @@ pytest = "~=6.0"
 isort = "~=5.7.0"
 black = { version = "*", allow-prereleases = true }
 flake8 = "~=3.8.4"
-mypy = "^0.790"
+mypy = "^0.800"
 coverage = { extras = ["toml"], version = "^5.3" }
 pytest-xdist = "^2.1.0"
 pytz = "^2020.1"
