@@ -39,6 +39,13 @@ def test_datetime_milliseconds_rounding():
     assert inst.field.microsecond != sample_datetime.microsecond
     assert inst.field == sample_datetime.replace(microsecond=10000)
 
+    sample_datetime = sample_datetime.replace(
+        microsecond=999501)
+    inst = ModelWithDate(field=sample_datetime)
+
+    assert inst.field == sample_datetime.replace(
+        microsecond=(sample_datetime.microsecond - sample_datetime.microsecond % 1000))
+
 
 def test_validate_datetime_from_strings():
     class ModelWithDate(Model):
