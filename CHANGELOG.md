@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Add py.typed to ship typing information ([#101](https://github.com/art049/odmantic/pull/101) by [@art049](https://github.com/art049))
+
 - Fix/099/round microseconds - truncate instead of round ([#100](https://github.com/art049/odmantic/pull/100) by [@erny](https://github.com/erny))
 
 - ⬆️ Update isort requirement from ~=5.6.4 to ~=5.7.0 ([#90](https://github.com/art049/odmantic/pull/90) by [@dependabot[bot]](https://github.com/apps/dependabot))
