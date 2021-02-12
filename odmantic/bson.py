@@ -144,10 +144,14 @@ class _datetime(datetime):
         # MongoDB does not store timezone info
         # https://docs.python.org/3/library/datetime.html#determining-if-an-object-is-aware-or-naive
         if d.tzinfo is not None and d.tzinfo.utcoffset(d) is not None:
-            raise ValueError("datetime objects must be naive (no timeone info)")
+            raise ValueError("datetime objects must be naive (no timezone info)")
         # Truncate microseconds to milliseconds to comply with Mongo behavior
         microsecs = d.microsecond - d.microsecond % 1000
         return d.replace(microsecond=microsecs)
+
+    @classmethod
+    def __modify_schema__(cls, field_schema: Dict) -> None:
+        field_schema.update(example=datetime.utcnow().isoformat())
 
 
 class _decimalDecimal(decimal.Decimal):

@@ -10,6 +10,7 @@ from bson.objectid import ObjectId
 from bson.regex import Regex
 from pydantic.error_wrappers import ValidationError
 
+from odmantic.field import Field
 from odmantic.model import Model
 
 pytestmark = pytest.mark.asyncio
@@ -24,6 +25,13 @@ def test_datetime_non_naive():
 
     with pytest.raises(ValueError):
         ModelWithDate(field=datetime.now(tz=pytz.timezone("Europe/Amsterdam")))
+
+
+def test_datetime_naive():
+    class ModelWithDate(Model):
+        field: datetime = Field(default_factory=datetime.utcnow)
+
+    ModelWithDate()
 
 
 def test_datetime_milliseconds_rounding():
