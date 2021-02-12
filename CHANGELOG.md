@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Fix datetime field default example value naiveness ([#103](https://github.com/art049/odmantic/pull/103) by [@art049](https://github.com/art049))
+
 - ⬆️ Update pytz requirement from ^2020.1 to ^2021.1 ([#98](https://github.com/art049/odmantic/pull/98) by [@dependabot[bot]](https://github.com/apps/dependabot))
 
 - ⬆️ Update mkdocstrings requirement from ^0.13.2 to ^0.14.0 ([#92](https://github.com/art049/odmantic/pull/92) by [@dependabot[bot]](https://github.com/apps/dependabot))
