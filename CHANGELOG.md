@@ -5,23 +5,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Fix datetime field default example value naiveness ([#103](https://github.com/art049/odmantic/pull/103) by [@art049](https://github.com/art049))
+## [0.3.3] - 2021-02-13
 
-- ⬆️ Update pytz requirement from ^2020.1 to ^2021.1 ([#98](https://github.com/art049/odmantic/pull/98) by [@dependabot[bot]](https://github.com/apps/dependabot))
-
-- ⬆️ Update mkdocstrings requirement from ^0.13.2 to ^0.14.0 ([#92](https://github.com/art049/odmantic/pull/92) by [@dependabot[bot]](https://github.com/apps/dependabot))
-
-- ⬆️ Update mypy requirement from ^0.790 to ^0.800 ([#97](https://github.com/art049/odmantic/pull/97) by [@dependabot[bot]](https://github.com/apps/dependabot))
-
-- Add py.typed to ship typing information ([#101](https://github.com/art049/odmantic/pull/101) by [@art049](https://github.com/art049))
-
-- Fix/099/round microseconds - truncate instead of round ([#100](https://github.com/art049/odmantic/pull/100) by [@erny](https://github.com/erny))
-
-- ⬆️ Update isort requirement from ~=5.6.4 to ~=5.7.0 ([#90](https://github.com/art049/odmantic/pull/90) by [@dependabot[bot]](https://github.com/apps/dependabot))
+### Fixed
 
 - Remove `bypass_document_validation` save option to avoid `Not Authorized` errors ([#85](https://github.com/art049/odmantic/pull/85) by [@Olegt0rr](https://github.com/Olegt0rr))
 
-- ⬆️ Update fastapi requirement from >=0.61.1,<0.63.0 to >=0.61.1,<0.64.0 ([#84](https://github.com/art049/odmantic/pull/84) by [@dependabot[bot]](https://github.com/apps/dependabot))
+- Fix/099/round microseconds - truncate instead of round ([#100](https://github.com/art049/odmantic/pull/100) by [@erny](https://github.com/erny))
+
+- Add py.typed to ship typing information for mypy ([#101](https://github.com/art049/odmantic/pull/101) by [@art049](https://github.com/art049))
+
+- Fix datetime field default example value naiveness ([#103](https://github.com/art049/odmantic/pull/103) by [@art049](https://github.com/art049))
+
+### Internals
+
+- Update pytz requirement from ^2020.1 to ^2021.1 ([#98](https://github.com/art049/odmantic/pull/98) by [@dependabot[bot]](https://github.com/apps/dependabot))
+
+- Update mkdocstrings requirement from ^0.13.2 to ^0.14.0 ([#92](https://github.com/art049/odmantic/pull/92) by [@dependabot[bot]](https://github.com/apps/dependabot))
+
+- Update mypy requirement from ^0.790 to ^0.800 ([#97](https://github.com/art049/odmantic/pull/97) by [@dependabot[bot]](https://github.com/apps/dependabot))
+
+- Update isort requirement from ~=5.6.4 to ~=5.7.0 ([#90](https://github.com/art049/odmantic/pull/90) by [@dependabot[bot]](https://github.com/apps/dependabot))
+
+- Update fastapi requirement from >=0.61.1,<0.63.0 to >=0.61.1,<0.64.0 ([#84](https://github.com/art049/odmantic/pull/84) by [@dependabot[bot]](https://github.com/apps/dependabot))
 
 ## [0.3.2] - 2020-12-15
 
@@ -120,4 +126,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.3.0]: https://github.com/art049/odmantic/compare/v0.2.1...v0.3.0
 [0.3.1]: https://github.com/art049/odmantic/compare/v0.3.0...v0.3.1
 [0.3.2]: https://github.com/art049/odmantic/compare/v0.3.1...v0.3.2
-[unreleased]: https://github.com/art049/odmantic/compare/v0.3.2...HEAD
+[0.3.3]: https://github.com/art049/odmantic/compare/v0.3.2...v0.3.3
+[unreleased]: https://github.com/art049/odmantic/compare/v0.3.3...HEAD
