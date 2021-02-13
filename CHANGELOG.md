@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Remove `bypass_document_validation` save option to avoid `Not Authorized` errors ([#85](https://github.com/art049/odmantic/pull/85) by [@Olegt0rr](https://github.com/Olegt0rr))
 
-- Fix/099/round microseconds - truncate instead of round ([#100](https://github.com/art049/odmantic/pull/100) by [@erny](https://github.com/erny))
+- Fix microseconds issue: use truncation instead of round ([#100](https://github.com/art049/odmantic/pull/100) by [@erny](https://github.com/erny))
 
 - Add py.typed to ship typing information for mypy ([#101](https://github.com/art049/odmantic/pull/101) by [@art049](https://github.com/art049))
 
