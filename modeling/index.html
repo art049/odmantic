@@ -1,406 +1,753 @@
 
-<!DOCTYPE html>
-
-<html class="no-js" lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width,initial-scale=1" name="viewport"/>
-<meta content="AsyncIO MongoDB ODM (Object Document Mapper) using python type hinting" name="description"/>
-<link href="https://art049.github.io/odmantic/modeling/" rel="canonical"/>
-<link href="../assets/images/favicon.png" rel="shortcut icon"/>
-<meta content="mkdocs-1.1.2, mkdocs-material-6.2.2" name="generator"/>
-<title>Modeling - ODMantic</title>
-<link href="../assets/stylesheets/main.73f7c429.min.css" rel="stylesheet"/>
-<link href="../assets/stylesheets/palette.39b8e14a.min.css" rel="stylesheet"/>
-<meta content="#8bc34b" name="theme-color"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
-<style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
-<link href="../css/extra.css" rel="stylesheet"/>
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="AsyncIO MongoDB ODM (Object Document Mapper) using python type hinting">
+      
+      
+      
+      
+        <link rel="canonical" href="https://art049.github.io/odmantic/modeling/">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.8">
+    
+    
+      
+        <title>Modeling - ODMantic</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.cb6bc1d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.39b8e14a.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#8bc34b">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../css/extra.css">
+    
+    
+      
+        
 <script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-180814888-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
-<script async="" src="https://www.google-analytics.com/analytics.js"></script>
-</head>
-<body data-md-color-accent="light-green" data-md-color-primary="light-green" data-md-color-scheme="preference" dir="ltr">
-<script>matchMedia("(prefers-color-scheme: dark)").matches&&document.body.setAttribute("data-md-color-scheme","slate")</script>
-<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
-<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
-<label class="md-overlay" for="__drawer"></label>
-<div data-md-component="skip">
-<a class="md-skip" href="#modeling">
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="preference" data-md-color-primary="light-green" data-md-color-accent="light-green">
+      
+        <script>matchMedia("(prefers-color-scheme: dark)").matches&&document.body.setAttribute("data-md-color-scheme","slate")</script>
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#modeling" class="md-skip">
           Skip to content
         </a>
-</div>
-<div data-md-component="announce">
-</div>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
 <header class="md-header" data-md-component="header">
-<nav aria-label="Header" class="md-header-nav md-grid">
-<a aria-label="ODMantic" class="md-header-nav__button md-logo" href="https://art049.github.io/odmantic/" title="ODMantic">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 9.63c-.19-2.79-1.32-5.51-3.44-7.63A12.253 12.253 0 008.5 9.63c1.29.68 2.47 1.56 3.5 2.63a14.22 14.22 0 013.5-2.63M12 15.45C9.85 12.17 6.18 10 2 10c0 10 9.32 11.89 10 12 .68-.12 10-2 10-12-4.18 0-7.85 2.17-10 5.45z"></path></svg>
-</a>
-<label class="md-header-nav__button md-icon" for="__drawer">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
-</label>
-<div class="md-header-nav__title" data-md-component="header-title">
-<div class="md-header-nav__ellipsis">
-<div class="md-header-nav__topic">
-<span class="md-ellipsis">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://art049.github.io/odmantic/" title="ODMantic" class="md-header-nav__button md-logo" aria-label="ODMantic">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 9.63c-.19-2.79-1.32-5.51-3.44-7.63A12.253 12.253 0 008.5 9.63c1.29.68 2.47 1.56 3.5 2.63a14.22 14.22 0 013.5-2.63M12 15.45C9.85 12.17 6.18 10 2 10c0 10 9.32 11.89 10 12 .68-.12 10-2 10-12-4.18 0-7.85 2.17-10 5.45z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      <div class="md-header-nav__ellipsis">
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
             ODMantic
           </span>
-</div>
-<div class="md-header-nav__topic">
-<span class="md-ellipsis">
+        </div>
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
             
               Modeling
             
           </span>
-</div>
-</div>
-</div>
-<label class="md-header-nav__button md-icon" for="__search">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
-</label>
+        </div>
+      </div>
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
 <div class="md-search" data-md-component="search" role="dialog">
-<label class="md-search__overlay" for="__search"></label>
-<div class="md-search__inner" role="search">
-<form class="md-search__form" name="search">
-<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" data-md-state="active" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
-<label class="md-search__icon md-icon" for="__search">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
-</label>
-<button aria-label="Clear" class="md-search__icon md-icon" data-md-component="search-reset" tabindex="-1" type="reset">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
-</button>
-</form>
-<div class="md-search__output">
-<div class="md-search__scrollwrap" data-md-scrollfix="">
-<div class="md-search-result" data-md-component="search-result">
-<div class="md-search-result__meta">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
             Initializing search
           </div>
-<ol class="md-search-result__list"></ol>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div class="md-header-nav__source">
-<a class="md-source" href="https://github.com/art049/odmantic/" title="Go to repository">
-<div class="md-source__icon md-icon">
-<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"></path></svg>
-</div>
-<div class="md-source__repository">
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/art049/odmantic/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
     art049/odmantic
   </div>
 </a>
-</div>
-</nav>
+      </div>
+    
+  </nav>
 </header>
-<div class="md-container" data-md-component="container">
-<main class="md-main" data-md-component="main">
-<div class="md-main__inner md-grid">
-<div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
-<div class="md-sidebar__scrollwrap">
-<div class="md-sidebar__inner">
-<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
-<label class="md-nav__title" for="__drawer">
-<a aria-label="ODMantic" class="md-nav__button md-logo" href="https://art049.github.io/odmantic/" title="ODMantic">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 9.63c-.19-2.79-1.32-5.51-3.44-7.63A12.253 12.253 0 008.5 9.63c1.29.68 2.47 1.56 3.5 2.63a14.22 14.22 0 013.5-2.63M12 15.45C9.85 12.17 6.18 10 2 10c0 10 9.32 11.89 10 12 .68-.12 10-2 10-12-4.18 0-7.85 2.17-10 5.45z"></path></svg>
-</a>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://art049.github.io/odmantic/" title="ODMantic" class="md-nav__button md-logo" aria-label="ODMantic">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 9.63c-.19-2.79-1.32-5.51-3.44-7.63A12.253 12.253 0 008.5 9.63c1.29.68 2.47 1.56 3.5 2.63a14.22 14.22 0 013.5-2.63M12 15.45C9.85 12.17 6.18 10 2 10c0 10 9.32 11.89 10 12 .68-.12 10-2 10-12-4.18 0-7.85 2.17-10 5.45z"/></svg>
+
+    </a>
     ODMantic
   </label>
-<div class="md-nav__source">
-<a class="md-source" href="https://github.com/art049/odmantic/" title="Go to repository">
-<div class="md-source__icon md-icon">
-<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"></path></svg>
-</div>
-<div class="md-source__repository">
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/art049/odmantic/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
     art049/odmantic
   </div>
 </a>
-</div>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="..">
-      Overview
-    </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../fields/">
-      Fields
-    </a>
-</li>
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fields/" class="md-nav__link">
+        Fields
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Modeling
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Modeling
-        <span class="md-nav__icon md-icon"></span>
-</label>
-<a class="md-nav__link md-nav__link--active" href="./">
-      Modeling
-    </a>
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#models">
-    Models
-  </a>
-<nav aria-label="Models" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#collection">
-    Collection
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#custom-model-validators">
-    Custom model validators
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#advanced-configuration">
-    Advanced Configuration
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#embedded-models">
-    Embedded Models
-  </a>
-<nav aria-label="Embedded Models" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#one-to-one">
-    One to One
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#one-to-many">
-    One to Many
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#customization">
-    Customization
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#referenced-models">
-    Referenced models
-  </a>
-<nav aria-label="Referenced models" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#many-to-one-mapped">
-    Many to One (Mapped)
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#many-to-many-manual">
-    Many to Many (Manual)
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../engine/">
-      Engine
-    </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../querying/">
-      Querying
-    </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../raw_query_usage/">
-      Raw query usage
-    </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../usage_fastapi/">
-      Usage with FastAPI
-    </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../usage_pydantic/">
-      Usage with Pydantic
-    </a>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="nav-9" id="nav-9" type="checkbox"/>
-<label class="md-nav__link" for="nav-9">
-      API Reference
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="API Reference" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="nav-9">
-<span class="md-nav__icon md-icon"></span>
-        API Reference
-      </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../api_reference/model/">
-      odmantic.model
-    </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../api_reference/engine/">
-      odmantic.engine
-    </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../api_reference/query/">
-      odmantic.query
-    </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../api_reference/field/">
-      odmantic.field
-    </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../api_reference/reference/">
-      odmantic.reference
-    </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../api_reference/bson/">
-      odmantic.bson
-    </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../api_reference/fastapi/">
-      odmantic.fastapi
-    </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../api_reference/exceptions/">
-      odmantic.exceptions
-    </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../contributing/">
-      Contributing
-    </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../changelog/">
-      Changelog
-    </a>
-</li>
-</ul>
-</nav>
-</div>
-</div>
-</div>
-<div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
-<div class="md-sidebar__scrollwrap">
-<div class="md-sidebar__inner">
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#models">
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#models" class="md-nav__link">
     Models
   </a>
-<nav aria-label="Models" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#collection">
+  
+    <nav class="md-nav" aria-label="Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#collection" class="md-nav__link">
     Collection
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#custom-model-validators">
+        
+          <li class="md-nav__item">
+  <a href="#custom-model-validators" class="md-nav__link">
     Custom model validators
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#advanced-configuration">
+        
+          <li class="md-nav__item">
+  <a href="#advanced-configuration" class="md-nav__link">
     Advanced Configuration
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#embedded-models">
+      
+        <li class="md-nav__item">
+  <a href="#embedded-models" class="md-nav__link">
     Embedded Models
   </a>
-<nav aria-label="Embedded Models" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#one-to-one">
+  
+    <nav class="md-nav" aria-label="Embedded Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#one-to-one" class="md-nav__link">
     One to One
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#one-to-many">
+        
+          <li class="md-nav__item">
+  <a href="#one-to-many" class="md-nav__link">
     One to Many
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#customization">
+        
+          <li class="md-nav__item">
+  <a href="#customization" class="md-nav__link">
     Customization
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#referenced-models">
+      
+        <li class="md-nav__item">
+  <a href="#referenced-models" class="md-nav__link">
     Referenced models
   </a>
-<nav aria-label="Referenced models" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#many-to-one-mapped">
+  
+    <nav class="md-nav" aria-label="Referenced models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#many-to-one-mapped" class="md-nav__link">
     Many to One (Mapped)
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#many-to-many-manual">
+        
+          <li class="md-nav__item">
+  <a href="#many-to-many-manual" class="md-nav__link">
     Many to Many (Manual)
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-</ul>
+      
+    </ul>
+  
 </nav>
-</div>
-</div>
-</div>
-<div class="md-content">
-<article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/art049/odmantic/edit/master/docs/modeling.md" title="Edit this page">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
-</a>
-<h1 id="modeling">Modeling<a class="headerlink" href="#modeling" title="Permanent link">¶</a></h1>
-<h2 id="models">Models<a class="headerlink" href="#models" title="Permanent link">¶</a></h2>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../engine/" class="md-nav__link">
+        Engine
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../querying/" class="md-nav__link">
+        Querying
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../raw_query_usage/" class="md-nav__link">
+        Raw query usage
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usage_fastapi/" class="md-nav__link">
+        Usage with FastAPI
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usage_pydantic/" class="md-nav__link">
+        Usage with Pydantic
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9" >
+      
+      <label class="md-nav__link" for="nav-9">
+        API Reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API Reference" data-md-level="1">
+        <label class="md-nav__title" for="nav-9">
+          <span class="md-nav__icon md-icon"></span>
+          API Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api_reference/model/" class="md-nav__link">
+        odmantic.model
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api_reference/engine/" class="md-nav__link">
+        odmantic.engine
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api_reference/query/" class="md-nav__link">
+        odmantic.query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api_reference/field/" class="md-nav__link">
+        odmantic.field
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api_reference/reference/" class="md-nav__link">
+        odmantic.reference
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api_reference/bson/" class="md-nav__link">
+        odmantic.bson
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api_reference/fastapi/" class="md-nav__link">
+        odmantic.fastapi
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api_reference/exceptions/" class="md-nav__link">
+        odmantic.exceptions
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        Contributing
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../changelog/" class="md-nav__link">
+        Changelog
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#models" class="md-nav__link">
+    Models
+  </a>
+  
+    <nav class="md-nav" aria-label="Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#collection" class="md-nav__link">
+    Collection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom-model-validators" class="md-nav__link">
+    Custom model validators
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-configuration" class="md-nav__link">
+    Advanced Configuration
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#embedded-models" class="md-nav__link">
+    Embedded Models
+  </a>
+  
+    <nav class="md-nav" aria-label="Embedded Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#one-to-one" class="md-nav__link">
+    One to One
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#one-to-many" class="md-nav__link">
+    One to Many
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#customization" class="md-nav__link">
+    Customization
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referenced-models" class="md-nav__link">
+    Referenced models
+  </a>
+  
+    <nav class="md-nav" aria-label="Referenced models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#many-to-one-mapped" class="md-nav__link">
+    Many to One (Mapped)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#many-to-many-manual" class="md-nav__link">
+    Many to Many (Manual)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/art049/odmantic/edit/master/docs/modeling.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="modeling">Modeling<a class="headerlink" href="#modeling" title="Permanent link">&para;</a></h1>
+<h2 id="models">Models<a class="headerlink" href="#models" title="Permanent link">&para;</a></h2>
 <p>To create a Model, simply inherit from the <a href="../api_reference/model/#odmantic.model.Model">Model</a> class and then
 specify the field types and eventually their descriptors.</p>
-<h3 id="collection">Collection<a class="headerlink" href="#collection" title="Permanent link">¶</a></h3>
+<h3 id="collection">Collection<a class="headerlink" href="#collection" title="Permanent link">&para;</a></h3>
 <p>Each Model will be linked to its own collection. By default, the collection name will be
 created from the chosen class name and converted to
 <a href="https://en.wikipedia.org/wiki/Snake_case">snake_case</a>. For example a model class named
@@ -419,7 +766,7 @@ option in the <code>Config</code> class.</p>
     <span class="n">population</span><span class="p">:</span> <span class="nb">int</span>
 
 <span class="hll">    <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
-</span><span class="hll">        <span class="n">collection</span> <span class="o">=</span> <span class="s2">"city"</span>
+</span><span class="hll">        <span class="n">collection</span> <span class="o">=</span> <span class="s2">&quot;city&quot;</span>
 </span></code></pre></div>
 Now, when <code>CapitalCity</code> instances will be persisted to the database, they will
 belong in the <code>city</code> collection instead of <code>capital_city</code>.</p>
@@ -428,7 +775,7 @@ belong in the <code>city</code> collection instead of <code>capital_city</code>.
 <p class="admonition-title">Warning</p>
 <p>Models and Embedded models inheritance is not supported yet.</p>
 </div>
-<h3 id="custom-model-validators">Custom model validators<a class="headerlink" href="#custom-model-validators" title="Permanent link">¶</a></h3>
+<h3 id="custom-model-validators">Custom model validators<a class="headerlink" href="#custom-model-validators" title="Permanent link">&para;</a></h3>
 <p>Exactly as done with pydantic, it's possible to define custom model validators as
 described in the <a href="https://pydantic-docs.helpmanual.io/usage/validators/#root-validators" target="blank_">pydantic: Root
 Validators</a>
@@ -512,53 +859,53 @@ ensure that the area of the rectangle is less or equal to 9.</p>
 
 <span class="hll">    <span class="nd">@root_validator</span>
 </span><span class="hll">    <span class="k">def</span> <span class="nf">check_width_length</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
-</span>        <span class="n">length</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"length"</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="n">width</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"width"</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span>        <span class="n">length</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;length&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;width&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 <span class="hll">        <span class="k">if</span> <span class="n">width</span> <span class="o">&gt;</span> <span class="n">length</span><span class="p">:</span>
-</span><span class="hll">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"width can't be greater than length"</span><span class="p">)</span>
+</span><span class="hll">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;width can&#39;t be greater than length&quot;</span><span class="p">)</span>
 </span>        <span class="k">return</span> <span class="n">values</span>
 
 <span class="hll">    <span class="nd">@root_validator</span>
 </span><span class="hll">    <span class="k">def</span> <span class="nf">check_area</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
-</span>        <span class="n">length</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"length"</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="n">width</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"width"</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span>        <span class="n">length</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;length&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;width&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 <span class="hll">        <span class="k">if</span> <span class="n">length</span> <span class="o">*</span> <span class="n">width</span> <span class="o">&gt;</span> <span class="bp">cls</span><span class="o">.</span><span class="n">MAX_AREA</span><span class="p">:</span>
-</span><span class="hll">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"area is greater than </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">MAX_AREA</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span class="hll">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;area is greater than </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">MAX_AREA</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span>        <span class="k">return</span> <span class="n">values</span>
 
 
 <span class="nb">print</span><span class="p">(</span><span class="n">SmallRectangle</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-<span class="c1">#&gt; id=ObjectId('5f81e3c073103f509f97e374'), length=2.0, width=1.0</span>
+<span class="c1">#&gt; id=ObjectId(&#39;5f81e3c073103f509f97e374&#39;), length=2.0, width=1.0</span>
 
 <span class="k">try</span><span class="p">:</span>
 <span class="hll">    <span class="n">SmallRectangle</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </span><span class="k">except</span> <span class="n">ValidationError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-    <span class="sd">"""</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    1 validation error for SmallRectangle</span>
 <span class="hll"><span class="sd">    width</span>
 </span><span class="hll"><span class="sd">      field required (type=value_error.missing)</span>
-</span><span class="sd">    """</span>
+</span><span class="sd">    &quot;&quot;&quot;</span>
 
 <span class="k">try</span><span class="p">:</span>
 <span class="hll">    <span class="n">SmallRectangle</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </span><span class="k">except</span> <span class="n">ValidationError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-    <span class="sd">"""</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    1 validation error for SmallRectangle</span>
 <span class="hll"><span class="sd">    __root__</span>
-</span><span class="hll"><span class="sd">      width can't be greater than length (type=value_error)</span>
-</span><span class="sd">    """</span>
+</span><span class="hll"><span class="sd">      width can&#39;t be greater than length (type=value_error)</span>
+</span><span class="sd">    &quot;&quot;&quot;</span>
 
 <span class="k">try</span><span class="p">:</span>
 <span class="hll">    <span class="n">SmallRectangle</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </span><span class="k">except</span> <span class="n">ValidationError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-    <span class="sd">"""</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    1 validation error for SmallRectangle</span>
 <span class="hll"><span class="sd">    __root__</span>
 </span><span class="hll"><span class="sd">      area is greater than 9 (type=value_error)</span>
-</span><span class="sd">    """</span>
+</span><span class="sd">    &quot;&quot;&quot;</span>
 </code></pre></div>
 </td></tr></table>
 <div class="admonition tip">
@@ -567,7 +914,7 @@ ensure that the area of the rectangle is less or equal to 9.</p>
 construct, as done in this example with <code>MAX_AREA</code>. Those class variables will be
 completely ignored by ODMantic while persisting instances to the database.</p>
 </div>
-<h3 id="advanced-configuration">Advanced Configuration<a class="headerlink" href="#advanced-configuration" title="Permanent link">¶</a></h3>
+<h3 id="advanced-configuration">Advanced Configuration<a class="headerlink" href="#advanced-configuration" title="Permanent link">&para;</a></h3>
 <p>The model configuration is done in the same way as with Pydantic models: using a <a href="https://pydantic-docs.helpmanual.io/usage/model_config/" target="blank_">Config
 class</a> defined
 in the model body.</p>
@@ -634,7 +981,7 @@ be used with ODMantic.</p>
 <p>If you feel the need to have an additional option inherited from Pydantic, you can
 <a href="https://github.com/art049/odmantic/issues/new" target="blank">open an issue</a>.</p>
 </div>
-<h2 id="embedded-models">Embedded Models<a class="headerlink" href="#embedded-models" title="Permanent link">¶</a></h2>
+<h2 id="embedded-models">Embedded Models<a class="headerlink" href="#embedded-models" title="Permanent link">&para;</a></h2>
 <p>Using an embedded model will store it directly in the root model it's integrated
 in. On the MongoDB side, the collection will contain the root documents and in inside
 each of them, the embedded models will be directly stored.</p>
@@ -652,7 +999,7 @@ document.</p>
 <p>The creation of an Embedded model is done by inheriting the
 <a href="../api_reference/model/#odmantic.model.EmbeddedModel">EmbeddedModel</a> class. You can then define fields exactly
 as for the regular Models.</p>
-<h3 id="one-to-one">One to One<a class="headerlink" href="#one-to-one" title="Permanent link">¶</a></h3>
+<h3 id="one-to-one">One to One<a class="headerlink" href="#one-to-one" title="Permanent link">&para;</a></h3>
 <p>In this example, we will model the relation between a country and its capital city.
 Since one capital city can belong to one and only one country, we can model this
 relation as a One-to-One relationship. We will use an Embedded Model in this case.</p>
@@ -700,14 +1047,14 @@ relation as a One-to-One relationship. We will use an Embedded Model in this cas
 
 <span class="n">countries</span> <span class="o">=</span> <span class="p">[</span>
     <span class="n">Country</span><span class="p">(</span>
-        <span class="n">name</span><span class="o">=</span><span class="s2">"Switzerland"</span><span class="p">,</span>
-        <span class="n">currency</span><span class="o">=</span><span class="s2">"Swiss franc"</span><span class="p">,</span>
-<span class="hll">        <span class="n">capital_city</span><span class="o">=</span><span class="n">CapitalCity</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"Bern"</span><span class="p">,</span> <span class="n">population</span><span class="o">=</span><span class="mi">1035000</span><span class="p">),</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Switzerland&quot;</span><span class="p">,</span>
+        <span class="n">currency</span><span class="o">=</span><span class="s2">&quot;Swiss franc&quot;</span><span class="p">,</span>
+<span class="hll">        <span class="n">capital_city</span><span class="o">=</span><span class="n">CapitalCity</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Bern&quot;</span><span class="p">,</span> <span class="n">population</span><span class="o">=</span><span class="mi">1035000</span><span class="p">),</span>
 </span>    <span class="p">),</span>
     <span class="n">Country</span><span class="p">(</span>
-        <span class="n">name</span><span class="o">=</span><span class="s2">"Sweden"</span><span class="p">,</span>
-        <span class="n">currency</span><span class="o">=</span><span class="s2">"Swedish krona"</span><span class="p">,</span>
-<span class="hll">        <span class="n">capital_city</span><span class="o">=</span><span class="n">CapitalCity</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"Stockholm"</span><span class="p">,</span> <span class="n">population</span><span class="o">=</span><span class="mi">975904</span><span class="p">),</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Sweden&quot;</span><span class="p">,</span>
+        <span class="n">currency</span><span class="o">=</span><span class="s2">&quot;Swedish krona&quot;</span><span class="p">,</span>
+<span class="hll">        <span class="n">capital_city</span><span class="o">=</span><span class="n">CapitalCity</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Stockholm&quot;</span><span class="p">,</span> <span class="n">population</span><span class="o">=</span><span class="mi">975904</span><span class="p">),</span>
 </span>    <span class="p">),</span>
 <span class="p">]</span>
 
@@ -720,21 +1067,21 @@ relation as a One-to-One relationship. We will use an Embedded Model in this cas
 <p>The <a href="../api_reference/field/#odmantic.field.Field">Field</a> descriptor can be used as well for Embedded
 Models in order to bring more flexibility (default values, Mongo key name, ...).</p>
 <details class="abstract" open="open"><summary>Content of the <code>country</code> collection after execution</summary><div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f79d7e8b305f24ca43593e2"</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Sweden"</span><span class="p">,</span>
-  <span class="nt">"currency"</span><span class="p">:</span> <span class="s2">"Swedish krona"</span><span class="p">,</span>
-<span class="hll">  <span class="nt">"capital_city"</span><span class="p">:</span> <span class="p">{</span>
-</span><span class="hll">    <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Stockholm"</span><span class="p">,</span>
-</span><span class="hll">    <span class="nt">"population"</span><span class="p">:</span> <span class="mi">975904</span>
+  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f79d7e8b305f24ca43593e2&quot;</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Sweden&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;currency&quot;</span><span class="p">:</span> <span class="s2">&quot;Swedish krona&quot;</span><span class="p">,</span>
+<span class="hll">  <span class="nt">&quot;capital_city&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class="hll">    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Stockholm&quot;</span><span class="p">,</span>
+</span><span class="hll">    <span class="nt">&quot;population&quot;</span><span class="p">:</span> <span class="mi">975904</span>
 </span><span class="hll">  <span class="p">}</span>
 </span><span class="p">}</span>
 <span class="p">{</span>
-  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f79d7e8b305f24ca43593e1"</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Switzerland"</span><span class="p">,</span>
-  <span class="nt">"currency"</span><span class="p">:</span> <span class="s2">"Swiss franc"</span><span class="p">,</span>
-<span class="hll">  <span class="nt">"capital_city"</span><span class="p">:</span> <span class="p">{</span>
-</span><span class="hll">    <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Bern"</span><span class="p">,</span>
-</span><span class="hll">    <span class="nt">"population"</span><span class="p">:</span> <span class="mi">1035000</span>
+  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f79d7e8b305f24ca43593e1&quot;</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Switzerland&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;currency&quot;</span><span class="p">:</span> <span class="s2">&quot;Swiss franc&quot;</span><span class="p">,</span>
+<span class="hll">  <span class="nt">&quot;capital_city&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class="hll">    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Bern&quot;</span><span class="p">,</span>
+</span><span class="hll">    <span class="nt">&quot;population&quot;</span><span class="p">:</span> <span class="mi">1035000</span>
 </span><span class="hll">  <span class="p">}</span>
 </span><span class="p">}</span>
 </code></pre></div>
@@ -744,18 +1091,18 @@ Models in order to bring more flexibility (default values, Mongo key name, ...).
 <p class="admonition-title">Tip</p>
 <p>It is possible as well to define query filters based on embedded documents content.</p>
 <div class="highlight"><pre><span></span><code><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span>
-<span class="hll">    <span class="n">Country</span><span class="p">,</span> <span class="n">Country</span><span class="o">.</span><span class="n">capital_city</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">"Stockholm"</span>
+<span class="hll">    <span class="n">Country</span><span class="p">,</span> <span class="n">Country</span><span class="o">.</span><span class="n">capital_city</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;Stockholm&quot;</span>
 </span><span class="p">)</span>
 <span class="c1">#&gt; Country(</span>
-<span class="c1">#&gt;     id=ObjectId("5f79d7e8b305f24ca43593e2"),</span>
-<span class="c1">#&gt;     name="Sweden",</span>
-<span class="c1">#&gt;     currency="Swedish krona",</span>
-<span class="c1">#&gt;     capital_city=CapitalCity(name="Stockholm", population=975904),</span>
+<span class="c1">#&gt;     id=ObjectId(&quot;5f79d7e8b305f24ca43593e2&quot;),</span>
+<span class="c1">#&gt;     name=&quot;Sweden&quot;,</span>
+<span class="c1">#&gt;     currency=&quot;Swedish krona&quot;,</span>
+<span class="c1">#&gt;     capital_city=CapitalCity(name=&quot;Stockholm&quot;, population=975904),</span>
 <span class="c1">#&gt; )</span>
 </code></pre></div>
 <p>For more details, see the <a href="../querying/">Querying</a> section.</p>
 </div>
-<h3 id="one-to-many">One to Many<a class="headerlink" href="#one-to-many" title="Permanent link">¶</a></h3>
+<h3 id="one-to-many">One to Many<a class="headerlink" href="#one-to-many" title="Permanent link">&para;</a></h3>
 <p>Here, we will model the relation between a customer of an online shop and his shipping
 addresses. A single customer can have multiple addresses but these addresses belong only
 to the customer's account. He should be allowed to modify them without modifying others
@@ -815,19 +1162,19 @@ should not be linked together).</p>
 </span>
 
 <span class="n">customer</span> <span class="o">=</span> <span class="n">Customer</span><span class="p">(</span>
-    <span class="n">name</span><span class="o">=</span><span class="s2">"John Doe"</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
 <span class="hll">    <span class="n">addresses</span><span class="o">=</span><span class="p">[</span>
 </span><span class="hll">        <span class="n">Address</span><span class="p">(</span>
-</span><span class="hll">            <span class="n">street</span><span class="o">=</span><span class="s2">"1757  Birch Street"</span><span class="p">,</span>
-</span><span class="hll">            <span class="n">city</span><span class="o">=</span><span class="s2">"Greenwood"</span><span class="p">,</span>
-</span><span class="hll">            <span class="n">state</span><span class="o">=</span><span class="s2">"Indiana"</span><span class="p">,</span>
-</span><span class="hll">            <span class="n">zipcode</span><span class="o">=</span><span class="s2">"46142"</span><span class="p">,</span>
+</span><span class="hll">            <span class="n">street</span><span class="o">=</span><span class="s2">&quot;1757  Birch Street&quot;</span><span class="p">,</span>
+</span><span class="hll">            <span class="n">city</span><span class="o">=</span><span class="s2">&quot;Greenwood&quot;</span><span class="p">,</span>
+</span><span class="hll">            <span class="n">state</span><span class="o">=</span><span class="s2">&quot;Indiana&quot;</span><span class="p">,</span>
+</span><span class="hll">            <span class="n">zipcode</span><span class="o">=</span><span class="s2">&quot;46142&quot;</span><span class="p">,</span>
 </span><span class="hll">        <span class="p">),</span>
 </span><span class="hll">        <span class="n">Address</span><span class="p">(</span>
-</span><span class="hll">            <span class="n">street</span><span class="o">=</span><span class="s2">"262  Barnes Avenue"</span><span class="p">,</span>
-</span><span class="hll">            <span class="n">city</span><span class="o">=</span><span class="s2">"Cincinnati"</span><span class="p">,</span>
-</span><span class="hll">            <span class="n">state</span><span class="o">=</span><span class="s2">"Ohio"</span><span class="p">,</span>
-</span><span class="hll">            <span class="n">zipcode</span><span class="o">=</span><span class="s2">"45216"</span><span class="p">,</span>
+</span><span class="hll">            <span class="n">street</span><span class="o">=</span><span class="s2">&quot;262  Barnes Avenue&quot;</span><span class="p">,</span>
+</span><span class="hll">            <span class="n">city</span><span class="o">=</span><span class="s2">&quot;Cincinnati&quot;</span><span class="p">,</span>
+</span><span class="hll">            <span class="n">state</span><span class="o">=</span><span class="s2">&quot;Ohio&quot;</span><span class="p">,</span>
+</span><span class="hll">            <span class="n">zipcode</span><span class="o">=</span><span class="s2">&quot;45216&quot;</span><span class="p">,</span>
 </span><span class="hll">        <span class="p">),</span>
 </span><span class="hll">    <span class="p">],</span>
 </span><span class="p">)</span>
@@ -840,20 +1187,20 @@ should not be linked together).</p>
 Embedded Models is done exactly as defining a field with its type being a sequence of
 <code>Address</code> objects.</p>
 <details class="abstract" open="open"><summary>Content of the <code>customer</code> collection after execution</summary><div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f79eb116371e09b16e4fae4"</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">"name"</span><span class="p">:</span><span class="s2">"John Doe"</span><span class="p">,</span>
-<span class="hll">  <span class="nt">"addresses"</span><span class="p">:[</span>
+  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f79eb116371e09b16e4fae4&quot;</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
+<span class="hll">  <span class="nt">&quot;addresses&quot;</span><span class="p">:[</span>
 </span><span class="hll">    <span class="p">{</span>
-</span><span class="hll">      <span class="nt">"street"</span><span class="p">:</span><span class="s2">"1757  Birch Street"</span><span class="p">,</span>
-</span><span class="hll">      <span class="nt">"city"</span><span class="p">:</span><span class="s2">"Greenwood"</span><span class="p">,</span>
-</span><span class="hll">      <span class="nt">"state"</span><span class="p">:</span><span class="s2">"Indiana"</span><span class="p">,</span>
-</span><span class="hll">      <span class="nt">"zipcode"</span><span class="p">:</span><span class="s2">"46142"</span>
+</span><span class="hll">      <span class="nt">&quot;street&quot;</span><span class="p">:</span><span class="s2">&quot;1757  Birch Street&quot;</span><span class="p">,</span>
+</span><span class="hll">      <span class="nt">&quot;city&quot;</span><span class="p">:</span><span class="s2">&quot;Greenwood&quot;</span><span class="p">,</span>
+</span><span class="hll">      <span class="nt">&quot;state&quot;</span><span class="p">:</span><span class="s2">&quot;Indiana&quot;</span><span class="p">,</span>
+</span><span class="hll">      <span class="nt">&quot;zipcode&quot;</span><span class="p">:</span><span class="s2">&quot;46142&quot;</span>
 </span><span class="hll">    <span class="p">},</span>
 </span><span class="hll">    <span class="p">{</span>
-</span><span class="hll">      <span class="nt">"street"</span><span class="p">:</span><span class="s2">"262  Barnes Avenue"</span><span class="p">,</span>
-</span><span class="hll">      <span class="nt">"city"</span><span class="p">:</span><span class="s2">"Cincinnati"</span><span class="p">,</span>
-</span><span class="hll">      <span class="nt">"state"</span><span class="p">:</span><span class="s2">"Ohio"</span><span class="p">,</span>
-</span><span class="hll">      <span class="nt">"zipcode"</span><span class="p">:</span><span class="s2">"45216"</span>
+</span><span class="hll">      <span class="nt">&quot;street&quot;</span><span class="p">:</span><span class="s2">&quot;262  Barnes Avenue&quot;</span><span class="p">,</span>
+</span><span class="hll">      <span class="nt">&quot;city&quot;</span><span class="p">:</span><span class="s2">&quot;Cincinnati&quot;</span><span class="p">,</span>
+</span><span class="hll">      <span class="nt">&quot;state&quot;</span><span class="p">:</span><span class="s2">&quot;Ohio&quot;</span><span class="p">,</span>
+</span><span class="hll">      <span class="nt">&quot;zipcode&quot;</span><span class="p">:</span><span class="s2">&quot;45216&quot;</span>
 </span><span class="hll">    <span class="p">}</span>
 </span><span class="hll">  <span class="p">]</span>
 </span><span class="p">}</span>
@@ -870,13 +1217,13 @@ descriptor. Another possibility is to use the <code>typing.Tuple</code> type.</p
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Building query filters based on the content of a sequence of embedded documents is
-not supported yet (but this feature is planned for an upcoming release <img alt="🔥" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/72x72/1f525.png" title=":fire:"/>).</p>
+not supported yet (but this feature is planned for an upcoming release <img alt="🔥" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/72x72/1f525.png" title=":fire:" />).</p>
 <p>Anyway, it's still possible to perform the filtering operation manually using Mongo
 <a href="https://docs.mongodb.com/manual/reference/operator/query-array/" target="_blank">Array Operators</a>
 (<code>$all</code>, <code>$elemMatch</code>, <code>$size</code>). See the <a href="../raw_query_usage/">Raw query usage</a> section for
 more details.</p>
 </div>
-<h3 id="customization">Customization<a class="headerlink" href="#customization" title="Permanent link">¶</a></h3>
+<h3 id="customization">Customization<a class="headerlink" href="#customization" title="Permanent link">&para;</a></h3>
 <p>Since the Embedded Models are considered as types by ODMantic, most of the complex type
 constructs that could be imagined should be supported.</p>
 <p>Some ideas which could be useful:</p>
@@ -898,7 +1245,7 @@ constructs that could be imagined should be supported.</p>
 <p>Nest embedded documents</p>
 </li>
 </ul>
-<h2 id="referenced-models">Referenced models<a class="headerlink" href="#referenced-models" title="Permanent link">¶</a></h2>
+<h2 id="referenced-models">Referenced models<a class="headerlink" href="#referenced-models" title="Permanent link">&para;</a></h2>
 <p>Embedded models are really simple to use but sometimes it is needed as well to
 have <strong>many-to-one</strong> (i.e. multiple entities referring to another single one) or
 <a href="https://en.wikipedia.org/wiki/Many-to-many_(data_model)" target="_blank">many-to-many</a>
@@ -907,7 +1254,7 @@ in this case, references will come handy.
 Another use case where references are useful is for one-to-one/one-to-many relations but
 when the referenced model has to exist in its own collection, in order to be accessed on
  its own without any parent model specified.</p>
-<h3 id="many-to-one-mapped">Many to One (Mapped)<a class="headerlink" href="#many-to-one-mapped" title="Permanent link">¶</a></h3>
+<h3 id="many-to-one-mapped">Many to One (Mapped)<a class="headerlink" href="#many-to-one-mapped" title="Permanent link">&para;</a></h3>
 <p>In this part, we will model the relation between books and publishers. Let's consider that each
 book has a single publisher. In this case, multiple books could be published by the same
 publisher. We can thus model this relation as a many-to-one relationship.</p>
@@ -951,13 +1298,13 @@ publisher. We can thus model this relation as a many-to-one relationship.</p>
 <span class="hll">    <span class="n">publisher</span><span class="p">:</span> <span class="n">Publisher</span> <span class="o">=</span> <span class="n">Reference</span><span class="p">()</span>
 </span>
 
-<span class="n">hachette</span> <span class="o">=</span> <span class="n">Publisher</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"Hachette Livre"</span><span class="p">,</span> <span class="n">founded</span><span class="o">=</span><span class="mi">1826</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s2">"FR"</span><span class="p">)</span>
-<span class="n">harper</span> <span class="o">=</span> <span class="n">Publisher</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"HarperCollins"</span><span class="p">,</span> <span class="n">founded</span><span class="o">=</span><span class="mi">1989</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s2">"US"</span><span class="p">)</span>
+<span class="n">hachette</span> <span class="o">=</span> <span class="n">Publisher</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Hachette Livre&quot;</span><span class="p">,</span> <span class="n">founded</span><span class="o">=</span><span class="mi">1826</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s2">&quot;FR&quot;</span><span class="p">)</span>
+<span class="n">harper</span> <span class="o">=</span> <span class="n">Publisher</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;HarperCollins&quot;</span><span class="p">,</span> <span class="n">founded</span><span class="o">=</span><span class="mi">1989</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s2">&quot;US&quot;</span><span class="p">)</span>
 
 <span class="hll"><span class="n">books</span> <span class="o">=</span> <span class="p">[</span>
-</span><span class="hll">    <span class="n">Book</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"They Didn't See Us Coming"</span><span class="p">,</span> <span class="n">pages</span><span class="o">=</span><span class="mi">304</span><span class="p">,</span> <span class="n">publisher</span><span class="o">=</span><span class="n">hachette</span><span class="p">),</span>
-</span><span class="hll">    <span class="n">Book</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"This Isn't Happening"</span><span class="p">,</span> <span class="n">pages</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">publisher</span><span class="o">=</span><span class="n">hachette</span><span class="p">),</span>
-</span><span class="hll">    <span class="n">Book</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"Prodigal Summer"</span><span class="p">,</span> <span class="n">pages</span><span class="o">=</span><span class="mi">464</span><span class="p">,</span> <span class="n">publisher</span><span class="o">=</span><span class="n">harper</span><span class="p">),</span>
+</span><span class="hll">    <span class="n">Book</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;They Didn&#39;t See Us Coming&quot;</span><span class="p">,</span> <span class="n">pages</span><span class="o">=</span><span class="mi">304</span><span class="p">,</span> <span class="n">publisher</span><span class="o">=</span><span class="n">hachette</span><span class="p">),</span>
+</span><span class="hll">    <span class="n">Book</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;This Isn&#39;t Happening&quot;</span><span class="p">,</span> <span class="n">pages</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">publisher</span><span class="o">=</span><span class="n">hachette</span><span class="p">),</span>
+</span><span class="hll">    <span class="n">Book</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Prodigal Summer&quot;</span><span class="p">,</span> <span class="n">pages</span><span class="o">=</span><span class="mi">464</span><span class="p">,</span> <span class="n">publisher</span><span class="o">=</span><span class="n">harper</span><span class="p">),</span>
 </span><span class="hll"><span class="p">]</span>
 </span>
 <span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">()</span>
@@ -974,16 +1321,16 @@ distinction since it would make more sense than having to set a descriptor for e
 reference.</p>
 </details>
 <details class="abstract" open="open"><summary>Content of the <code>publisher</code> collection after execution</summary><p><div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="hll">  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a0dc48a73b20f16e2a364"</span><span class="err">)</span><span class="p">,</span>
-</span>  <span class="nt">"founded"</span><span class="p">:</span> <span class="mi">1826</span><span class="p">,</span>
-  <span class="nt">"location"</span><span class="p">:</span> <span class="s2">"FR"</span><span class="p">,</span>
-  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Hachette Livre"</span>
+<span class="hll">  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a0dc48a73b20f16e2a364&quot;</span><span class="err">)</span><span class="p">,</span>
+</span>  <span class="nt">&quot;founded&quot;</span><span class="p">:</span> <span class="mi">1826</span><span class="p">,</span>
+  <span class="nt">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;FR&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Hachette Livre&quot;</span>
 <span class="p">}</span>
 <span class="p">{</span>
-<span class="hll">  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a0dc48a73b20f16e2a365"</span><span class="err">)</span><span class="p">,</span>
-</span>  <span class="nt">"founded"</span><span class="p">:</span> <span class="mi">1989</span><span class="p">,</span>
-  <span class="nt">"location"</span><span class="p">:</span> <span class="s2">"US"</span><span class="p">,</span>
-  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"HarperCollins"</span>
+<span class="hll">  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a0dc48a73b20f16e2a365&quot;</span><span class="err">)</span><span class="p">,</span>
+</span>  <span class="nt">&quot;founded&quot;</span><span class="p">:</span> <span class="mi">1989</span><span class="p">,</span>
+  <span class="nt">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;US&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;HarperCollins&quot;</span>
 <span class="p">}</span>
 </code></pre></div>
 We can see that the publishers have been persisted to their collection even if no
@@ -993,22 +1340,22 @@ will persist automatically the referenced documents.</p>
 <p>While fetching instances, the engine will as well resolve <strong>every</strong> reference.</p>
 </details>
 <details class="abstract" open="open"><summary>Content of the <code>book</code> collection after execution</summary><p><div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a0dc48a73b20f16e2a366"</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">"pages"</span><span class="p">:</span> <span class="mi">304</span><span class="p">,</span>
-<span class="hll">  <span class="nt">"publisher"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a0dc48a73b20f16e2a364"</span><span class="err">)</span><span class="p">,</span>
-</span>  <span class="nt">"title"</span><span class="p">:</span> <span class="s2">"They Didn't See Us Coming"</span>
+  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a0dc48a73b20f16e2a366&quot;</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">&quot;pages&quot;</span><span class="p">:</span> <span class="mi">304</span><span class="p">,</span>
+<span class="hll">  <span class="nt">&quot;publisher&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a0dc48a73b20f16e2a364&quot;</span><span class="err">)</span><span class="p">,</span>
+</span>  <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;They Didn&#39;t See Us Coming&quot;</span>
 <span class="p">}</span>
 <span class="p">{</span>
-  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a0dc48a73b20f16e2a367"</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">"pages"</span><span class="p">:</span> <span class="mi">256</span><span class="p">,</span>
-<span class="hll">  <span class="nt">"publisher"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a0dc48a73b20f16e2a364"</span><span class="err">)</span><span class="p">,</span>
-</span>  <span class="nt">"title"</span><span class="p">:</span> <span class="s2">"This Isn't Happening"</span>
+  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a0dc48a73b20f16e2a367&quot;</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">&quot;pages&quot;</span><span class="p">:</span> <span class="mi">256</span><span class="p">,</span>
+<span class="hll">  <span class="nt">&quot;publisher&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a0dc48a73b20f16e2a364&quot;</span><span class="err">)</span><span class="p">,</span>
+</span>  <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;This Isn&#39;t Happening&quot;</span>
 <span class="p">}</span>
 <span class="p">{</span>
-  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a0dc48a73b20f16e2a368"</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">"pages"</span><span class="p">:</span> <span class="mi">464</span><span class="p">,</span>
-<span class="hll">  <span class="nt">"publisher"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a0dc48a73b20f16e2a365"</span><span class="err">)</span><span class="p">,</span>
-</span>  <span class="nt">"title"</span><span class="p">:</span> <span class="s2">"Prodigal Summer"</span>
+  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a0dc48a73b20f16e2a368&quot;</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">&quot;pages&quot;</span><span class="p">:</span> <span class="mi">464</span><span class="p">,</span>
+<span class="hll">  <span class="nt">&quot;publisher&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a0dc48a73b20f16e2a365&quot;</span><span class="err">)</span><span class="p">,</span>
+</span>  <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Prodigal Summer&quot;</span>
 <span class="p">}</span>
 </code></pre></div>
 The resulting books in the collection contain the publisher reference directly as a
@@ -1020,7 +1367,7 @@ document attribute (using the reference name as the document's key).</p>
 <p>It's possible to customize the foreign key storage key using the <code>key_name</code> argument
 while building the <a href="../api_reference/reference/#odmantic.reference.Reference">Reference</a> descriptor.</p>
 </div>
-<h3 id="many-to-many-manual">Many to Many (Manual)<a class="headerlink" href="#many-to-many-manual" title="Permanent link">¶</a></h3>
+<h3 id="many-to-many-manual">Many to Many (Manual)<a class="headerlink" href="#many-to-many-manual" title="Permanent link">&para;</a></h3>
 <p>Here, we will model the relation between books and their authors. Since a book can have
 multiple authors and an author can be authoring multiple books, we will model this
  relation as a many-to-many relationship.</p>
@@ -1075,14 +1422,14 @@ define the relationship in a manual way.</p>
 </span>    <span class="n">author_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">ObjectId</span><span class="p">]</span>
 
 
-<span class="hll"><span class="n">david</span> <span class="o">=</span> <span class="n">Author</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"David Beazley"</span><span class="p">)</span>
-</span><span class="hll"><span class="n">brian</span> <span class="o">=</span> <span class="n">Author</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"Brian K. Jones"</span><span class="p">)</span>
+<span class="hll"><span class="n">david</span> <span class="o">=</span> <span class="n">Author</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;David Beazley&quot;</span><span class="p">)</span>
+</span><span class="hll"><span class="n">brian</span> <span class="o">=</span> <span class="n">Author</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Brian K. Jones&quot;</span><span class="p">)</span>
 </span>
 <span class="n">python_cookbook</span> <span class="o">=</span> <span class="n">Book</span><span class="p">(</span>
-<span class="hll">    <span class="n">title</span><span class="o">=</span><span class="s2">"Python Cookbook"</span><span class="p">,</span> <span class="n">pages</span><span class="o">=</span><span class="mi">706</span><span class="p">,</span> <span class="n">author_ids</span><span class="o">=</span><span class="p">[</span><span class="n">david</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">brian</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
+<span class="hll">    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Python Cookbook&quot;</span><span class="p">,</span> <span class="n">pages</span><span class="o">=</span><span class="mi">706</span><span class="p">,</span> <span class="n">author_ids</span><span class="o">=</span><span class="p">[</span><span class="n">david</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">brian</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
 </span><span class="p">)</span>
 <span class="n">python_essentials</span> <span class="o">=</span> <span class="n">Book</span><span class="p">(</span>
-<span class="hll">    <span class="n">title</span><span class="o">=</span><span class="s2">"Python Essential Reference"</span><span class="p">,</span> <span class="n">pages</span><span class="o">=</span><span class="mi">717</span><span class="p">,</span> <span class="n">author_ids</span><span class="o">=</span><span class="p">[</span><span class="n">brian</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
+<span class="hll">    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Python Essential Reference&quot;</span><span class="p">,</span> <span class="n">pages</span><span class="o">=</span><span class="mi">717</span><span class="p">,</span> <span class="n">author_ids</span><span class="o">=</span><span class="p">[</span><span class="n">brian</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
 </span><span class="p">)</span>
 
 <span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">()</span>
@@ -1095,30 +1442,30 @@ define the relationship in a manual way.</p>
 <p>Since this multi-reference is not mapped by the ODM, we have to persist the authors
 manually.</p>
 <details class="abstract" open="open"><summary>Content of the <code>author</code> collection after execution</summary><div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="hll">  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a37dc7311be1362e1da4e"</span><span class="err">)</span><span class="p">,</span>
-</span>  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"David Beazley"</span>
+<span class="hll">  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a37dc7311be1362e1da4e&quot;</span><span class="err">)</span><span class="p">,</span>
+</span>  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;David Beazley&quot;</span>
 <span class="p">}</span>
 <span class="p">{</span>
-<span class="hll">  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a37dc7311be1362e1da4f"</span><span class="err">)</span><span class="p">,</span>
-</span>  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Brian K. Jones"</span>
+<span class="hll">  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a37dc7311be1362e1da4f&quot;</span><span class="err">)</span><span class="p">,</span>
+</span>  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Brian K. Jones&quot;</span>
 <span class="p">}</span>
 </code></pre></div>
 </details>
 <details class="abstract" open="open"><summary>Content of the <code>book</code> collection after execution</summary><div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a37dc7311be1362e1da50"</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">"title"</span><span class="p">:</span><span class="nt">"Python Cookbook"</span>
-  <span class="nt">"pages"</span><span class="p">:</span><span class="mi">706</span><span class="p">,</span>
-<span class="hll">  <span class="nt">"author_ids"</span><span class="p">:[</span>
-</span><span class="hll">    <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a37dc7311be1362e1da4e"</span><span class="err">)</span><span class="p">,</span>
-</span><span class="hll">    <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a37dc7311be1362e1da4f"</span><span class="err">)</span>
+  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a37dc7311be1362e1da50&quot;</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="nt">&quot;Python Cookbook&quot;</span>
+  <span class="nt">&quot;pages&quot;</span><span class="p">:</span><span class="mi">706</span><span class="p">,</span>
+<span class="hll">  <span class="nt">&quot;author_ids&quot;</span><span class="p">:[</span>
+</span><span class="hll">    <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a37dc7311be1362e1da4e&quot;</span><span class="err">)</span><span class="p">,</span>
+</span><span class="hll">    <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a37dc7311be1362e1da4f&quot;</span><span class="err">)</span>
 </span><span class="hll">  <span class="p">],</span>
 </span><span class="p">}</span>
 <span class="p">{</span>
-  <span class="nt">"_id"</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a37dc7311be1362e1da51"</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">"title"</span><span class="p">:</span><span class="nt">"Python Essential Reference"</span>
-  <span class="nt">"pages"</span><span class="p">:</span><span class="mi">717</span><span class="p">,</span>
-<span class="hll">  <span class="nt">"author_ids"</span><span class="p">:[</span>
-</span><span class="hll">    <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">"5f7a37dc7311be1362e1da4f"</span><span class="err">)</span>
+  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a37dc7311be1362e1da51&quot;</span><span class="err">)</span><span class="p">,</span>
+  <span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="nt">&quot;Python Essential Reference&quot;</span>
+  <span class="nt">&quot;pages&quot;</span><span class="p">:</span><span class="mi">717</span><span class="p">,</span>
+<span class="hll">  <span class="nt">&quot;author_ids&quot;</span><span class="p">:[</span>
+</span><span class="hll">    <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a37dc7311be1362e1da4f&quot;</span><span class="err">)</span>
 </span><span class="hll">  <span class="p">],</span>
 </span><span class="p">}</span>
 </code></pre></div>
@@ -1133,87 +1480,130 @@ manually.</p>
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">book</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">Book</span><span class="p">,</span> <span class="n">Book</span><span class="o">.</span><span class="n">title</span> <span class="o">==</span> <span class="s2">"Python Cookbook"</span><span class="p">)</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">book</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">Book</span><span class="p">,</span> <span class="n">Book</span><span class="o">.</span><span class="n">title</span> <span class="o">==</span> <span class="s2">&quot;Python Cookbook&quot;</span><span class="p">)</span>
 <span class="hll"><span class="n">authors</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">Author</span><span class="p">,</span> <span class="n">Author</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="n">book</span><span class="o">.</span><span class="n">author_ids</span><span class="p">))</span>
 </span><span class="nb">print</span><span class="p">(</span><span class="n">authors</span><span class="p">)</span>
 <span class="c1">#&gt; [</span>
-<span class="c1">#&gt;   Author(id=ObjectId("5f7a37dc7311be1362e1da4e"), name="David Beazley"),</span>
-<span class="c1">#&gt;   Author(id=ObjectId("5f7a37dc7311be1362e1da4f"), name="Brian K. Jones"),</span>
+<span class="c1">#&gt;   Author(id=ObjectId(&quot;5f7a37dc7311be1362e1da4e&quot;), name=&quot;David Beazley&quot;),</span>
+<span class="c1">#&gt;   Author(id=ObjectId(&quot;5f7a37dc7311be1362e1da4f&quot;), name=&quot;Brian K. Jones&quot;),</span>
 <span class="c1">#&gt; ]</span>
 </code></pre></div>
 </td></tr></table>
 </div>
-</article>
-</div>
-</div>
-</main>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
 <footer class="md-footer">
-<div class="md-footer-nav">
-<nav aria-label="Footer" class="md-footer-nav__inner md-grid">
-<a class="md-footer-nav__link md-footer-nav__link--prev" href="../fields/" rel="prev">
-<div class="md-footer-nav__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
-</div>
-<div class="md-footer-nav__title">
-<div class="md-ellipsis">
-<span class="md-footer-nav__direction">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../fields/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
                   Previous
                 </span>
                 Fields
               </div>
-</div>
-</a>
-<a class="md-footer-nav__link md-footer-nav__link--next" href="../engine/" rel="next">
-<div class="md-footer-nav__title">
-<div class="md-ellipsis">
-<span class="md-footer-nav__direction">
+            </div>
+          </a>
+        
+        
+          <a href="../engine/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
                   Next
                 </span>
                 Engine
               </div>
-</div>
-<div class="md-footer-nav__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
-</div>
-</a>
-</nav>
-</div>
-<div class="md-footer-meta md-typeset">
-<div class="md-footer-meta__inner md-grid">
-<div class="md-footer-copyright">
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
         
         Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
           Material for MkDocs
         </a>
-</div>
-<div class="md-footer-social">
-<a class="md-footer-social__link" href="https://github.com/art049" rel="noopener" target="_blank" title="github.com">
-<svg viewbox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>
-</a>
-<a class="md-footer-social__link" href="https://twitter.com/art049" rel="noopener" target="_blank" title="twitter.com">
-<svg viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path></svg>
-</a>
-<a class="md-footer-social__link" href="https://www.linkedin.com/in/arthur-pastel-a08579112" rel="noopener" target="_blank" title="www.linkedin.com">
-<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"></path></svg>
-</a>
-</div>
-</div>
-</div>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/art049" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://twitter.com/art049" target="_blank" rel="noopener" title="twitter.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://www.linkedin.com/in/arthur-pastel-a08579112" target="_blank" rel="noopener" title="www.linkedin.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
 </footer>
-</div>
-<script src="../assets/javascripts/vendor.08c56446.min.js"></script>
-<script src="../assets/javascripts/bundle.6ced434e.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
-<script>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.18f0862e.min.js"></script>
+      <script src="../assets/javascripts/bundle.994580cf.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
         app = initialize({
           base: "..",
           features: ['instant'],
           search: Object.assign({
-            worker: "../assets/javascripts/worker/search.8c7e0a7e.min.js"
+            worker: "../assets/javascripts/worker/search.9c0e82ba.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>
-<script src="../js/gitter.js"></script>
-<script src="https://sidecar.gitter.im/dist/sidecar.v1.js"></script>
-</body>
+      
+        <script src="../js/gitter.js"></script>
+      
+        <script src="https://sidecar.gitter.im/dist/sidecar.v1.js"></script>
+      
+    
+  </body>
 </html>
