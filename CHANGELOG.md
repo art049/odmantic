@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- ⬆️ Update mypy requirement from ^0.800 to ^0.812 ([#106](https://github.com/art049/odmantic/pull/106) by [@dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [0.3.3] - 2021-02-13
 
 ### Fixed
