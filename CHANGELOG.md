@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Support pydantic 1.8 ([#113](https://github.com/art049/odmantic/pull/113) by [@art049](https://github.com/art049))
+
 - Add nightly builds ([#114](https://github.com/art049/odmantic/pull/114) by [@art049](https://github.com/art049))
 
 - Don't replace field description for ObjectId ([#82](https://github.com/art049/odmantic/pull/82) by [@Olegt0rr](https://github.com/Olegt0rr))
