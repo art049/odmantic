@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Don't replace field description for ObjectId ([#82](https://github.com/art049/odmantic/pull/82) by [@Olegt0rr](https://github.com/Olegt0rr))
+
 - CI Matrix with Standalone instances, ReplicaSets and Sharded clusters ([#91](https://github.com/art049/odmantic/pull/91) by [@art049](https://github.com/art049))
 
 - ⬆️ Update mkdocstrings requirement from ^0.14.0 to ^0.15.0 ([#110](https://github.com/art049/odmantic/pull/110) by [@dependabot[bot]](https://github.com/apps/dependabot))
