@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Fix modified mark clearing on save for nested models ([#88](https://github.com/art049/odmantic/pull/88) by [@Olegt0rr](https://github.com/Olegt0rr))
+
 - Support pydantic 1.8 ([#113](https://github.com/art049/odmantic/pull/113) by [@art049](https://github.com/art049))
 
 - Add nightly builds ([#114](https://github.com/art049/odmantic/pull/114) by [@art049](https://github.com/art049))
