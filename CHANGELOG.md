@@ -5,25 +5,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.4] - 2021-03-04
+
+#### Fixed
+
 - Fix modified mark clearing on save for nested models ([#88](https://github.com/art049/odmantic/pull/88) by [@Olegt0rr](https://github.com/Olegt0rr))
+
+- Don't replace default field description for ObjectId ([#82](https://github.com/art049/odmantic/pull/82) by [@Olegt0rr](https://github.com/Olegt0rr))
+
+#### Internals
 
 - Support pydantic 1.8 ([#113](https://github.com/art049/odmantic/pull/113) by [@art049](https://github.com/art049))
 
 - Add nightly builds ([#114](https://github.com/art049/odmantic/pull/114) by [@art049](https://github.com/art049))
 
-- Don't replace field description for ObjectId ([#82](https://github.com/art049/odmantic/pull/82) by [@Olegt0rr](https://github.com/Olegt0rr))
-
 - CI Matrix with Standalone instances, ReplicaSets and Sharded clusters ([#91](https://github.com/art049/odmantic/pull/91) by [@art049](https://github.com/art049))
 
-- ⬆️ Update mkdocstrings requirement from ^0.14.0 to ^0.15.0 ([#110](https://github.com/art049/odmantic/pull/110) by [@dependabot[bot]](https://github.com/apps/dependabot))
+- Update mkdocstrings requirement from ^0.14.0 to ^0.15.0 ([#110](https://github.com/art049/odmantic/pull/110) by [@dependabot[bot]](https://github.com/apps/dependabot))
 
-- ⬆️ Update mkdocs-material requirement from ^6.0.2 to ^7.0.3 ([#111](https://github.com/art049/odmantic/pull/111) by [@dependabot[bot]](https://github.com/apps/dependabot))
+- Update mkdocs-material requirement from ^6.0.2 to ^7.0.3 ([#111](https://github.com/art049/odmantic/pull/111) by [@dependabot[bot]](https://github.com/apps/dependabot))
 
-- ⬆️ Update mypy requirement from ^0.800 to ^0.812 ([#106](https://github.com/art049/odmantic/pull/106) by [@dependabot[bot]](https://github.com/apps/dependabot))
+- Update mypy requirement from ^0.800 to ^0.812 ([#106](https://github.com/art049/odmantic/pull/106) by [@dependabot[bot]](https://github.com/apps/dependabot))
 
 ## [0.3.3] - 2021-02-13
 
-### Fixed
+#### Fixed
 
 - Remove `bypass_document_validation` save option to avoid `Not Authorized` errors ([#85](https://github.com/art049/odmantic/pull/85) by [@Olegt0rr](https://github.com/Olegt0rr))
 
@@ -33,7 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix datetime field default example value naiveness ([#103](https://github.com/art049/odmantic/pull/103) by [@art049](https://github.com/art049))
 
-### Internals
+#### Internals
 
 - Update pytz requirement from ^2020.1 to ^2021.1 ([#98](https://github.com/art049/odmantic/pull/98) by [@dependabot[bot]](https://github.com/apps/dependabot))
 
@@ -143,4 +149,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.3.1]: https://github.com/art049/odmantic/compare/v0.3.0...v0.3.1
 [0.3.2]: https://github.com/art049/odmantic/compare/v0.3.1...v0.3.2
 [0.3.3]: https://github.com/art049/odmantic/compare/v0.3.2...v0.3.3
-[unreleased]: https://github.com/art049/odmantic/compare/v0.3.3...HEAD
+[0.3.4]: https://github.com/art049/odmantic/compare/v0.3.3...v0.3.4
+[unreleased]: https://github.com/art049/odmantic/compare/v0.3.4...HEAD
