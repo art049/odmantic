@@ -9,6 +9,7 @@ from odmantic.exceptions import DocumentNotFoundError, DocumentParsingError
 from odmantic.field import Field
 from odmantic.model import EmbeddedModel, Model
 from odmantic.query import asc, desc
+from tests.zoo.book_reference import Book, Publisher
 
 from ..zoo.person import PersonModel
 
@@ -263,6 +264,14 @@ async def test_modified_fields_cleared_on_document_saved(engine: AIOEngine):
     assert len(instance.__fields_modified__) > 0
     await engine.save(instance)
     assert len(instance.__fields_modified__) == 0
+
+
+async def test_modified_fields_cleared_on_nested_document_saved(engine: AIOEngine):
+    hachette = Publisher(name="Hachette Livre", founded=1826, location="FR")
+    book = Book(title="They Didn't See Us Coming", pages=304, publisher=hachette)
+    assert len(hachette.__fields_modified__) > 0
+    await engine.save(book)
+    assert len(hachette.__fields_modified__) == 0
 
 
 @pytest.fixture()
