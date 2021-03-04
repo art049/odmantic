@@ -6,6 +6,8 @@ env:
 tasks:
   check:
     preconditions:
+      - sh: command -v nc
+        msg: netcat (nc) was not found. Please install it and try again.
       - sh: nc -vz 127.0.0.1 27017 || ! [ -z "$TEST_MONGO_URI" ]
         msg: |
           Mongo server not found, please start a server or start a cluster and set the
