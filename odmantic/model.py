@@ -757,6 +757,42 @@ class Model(_BaseODMModel, metaclass=ModelMetaclass):
             )
         super().__setattr__(name, value)
 
+    def patch(
+        self,
+        patch_object: Union[BaseModel, Dict[str, Any]],
+        *,
+        include: Union[None, "AbstractSetIntStr", "MappingIntStrAny"] = None,
+        exclude: Union[None, "AbstractSetIntStr", "MappingIntStrAny"] = None,
+        exclude_unset: bool = True,
+        exclude_defaults: bool = False,
+        exclude_none: bool = False,
+    ) -> None:
+        is_primary_field_in_patch = (
+            isinstance(patch_object, BaseModel)
+            and self.__primary_field__ in patch_object.__fields__
+        ) or (isinstance(patch_object, dict) and self.__primary_field__ in patch_object)
+        if is_primary_field_in_patch:
+            if (
+                include is None
+                and (exclude is None or self.__primary_field__ not in exclude)
+            ) or (
+                include is not None
+                and self.__primary_field__ in include
+                and (exclude is None or self.__primary_field__ not in exclude)
+            ):
+                raise ValueError(
+                    "Patching the primary key is not supported. "
+                    "See the copy method if you want to modify the primary field."
+                )
+        return super().patch(
+            patch_object,
+            include=include,
+            exclude=exclude,
+            exclude_unset=exclude_unset,
+            exclude_defaults=exclude_defaults,
+            exclude_none=exclude_none,
+        )
+
 
 class EmbeddedModel(_BaseODMModel, metaclass=EmbeddedModelMetaclass):
     """Class that can be extended to create an ODMantic Embedded Model.

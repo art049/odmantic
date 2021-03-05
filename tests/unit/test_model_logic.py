@@ -427,3 +427,66 @@ def test_patch_side_effect_field_modified():
     r.patch({"width": 5})
     assert r.area == 5
     assert "area" in r.__fields_modified__
+
+
+def test_patch_dict_id_exception():
+    class M(Model):
+        alternate_id: int = Field(primary_field=True)
+        f: int
+
+    m = M(alternate_id=0, f=0)
+    with pytest.raises(ValueError, match="Patching the primary key is not supported"):
+        m.patch({"alternate_id": 1})
+
+
+@pytest.mark.parametrize(
+    "patch_kwargs",
+    (
+        {"include": set()},
+        {"exclude": {"alternate_id"}},
+        {"include": {"alternate_id"}, "exclude": {"alternate_id"}},
+    ),
+)
+def test_patch_dict_alternate_id_filtered(patch_kwargs):
+    class M(Model):
+        alternate_id: int = Field(primary_field=True)
+        f: int
+
+    m = M(alternate_id=0, f=0)
+    m.patch({"alternate_id": 1}, **patch_kwargs)
+    assert m.f == 0 and m.alternate_id == 0, "instance should be unchanged"
+
+
+def test_patch_pydantic_id_exception():
+    class M(Model):
+        alternate_id: int = Field(primary_field=True)
+        f: int
+
+    m = M(alternate_id=0, f=0)
+
+    class PatchObject(BaseModel):
+        alternate_id: int
+
+    with pytest.raises(ValueError, match="Patching the primary key is not supported"):
+        m.patch(PatchObject(alternate_id=1))
+
+
+@pytest.mark.parametrize(
+    "patch_kwargs",
+    (
+        {"include": set()},
+        {"exclude": {"alternate_id"}},
+        {"include": {"alternate_id"}, "exclude": {"alternate_id"}},
+    ),
+)
+def test_patch_pydantic_alternate_id_filtered(patch_kwargs):
+    class M(Model):
+        alternate_id: int = Field(primary_field=True)
+        f: int
+
+    class PatchObject(BaseModel):
+        alternate_id: int
+
+    m = M(alternate_id=0, f=0)
+    m.patch(PatchObject(alternate_id=1), **patch_kwargs)
+    assert m.f == 0 and m.alternate_id == 0, "instance should be unchanged"
