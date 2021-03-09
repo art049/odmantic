@@ -536,7 +536,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         object.__setattr__(copied, "__fields_modified__", set(copied.__fields__))
         return copied
 
-    def patch(
+    def update(
         self,
         patch_object: Union[BaseModel, Dict[str, Any]],
         *,
@@ -546,7 +546,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         exclude_defaults: bool = False,
         exclude_none: bool = False,
     ) -> None:
-        """Patch instance fields from a Pydantic model or a dictionary.
+        """Update instance fields from a Pydantic model or a dictionary.
 
         If a pydantic model is provided, only the **fields set** will be
         applied by default.
@@ -557,11 +557,11 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
                 `None`)
             exclude: fields to exclude from the `patch_object`, this takes
                 precedence over include
-            exclude_unset: only patch fields explicitly set in the patch object (only
+            exclude_unset: only update fields explicitly set in the patch object (only
                 applies to Pydantic models)
-            exclude_defaults: only patch fields that are different from their default
+            exclude_defaults: only update fields that are different from their default
                 value in the patch object (only applies to Pydantic models)
-            exclude_none: only patch fields different from None in the patch object
+            exclude_none: only update fields different from None in the patch object
                 (only applies to Pydantic models)
 
         Raises:
@@ -757,7 +757,7 @@ class Model(_BaseODMModel, metaclass=ModelMetaclass):
             )
         super().__setattr__(name, value)
 
-    def patch(
+    def update(
         self,
         patch_object: Union[BaseModel, Dict[str, Any]],
         *,
@@ -781,10 +781,10 @@ class Model(_BaseODMModel, metaclass=ModelMetaclass):
                 and (exclude is None or self.__primary_field__ not in exclude)
             ):
                 raise ValueError(
-                    "Patching the primary key is not supported. "
+                    "Updating the primary key is not supported. "
                     "See the copy method if you want to modify the primary field."
                 )
-        return super().patch(
+        return super().update(
             patch_object,
             include=include,
             exclude=exclude,
