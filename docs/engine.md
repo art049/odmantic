@@ -175,6 +175,7 @@ The [AIOEngine.save][odmantic.engine.AIOEngine.save] and
 [AIOEngine.save_all][odmantic.engine.AIOEngine.save] methods are actually behaving as
 `upsert` operations. In other words, if the instance already exists it will be updated.
 Otherwise, the related document will be created in the database.
+
 ### Modifying one field
 
 Modifying a single field can be achieved by directly changing the instance attribute and
@@ -210,12 +211,12 @@ saving the instance.
 ### Patching multiple fields at once
 
 The easiest way to change multiple fields at once is to use the
-[Model.patch][odmantic.model._BaseODMModel.patch] method. This method will take either a
-Pydantic object or a dictionary and update the matching field of the instance.
+[Model.update][odmantic.model._BaseODMModel.update] method. This method will take either a
+Pydantic object or a dictionary and update the matching fields of the instance.
 
 === "From a Pydantic Model"
 
-    ```python linenums="1" hl_lines="19-21 24 26 29 32"
+    ```python linenums="1" hl_lines="19-21 25 27 30 33"
     --8<-- "engine/patch_multiple_fields_pydantic.py"
     ```
 
@@ -260,7 +261,6 @@ instance using the [Model.copy][odmantic.model._BaseODMModel.copy] method.
     trust this data.
 
 
-### Modifying a subpart of the instance
 
 ## Delete
 

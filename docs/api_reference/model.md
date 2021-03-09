@@ -3,7 +3,7 @@
         members:
           - parse_doc
           - doc
-          - patch
+          - update
           - copy
           - dict
 

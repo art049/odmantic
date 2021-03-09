@@ -12,10 +12,10 @@ player_tlo = await engine.find_one(Player, Player.name == "TLO")
 print(repr(player_tlo))
 #> Player(id=ObjectId(...), name='TLO', game='Starcraft')
 
-# Create the patch dictionnary containing the new values
+# Create the patch dictionary containing the new values
 patch_object = {"name": "TheLittleOne", "game": "Starcraft II"}
-# Apply the patch to the instance
-player_tlo.patch(patch_object)
+# Update the local instance
+player_tlo.update(patch_object)
 
 print(repr(player_tlo))
 #> Player(id=ObjectId(...), name='TheLittleOne', game='Starcraft II')

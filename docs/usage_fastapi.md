@@ -661,25 +661,63 @@ body.
 In this example, we will define a `PATCH` method that will allow us to modify only some
 specific fields of a Tree instance:
 
-```python linenums="1" hl_lines="29-32 35-45"
+```python linenums="1" hl_lines="26-29 32-39"
 --8<-- "usage_fastapi/example_update.py"
 ```
 First, we define the `TreePatchSchema` this Pydantic model will contain the
 modifications that we need to apply on the instance. Since we want to be able to update
-each field independently, we make them all non required (i.e. `Optional`) in the schema.
+each field independently, we give each of them the `None` default value.
+
 
 Then, we configure a new `PATCH` endpoint by setting the `id` of the model to update
 as a path parameter and the `TreePatchSchema` as the request body parameter.
 
 After all the parameters have been validated properly and the appropriate instance have
 been gathered, we can apply the modifications to the local instance using the
-[Model.patch][odmantic.model._BaseODMModel.patch] method.
+[Model.update][odmantic.model._BaseODMModel.update] method. By default, the update
+method will replace each field values in the instance with the ones explicitely set in
+the patch object. Thus, the fields containing the None default values are not gonna be
+changed in the instance.
 
-Once our tree has been properly patched, we can save it and return it's updated version.
-```python
-await engine.save(tree)
-return tree
-```
+
+We can then finish by saving and returning the updated tree.
+
+??? tip "Optional, defaults, non-required and required pydantic fields (advanced)"
+
+    ```python
+    from pydantic import BaseModel
+
+    class M(BaseModel):
+        a: Optional[int]
+        b: Optional[int] = None
+        c: int = None
+        d: int
+    ```
+
+    In this example, fields have a different behavior:
+
+    `#!python a: Optional[int]`
+    : this field is **not required**, `None` is its default value, it can be given
+      `None` or any `int` values
+
+    `#!python b: Optional[int] = None`
+    : same behavior as `a` since `None` is set automatically as the default value for
+      `typing.Optional` fields
+
+    `#!python c: int = None`
+    : this field is **not required**, if not explicitely provided it will take the
+      `None` value, **only** an `int` can be given as an explicit value
+
+    `#!python d: int`
+    : this field is **required** and an `int` value **must** be provided
+
+    (More details: [pydantic #1223](https://github.com/samuelcolvin/pydantic/issues/1223#issuecomment-594632324){:target=blank_},
+     [pydantic: Required fields](https://pydantic-docs.helpmanual.io/usage/models/#required-fields){:target=blank_})
+
+    By default [Model.update][odmantic.model._BaseODMModel.update], will not apply
+    values from unset (not explicitely populated) fields. Since we don't want to allow
+    explicitely set `None` values in the example, we used fields defined as
+    `#!python c: int = None`.
 
 !!! example "Updating a tree from the command line"
     === "HTTPie"

@@ -20,10 +20,11 @@ class PatchPlayerSchema(BaseModel):
     name: str
     game: str
 
+
 # Create the patch object containing the new values
 patch_object = PatchPlayerSchema(name="TheLittleOne", game="Starcraft II")
 # Apply the patch to the instance
-player_tlo.patch(patch_object)
+player_tlo.update(patch_object)
 
 print(repr(player_tlo))
 #> Player(id=ObjectId(...), name='TheLittleOne', game='Starcraft II')
