@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Patch and copy Model instances ([#39](https://github.com/art049/odmantic/pull/39) by [@art049](https://github.com/art049))
+
 #### Added
 
 - Update and copy methods:
