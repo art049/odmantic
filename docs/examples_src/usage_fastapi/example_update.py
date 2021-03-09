@@ -1,6 +1,3 @@
-from typing import Optional
-
-import uvicorn
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
@@ -37,6 +34,6 @@ async def update_tree_by_id(id: ObjectId, patch: TreePatchSchema):
     tree = await engine.find_one(Tree, Tree.id == id)
     if tree is None:
         raise HTTPException(404)
-    tree.patch(patch)
+    tree.update(patch)
     await engine.save(tree)
     return tree

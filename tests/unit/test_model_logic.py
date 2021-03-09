@@ -257,134 +257,136 @@ def test_model_copy_field_modified_on_primary_field_change(deep: bool):
 
 
 INITIAL_FIRST_NAME, INITIAL_LAST_NAME = "INITIAL_FIRST_NAME", "INITIAL_LAST_NAME"
-PATCHED_NAME = "PATCHED_NAME"
+UPDATED_NAME = "UPDATED_NAME"
 
 
 @pytest.fixture
-def instance_to_patch():
+def instance_to_update():
     return PersonModel(first_name=INITIAL_FIRST_NAME, last_name=INITIAL_LAST_NAME)
 
 
-def test_patch_pydantic_model(instance_to_patch):
-    class Patch(BaseModel):
+def test_update_pydantic_model(instance_to_update):
+    class Update(BaseModel):
         first_name: str
 
-    patch_obj = Patch(first_name=PATCHED_NAME)
-    instance_to_patch.patch(patch_obj)
-    assert instance_to_patch.first_name == PATCHED_NAME
-    assert instance_to_patch.last_name == INITIAL_LAST_NAME
+    update_obj = Update(first_name=UPDATED_NAME)
+    instance_to_update.update(update_obj)
+    assert instance_to_update.first_name == UPDATED_NAME
+    assert instance_to_update.last_name == INITIAL_LAST_NAME
 
 
-def test_patch_dictionary(instance_to_patch):
-    patch_obj = {"first_name": PATCHED_NAME}
-    instance_to_patch.patch(patch_obj)
-    assert instance_to_patch.first_name == PATCHED_NAME
-    assert instance_to_patch.last_name == INITIAL_LAST_NAME
+def test_update_dictionary(instance_to_update):
+    update_obj = {"first_name": UPDATED_NAME}
+    instance_to_update.update(update_obj)
+    assert instance_to_update.first_name == UPDATED_NAME
+    assert instance_to_update.last_name == INITIAL_LAST_NAME
 
 
-def test_patch_include(instance_to_patch):
-    patch_obj = {"first_name": PATCHED_NAME}
-    instance_to_patch.patch(patch_obj, include=set())
-    assert instance_to_patch.first_name == INITIAL_FIRST_NAME
-    assert instance_to_patch.last_name == INITIAL_LAST_NAME
+def test_update_include(instance_to_update):
+    update_obj = {"first_name": UPDATED_NAME}
+    instance_to_update.update(update_obj, include=set())
+    assert instance_to_update.first_name == INITIAL_FIRST_NAME
+    assert instance_to_update.last_name == INITIAL_LAST_NAME
 
 
-def test_patch_exclude(instance_to_patch):
-    patch_obj = {"first_name": PATCHED_NAME}
-    instance_to_patch.patch(patch_obj, exclude={"first_name"})
-    assert instance_to_patch.first_name == INITIAL_FIRST_NAME
-    assert instance_to_patch.last_name == INITIAL_LAST_NAME
+def test_update_exclude(instance_to_update):
+    update_obj = {"first_name": UPDATED_NAME}
+    instance_to_update.update(update_obj, exclude={"first_name"})
+    assert instance_to_update.first_name == INITIAL_FIRST_NAME
+    assert instance_to_update.last_name == INITIAL_LAST_NAME
 
 
-def test_patch_exclude_none(instance_to_patch):
-    class Patch(BaseModel):
+def test_update_exclude_none(instance_to_update):
+    class Update(BaseModel):
         first_name: Optional[str]
         last_name: Optional[str]
 
-    patch_obj = Patch(first_name=PATCHED_NAME, last_name=None)
-    instance_to_patch.patch(patch_obj, exclude_unset=False, exclude_none=True)
-    assert instance_to_patch.first_name == PATCHED_NAME
-    assert instance_to_patch.last_name == INITIAL_LAST_NAME
+    update_obj = Update(first_name=UPDATED_NAME, last_name=None)
+    instance_to_update.update(update_obj, exclude_unset=False, exclude_none=True)
+    assert instance_to_update.first_name == UPDATED_NAME
+    assert instance_to_update.last_name == INITIAL_LAST_NAME
 
 
-def test_patch_exclude_defaults(instance_to_patch):
-    initial_instance = instance_to_patch.copy()
+def test_update_exclude_defaults(instance_to_update):
+    initial_instance = instance_to_update.copy()
 
-    class Patch(BaseModel):
+    class Update(BaseModel):
         first_name: Optional[str] = None
-        last_name: str = PATCHED_NAME
+        last_name: str = UPDATED_NAME
 
-    patch_obj = Patch()
-    instance_to_patch.patch(patch_obj, exclude_unset=False, exclude_defaults=True)
-    assert instance_to_patch == initial_instance
-
-
-def test_patch_exclude_over_include(instance_to_patch):
-    patch_obj = {"first_name": PATCHED_NAME}
-    instance_to_patch.patch(patch_obj, include={"first_name"}, exclude={"first_name"})
-    assert instance_to_patch.first_name == INITIAL_FIRST_NAME
-    assert instance_to_patch.last_name == INITIAL_LAST_NAME
+    update_obj = Update()
+    instance_to_update.update(update_obj, exclude_unset=False, exclude_defaults=True)
+    assert instance_to_update == initial_instance
 
 
-def test_patch_invalid():
+def test_update_exclude_over_include(instance_to_update):
+    update_obj = {"first_name": UPDATED_NAME}
+    instance_to_update.update(
+        update_obj, include={"first_name"}, exclude={"first_name"}
+    )
+    assert instance_to_update.first_name == INITIAL_FIRST_NAME
+    assert instance_to_update.last_name == INITIAL_LAST_NAME
+
+
+def test_update_invalid():
     class M(Model):
         f: int
 
     instance = M(f=12)
-    patch_obj = {"f": "aaa"}
+    update_obj = {"f": "aaa"}
     with pytest.raises(ValidationError):
-        instance.patch(patch_obj)
+        instance.update(update_obj)
 
 
-def test_patch_model_undue_patch_fields():
+def test_update_model_undue_update_fields():
     class M(Model):
         f: int
 
     instance = M(f=12)
-    patch_obj = {"not_in_model": "aaa"}
-    instance.patch(patch_obj)
+    update_obj = {"not_in_model": "aaa"}
+    instance.update(update_obj)
 
 
-def test_patch_pydantic_unset_patch_fields():
-    PATCHED_VALUE = 100
+def test_update_pydantic_unset_update_fields():
+    UPDATEED_VALUE = 100
 
     class P(BaseModel):
-        f: int = PATCHED_VALUE
+        f: int = UPDATEED_VALUE
 
     class M(Model):
         f: int
 
     instance = M(f=0)
-    patch_obj = P()
-    instance.patch(patch_obj)
-    assert instance.f != PATCHED_VALUE
+    update_obj = P()
+    instance.update(update_obj)
+    assert instance.f != UPDATEED_VALUE
 
 
-def test_patch_pydantic_unset_patch_fields_include_unset():
-    PATCHED_VALUE = 100
+def test_update_pydantic_unset_update_fields_include_unset():
+    UPDATEED_VALUE = 100
 
     class P(BaseModel):
-        f: int = PATCHED_VALUE
+        f: int = UPDATEED_VALUE
 
     class M(Model):
         f: int
 
     instance = M(f=0)
-    patch_obj = P()
-    instance.patch(patch_obj, exclude_unset=False)
-    assert instance.f == PATCHED_VALUE
+    update_obj = P()
+    instance.update(update_obj, exclude_unset=False)
+    assert instance.f == UPDATEED_VALUE
 
 
-def test_patch_embedded_model():
+def test_update_embedded_model():
     class E(EmbeddedModel):
         f: int
 
     instance = E(f=12)
-    instance.patch({"f": 15})
+    instance.update({"f": 15})
     assert instance.f == 15
 
 
-def test_patch_reference():
+def test_update_reference():
     class R(Model):
         f: int
 
@@ -395,22 +397,22 @@ def test_patch_reference():
     r1 = R(f=1)
 
     instance = M(r=r0)
-    instance.patch({"r": r1})
+    instance.update({"r": r1})
     assert instance.r.f == r1.f
     assert instance.r == r1
 
 
-def test_patch_type_coercion():
+def test_update_type_coercion():
     class M(Model):
         f: int
 
     instance = M(f=12)
-    patch_obj = {"f": "12"}
-    instance.patch(patch_obj)
+    update_obj = {"f": "12"}
+    instance.update(update_obj)
     assert isinstance(instance.f, int)
 
 
-def test_patch_side_effect_field_modified():
+def test_update_side_effect_field_modified():
     class Rectangle(Model):
         width: float
         height: float
@@ -424,69 +426,69 @@ def test_patch_side_effect_field_modified():
     r = Rectangle(width=1, height=1)
     assert r.area == 1
     r.__fields_modified__.clear()
-    r.patch({"width": 5})
+    r.update({"width": 5})
     assert r.area == 5
     assert "area" in r.__fields_modified__
 
 
-def test_patch_dict_id_exception():
+def test_update_dict_id_exception():
     class M(Model):
         alternate_id: int = Field(primary_field=True)
         f: int
 
     m = M(alternate_id=0, f=0)
-    with pytest.raises(ValueError, match="Patching the primary key is not supported"):
-        m.patch({"alternate_id": 1})
+    with pytest.raises(ValueError, match="Updating the primary key is not supported"):
+        m.update({"alternate_id": 1})
 
 
 @pytest.mark.parametrize(
-    "patch_kwargs",
+    "update_kwargs",
     (
         {"include": set()},
         {"exclude": {"alternate_id"}},
         {"include": {"alternate_id"}, "exclude": {"alternate_id"}},
     ),
 )
-def test_patch_dict_alternate_id_filtered(patch_kwargs):
+def test_update_dict_alternate_id_filtered(update_kwargs):
     class M(Model):
         alternate_id: int = Field(primary_field=True)
         f: int
 
     m = M(alternate_id=0, f=0)
-    m.patch({"alternate_id": 1}, **patch_kwargs)
+    m.update({"alternate_id": 1}, **update_kwargs)
     assert m.f == 0 and m.alternate_id == 0, "instance should be unchanged"
 
 
-def test_patch_pydantic_id_exception():
+def test_update_pydantic_id_exception():
     class M(Model):
         alternate_id: int = Field(primary_field=True)
         f: int
 
     m = M(alternate_id=0, f=0)
 
-    class PatchObject(BaseModel):
+    class UpdateObject(BaseModel):
         alternate_id: int
 
-    with pytest.raises(ValueError, match="Patching the primary key is not supported"):
-        m.patch(PatchObject(alternate_id=1))
+    with pytest.raises(ValueError, match="Updating the primary key is not supported"):
+        m.update(UpdateObject(alternate_id=1))
 
 
 @pytest.mark.parametrize(
-    "patch_kwargs",
+    "update_kwargs",
     (
         {"include": set()},
         {"exclude": {"alternate_id"}},
         {"include": {"alternate_id"}, "exclude": {"alternate_id"}},
     ),
 )
-def test_patch_pydantic_alternate_id_filtered(patch_kwargs):
+def test_update_pydantic_alternate_id_filtered(update_kwargs):
     class M(Model):
         alternate_id: int = Field(primary_field=True)
         f: int
 
-    class PatchObject(BaseModel):
+    class UpdateObject(BaseModel):
         alternate_id: int
 
     m = M(alternate_id=0, f=0)
-    m.patch(PatchObject(alternate_id=1), **patch_kwargs)
+    m.update(UpdateObject(alternate_id=1), **update_kwargs)
     assert m.f == 0 and m.alternate_id == 0, "instance should be unchanged"
