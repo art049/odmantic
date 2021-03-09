@@ -5,6 +5,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+#### Added
+
+- Update and copy methods:
+    - Updating multiple fields at once is now directly possible from a pydantic model or
+      a dictionary ([feature documentation](https://art049.github.io/odmantic/engine/#patching-multiple-fields-at-once),
+      [sample use case with FastAPI](https://art049.github.io/odmantic/usage_fastapi/#updating-a-tree))
+    - Changing the primary field of an instance is now easier
+      ([documentation](https://art049.github.io/odmantic/engine/#changing-the-primary-field))
+
 ## [0.3.4] - 2021-03-04
 
 #### Fixed
