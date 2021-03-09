@@ -168,13 +168,17 @@ this method with filtering queries.
 
 ## Update
 
-Updating an instance in the database can be done simply by modifying the instance
-locally and saving it again to the database.
+Updating an instance in the database can be done by modifying the instance locally and
+saving it again to the database.
 
 The [AIOEngine.save][odmantic.engine.AIOEngine.save] and
 [AIOEngine.save_all][odmantic.engine.AIOEngine.save] methods are actually behaving as
 `upsert` operations. In other words, if the instance already exists it will be updated.
 Otherwise, the related document will be created in the database.
+### Modifying one field
+
+Modifying a single field can be achieved by directly changing the instance attribute and
+saving the instance.
 
 ```python linenums="1" hl_lines="13-14"
 --8<-- "engine/update.py"
@@ -203,27 +207,60 @@ Otherwise, the related document will be created in the database.
       "name": "Serral"
     }
     ```
+### Patching multiple fields at once
 
-!!! warning "Primary field update"
-    Currently, changing the primary field value is disabled and a `NotImplementedError`
-    exception will be raised if you try to do so. It is still possible to mutate the
-    primary field if the field type is mutable but it might result in unexpected
-    behaviors.
+The easiest way to change multiple fields at once is to use the
+[Model.patch][odmantic.model._BaseODMModel.patch] method. This method will take either a
+Pydantic object or a dictionary and update the matching field of the instance.
 
-    ??? tip "Workaround to modify the primary key"
-        There is still a workaround to update the primary key of a document:
-        ```python linenums="1" hl_lines="18 20 22"
-        --8<-- "engine/primary_key_update.py"
-        ```
+=== "From a Pydantic Model"
 
-        !!! abstract "Resulting document associated to the player"
-            ```json hl_lines="2"
-            {
-                "_id": ObjectId("ffffffffffffffffffffffff"),
-                "game": "Valorant",
-                "name": "Shroud"
-            }
-            ```
+    ```python linenums="1" hl_lines="19-21 24 26 29 32"
+    --8<-- "engine/patch_multiple_fields_pydantic.py"
+    ```
+
+=== "From a dictionary"
+
+    ```python linenums="1" hl_lines="16 18 21 24"
+    --8<-- "engine/patch_multiple_fields_dict.py"
+    ```
+
+!!! abstract "Resulting document associated to the player"
+    ```json hl_lines="3 4"
+    {
+      "_id": ObjectId("5f85f36d6dfecacc68428a49"),
+      "game": "Starcraft II",
+      "name": "TheLittleOne"
+    }
+    ```
+
+### Changing the primary field
+
+Directly changing the primary field value as explained above is not
+possible and a `NotImplementedError` exception will be raised if you try to do so.
+
+The easiest way to change an instance primary field is to perform a local copy of the
+instance using the [Model.copy][odmantic.model._BaseODMModel.copy] method.
+
+```python linenums="1" hl_lines="18 20 22"
+--8<-- "engine/primary_key_update.py"
+```
+
+!!! abstract "Resulting document associated to the player"
+    ```json hl_lines="2"
+    {
+        "_id": ObjectId("ffffffffffffffffffffffff"),
+        "game": "Valorant",
+        "name": "Shroud"
+    }
+    ```
+
+!!! danger "Update data used with the copy"
+    The data updated by the copy method is not validated: you should **absolutely**
+    trust this data.
+
+
+### Modifying a subpart of the instance
 
 ## Delete
 

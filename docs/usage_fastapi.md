@@ -654,12 +654,12 @@ instance. Once we have the instance, we call the
 ### Updating a tree
 
 We already defined a `PUT` route that enables us to modify (replace) a tree instance.
-However, with this previopus implementation, it's not possible to specify only the
+However, with this previous implementation, it's not possible to specify only the
 fields that we want to change as the whole Tree instance is rebuilt from the request's
 body.
 
-In this example, we will define a `PATCH` method that will allow us to modify some
-fields of a Tree instance:
+In this example, we will define a `PATCH` method that will allow us to modify only some
+specific fields of a Tree instance:
 
 ```python linenums="1" hl_lines="29-32 35-45"
 --8<-- "usage_fastapi/example_update.py"
@@ -671,36 +671,9 @@ each field independently, we make them all non required (i.e. `Optional`) in the
 Then, we configure a new `PATCH` endpoint by setting the `id` of the model to update
 as a path parameter and the `TreePatchSchema` as the request body parameter.
 
-Once all the parameters have been validated properly and the associated instance have
-been gathered, we can apply the modifications to the model.
-
-The first step is to create a dictionnary containing only the fields to modify (the
-`exclude_unset` argument helps us to gather only the fields that have been set from the
-request's body):
-
-```python
-patch_dict = patch.dict(exclude_unset=True)
-```
-
-The next step is to iterate over this dictionary to apply the changes to the model
-iteratively:
-
-```python
-for name, value in patch_dict.items():
-    setattr(tree, name, value)
-```
-
-!!! tip "Using setattr to update an instance"
-    Here we use the `setattr` builtin function to update the instance attributes.
-
-    For example:
-    ```python
-    setattr(tree, "average_size", 21.5)
-    ```
-    will have exactly the same effect as:
-    ```python
-    tree.average_size = 21.5
-    ```
+After all the parameters have been validated properly and the appropriate instance have
+been gathered, we can apply the modifications to the local instance using the
+[Model.patch][odmantic.model._BaseODMModel.patch] method.
 
 Once our tree has been properly patched, we can save it and return it's updated version.
 ```python
@@ -784,6 +757,6 @@ Some ideas that should arrive soon:
   document is not found an exception will be raised directly.
 - Implement the equivalent of MongoDB insert method to be able to create document
   without overwriting existing ones.
-- Implement a Model.update method to update the model fields from a dictionnary or from
-  a Pydantic schema.
+- <del>Implement a Model.update method to update the model fields from a dictionnary or from
+  a Pydantic schema.</del>
 - Automatically generate CRUD endpoints directly from an ODMantic Model.
