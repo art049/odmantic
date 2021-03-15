@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- ⬆️ Update flake8 requirement from ~=3.8.4 to ~=3.9.0 ([#116](https://github.com/art049/odmantic/pull/116) by [@dependabot[bot]](https://github.com/apps/dependabot))
+
 - Patch and copy Model instances ([#39](https://github.com/art049/odmantic/pull/39) by [@art049](https://github.com/art049))
 
 #### Added
