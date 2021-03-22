@@ -49,7 +49,7 @@ fastapi = ["fastapi"]
 
 [tool.poetry.dev-dependencies]
 pytest = "~=6.0"
-isort = "~=5.7.0"
+isort = "~=5.8.0"
 black = { version = "*", allow-prereleases = true }
 flake8 = "~=3.9.0"
 mypy = "^0.812"
