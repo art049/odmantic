@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- ⬆️ Update importlib-metadata requirement from >=1,<4 to >=1,<5 ([#126](https://github.com/art049/odmantic/pull/126) by [@dependabot[bot]](https://github.com/apps/dependabot))
+
 - ⬆️ Update pydocstyle requirement from ^5.1.1 to ^6.0.0 ([#119](https://github.com/art049/odmantic/pull/119) by [@dependabot[bot]](https://github.com/apps/dependabot))
 
 - ⬆️ Update isort requirement from ~=5.7.0 to ~=5.8.0 ([#122](https://github.com/art049/odmantic/pull/122) by [@dependabot[bot]](https://github.com/apps/dependabot))
