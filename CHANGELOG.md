@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- ⬆️ Update motor requirement from >=2.1.0,<2.4.0 to >=2.1.0,<2.5.0 ([#124](https://github.com/art049/odmantic/pull/124) by [@dependabot[bot]](https://github.com/apps/dependabot))
+
 - ⬆️ Update importlib-metadata requirement from >=1,<4 to >=1,<5 ([#126](https://github.com/art049/odmantic/pull/126) by [@dependabot[bot]](https://github.com/apps/dependabot))
 
 - ⬆️ Update pydocstyle requirement from ^5.1.1 to ^6.0.0 ([#119](https://github.com/art049/odmantic/pull/119) by [@dependabot[bot]](https://github.com/apps/dependabot))
