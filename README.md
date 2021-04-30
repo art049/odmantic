@@ -22,7 +22,7 @@
 
 ---
 
-Asynchronous ODM(Object Document Mapper) for <a href="https://www.mongodb.com/"
+Asynchronous ODM (Object Document Mapper) for <a href="https://www.mongodb.com/"
 target="_blank">MongoDB</a> based on standard python type hints. It's built on top of <a
 href="https://pydantic-docs.helpmanual.io/" target="_blank">pydantic</a> for model
 definition and validation.
