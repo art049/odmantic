@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Update README.md ([#129](https://github.com/art049/odmantic/pull/129) by [@Kludex](https://github.com/Kludex))
+
 - ⬆️ Update pytest-asyncio requirement from ^0.14.0 to ^0.15.0 ([#125](https://github.com/art049/odmantic/pull/125) by [@dependabot[bot]](https://github.com/apps/dependabot))
 
 - ⬆️ Update motor requirement from >=2.1.0,<2.4.0 to >=2.1.0,<2.5.0 ([#124](https://github.com/art049/odmantic/pull/124) by [@dependabot[bot]](https://github.com/apps/dependabot))
