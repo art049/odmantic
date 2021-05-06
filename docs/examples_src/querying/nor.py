@@ -7,11 +7,11 @@ class Tree(Model):
 
 
 query.nor_(Tree.name == "Spruce", Tree.size > 2)
-# > QueryExpression(
-# >     {
-# >         "$nor": (
-# >             QueryExpression({"name": {"$eq": "Spruce"}}),
-# >             QueryExpression({"size": {"$gt": 2}}),
-# >         )
-# >     }
-# > )
+#> QueryExpression(
+#>     {
+#>         "$nor": (
+#>             QueryExpression({"name": {"$eq": "Spruce"}}),
+#>             QueryExpression({"size": {"$gt": 2}}),
+#>         )
+#>     }
+#> )
