@@ -5,6 +5,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.5] - 2021-05-12
+
+#### Security
+
+- Change allowed pydantic versions to handle [CVE-2021-29510](https://github.com/samuelcolvin/pydantic/security/advisories/GHSA-5jqp-qgf6-3pvh) by [@art049](https://github.com/art049)
 ## [0.3.4] - 2021-03-04
 
 #### Fixed
@@ -150,4 +155,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.3.2]: https://github.com/art049/odmantic/compare/v0.3.1...v0.3.2
 [0.3.3]: https://github.com/art049/odmantic/compare/v0.3.2...v0.3.3
 [0.3.4]: https://github.com/art049/odmantic/compare/v0.3.3...v0.3.4
-[unreleased]: https://github.com/art049/odmantic/compare/v0.3.4...HEAD
+[0.3.5]: https://github.com/art049/odmantic/compare/v0.3.4...v0.3.5
+[unreleased]: https://github.com/art049/odmantic/compare/v0.3.5...HEAD
