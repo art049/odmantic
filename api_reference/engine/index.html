@@ -13,8 +13,8 @@
       
         <link rel="canonical" href="https://art049.github.io/odmantic/api_reference/engine/">
       
-      <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.8">
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.4">
     
     
       
@@ -22,10 +22,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.cb6bc1d0.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.bde7dde4.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.39b8e14a.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
         
           
           
@@ -39,17 +39,19 @@
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
-        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
       
     
     
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
       <link rel="stylesheet" href="../../css/extra.css">
     
     
       
         
-<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-180814888-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-180814888-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
 <script async src="https://www.google-analytics.com/analytics.js"></script>
       
     
@@ -63,10 +65,9 @@
     
     
     <body dir="ltr" data-md-color-scheme="preference" data-md-color-primary="light-green" data-md-color-accent="light-green">
-      
-        <script>matchMedia("(prefers-color-scheme: dark)").matches&&document.body.setAttribute("data-md-color-scheme","slate")</script>
-      
   
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -83,27 +84,25 @@
       
     </div>
     
-      
-
-<header class="md-header" data-md-component="header">
-  <nav class="md-header-nav md-grid" aria-label="Header">
-    <a href="https://art049.github.io/odmantic/" title="ODMantic" class="md-header-nav__button md-logo" aria-label="ODMantic">
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ODMantic" class="md-header__button md-logo" aria-label="ODMantic" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 9.63c-.19-2.79-1.32-5.51-3.44-7.63A12.253 12.253 0 008.5 9.63c1.29.68 2.47 1.56 3.5 2.63a14.22 14.22 0 013.5-2.63M12 15.45C9.85 12.17 6.18 10 2 10c0 10 9.32 11.89 10 12 .68-.12 10-2 10-12-4.18 0-7.85 2.17-10 5.45z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 9.63c-.19-2.79-1.32-5.51-3.44-7.63A12.253 12.253 0 0 0 8.5 9.63c1.29.68 2.47 1.56 3.5 2.63a14.22 14.22 0 0 1 3.5-2.63M12 15.45C9.85 12.17 6.18 10 2 10c0 10 9.32 11.89 10 12 .68-.12 10-2 10-12-4.18 0-7.85 2.17-10 5.45z"/></svg>
 
     </a>
-    <label class="md-header-nav__button md-icon" for="__drawer">
+    <label class="md-header__button md-icon" for="__drawer">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
     </label>
-    <div class="md-header-nav__title" data-md-component="header-title">
-      <div class="md-header-nav__ellipsis">
-        <div class="md-header-nav__topic">
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
           <span class="md-ellipsis">
             ODMantic
           </span>
         </div>
-        <div class="md-header-nav__topic">
+        <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
               odmantic.engine
@@ -113,8 +112,10 @@
       </div>
     </div>
     
-      <label class="md-header-nav__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
       </label>
       
 <div class="md-search" data-md-component="search" role="dialog">
@@ -123,11 +124,11 @@
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
       <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
       </label>
-      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
       </button>
     </form>
     <div class="md-search__output">
@@ -144,12 +145,12 @@
 </div>
     
     
-      <div class="md-header-nav__source">
+      <div class="md-header__source">
         
-<a href="https://github.com/art049/odmantic/" title="Go to repository" class="md-source">
+<a href="https://github.com/art049/odmantic/" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
     art049/odmantic
@@ -170,20 +171,18 @@
           
             
               
-              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
 
 
-
-
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="https://art049.github.io/odmantic/" title="ODMantic" class="md-nav__button md-logo" aria-label="ODMantic">
+    <a href="../.." title="ODMantic" class="md-nav__button md-logo" aria-label="ODMantic" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 9.63c-.19-2.79-1.32-5.51-3.44-7.63A12.253 12.253 0 008.5 9.63c1.29.68 2.47 1.56 3.5 2.63a14.22 14.22 0 013.5-2.63M12 15.45C9.85 12.17 6.18 10 2 10c0 10 9.32 11.89 10 12 .68-.12 10-2 10-12-4.18 0-7.85 2.17-10 5.45z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 9.63c-.19-2.79-1.32-5.51-3.44-7.63A12.253 12.253 0 0 0 8.5 9.63c1.29.68 2.47 1.56 3.5 2.63a14.22 14.22 0 0 1 3.5-2.63M12 15.45C9.85 12.17 6.18 10 2 10c0 10 9.32 11.89 10 12 .68-.12 10-2 10-12-4.18 0-7.85 2.17-10 5.45z"/></svg>
 
     </a>
     ODMantic
@@ -191,10 +190,10 @@
   
     <div class="md-nav__source">
       
-<a href="https://github.com/art049/odmantic/" title="Go to repository" class="md-source">
+<a href="https://github.com/art049/odmantic/" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
     art049/odmantic
@@ -337,19 +336,18 @@
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" checked>
       
-      <label class="md-nav__link" for="nav-9">
+      <label class="md-nav__link" for="__nav_9">
         API Reference
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="API Reference" data-md-level="1">
-        <label class="md-nav__title" for="nav-9">
+        <label class="md-nav__title" for="__nav_9">
           <span class="md-nav__icon md-icon"></span>
           API Reference
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
-          
           
             
   
@@ -374,6 +372,7 @@
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
       
+      
         <label class="md-nav__link md-nav__link--active" for="__toc">
           odmantic.engine
           <span class="md-nav__icon md-icon"></span>
@@ -388,11 +387,12 @@
   
   
   
+  
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
-    <ul class="md-nav__list" data-md-scrollfix>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
   <a href="#odmantic.engine.AIOEngine" class="md-nav__link">
@@ -594,7 +594,7 @@
             
             
               
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -602,11 +602,12 @@
   
   
   
+  
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
-    <ul class="md-nav__list" data-md-scrollfix>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
   <a href="#odmantic.engine.AIOEngine" class="md-nav__link">
@@ -692,7 +693,7 @@
               </div>
             
           
-          <div class="md-content">
+          <div class="md-content" data-md-component="content">
             <article class="md-content__inner md-typeset">
               
                 
@@ -704,65 +705,84 @@
                   <h1>odmantic.engine</h1>
                 
                 <div class="doc doc-object doc-class">
-<h2 class="doc doc-heading" id="odmantic.engine.AIOEngine">
 
+
+
+<h2 id="odmantic.engine.AIOEngine" class="doc doc-heading">
         <code>odmantic.engine.AIOEngine</code>
 
 
-      <a class="headerlink" href="#odmantic.engine.AIOEngine" title="Permanent link">&para;</a></h2>
-<div class="doc doc-contents first">
-<p>The AIOEngine object is responsible for handling database operations with MongoDB
-in an asynchronous way using motor.</p>
-<div class="doc doc-children">
-<div class="doc doc-object doc-method">
-<h3 class="doc doc-heading" id="odmantic.engine.AIOEngine.__init__">
+<a href="#odmantic.engine.AIOEngine" class="headerlink" title="Permanent link">&para;</a></h2>
 
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">motor_client</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="s1">'test'</span><span class="p">)</span></code>
+    <div class="doc doc-contents first">
+
+      <p>The AIOEngine object is responsible for handling database operations with MongoDB
+in an asynchronous way using motor.</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="odmantic.engine.AIOEngine.__init__" class="doc doc-heading">
+<code class="codehilite language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">motor_client</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">)</span></code>
 <span class="doc doc-properties">
    <small class="doc doc-property doc-property-special">
     <code>special</code>
   </small>
  </span>
 
-      <a class="headerlink" href="#odmantic.engine.AIOEngine.__init__" title="Permanent link">&para;</a></h3>
-<div class="doc doc-contents ">
-<p>Engine constructor.</p>
+<a href="#odmantic.engine.AIOEngine.__init__" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Engine constructor.</p>
+
 <p><strong>Parameters:</strong></p>
 <table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>motor_client</code></td>
-<td><code>AsyncIOMotorClient</code></td>
-<td>
-<p>instance of an AsyncIO motor client. If None, a default one
-    will be created</p>
-</td>
-<td><code>None</code></td>
-</tr>
-<tr>
-<td><code>database</code></td>
-<td><code>str</code></td>
-<td>
-<p>name of the database to use</p>
-</td>
-<td><code>'test'</code></td>
-</tr>
-</tbody>
-</table>
-<br />
-<details class="quote">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>motor_client</code></td>
+        <td><code>AsyncIOMotorClient</code></td>
+        <td><p>instance of an AsyncIO motor client. If None, a default one
+    will be created</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>database</code></td>
+        <td><code>str</code></td>
+        <td><p>name of the database to use</p></td>
+        <td><code>&#39;test&#39;</code></td>
+      </tr>
+  </tbody>
+</table>      <!---
+#noqa: DAR401 ValueError
+-->
+
+        <details class="quote">
           <summary>Source code in <code>odmantic/engine.py</code></summary>
-          <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">motor_client</span><span class="p">:</span> <span class="n">AsyncIOMotorClient</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">database</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"test"</span><span class="p">):</span>
-    <span class="sd">"""Engine constructor.</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">motor_client</span><span class="p">:</span> <span class="n">AsyncIOMotorClient</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">database</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;test&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Engine constructor.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        motor_client: instance of an AsyncIO motor client. If None, a default one</span>
@@ -772,92 +792,95 @@ in an asynchronous way using motor.</p>
 <span class="sd">    &lt;!---</span>
 <span class="sd">    #noqa: DAR401 ValueError</span>
 <span class="sd">    --&gt;</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># https://docs.mongodb.com/manual/reference/limits/#naming-restrictions</span>
     <span class="n">forbidden_characters</span> <span class="o">=</span> <span class="n">_FORBIDDEN_DATABASE_CHARACTERS</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span>
         <span class="nb">set</span><span class="p">(</span><span class="n">database</span><span class="p">)</span>
     <span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">forbidden_characters</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">"database name cannot contain: </span><span class="si">{</span><span class="s1">' '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">forbidden_characters</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
+            <span class="sa">f</span><span class="s2">&quot;database name cannot contain: </span><span class="si">{</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">forbidden_characters</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="p">)</span>
     <span class="k">if</span> <span class="n">motor_client</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">motor_client</span> <span class="o">=</span> <span class="n">AsyncIOMotorClient</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">motor_client</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">database_name</span> <span class="o">=</span> <span class="n">database</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">database</span> <span class="o">=</span> <span class="n">motor_client</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">database_name</span><span class="p">]</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-<div class="doc doc-object doc-method">
-<h3 class="doc doc-heading" id="odmantic.engine.AIOEngine.count">
+</code></pre></div>
+        </details>
+    </div>
 
-<code class="highlight language-python"><span class="n">count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">)</span></code>
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="odmantic.engine.AIOEngine.count" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">)</span></code>
 <span class="doc doc-properties">
    <small class="doc doc-property doc-property-async">
     <code>async</code>
   </small>
  </span>
 
-      <a class="headerlink" href="#odmantic.engine.AIOEngine.count" title="Permanent link">&para;</a></h3>
-<div class="doc doc-contents ">
-<p>Get the count of documents matching a query</p>
+<a href="#odmantic.engine.AIOEngine.count" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Get the count of documents matching a query</p>
+
 <p><strong>Parameters:</strong></p>
 <table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>model</code></td>
-<td><code>Type[~ModelType]</code></td>
-<td>
-<p>model to perform the operation on</p>
-</td>
-<td><em>required</em></td>
-</tr>
-<tr>
-<td><code>queries</code></td>
-<td><code>Union[odmantic.query.QueryExpression, Dict, bool]</code></td>
-<td>
-<p>query filters to apply</p>
-</td>
-<td><code>()</code></td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>model</code></td>
+        <td><code>Type[~ModelType]</code></td>
+        <td><p>model to perform the operation on</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>queries</code></td>
+        <td><code>Union[odmantic.query.QueryExpression, Dict, bool]</code></td>
+        <td><p>query filters to apply</p></td>
+        <td><code>()</code></td>
+      </tr>
+  </tbody>
 </table>
 <p><strong>Returns:</strong></p>
 <table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>int</code></td>
-<td>
-<p>number of document matching the query</p>
-</td>
-</tr>
-</tbody>
-</table>
-<br />
-<details class="quote">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>int</code></td>
+      <td><p>number of document matching the query</p></td>
+    </tr>
+  </tbody>
+</table>      <!---
+#noqa: DAR401 TypeError
+-->
+
+        <details class="quote">
           <summary>Source code in <code>odmantic/engine.py</code></summary>
-          <div class="highlight">
-<pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">count</span><span class="p">(</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">count</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ModelType</span><span class="p">],</span> <span class="o">*</span><span class="n">queries</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">QueryExpression</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-    <span class="sd">"""Get the count of documents matching a query</span>
+    <span class="sd">&quot;&quot;&quot;Get the count of documents matching a query</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        model: model to perform the operation on</span>
@@ -869,74 +892,77 @@ in an asynchronous way using motor.</p>
 <span class="sd">    &lt;!---</span>
 <span class="sd">    #noqa: DAR401 TypeError</span>
 <span class="sd">    --&gt;</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">lenient_issubclass</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">Model</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Can only call count with a Model class"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Can only call count with a Model class&quot;</span><span class="p">)</span>
     <span class="n">query</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="o">.</span><span class="n">_build_query</span><span class="p">(</span><span class="o">*</span><span class="n">queries</span><span class="p">)</span>
     <span class="n">collection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">__collection__</span><span class="p">]</span>
     <span class="n">count</span> <span class="o">=</span> <span class="k">await</span> <span class="n">collection</span><span class="o">.</span><span class="n">count_documents</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
     <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-<div class="doc doc-object doc-method">
-<h3 class="doc doc-heading" id="odmantic.engine.AIOEngine.delete">
+</code></pre></div>
+        </details>
+    </div>
 
-<code class="highlight language-python"><span class="n">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">)</span></code>
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="odmantic.engine.AIOEngine.delete" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">)</span></code>
 <span class="doc doc-properties">
    <small class="doc doc-property doc-property-async">
     <code>async</code>
   </small>
  </span>
 
-      <a class="headerlink" href="#odmantic.engine.AIOEngine.delete" title="Permanent link">&para;</a></h3>
-<div class="doc doc-contents ">
-<p>Delete an instance from the database</p>
+<a href="#odmantic.engine.AIOEngine.delete" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Delete an instance from the database</p>
+
 <p><strong>Parameters:</strong></p>
 <table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>instance</code></td>
-<td><code>~ModelType</code></td>
-<td>
-<p>the instance to delete</p>
-</td>
-<td><em>required</em></td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>instance</code></td>
+        <td><code>~ModelType</code></td>
+        <td><p>the instance to delete</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
 </table>
 <p><strong>Exceptions:</strong></p>
 <table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>DocumentNotFoundError</code></td>
-<td>
-<p>the instance has not been persisted to the database</p>
-</td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>DocumentNotFoundError</code></td>
+        <td><p>the instance has not been persisted to the database</p></td>
+      </tr>
+  </tbody>
 </table>
-<details class="quote">
+        <details class="quote">
           <summary>Source code in <code>odmantic/engine.py</code></summary>
-          <div class="highlight">
-<pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">:</span> <span class="n">ModelType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">"""Delete an instance from the database</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">:</span> <span class="n">ModelType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Delete an instance from the database</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        instance: the instance to delete</span>
@@ -944,119 +970,116 @@ in an asynchronous way using motor.</p>
 <span class="sd">    Raises:</span>
 <span class="sd">        DocumentNotFoundError: the instance has not been persisted to the database</span>
 
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># TODO handle cascade deletion</span>
     <span class="n">collection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="n">instance</span><span class="o">.</span><span class="n">__collection__</span><span class="p">]</span>
     <span class="n">pk_name</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">__primary_field__</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">collection</span><span class="o">.</span><span class="n">delete_many</span><span class="p">({</span><span class="s2">"_id"</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">pk_name</span><span class="p">)})</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">collection</span><span class="o">.</span><span class="n">delete_many</span><span class="p">({</span><span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">pk_name</span><span class="p">)})</span>
     <span class="n">count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">deleted_count</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">DocumentNotFoundError</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-<div class="doc doc-object doc-method">
-<h3 class="doc doc-heading" id="odmantic.engine.AIOEngine.find">
+</code></pre></div>
+        </details>
+    </div>
 
-<code class="highlight language-python"><span class="n">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+  </div>
 
-      <a class="headerlink" href="#odmantic.engine.AIOEngine.find" title="Permanent link">&para;</a></h3>
-<div class="doc doc-contents ">
-<p>Search for Model instances matching the query filter provided</p>
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="odmantic.engine.AIOEngine.find" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#odmantic.engine.AIOEngine.find" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Search for Model instances matching the query filter provided</p>
+
 <p><strong>Parameters:</strong></p>
 <table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>model</code></td>
-<td><code>Type[~ModelType]</code></td>
-<td>
-<p>model to perform the operation on</p>
-</td>
-<td><em>required</em></td>
-</tr>
-<tr>
-<td><code>queries</code></td>
-<td><code>Union[odmantic.query.QueryExpression, Dict, bool]</code></td>
-<td>
-<p>query filter to apply</p>
-</td>
-<td><code>()</code></td>
-</tr>
-<tr>
-<td><code>sort</code></td>
-<td><code>Optional[Any]</code></td>
-<td>
-<p>sort expression</p>
-</td>
-<td><code>None</code></td>
-</tr>
-<tr>
-<td><code>skip</code></td>
-<td><code>int</code></td>
-<td>
-<p>number of document to skip</p>
-</td>
-<td><code>0</code></td>
-</tr>
-<tr>
-<td><code>limit</code></td>
-<td><code>Optional[int]</code></td>
-<td>
-<p>maximum number of instance fetched</p>
-</td>
-<td><code>None</code></td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>model</code></td>
+        <td><code>Type[~ModelType]</code></td>
+        <td><p>model to perform the operation on</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>queries</code></td>
+        <td><code>Union[odmantic.query.QueryExpression, Dict, bool]</code></td>
+        <td><p>query filter to apply</p></td>
+        <td><code>()</code></td>
+      </tr>
+      <tr>
+        <td><code>sort</code></td>
+        <td><code>Optional[Any]</code></td>
+        <td><p>sort expression</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>skip</code></td>
+        <td><code>int</code></td>
+        <td><p>number of document to skip</p></td>
+        <td><code>0</code></td>
+      </tr>
+      <tr>
+        <td><code>limit</code></td>
+        <td><code>Optional[int]</code></td>
+        <td><p>maximum number of instance fetched</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
 </table>
 <p><strong>Exceptions:</strong></p>
 <table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>DocumentParsingError</code></td>
-<td>
-<p>unable to parse one of the resulting documents</p>
-</td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>DocumentParsingError</code></td>
+        <td><p>unable to parse one of the resulting documents</p></td>
+      </tr>
+  </tbody>
 </table>
 <p><strong>Returns:</strong></p>
 <table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>odmantic.engine.AIOCursor[~ModelType]</code></td>
-<td>
-<p><a href="#odmantic.engine.AIOCursor">odmantic.engine.AIOCursor</a> of the query</p>
-</td>
-</tr>
-</tbody>
-</table>
-<br />
-<details class="quote">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>odmantic.engine.AIOCursor[~ModelType]</code></td>
+      <td><p><a href="#odmantic.engine.AIOCursor">odmantic.engine.AIOCursor</a> of the query</p></td>
+    </tr>
+  </tbody>
+</table>      <!---
+#noqa: DAR401 ValueError
+#noqa: DAR401 TypeError
+#noqa: DAR402 DocumentParsingError
+-->
+
+        <details class="quote">
           <summary>Source code in <code>odmantic/engine.py</code></summary>
-          <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">find</span><span class="p">(</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">find</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">model</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ModelType</span><span class="p">],</span>
     <span class="o">*</span><span class="n">queries</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
@@ -1066,7 +1089,7 @@ in an asynchronous way using motor.</p>
     <span class="n">skip</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
     <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AIOCursor</span><span class="p">[</span><span class="n">ModelType</span><span class="p">]:</span>
-    <span class="sd">"""Search for Model instances matching the query filter provided</span>
+    <span class="sd">&quot;&quot;&quot;Search for Model instances matching the query filter provided</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        model: model to perform the operation on</span>
@@ -1086,120 +1109,120 @@ in an asynchronous way using motor.</p>
 <span class="sd">    #noqa: DAR401 TypeError</span>
 <span class="sd">    #noqa: DAR402 DocumentParsingError</span>
 <span class="sd">    --&gt;</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">lenient_issubclass</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">Model</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Can only call find with a Model class"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Can only call find with a Model class&quot;</span><span class="p">)</span>
     <span class="n">sort_expression</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_sort_argument</span><span class="p">(</span><span class="n">sort</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">limit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">limit</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"limit has to be a strict positive value or None"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;limit has to be a strict positive value or None&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">skip</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"skip has to be a positive integer"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;skip has to be a positive integer&quot;</span><span class="p">)</span>
     <span class="n">query</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="o">.</span><span class="n">_build_query</span><span class="p">(</span><span class="o">*</span><span class="n">queries</span><span class="p">)</span>
     <span class="n">collection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-    <span class="n">pipeline</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">"$match"</span><span class="p">:</span> <span class="n">query</span><span class="p">}]</span>
+    <span class="n">pipeline</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;$match&quot;</span><span class="p">:</span> <span class="n">query</span><span class="p">}]</span>
     <span class="k">if</span> <span class="n">sort_expression</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">pipeline</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"$sort"</span><span class="p">:</span> <span class="n">sort_expression</span><span class="p">})</span>
+        <span class="n">pipeline</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;$sort&quot;</span><span class="p">:</span> <span class="n">sort_expression</span><span class="p">})</span>
     <span class="k">if</span> <span class="n">skip</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">pipeline</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"$skip"</span><span class="p">:</span> <span class="n">skip</span><span class="p">})</span>
+        <span class="n">pipeline</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;$skip&quot;</span><span class="p">:</span> <span class="n">skip</span><span class="p">})</span>
     <span class="k">if</span> <span class="n">limit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">limit</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">pipeline</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"$limit"</span><span class="p">:</span> <span class="n">limit</span><span class="p">})</span>
+        <span class="n">pipeline</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;$limit&quot;</span><span class="p">:</span> <span class="n">limit</span><span class="p">})</span>
     <span class="n">pipeline</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">AIOEngine</span><span class="o">.</span><span class="n">_cascade_find_pipeline</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
     <span class="n">motor_cursor</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">pipeline</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">AIOCursor</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">motor_cursor</span><span class="p">)</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-<div class="doc doc-object doc-method">
-<h3 class="doc doc-heading" id="odmantic.engine.AIOEngine.find_one">
+</code></pre></div>
+        </details>
+    </div>
 
-<code class="highlight language-python"><span class="n">find_one</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="odmantic.engine.AIOEngine.find_one" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">find_one</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 <span class="doc doc-properties">
    <small class="doc doc-property doc-property-async">
     <code>async</code>
   </small>
  </span>
 
-      <a class="headerlink" href="#odmantic.engine.AIOEngine.find_one" title="Permanent link">&para;</a></h3>
-<div class="doc doc-contents ">
-<p>Search for a Model instance matching the query filter provided</p>
+<a href="#odmantic.engine.AIOEngine.find_one" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Search for a Model instance matching the query filter provided</p>
+
 <p><strong>Parameters:</strong></p>
 <table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>model</code></td>
-<td><code>Type[~ModelType]</code></td>
-<td>
-<p>model to perform the operation on</p>
-</td>
-<td><em>required</em></td>
-</tr>
-<tr>
-<td><code>queries</code></td>
-<td><code>Union[odmantic.query.QueryExpression, Dict, bool]</code></td>
-<td>
-<p>query filter to apply</p>
-</td>
-<td><code>()</code></td>
-</tr>
-<tr>
-<td><code>sort</code></td>
-<td><code>Optional[Any]</code></td>
-<td>
-<p>sort expression</p>
-</td>
-<td><code>None</code></td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>model</code></td>
+        <td><code>Type[~ModelType]</code></td>
+        <td><p>model to perform the operation on</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>queries</code></td>
+        <td><code>Union[odmantic.query.QueryExpression, Dict, bool]</code></td>
+        <td><p>query filter to apply</p></td>
+        <td><code>()</code></td>
+      </tr>
+      <tr>
+        <td><code>sort</code></td>
+        <td><code>Optional[Any]</code></td>
+        <td><p>sort expression</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
 </table>
 <p><strong>Exceptions:</strong></p>
 <table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>DocumentParsingError</code></td>
-<td>
-<p>unable to parse the resulting document</p>
-</td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>DocumentParsingError</code></td>
+        <td><p>unable to parse the resulting document</p></td>
+      </tr>
+  </tbody>
 </table>
 <p><strong>Returns:</strong></p>
 <table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>Optional[~ModelType]</code></td>
-<td>
-<p>the fetched instance if found otherwise None</p>
-</td>
-</tr>
-</tbody>
-</table>
-<br />
-<details class="quote">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Optional[~ModelType]</code></td>
+      <td><p>the fetched instance if found otherwise None</p></td>
+    </tr>
+  </tbody>
+</table>      <!---
+#noqa: DAR401 TypeError
+#noqa: DAR402 DocumentParsingError
+-->
+
+        <details class="quote">
           <summary>Source code in <code>odmantic/engine.py</code></summary>
-          <div class="highlight">
-<pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">find_one</span><span class="p">(</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">find_one</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">model</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ModelType</span><span class="p">],</span>
     <span class="o">*</span><span class="n">queries</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
@@ -1207,7 +1230,7 @@ in an asynchronous way using motor.</p>
     <span class="p">],</span>  <span class="c1"># bool: allow using binary operators w/o plugin,</span>
     <span class="n">sort</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ModelType</span><span class="p">]:</span>
-    <span class="sd">"""Search for a Model instance matching the query filter provided</span>
+    <span class="sd">&quot;&quot;&quot;Search for a Model instance matching the query filter provided</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        model: model to perform the operation on</span>
@@ -1224,148 +1247,157 @@ in an asynchronous way using motor.</p>
 <span class="sd">    #noqa: DAR401 TypeError</span>
 <span class="sd">    #noqa: DAR402 DocumentParsingError</span>
 <span class="sd">    --&gt;</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">lenient_issubclass</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">Model</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Can only call find_one with a Model class"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Can only call find_one with a Model class&quot;</span><span class="p">)</span>
     <span class="n">results</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="k">return</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-<div class="doc doc-object doc-method">
-<h3 class="doc doc-heading" id="odmantic.engine.AIOEngine.get_collection">
+</code></pre></div>
+        </details>
+    </div>
 
-<code class="highlight language-python"><span class="n">get_collection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span></code>
+  </div>
 
-      <a class="headerlink" href="#odmantic.engine.AIOEngine.get_collection" title="Permanent link">&para;</a></h3>
-<div class="doc doc-contents ">
-<p>Get the motor collection associated to a Model.</p>
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="odmantic.engine.AIOEngine.get_collection" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">get_collection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span></code>
+
+<a href="#odmantic.engine.AIOEngine.get_collection" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Get the motor collection associated to a Model.</p>
+
 <p><strong>Parameters:</strong></p>
 <table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>model</code></td>
-<td><code>Type[~ModelType]</code></td>
-<td>
-<p>model class</p>
-</td>
-<td><em>required</em></td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>model</code></td>
+        <td><code>Type[~ModelType]</code></td>
+        <td><p>model class</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
 </table>
 <p><strong>Returns:</strong></p>
 <table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>AsyncIOMotorCollection</code></td>
-<td>
-<p>the AsyncIO motor collection object</p>
-</td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>AsyncIOMotorCollection</code></td>
+      <td><p>the AsyncIO motor collection object</p></td>
+    </tr>
+  </tbody>
 </table>
-<details class="quote">
+        <details class="quote">
           <summary>Source code in <code>odmantic/engine.py</code></summary>
-          <div class="highlight">
-<pre><span></span><code><span class="k">def</span> <span class="nf">get_collection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ModelType</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">AsyncIOMotorCollection</span><span class="p">:</span>
-    <span class="sd">"""Get the motor collection associated to a Model.</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_collection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ModelType</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">AsyncIOMotorCollection</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Get the motor collection associated to a Model.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        model: model class</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        the AsyncIO motor collection object</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">__collection__</span><span class="p">]</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-<div class="doc doc-object doc-method">
-<h3 class="doc doc-heading" id="odmantic.engine.AIOEngine.save">
+</code></pre></div>
+        </details>
+    </div>
 
-<code class="highlight language-python"><span class="n">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">)</span></code>
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="odmantic.engine.AIOEngine.save" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">)</span></code>
 <span class="doc doc-properties">
    <small class="doc doc-property doc-property-async">
     <code>async</code>
   </small>
  </span>
 
-      <a class="headerlink" href="#odmantic.engine.AIOEngine.save" title="Permanent link">&para;</a></h3>
-<div class="doc doc-contents ">
-<p>Persist an instance to the database</p>
+<a href="#odmantic.engine.AIOEngine.save" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Persist an instance to the database</p>
 <p>This method behaves as an 'upsert' operation. If a document already exists
 with the same primary key, it will be overwritten.</p>
 <p>All the other models referenced by this instance will be saved as well.</p>
+
 <p><strong>Parameters:</strong></p>
 <table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>instance</code></td>
-<td><code>~ModelType</code></td>
-<td>
-<p>instance to persist</p>
-</td>
-<td><em>required</em></td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>instance</code></td>
+        <td><code>~ModelType</code></td>
+        <td><p>instance to persist</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
 </table>
 <p><strong>Returns:</strong></p>
 <table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>~ModelType</code></td>
-<td>
-<p>the saved instance</p>
-</td>
-</tr>
-</tbody>
-</table>
-<div class="admonition note">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>~ModelType</code></td>
+      <td><p>the saved instance</p></td>
+    </tr>
+  </tbody>
+</table>      <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The save operation actually modify the instance argument in place. However,
 the instance is still returned for convenience.</p>
 </div>
-<details class="quote">
-          <summary>Source code in <code>odmantic/engine.py</code></summary>
-          <div class="highlight">
-<pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">:</span> <span class="n">ModelType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModelType</span><span class="p">:</span>
-    <span class="sd">"""Persist an instance to the database</span>
+<!---
+#noqa: DAR401 TypeError
+-->
 
-<span class="sd">    This method behaves as an 'upsert' operation. If a document already exists</span>
+        <details class="quote">
+          <summary>Source code in <code>odmantic/engine.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">:</span> <span class="n">ModelType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModelType</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Persist an instance to the database</span>
+
+<span class="sd">    This method behaves as an &#39;upsert&#39; operation. If a document already exists</span>
 <span class="sd">    with the same primary key, it will be overwritten.</span>
 
 <span class="sd">    All the other models referenced by this instance will be saved as well.</span>
@@ -1383,87 +1415,89 @@ the instance is still returned for convenience.</p>
 <span class="sd">    &lt;!---</span>
 <span class="sd">    #noqa: DAR401 TypeError</span>
 <span class="sd">    --&gt;</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">Model</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Can only call find_one with a Model class"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Can only call find_one with a Model class&quot;</span><span class="p">)</span>
 
     <span class="k">async</span> <span class="k">with</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">start_session</span><span class="p">()</span> <span class="k">as</span> <span class="n">s</span><span class="p">:</span>
         <span class="k">async</span> <span class="k">with</span> <span class="n">s</span><span class="o">.</span><span class="n">start_transaction</span><span class="p">():</span>
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_save</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
-    <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="s2">"__fields_modified__"</span><span class="p">,</span> <span class="nb">set</span><span class="p">())</span>
     <span class="k">return</span> <span class="n">instance</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-<div class="doc doc-object doc-method">
-<h3 class="doc doc-heading" id="odmantic.engine.AIOEngine.save_all">
+</code></pre></div>
+        </details>
+    </div>
 
-<code class="highlight language-python"><span class="n">save_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instances</span><span class="p">)</span></code>
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="odmantic.engine.AIOEngine.save_all" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">save_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instances</span><span class="p">)</span></code>
 <span class="doc doc-properties">
    <small class="doc doc-property doc-property-async">
     <code>async</code>
   </small>
  </span>
 
-      <a class="headerlink" href="#odmantic.engine.AIOEngine.save_all" title="Permanent link">&para;</a></h3>
-<div class="doc doc-contents ">
-<p>Persist instances to the database</p>
+<a href="#odmantic.engine.AIOEngine.save_all" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Persist instances to the database</p>
 <p>This method behaves as multiple 'upsert' operations. If one of the document
 already exists with the same primary key, it will be overwritten.</p>
 <p>All the other models referenced by this instance will be recursively saved as
 well.</p>
+
 <p><strong>Parameters:</strong></p>
 <table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>instances</code></td>
-<td><code>Sequence[~ModelType]</code></td>
-<td>
-<p>instances to persist</p>
-</td>
-<td><em>required</em></td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>instances</code></td>
+        <td><code>Sequence[~ModelType]</code></td>
+        <td><p>instances to persist</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
 </table>
 <p><strong>Returns:</strong></p>
 <table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>List[~ModelType]</code></td>
-<td>
-<p>the saved instances</p>
-</td>
-</tr>
-</tbody>
-</table>
-<div class="admonition note">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>List[~ModelType]</code></td>
+      <td><p>the saved instances</p></td>
+    </tr>
+  </tbody>
+</table>      <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The save_all operation actually modify the arguments in place. However, the
 instances are still returned for convenience.</p>
 </div>
-<details class="quote">
-          <summary>Source code in <code>odmantic/engine.py</code></summary>
-          <div class="highlight">
-<pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">save_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instances</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">ModelType</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ModelType</span><span class="p">]:</span>
-    <span class="sd">"""Persist instances to the database</span>
 
-<span class="sd">    This method behaves as multiple 'upsert' operations. If one of the document</span>
+        <details class="quote">
+          <summary>Source code in <code>odmantic/engine.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">save_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instances</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">ModelType</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ModelType</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;Persist instances to the database</span>
+
+<span class="sd">    This method behaves as multiple &#39;upsert&#39; operations. If one of the document</span>
 <span class="sd">    already exists with the same primary key, it will be overwritten.</span>
 
 <span class="sd">    All the other models referenced by this instance will be recursively saved as</span>
@@ -1478,36 +1512,54 @@ instances are still returned for convenience.</p>
 <span class="sd">    NOTE:</span>
 <span class="sd">        The save_all operation actually modify the arguments in place. However, the</span>
 <span class="sd">        instances are still returned for convenience.</span>
-<span class="sd">    """</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">async</span> <span class="k">with</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">start_session</span><span class="p">()</span> <span class="k">as</span> <span class="n">s</span><span class="p">:</span>
         <span class="k">async</span> <span class="k">with</span> <span class="n">s</span><span class="o">.</span><span class="n">start_transaction</span><span class="p">():</span>
             <span class="n">added_instances</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
                 <span class="o">*</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_save</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">instance</span> <span class="ow">in</span> <span class="n">instances</span><span class="p">]</span>
             <span class="p">)</span>
     <span class="k">return</span> <span class="n">added_instances</span>
-</code></pre>
-</div>
-</details>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="doc doc-object doc-class">
-<h2 class="doc doc-heading" id="odmantic.engine.AIOCursor">
+</code></pre></div>
+        </details>
+    </div>
 
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 id="odmantic.engine.AIOCursor" class="doc doc-heading">
         <code>odmantic.engine.AIOCursor</code>
 
 
-      <a class="headerlink" href="#odmantic.engine.AIOCursor" title="Permanent link">&para;</a></h2>
-<div class="doc doc-contents first">
-<p>This object has to be built from the <a href="#odmantic.engine.AIOEngine.find">odmantic.engine.AIOEngine.find</a> method.</p>
+<a href="#odmantic.engine.AIOCursor" class="headerlink" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents first">
+
+      <p>This object has to be built from the <a href="#odmantic.engine.AIOEngine.find">odmantic.engine.AIOEngine.find</a> method.</p>
 <p>An AIOCursor object support multiple async operations:</p>
 <ul>
 <li><strong>async for</strong>: asynchronously iterate over the query results</li>
 <li><strong>await</strong> : when awaited it will return a list of the fetched models</li>
 </ul>
-<div class="doc doc-children">
+
+
+
+
+  <div class="doc doc-children">
 
 
 
@@ -1523,8 +1575,10 @@ instances are still returned for convenience.</p>
 
 
   </div>
-</div>
-</div>
+
+    </div>
+
+  </div>
                 
               
               
@@ -1535,45 +1589,44 @@ instances are still returned for convenience.</p>
             </article>
           </div>
         </div>
+        
       </main>
       
         
 <footer class="md-footer">
   
-    <div class="md-footer-nav">
-      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
-        
-          <a href="../model/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
-            <div class="md-footer-nav__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../model/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              odmantic.model
             </div>
-            <div class="md-footer-nav__title">
-              <div class="md-ellipsis">
-                <span class="md-footer-nav__direction">
-                  Previous
-                </span>
-                odmantic.model
-              </div>
+          </div>
+        </a>
+      
+      
+        <a href="../query/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              odmantic.query
             </div>
-          </a>
-        
-        
-          <a href="../query/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
-            <div class="md-footer-nav__title">
-              <div class="md-ellipsis">
-                <span class="md-footer-nav__direction">
-                  Next
-                </span>
-                odmantic.query
-              </div>
-            </div>
-            <div class="md-footer-nav__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
-            </div>
-          </a>
-        
-      </nav>
-    </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -1583,6 +1636,7 @@ instances are still returned for convenience.</p>
         <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
           Material for MkDocs
         </a>
+        
       </div>
       
   <div class="md-footer-social">
@@ -1621,19 +1675,13 @@ instances are still returned for convenience.</p>
 </footer>
       
     </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["instant"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.4fa0e4ee.min.js", "version": null}</script>
     
-      <script src="../../assets/javascripts/vendor.18f0862e.min.js"></script>
-      <script src="../../assets/javascripts/bundle.994580cf.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
-      
-      <script>
-        app = initialize({
-          base: "../..",
-          features: ['instant'],
-          search: Object.assign({
-            worker: "../../assets/javascripts/worker/search.9c0e82ba.min.js"
-          }, typeof search !== "undefined" && search)
-        })
-      </script>
+    
+      <script src="../../assets/javascripts/bundle.1d3bfcf1.min.js"></script>
       
         <script src="../../js/gitter.js"></script>
       
