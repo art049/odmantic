@@ -20,11 +20,18 @@ def test_datetime_non_naive():
     class ModelWithDate(Model):
         field: datetime
 
-    with pytest.raises(ValueError):
+    try:
         ModelWithDate(field=datetime.now(tz=pytz.utc))
+        ModelWithDate(field="2018-11-02T23:59:01.824Z")
+        ModelWithDate(field="2018-11-02T23:59:01.824+00:00")
+    except ValueError:
+        pytest.fail("UTC should be acceptable, but is not")
 
     with pytest.raises(ValueError):
         ModelWithDate(field=datetime.now(tz=pytz.timezone("Europe/Amsterdam")))
+
+    with pytest.raises(ValueError):
+        ModelWithDate(field="2018-11-02T23:59:01.824+10:00")
 
 
 def test_datetime_naive():
