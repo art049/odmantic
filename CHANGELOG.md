@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- ⬆️ Update mypy requirement from ^0.812 to ^0.910 ([#142](https://github.com/art049/odmantic/pull/142) by [@dependabot[bot]](https://github.com/apps/dependabot))
+
 - Update README.md ([#129](https://github.com/art049/odmantic/pull/129) by [@Kludex](https://github.com/Kludex))
 
 - ⬆️ Update pytest-asyncio requirement from ^0.14.0 to ^0.15.0 ([#125](https://github.com/art049/odmantic/pull/125) by [@dependabot[bot]](https://github.com/apps/dependabot))
