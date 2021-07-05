@@ -94,7 +94,6 @@ extra:
       link: https://twitter.com/art049
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/in/arthur-pastel-a08579112
-
-google_analytics:
-  - UA-180814888-1
-  - auto
+  analytics:
+    provider: google
+    property: UA-180814888-1
