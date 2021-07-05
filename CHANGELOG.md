@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- ⬆️ Update fastapi requirement from >=0.61.1,<0.64.0 to >=0.61.1,<0.67.0 ([#150](https://github.com/art049/odmantic/pull/150) by [@dependabot[bot]](https://github.com/apps/dependabot))
+
 - ⬆️ Update mypy requirement from ^0.812 to ^0.910 ([#142](https://github.com/art049/odmantic/pull/142) by [@dependabot[bot]](https://github.com/apps/dependabot))
 
 - Update README.md ([#129](https://github.com/art049/odmantic/pull/129) by [@Kludex](https://github.com/Kludex))
