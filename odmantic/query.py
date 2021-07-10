@@ -2,7 +2,7 @@ import re
 from enum import Enum
 from typing import TYPE_CHECKING, Any, Dict, Pattern, Sequence, Union
 
-from odmantic.typing import Literal
+from odmantic.tools.typing import Literal
 
 if TYPE_CHECKING:
     from odmantic.field import FieldProxy

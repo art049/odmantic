@@ -32,7 +32,7 @@ from odmantic.query import (
     not_in,
 )
 
-from .typing import NoArgAnyCallable
+from .tools.typing import NoArgAnyCallable
 
 if TYPE_CHECKING:
     from odmantic.model import EmbeddedModel, Model  # noqa: F401

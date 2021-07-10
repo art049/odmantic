@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 from odmantic.engine import AIOEngine
-from odmantic.fastapi import AIOEngineDependency
+from odmantic.tools.fastapi import AIOEngineDependency
 from odmantic.model import Model
 from tests.integration.conftest import TEST_MONGO_MODE, TEST_MONGO_URI, MongoMode
 

@@ -1,6 +1,6 @@
 import pytest
 
-from odmantic.bson import ObjectId
+from odmantic.tools.bson import ObjectId
 from odmantic.engine import AIOEngine
 from odmantic.exceptions import DocumentParsingError
 from odmantic.model import Model

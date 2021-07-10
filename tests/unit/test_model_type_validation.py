@@ -14,7 +14,7 @@ from typing import (
 import bson
 import pytest
 
-from odmantic.bson import (
+from odmantic.tools.bson import (
     _BSON_SUBSTITUTED_FIELDS,
     Binary,
     Decimal128,

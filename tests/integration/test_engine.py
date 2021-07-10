@@ -3,7 +3,7 @@ from typing import Dict, List, Optional, Tuple
 import pytest
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from odmantic.bson import ObjectId
+from odmantic.tools.bson import ObjectId
 from odmantic.engine import AIOEngine
 from odmantic.exceptions import DocumentNotFoundError, DocumentParsingError
 from odmantic.field import Field

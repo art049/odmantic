@@ -1,8 +1,8 @@
-from .bson import ObjectId
 from .engine import AIOEngine
 from .field import Field
 from .model import EmbeddedModel, Model
 from .reference import Reference
+from .tools.bson import ObjectId
 
 __all__ = ["AIOEngine", "Model", "EmbeddedModel", "Field", "Reference", "ObjectId"]
 
@@ -13,4 +13,7 @@ try:
 except ModuleNotFoundError:
     import importlib_metadata  # type: ignore
 
-__version__ = importlib_metadata.version(__name__)
+try:
+    __version__ = importlib_metadata.version(__name__)
+except ModuleNotFoundError:
+    __version__ = "unknown"

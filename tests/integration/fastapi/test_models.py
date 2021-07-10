@@ -6,7 +6,7 @@ import pytest
 from bson import ObjectId as BSONObjectId
 
 from odmantic import Model, ObjectId, Reference
-from odmantic.bson import BaseBSONModel, Binary, Decimal128, Int64, Regex
+from odmantic.tools.bson import BaseBSONModel, Binary, Decimal128, Int64, Regex
 from odmantic.model import EmbeddedModel
 
 

@@ -37,7 +37,7 @@ from pydantic.tools import parse_obj_as
 from pydantic.typing import is_classvar, resolve_annotations
 from pydantic.utils import lenient_issubclass
 
-from odmantic.bson import (
+from odmantic.tools.bson import (
     _BSON_SUBSTITUTED_FIELDS,
     BaseBSONModel,
     ObjectId,
@@ -59,7 +59,7 @@ from odmantic.field import (
     ODMReference,
 )
 from odmantic.reference import ODMReferenceInfo
-from odmantic.typing import USES_OLD_TYPING_INTERFACE
+from odmantic.tools.typing import USES_OLD_TYPING_INTERFACE
 from odmantic.utils import (
     is_dunder,
     raise_on_invalid_collection_name,
