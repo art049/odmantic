@@ -264,8 +264,8 @@ async def test_delete_not_existing(engine: AIOEngine):
 
 
 @pytest.mark.usefixtures("person_persisted")
-async def test_delete_many_and_count(engine: AIOEngine):
-    actual_delete_count = await engine.delete_many(
+async def test_remove_and_count(engine: AIOEngine):
+    actual_delete_count = await engine.remove(
         PersonModel, PersonModel.first_name == "Jean-Pierre"
     )
     assert actual_delete_count == 2
@@ -273,7 +273,16 @@ async def test_delete_many_and_count(engine: AIOEngine):
 
 
 @pytest.mark.usefixtures("person_persisted")
-async def test_delete_many_not_existing(engine: AIOEngine):
+async def test_remove_just_one(engine: AIOEngine):
+    actual_delete_count = await engine.remove(
+        PersonModel, PersonModel.first_name == "Jean-Pierre", just_one=True
+    )
+    assert actual_delete_count == 1
+    assert await engine.count(PersonModel) == 2
+
+
+@pytest.mark.usefixtures("person_persisted")
+async def test_remove_not_existing(engine: AIOEngine):
     # Force engine.delete to raise an exception
     async def mock_delete(instance: Any) -> None:
         raise DocumentNotFoundError(instance)
@@ -281,7 +290,7 @@ async def test_delete_many_not_existing(engine: AIOEngine):
     instance = await engine.find_one(PersonModel, PersonModel.last_name == "Drucker")
     setattr(engine, "delete", mock_delete)
     with pytest.raises(DocumentsNotFoundError) as exc:
-        await engine.delete_many(PersonModel, PersonModel.last_name == "Drucker")
+        await engine.remove(PersonModel, PersonModel.last_name == "Drucker")
     assert exc.value.instances == [instance]
 
 

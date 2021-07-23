@@ -414,18 +414,19 @@ class AIOEngine:
         if count == 0:
             raise DocumentNotFoundError(instance)
 
-    async def delete_many(
+    async def remove(
         self,
         model: Type[ModelType],
-        *queries: Union[
-            QueryExpression, Dict, bool
-        ],  # bool: allow using binary operators with mypy
+        *queries: Union[QueryExpression, Dict, bool],
+        just_one: bool = False,
+        # bool: allow using binary operators with mypy
     ) -> int:
         """Delete Model instances matching the query filter provided
 
         Args:
             model: model to perform the operation on
             queries: query filter to apply
+            just_one: limit the deletion to just one document
 
         Raises:
             DocumentsNotFoundError: the instance(s) that have not been persisted to
@@ -439,6 +440,8 @@ class AIOEngine:
         not_found_instances: List[ModelType] = []
         motor_cursor = self.find(model, *queries)
         async for instance in motor_cursor:
+            if just_one and delete_count > 0:
+                break
             try:
                 await self.delete(instance)
             except DocumentNotFoundError:

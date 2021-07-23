@@ -289,6 +289,8 @@ instance using the [Model.copy][odmantic.model._BaseODMModel.copy] method.
 
 ## Delete
 
+### Delete a single instance
+
 You can delete instance by passing them to the
 [AIOEngine.delete][odmantic.engine.AIOEngine.delete] method.
 
@@ -297,3 +299,21 @@ You can delete instance by passing them to the
 ```
 
 The collection is now empty :broom:.
+
+### Remove
+
+You can delete instances that match a filter by using the
+[AIOEngine.remove][odmantic.engine.AIOEngine.remove] method.
+
+```python linenums="1" hl_lines="14"
+--8<-- "engine/remove.py"
+```
+
+#### Just one
+
+You can limit [AIOEngine.remove][odmantic.engine.AIOEngine.remove] to removing only one
+instance by passing `just_one`.
+
+```python linenums="1" hl_lines="14"
+--8<-- "engine/remove_just_one.py"
+```
