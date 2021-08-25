@@ -60,7 +60,7 @@ class AIOCursor(
     def __await__(self) -> Generator[None, None, List[ModelType]]:
         if self._results is not None:
             return self._results
-        raw_docs = yield from self._motor_cursor.to_list(length=None).__await__()
+        raw_docs = yield from self._motor_cursor.to_list(length=None)
         instances = []
         for raw_doc in raw_docs:
             instances.append(self._parse_document(raw_doc))
