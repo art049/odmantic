@@ -638,7 +638,14 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
             exclude_none=exclude_none,
         )
 
-    def doc(self, include: Optional["AbstractSetIntStr"] = None) -> Dict[str, Any]:
+    def doc(
+        self,
+        include: Optional["AbstractSetIntStr"] = None,
+        *,
+        exclude_unset: bool = False,
+        exclude_defaults: bool = False,
+        exclude_none: bool = False,
+    ) -> Dict[str, Any]:
         """Generate a document representation of the instance (as a dictionary).
 
         Args:
@@ -648,7 +655,11 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         Returns:
             the document associated to the instance
         """
-        raw_doc = self.dict()
+        raw_doc = self.dict(
+            exclude_unset=exclude_unset,
+            exclude_defaults=exclude_defaults,
+            exclude_none=exclude_none,
+        )
         doc: Dict[str, Any] = {}
         for field_name, field in self.__odm_fields__.items():
             if include is not None and field_name not in include:
