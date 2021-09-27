@@ -658,7 +658,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
             if include is not None and field_name not in include:
                 continue
             if isinstance(field, ODMReference):
-                doc[field.key_name] = raw_doc[field_name]["id"]
+                doc[field.key_name] = raw_doc[field_name][field.model.__primary_field__]
             else:
                 if field_name in self.__bson_serialized_fields__:
                     doc[field.key_name] = self.__fields__[field_name].type_.__bson__(
