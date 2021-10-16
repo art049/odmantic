@@ -138,7 +138,7 @@ next step.
 > terminate the MongoDB instance and remove the container).
 >
 > ```shell
-> docker run --rm --net=host mongo
+> docker run --rm -p 27017:27017 mongo
 > ```
 
 First, let's connect to the database using the engine. In ODMantic, every database
