@@ -48,7 +48,7 @@ fastapi = { version = ">=0.61.1,<0.67.0", optional = true }
 fastapi = ["fastapi"]
 
 [tool.poetry.dev-dependencies]
-pytest = "~=6.0"
+pytest = "~=7.0"
 isort = "~=5.8.0"
 black = { version = "*", allow-prereleases = true }
 flake8 = "~=3.9.0"
