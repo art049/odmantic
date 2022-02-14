@@ -672,7 +672,10 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
                         raw_doc[field_name]
                     )
                 else:
-                    doc[field.key_name] = raw_doc[field_name]
+                    try:
+                        doc[field.key_name] = raw_doc[field_name]
+                    except KeyError:
+                        pass
         return doc
 
     @classmethod
