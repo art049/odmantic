@@ -5,6 +5,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- ⬆️ Update typer requirement from ^0.3.2 to ^0.4.1 ([#214](https://github.com/art049/odmantic/pull/214) by [@dependabot[bot]](https://github.com/apps/dependabot))
+
+- ⬆️ Update mypy requirement from ^0.910 to ^0.942 ([#215](https://github.com/art049/odmantic/pull/215) by [@dependabot[bot]](https://github.com/apps/dependabot))
+
+- ⬆️ Update fastapi requirement from >=0.61.1,<0.67.0 to >=0.61.1,<0.69.0 ([#166](https://github.com/art049/odmantic/pull/166) by [@dependabot[bot]](https://github.com/apps/dependabot))
+
 - ⬆️ Update fastapi requirement from >=0.61.1,<0.64.0 to >=0.61.1,<0.67.0 ([#150](https://github.com/art049/odmantic/pull/150) by [@dependabot[bot]](https://github.com/apps/dependabot))
 
 - ⬆️ Update mypy requirement from ^0.812 to ^0.910 ([#142](https://github.com/art049/odmantic/pull/142) by [@dependabot[bot]](https://github.com/apps/dependabot))
