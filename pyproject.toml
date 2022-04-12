@@ -57,7 +57,7 @@ coverage = { extras = ["toml"], version = "^6.2" }
 pytest-xdist = "^2.1.0"
 pytz = "^2021.1"
 asyncmock = "^0.4.2"
-mkdocstrings = "^0.15.0"
+mkdocstrings = "^0.16.2"
 pydocstyle = "^6.0.0"
 darglint = "^1.5.4"
 ipython = "^7.16.1"
