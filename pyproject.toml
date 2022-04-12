@@ -51,7 +51,7 @@ fastapi = ["fastapi"]
 pytest = "~=6.0"
 isort = "~=5.8.0"
 black = { version = "*", allow-prereleases = true }
-flake8 = "~=3.9.0"
+flake8 = "~=4.0.1"
 mypy = "^0.942"
 coverage = { extras = ["toml"], version = "^5.3" }
 pytest-xdist = "^2.1.0"
