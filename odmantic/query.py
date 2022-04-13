@@ -68,6 +68,11 @@ def _cmp_expression(f: "FieldProxy", op: str, cmp_value: Any) -> QueryExpression
 FieldProxyAny = Union["FieldProxy", Any]
 
 
+def exists(field: FieldProxyAny, value: bool) -> QueryExpression:
+    """Exists comparison operator."""
+    return _cmp_expression(field, "$exists", value)
+
+
 def eq(field: FieldProxyAny, value: Any) -> QueryExpression:
     """Equality comparison operator."""
     return _cmp_expression(field, "$eq", value)

@@ -22,6 +22,7 @@ from odmantic.query import (
     asc,
     desc,
     eq,
+    exists,
     gt,
     gte,
     in_,
@@ -202,7 +203,20 @@ class ODMField(ODMBaseField):
 
     __slots__ = ("primary_field",)
     __allowed_operators__ = set(
-        ("eq", "ne", "in_", "not_in", "lt", "lte", "gt", "gte", "match", "asc", "desc")
+        (
+            "eq",
+            "ne",
+            "in_",
+            "not_in",
+            "lt",
+            "lte",
+            "gt",
+            "gte",
+            "match",
+            "asc",
+            "desc",
+            "exists",
+        )
     )
 
     def __init__(
@@ -335,6 +349,9 @@ class FieldProxy:
 
     def __le__(self, value: Any) -> QueryExpression:
         return self.lte(value)
+
+    def exists(self, value: bool) -> QueryExpression:
+        return exists(self, value)
 
     def eq(self, value: Any) -> QueryExpression:
         return eq(self, value)

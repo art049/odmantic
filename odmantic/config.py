@@ -1,7 +1,7 @@
 import json
 from typing import Any, Callable, Dict, Optional, Type, Union
 
-from pydantic.main import BaseConfig, SchemaExtraCallable
+from pydantic.main import BaseConfig
 from pydantic.typing import AnyCallable
 
 from odmantic.bson import BSON_TYPES_ENCODERS

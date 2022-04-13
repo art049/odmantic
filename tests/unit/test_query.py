@@ -3,6 +3,10 @@ from tests.zoo.book_embedded import Book, Publisher
 from tests.zoo.tree import TreeKind, TreeModel
 
 
+def test_exists():
+    assert (Publisher.name.exists(True)) == {"name": {"$exists": True}}
+
+
 def test_embedded_eq():
     pub = Publisher(name="O'Reilly Media", founded=1980, location="CA")
     assert (Book.publisher == pub) == {
