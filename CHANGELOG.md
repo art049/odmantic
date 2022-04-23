@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Update example in README ([#192](https://github.com/art049/odmantic/pull/192) by [@jasper-moment](https://github.com/jasper-moment))
+
 - ⬆️ Update motor requirement from >=2.1.0,<2.5.0 to >=2.1.0,<2.6.0 ([#160](https://github.com/art049/odmantic/pull/160) by [@dependabot[bot]](https://github.com/apps/dependabot))
 
 - ⬆️ Update typer requirement from ^0.3.2 to ^0.4.1 ([#214](https://github.com/art049/odmantic/pull/214) by [@dependabot[bot]](https://github.com/apps/dependabot))
