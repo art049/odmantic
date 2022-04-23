@@ -5,7 +5,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2022-04-23
+
+#### Added
+
+- Update and copy methods:
+    - Updating multiple fields at once is now directly possible from a pydantic model or
+      a dictionary ([feature documentation](https://art049.github.io/odmantic/engine/#patching-multiple-fields-at-once),
+      [sample use case with FastAPI](https://art049.github.io/odmantic/usage_fastapi/#updating-a-tree))
+    - Changing the primary field of an instance is now easier
+      ([documentation](https://art049.github.io/odmantic/engine/#changing-the-primary-field))
+
+- Patch and copy Model instances ([#39](https://github.com/art049/odmantic/pull/39) by [@art049](https://github.com/art049))
+
+#### Fixed
+
 - Update example in README ([#192](https://github.com/art049/odmantic/pull/192) by [@jasper-moment](https://github.com/jasper-moment))
+
+- Update README.md ([#129](https://github.com/art049/odmantic/pull/129) by [@Kludex](https://github.com/Kludex))
+
+#### Internals
 
 - ⬆️ Update motor requirement from >=2.1.0,<2.5.0 to >=2.1.0,<2.6.0 ([#160](https://github.com/art049/odmantic/pull/160) by [@dependabot[bot]](https://github.com/apps/dependabot))
 
@@ -19,8 +38,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - ⬆️ Update mypy requirement from ^0.812 to ^0.910 ([#142](https://github.com/art049/odmantic/pull/142) by [@dependabot[bot]](https://github.com/apps/dependabot))
 
-- Update README.md ([#129](https://github.com/art049/odmantic/pull/129) by [@Kludex](https://github.com/Kludex))
-
 - ⬆️ Update pytest-asyncio requirement from ^0.14.0 to ^0.15.0 ([#125](https://github.com/art049/odmantic/pull/125) by [@dependabot[bot]](https://github.com/apps/dependabot))
 
 - ⬆️ Update motor requirement from >=2.1.0,<2.4.0 to >=2.1.0,<2.5.0 ([#124](https://github.com/art049/odmantic/pull/124) by [@dependabot[bot]](https://github.com/apps/dependabot))
@@ -32,17 +49,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ⬆️ Update isort requirement from ~=5.7.0 to ~=5.8.0 ([#122](https://github.com/art049/odmantic/pull/122) by [@dependabot[bot]](https://github.com/apps/dependabot))
 
 - ⬆️ Update flake8 requirement from ~=3.8.4 to ~=3.9.0 ([#116](https://github.com/art049/odmantic/pull/116) by [@dependabot[bot]](https://github.com/apps/dependabot))
-
-- Patch and copy Model instances ([#39](https://github.com/art049/odmantic/pull/39) by [@art049](https://github.com/art049))
-
-#### Added
-
-- Update and copy methods:
-    - Updating multiple fields at once is now directly possible from a pydantic model or
-      a dictionary ([feature documentation](https://art049.github.io/odmantic/engine/#patching-multiple-fields-at-once),
-      [sample use case with FastAPI](https://art049.github.io/odmantic/usage_fastapi/#updating-a-tree))
-    - Changing the primary field of an instance is now easier
-      ([documentation](https://art049.github.io/odmantic/engine/#changing-the-primary-field))
 
 ## [0.3.5] - 2021-05-12
 
@@ -196,4 +202,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.3.3]: https://github.com/art049/odmantic/compare/v0.3.2...v0.3.3
 [0.3.4]: https://github.com/art049/odmantic/compare/v0.3.3...v0.3.4
 [0.3.5]: https://github.com/art049/odmantic/compare/v0.3.4...v0.3.5
-[unreleased]: https://github.com/art049/odmantic/compare/v0.3.5...HEAD
+[0.4.0]: https://github.com/art049/odmantic/compare/v0.3.5...v0.4.0
+[unreleased]: https://github.com/art049/odmantic/compare/v0.4.0...HEAD
