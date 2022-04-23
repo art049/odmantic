@@ -23,9 +23,9 @@ class TypeTestCase(Generic[T]):
     sample_value: T
 
 
-MIN_INT32 = -(2 ** 31)
+MIN_INT32 = -(2**31)
 UNDER_INT32_VALUE = MIN_INT32 - 1
-MAX_INT32 = 2 ** 31 - 1
+MAX_INT32 = 2**31 - 1
 OVER_INT32_VALUE = MAX_INT32 + 1
 
 sample_datetime = datetime.now()

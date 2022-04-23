@@ -333,6 +333,9 @@ def test_untouched_types_function():
         return str(self.id)
 
     class M(Model):
+        class Config:
+            arbitrary_types_allowed = True
+
         id_: FunctionType = id_str  # type: ignore
 
     assert "id_" not in M.__odm_fields__.keys()
