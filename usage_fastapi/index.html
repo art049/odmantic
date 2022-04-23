@@ -14,7 +14,7 @@
         <link rel="canonical" href="https://art049.github.io/odmantic/usage_fastapi/">
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.4">
+      <meta name="generator" content="mkdocs-1.2.4, mkdocs-material-7.3.6">
     
     
       
@@ -22,10 +22,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.bde7dde4.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.a57b2b03.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.ef6f36e2.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
         
           
           
@@ -50,10 +50,19 @@
     
     
       
-        
-<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-180814888-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
-<script async src="https://www.google-analytics.com/analytics.js"></script>
-      
+
+  
+
+
+  
+
+  
+
+
+  <script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-180814888-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+  <script async src="https://www.google-analytics.com/analytics.js"></script>
+
+
     
     
   </head>
@@ -84,7 +93,9 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href=".." title="ODMantic" class="md-header__button md-logo" aria-label="ODMantic" data-md-component="logo">
       
@@ -122,14 +133,18 @@
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
       </label>
-      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
-      </button>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
@@ -159,11 +174,14 @@
       </div>
     
   </nav>
+  
 </header>
     
     <div class="md-container" data-md-component="container">
       
       
+        
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -320,6 +338,8 @@
       </a>
       
         
+
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -458,10 +478,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
       
-      <label class="md-nav__link" for="__nav_9">
-        API Reference
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          API Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="API Reference" data-md-level="1">
         <label class="md-nav__title" for="__nav_9">
           <span class="md-nav__icon md-icon"></span>
@@ -470,6 +494,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -480,8 +505,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -492,8 +519,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -504,8 +533,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -516,8 +547,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -528,8 +561,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -540,8 +575,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -552,8 +589,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -564,6 +603,7 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -613,6 +653,8 @@
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
+
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -869,7 +911,9 @@ debugger for example), some extra steps will be required.</p>
     <span class="n">server</span> <span class="o">=</span> <span class="n">uvicorn</span><span class="o">.</span><span class="n">Server</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
     <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">server</span><span class="o">.</span><span class="n">serve</span><span class="p">())</span>
 </code></pre></div></p>
-<details class="info"><summary><code>uvicorn.run</code> behavior with event loops (Advanced)</summary><p>The usual entrypoint <code>uvicorn.run(app)</code> for ASGI apps doesn't work because when
+<details class="info">
+<summary><code>uvicorn.run</code> behavior with event loops (Advanced)</summary>
+<p>The usual entrypoint <code>uvicorn.run(app)</code> for ASGI apps doesn't work because when
 called <code>uvicorn</code> will create and run a brand <strong>new</strong> event loop.</p>
 <p>Thus, the engine object will be bound to a different event loop that will not be
 running. In this case, you'll witness <code>&lt;Future pending&gt; attached to a different
@@ -902,7 +946,9 @@ First, the request body will be parsed to a <code>Tree</code> object (this is do
 specifying the argument <code>tree: Tree</code>). This mean that the model validation will be
 performed. Once the model is parsed to a Tree instance, we persist it to the
 database and we return it.</p>
-<details class="tip" open="open"><summary>Command line tool for interacting with JSON based HTTP APIs</summary><p>To interact with the API from the command line, we recommend to use the
+<details class="tip" open="open">
+<summary>Command line tool for interacting with JSON based HTTP APIs</summary>
+<p>To interact with the API from the command line, we recommend to use the
 <a href="https://httpie.org/" target="blank_">HTTPie</a> CLI.</p>
 <p>The next examples are still provided with the <code>curl</code> syntax since the Swagger
  documentation generated by FastAPI will give you curl examples directly.</p>
@@ -950,7 +996,9 @@ created instance or to overwrite an existing instance.</p>
 <p>Since the <code>engine.save</code> behave as an upsert operation (<a href="../engine/#update">more
 details</a>), you can overwrite instances stored in the database
  by creating a new instance with the same id and calling the <code>engine.save</code> method.</p>
-<details class="example"><summary>Modifying the Tree from the command line</summary><p>To overwrite the tree with <code>id=5f8c8c1ff1d33aa1012f3086</code>:</p>
+<details class="example">
+<summary>Modifying the Tree from the command line</summary>
+<p>To overwrite the tree with <code>id=5f8c8c1ff1d33aa1012f3086</code>:</p>
 <div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">HTTPie</label><div class="tabbed-content">
 <p>Send the request:
 <div class="highlight"><pre><span></span><code>http PUT localhost:8080/trees/ <span class="se">\</span>
@@ -1436,11 +1484,11 @@ Output:
 </div>
 <h3 id="updating-a-tree">Updating a tree<a class="headerlink" href="#updating-a-tree" title="Permanent link">&para;</a></h3>
 <p>We already defined a <code>PUT</code> route that enables us to modify (replace) a tree instance.
-However, with this previopus implementation, it's not possible to specify only the
+However, with this previous implementation, it's not possible to specify only the
 fields that we want to change as the whole Tree instance is rebuilt from the request's
 body.</p>
-<p>In this example, we will define a <code>PATCH</code> method that will allow us to modify some
-fields of a Tree instance:</p>
+<p>In this example, we will define a <code>PATCH</code> method that will allow us to modify only some
+specific fields of a Tree instance:</p>
 <p><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
@@ -1479,16 +1527,7 @@ fields of a Tree instance:</p>
 <span class="normal">36</span>
 <span class="normal">37</span>
 <span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span>
-<span class="normal">45</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
-
-<span class="kn">import</span> <span class="nn">uvicorn</span>
-<span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">HTTPException</span>
+<span class="normal">39</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">HTTPException</span>
 <span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
 
 <span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span><span class="p">,</span> <span class="n">Model</span><span class="p">,</span> <span class="n">ObjectId</span>
@@ -1514,9 +1553,9 @@ fields of a Tree instance:</p>
 
 
 <span class="hll"><span class="k">class</span> <span class="nc">TreePatchSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-</span><span class="hll">    <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
-</span><span class="hll">    <span class="n">average_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
-</span><span class="hll">    <span class="n">discovery_year</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+</span><span class="hll">    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span class="hll">    <span class="n">average_size</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span class="hll">    <span class="n">discovery_year</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span>
 </span>
 
 <span class="hll"><span class="nd">@app</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s2">&quot;/trees/</span><span class="si">{id}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">response_model</span><span class="o">=</span><span class="n">Tree</span><span class="p">)</span>
@@ -1524,45 +1563,54 @@ fields of a Tree instance:</p>
 </span><span class="hll">    <span class="n">tree</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">Tree</span><span class="p">,</span> <span class="n">Tree</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">)</span>
 </span><span class="hll">    <span class="k">if</span> <span class="n">tree</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
 </span><span class="hll">        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
-</span><span class="hll">
-</span><span class="hll">    <span class="n">patch_dict</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_unset</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span class="hll">    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">patch_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-</span><span class="hll">        <span class="nb">setattr</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</span><span class="hll">    <span class="n">tree</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">patch</span><span class="p">)</span>
 </span><span class="hll">    <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
 </span><span class="hll">    <span class="k">return</span> <span class="n">tree</span>
 </span></code></pre></div>
 </td></tr></table>
 First, we define the <code>TreePatchSchema</code> this Pydantic model will contain the
 modifications that we need to apply on the instance. Since we want to be able to update
-each field independently, we make them all non required (i.e. <code>Optional</code>) in the schema.</p>
+each field independently, we give each of them the <code>None</code> default value.</p>
 <p>Then, we configure a new <code>PATCH</code> endpoint by setting the <code>id</code> of the model to update
 as a path parameter and the <code>TreePatchSchema</code> as the request body parameter.</p>
-<p>Once all the parameters have been validated properly and the associated instance have
-been gathered, we can apply the modifications to the model.</p>
-<p>The first step is to create a dictionnary containing only the fields to modify (the
-<code>exclude_unset</code> argument helps us to gather only the fields that have been set from the
-request's body):</p>
-<div class="highlight"><pre><span></span><code><span class="n">patch_dict</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude_unset</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<p>After all the parameters have been validated properly and the appropriate instance have
+been gathered, we can apply the modifications to the local instance using the
+<a href="../api_reference/model/#odmantic.model._BaseODMModel.update">Model.update</a> method. By default, the update
+method will replace each field values in the instance with the ones explicitely set in
+the patch object. Thus, the fields containing the None default values are not gonna be
+changed in the instance.</p>
+<p>We can then finish by saving and returning the updated tree.</p>
+<details class="tip">
+<summary>Optional, defaults, non-required and required pydantic fields (advanced)</summary>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
+
+<span class="k">class</span> <span class="nc">M</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">a</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+    <span class="n">b</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">c</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">d</span><span class="p">:</span> <span class="nb">int</span>
 </code></pre></div>
-<p>The next step is to iterate over this dictionary to apply the changes to the model
-iteratively:</p>
-<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">patch_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="nb">setattr</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-</code></pre></div>
-<div class="admonition tip">
-<p class="admonition-title">Using setattr to update an instance</p>
-<p>Here we use the <code>setattr</code> builtin function to update the instance attributes.</p>
-<p>For example:
-<div class="highlight"><pre><span></span><code><span class="nb">setattr</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="s2">&quot;average_size&quot;</span><span class="p">,</span> <span class="mf">21.5</span><span class="p">)</span>
-</code></pre></div>
-will have exactly the same effect as:
-<div class="highlight"><pre><span></span><code><span class="n">tree</span><span class="o">.</span><span class="n">average_size</span> <span class="o">=</span> <span class="mf">21.5</span>
-</code></pre></div></p>
-</div>
-<p>Once our tree has been properly patched, we can save it and return it's updated version.
-<div class="highlight"><pre><span></span><code><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
-<span class="k">return</span> <span class="n">tree</span>
-</code></pre></div></p>
+<p>In this example, fields have a different behavior:</p>
+<dl>
+<dt><code class="highlight"><span class="n">a</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span></code></dt>
+<dd>this field is <strong>not required</strong>, <code>None</code> is its default value, it can be given
+  <code>None</code> or any <code>int</code> values</dd>
+<dt><code class="highlight"><span class="n">b</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></code></dt>
+<dd>same behavior as <code>a</code> since <code>None</code> is set automatically as the default value for
+  <code>typing.Optional</code> fields</dd>
+<dt><code class="highlight"><span class="n">c</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span></code></dt>
+<dd>this field is <strong>not required</strong>, if not explicitely provided it will take the
+  <code>None</code> value, <strong>only</strong> an <code>int</code> can be given as an explicit value</dd>
+<dt><code class="highlight"><span class="n">d</span><span class="p">:</span> <span class="nb">int</span></code></dt>
+<dd>this field is <strong>required</strong> and an <code>int</code> value <strong>must</strong> be provided</dd>
+</dl>
+<p>(More details: <a href="https://github.com/samuelcolvin/pydantic/issues/1223#issuecomment-594632324" target="blank_">pydantic #1223</a>,
+ <a href="https://pydantic-docs.helpmanual.io/usage/models/#required-fields" target="blank_">pydantic: Required fields</a>)</p>
+<p>By default <a href="../api_reference/model/#odmantic.model._BaseODMModel.update">Model.update</a>, will not apply
+values from unset (not explicitely populated) fields. Since we don't want to allow
+explicitely set <code>None</code> values in the example, we used fields defined as
+<code class="highlight"><span class="n">c</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span></code>.</p>
+</details>
 <div class="admonition example">
 <p class="admonition-title">Updating a tree from the command line</p>
 <div class="tabbed-set" data-tabs="10:2"><input checked="checked" id="__tabbed_10_1" name="__tabbed_10" type="radio" /><label for="__tabbed_10_1">HTTPie</label><div class="tabbed-content">
@@ -1629,8 +1677,8 @@ Output:
   document is not found an exception will be raised directly.</li>
 <li>Implement the equivalent of MongoDB insert method to be able to create document
   without overwriting existing ones.</li>
-<li>Implement a Model.update method to update the model fields from a dictionnary or from
-  a Pydantic schema.</li>
+<li><del>Implement a Model.update method to update the model fields from a dictionnary or from
+  a Pydantic schema.</del></li>
 <li>Automatically generate CRUD endpoints directly from an ODMantic Model.</li>
 </ul>
                 
@@ -1651,7 +1699,8 @@ Output:
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
-        <a href="../raw_query_usage/" class="md-footer__link md-footer__link--prev" rel="prev">
+        
+        <a href="../raw_query_usage/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Raw query usage" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1666,7 +1715,8 @@ Output:
         </a>
       
       
-        <a href="../usage_pydantic/" class="md-footer__link md-footer__link--next" rel="next">
+        
+        <a href="../usage_pydantic/" class="md-footer__link md-footer__link--next" aria-label="Next: Usage with Pydantic" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
@@ -1686,10 +1736,12 @@ Output:
     <div class="md-footer-meta__inner md-grid">
       <div class="md-footer-copyright">
         
-        Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-          Material for MkDocs
-        </a>
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
         
       </div>
       
@@ -1732,10 +1784,10 @@ Output:
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": ["instant"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.4fa0e4ee.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["instant"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.1d3bfcf1.min.js"></script>
+      <script src="../assets/javascripts/bundle.b1047164.min.js"></script>
       
         <script src="../js/gitter.js"></script>
       

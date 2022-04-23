@@ -14,7 +14,7 @@
         <link rel="canonical" href="https://art049.github.io/odmantic/modeling/">
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.4">
+      <meta name="generator" content="mkdocs-1.2.4, mkdocs-material-7.3.6">
     
     
       
@@ -22,10 +22,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.bde7dde4.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.a57b2b03.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.ef6f36e2.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
         
           
           
@@ -50,10 +50,19 @@
     
     
       
-        
-<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-180814888-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
-<script async src="https://www.google-analytics.com/analytics.js"></script>
-      
+
+  
+
+
+  
+
+  
+
+
+  <script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-180814888-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+  <script async src="https://www.google-analytics.com/analytics.js"></script>
+
+
     
     
   </head>
@@ -84,7 +93,9 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href=".." title="ODMantic" class="md-header__button md-logo" aria-label="ODMantic" data-md-component="logo">
       
@@ -122,14 +133,18 @@
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
       </label>
-      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
-      </button>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
@@ -159,11 +174,14 @@
       </div>
     
   </nav>
+  
 </header>
     
     <div class="md-container" data-md-component="container">
       
       
+        
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -260,6 +278,8 @@
       </a>
       
         
+
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -464,10 +484,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
       
-      <label class="md-nav__link" for="__nav_9">
-        API Reference
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          API Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="API Reference" data-md-level="1">
         <label class="md-nav__title" for="__nav_9">
           <span class="md-nav__icon md-icon"></span>
@@ -476,6 +500,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -486,8 +511,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -498,8 +525,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -510,8 +539,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -522,8 +553,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -534,8 +567,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -546,8 +581,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -558,8 +595,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -570,6 +609,7 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -619,6 +659,8 @@
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
+
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -950,7 +992,9 @@ in the model body.</p>
 <dt><code class="highlight"><span class="n">json_encoders</span><span class="p">:</span> <span class="nb">dict</span></code> <em>(inherited from Pydantic)</em></dt>
 <dd>
 <p>Customize the way types used in the model are encoded to JSON.</p>
-<details class="example"><summary><code>json_encoders</code> example</summary><p>For example, in order to serialize <code>datetime</code> fields as timestamp values:</p>
+<details class="example">
+<summary><code>json_encoders</code> example</summary>
+<p>For example, in order to serialize <code>datetime</code> fields as timestamp values:</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Event</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">date</span><span class="p">:</span> <span class="n">datetime</span>
 
@@ -1067,24 +1111,26 @@ relation as a One-to-One relationship. We will use an Embedded Model in this cas
 <code>CapitalCity</code> class will be considered as a field type during the model definition.</p>
 <p>The <a href="../api_reference/field/#odmantic.field.Field">Field</a> descriptor can be used as well for Embedded
 Models in order to bring more flexibility (default values, Mongo key name, ...).</p>
-<details class="abstract" open="open"><summary>Content of the <code>country</code> collection after execution</summary><div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f79d7e8b305f24ca43593e2&quot;</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Sweden&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;currency&quot;</span><span class="p">:</span> <span class="s2">&quot;Swedish krona&quot;</span><span class="p">,</span>
-<span class="hll">  <span class="nt">&quot;capital_city&quot;</span><span class="p">:</span> <span class="p">{</span>
-</span><span class="hll">    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Stockholm&quot;</span><span class="p">,</span>
-</span><span class="hll">    <span class="nt">&quot;population&quot;</span><span class="p">:</span> <span class="mi">975904</span>
-</span><span class="hll">  <span class="p">}</span>
-</span><span class="p">}</span>
-<span class="p">{</span>
-  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f79d7e8b305f24ca43593e1&quot;</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Switzerland&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;currency&quot;</span><span class="p">:</span> <span class="s2">&quot;Swiss franc&quot;</span><span class="p">,</span>
-<span class="hll">  <span class="nt">&quot;capital_city&quot;</span><span class="p">:</span> <span class="p">{</span>
-</span><span class="hll">    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Bern&quot;</span><span class="p">,</span>
-</span><span class="hll">    <span class="nt">&quot;population&quot;</span><span class="p">:</span> <span class="mi">1035000</span>
-</span><span class="hll">  <span class="p">}</span>
-</span><span class="p">}</span>
+<details class="abstract" open="open">
+<summary>Content of the <code>country</code> collection after execution</summary>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f79d7e8b305f24ca43593e2&quot;</span><span class="err">)</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sweden&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;currency&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Swedish krona&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="hll"><span class="w">  </span><span class="nt">&quot;capital_city&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+</span><span class="hll"><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Stockholm&quot;</span><span class="p">,</span><span class="w"></span>
+</span><span class="hll"><span class="w">    </span><span class="nt">&quot;population&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">975904</span><span class="w"></span>
+</span><span class="hll"><span class="w">  </span><span class="p">}</span><span class="w"></span>
+</span><span class="p">}</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f79d7e8b305f24ca43593e1&quot;</span><span class="err">)</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Switzerland&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;currency&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Swiss franc&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="hll"><span class="w">  </span><span class="nt">&quot;capital_city&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+</span><span class="hll"><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Bern&quot;</span><span class="p">,</span><span class="w"></span>
+</span><span class="hll"><span class="w">    </span><span class="nt">&quot;population&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1035000</span><span class="w"></span>
+</span><span class="hll"><span class="w">  </span><span class="p">}</span><span class="w"></span>
+</span><span class="p">}</span><span class="w"></span>
 </code></pre></div>
 </details>
 <!-- prettier-ignore -->
@@ -1187,24 +1233,26 @@ should not be linked together).</p>
 <p>As done previously for the One to One relation, defining a One to Many relationship with
 Embedded Models is done exactly as defining a field with its type being a sequence of
 <code>Address</code> objects.</p>
-<details class="abstract" open="open"><summary>Content of the <code>customer</code> collection after execution</summary><div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f79eb116371e09b16e4fae4&quot;</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
-<span class="hll">  <span class="nt">&quot;addresses&quot;</span><span class="p">:[</span>
-</span><span class="hll">    <span class="p">{</span>
-</span><span class="hll">      <span class="nt">&quot;street&quot;</span><span class="p">:</span><span class="s2">&quot;1757  Birch Street&quot;</span><span class="p">,</span>
-</span><span class="hll">      <span class="nt">&quot;city&quot;</span><span class="p">:</span><span class="s2">&quot;Greenwood&quot;</span><span class="p">,</span>
-</span><span class="hll">      <span class="nt">&quot;state&quot;</span><span class="p">:</span><span class="s2">&quot;Indiana&quot;</span><span class="p">,</span>
-</span><span class="hll">      <span class="nt">&quot;zipcode&quot;</span><span class="p">:</span><span class="s2">&quot;46142&quot;</span>
-</span><span class="hll">    <span class="p">},</span>
-</span><span class="hll">    <span class="p">{</span>
-</span><span class="hll">      <span class="nt">&quot;street&quot;</span><span class="p">:</span><span class="s2">&quot;262  Barnes Avenue&quot;</span><span class="p">,</span>
-</span><span class="hll">      <span class="nt">&quot;city&quot;</span><span class="p">:</span><span class="s2">&quot;Cincinnati&quot;</span><span class="p">,</span>
-</span><span class="hll">      <span class="nt">&quot;state&quot;</span><span class="p">:</span><span class="s2">&quot;Ohio&quot;</span><span class="p">,</span>
-</span><span class="hll">      <span class="nt">&quot;zipcode&quot;</span><span class="p">:</span><span class="s2">&quot;45216&quot;</span>
-</span><span class="hll">    <span class="p">}</span>
-</span><span class="hll">  <span class="p">]</span>
-</span><span class="p">}</span>
+<details class="abstract" open="open">
+<summary>Content of the <code>customer</code> collection after execution</summary>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f79eb116371e09b16e4fae4&quot;</span><span class="err">)</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;John Doe&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="hll"><span class="w">  </span><span class="nt">&quot;addresses&quot;</span><span class="p">:[</span><span class="w"></span>
+</span><span class="hll"><span class="w">    </span><span class="p">{</span><span class="w"></span>
+</span><span class="hll"><span class="w">      </span><span class="nt">&quot;street&quot;</span><span class="p">:</span><span class="s2">&quot;1757  Birch Street&quot;</span><span class="p">,</span><span class="w"></span>
+</span><span class="hll"><span class="w">      </span><span class="nt">&quot;city&quot;</span><span class="p">:</span><span class="s2">&quot;Greenwood&quot;</span><span class="p">,</span><span class="w"></span>
+</span><span class="hll"><span class="w">      </span><span class="nt">&quot;state&quot;</span><span class="p">:</span><span class="s2">&quot;Indiana&quot;</span><span class="p">,</span><span class="w"></span>
+</span><span class="hll"><span class="w">      </span><span class="nt">&quot;zipcode&quot;</span><span class="p">:</span><span class="s2">&quot;46142&quot;</span><span class="w"></span>
+</span><span class="hll"><span class="w">    </span><span class="p">},</span><span class="w"></span>
+</span><span class="hll"><span class="w">    </span><span class="p">{</span><span class="w"></span>
+</span><span class="hll"><span class="w">      </span><span class="nt">&quot;street&quot;</span><span class="p">:</span><span class="s2">&quot;262  Barnes Avenue&quot;</span><span class="p">,</span><span class="w"></span>
+</span><span class="hll"><span class="w">      </span><span class="nt">&quot;city&quot;</span><span class="p">:</span><span class="s2">&quot;Cincinnati&quot;</span><span class="p">,</span><span class="w"></span>
+</span><span class="hll"><span class="w">      </span><span class="nt">&quot;state&quot;</span><span class="p">:</span><span class="s2">&quot;Ohio&quot;</span><span class="p">,</span><span class="w"></span>
+</span><span class="hll"><span class="w">      </span><span class="nt">&quot;zipcode&quot;</span><span class="p">:</span><span class="s2">&quot;45216&quot;</span><span class="w"></span>
+</span><span class="hll"><span class="w">    </span><span class="p">}</span><span class="w"></span>
+</span><span class="hll"><span class="w">  </span><span class="p">]</span><span class="w"></span>
+</span><span class="p">}</span><span class="w"></span>
 </code></pre></div>
 </details>
 <!-- prettier-ignore -->
@@ -1315,24 +1363,28 @@ publisher. We can thus model this relation as a many-to-one relationship.</p>
 <p>The definition of a reference field <strong>requires</strong> the presence of the <a href="../api_reference/reference/#odmantic.reference.Reference">Reference()</a>
 descriptor. Once the models are defined, linking two instances is done simply by
 assigning the reference field of referencing instance to the referenced instance.</p>
-<details class="question"><summary>Why is it required to include the Reference descriptor ?</summary><p>The main goal behind enforcing the presence of the descriptor is to have a clear
+<details class="question">
+<summary>Why is it required to include the Reference descriptor ?</summary>
+<p>The main goal behind enforcing the presence of the descriptor is to have a clear
 distinction between Embedded Models and References.</p>
 <p>In the future, a generic <code>Reference[T]</code> type will probably be included to make this
 distinction since it would make more sense than having to set a descriptor for each
 reference.</p>
 </details>
-<details class="abstract" open="open"><summary>Content of the <code>publisher</code> collection after execution</summary><p><div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="hll">  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a0dc48a73b20f16e2a364&quot;</span><span class="err">)</span><span class="p">,</span>
-</span>  <span class="nt">&quot;founded&quot;</span><span class="p">:</span> <span class="mi">1826</span><span class="p">,</span>
-  <span class="nt">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;FR&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Hachette Livre&quot;</span>
-<span class="p">}</span>
-<span class="p">{</span>
-<span class="hll">  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a0dc48a73b20f16e2a365&quot;</span><span class="err">)</span><span class="p">,</span>
-</span>  <span class="nt">&quot;founded&quot;</span><span class="p">:</span> <span class="mi">1989</span><span class="p">,</span>
-  <span class="nt">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;US&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;HarperCollins&quot;</span>
-<span class="p">}</span>
+<details class="abstract" open="open">
+<summary>Content of the <code>publisher</code> collection after execution</summary>
+<p><div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="hll"><span class="w">  </span><span class="nt">&quot;_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a0dc48a73b20f16e2a364&quot;</span><span class="err">)</span><span class="p">,</span><span class="w"></span>
+</span><span class="w">  </span><span class="nt">&quot;founded&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1826</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;location&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FR&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Hachette Livre&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="hll"><span class="w">  </span><span class="nt">&quot;_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a0dc48a73b20f16e2a365&quot;</span><span class="err">)</span><span class="p">,</span><span class="w"></span>
+</span><span class="w">  </span><span class="nt">&quot;founded&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1989</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;location&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;US&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;HarperCollins&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 We can see that the publishers have been persisted to their collection even if no
 explicit save has been perfomed.
@@ -1340,24 +1392,26 @@ When calling the <a href="../api_reference/engine/#odmantic.engine.AIOEngine.sav
 will persist automatically the referenced documents.</p>
 <p>While fetching instances, the engine will as well resolve <strong>every</strong> reference.</p>
 </details>
-<details class="abstract" open="open"><summary>Content of the <code>book</code> collection after execution</summary><p><div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a0dc48a73b20f16e2a366&quot;</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">&quot;pages&quot;</span><span class="p">:</span> <span class="mi">304</span><span class="p">,</span>
-<span class="hll">  <span class="nt">&quot;publisher&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a0dc48a73b20f16e2a364&quot;</span><span class="err">)</span><span class="p">,</span>
-</span>  <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;They Didn&#39;t See Us Coming&quot;</span>
-<span class="p">}</span>
-<span class="p">{</span>
-  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a0dc48a73b20f16e2a367&quot;</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">&quot;pages&quot;</span><span class="p">:</span> <span class="mi">256</span><span class="p">,</span>
-<span class="hll">  <span class="nt">&quot;publisher&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a0dc48a73b20f16e2a364&quot;</span><span class="err">)</span><span class="p">,</span>
-</span>  <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;This Isn&#39;t Happening&quot;</span>
-<span class="p">}</span>
-<span class="p">{</span>
-  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a0dc48a73b20f16e2a368&quot;</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">&quot;pages&quot;</span><span class="p">:</span> <span class="mi">464</span><span class="p">,</span>
-<span class="hll">  <span class="nt">&quot;publisher&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a0dc48a73b20f16e2a365&quot;</span><span class="err">)</span><span class="p">,</span>
-</span>  <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Prodigal Summer&quot;</span>
-<span class="p">}</span>
+<details class="abstract" open="open">
+<summary>Content of the <code>book</code> collection after execution</summary>
+<p><div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a0dc48a73b20f16e2a366&quot;</span><span class="err">)</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;pages&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">304</span><span class="p">,</span><span class="w"></span>
+<span class="hll"><span class="w">  </span><span class="nt">&quot;publisher&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a0dc48a73b20f16e2a364&quot;</span><span class="err">)</span><span class="p">,</span><span class="w"></span>
+</span><span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;They Didn&#39;t See Us Coming&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a0dc48a73b20f16e2a367&quot;</span><span class="err">)</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;pages&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">256</span><span class="p">,</span><span class="w"></span>
+<span class="hll"><span class="w">  </span><span class="nt">&quot;publisher&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a0dc48a73b20f16e2a364&quot;</span><span class="err">)</span><span class="p">,</span><span class="w"></span>
+</span><span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;This Isn&#39;t Happening&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a0dc48a73b20f16e2a368&quot;</span><span class="err">)</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;pages&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">464</span><span class="p">,</span><span class="w"></span>
+<span class="hll"><span class="w">  </span><span class="nt">&quot;publisher&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a0dc48a73b20f16e2a365&quot;</span><span class="err">)</span><span class="p">,</span><span class="w"></span>
+</span><span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Prodigal Summer&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 The resulting books in the collection contain the publisher reference directly as a
 document attribute (using the reference name as the document's key).</p>
@@ -1442,33 +1496,37 @@ define the relationship in a manual way.</p>
 <code>id</code> field in the <code>Author</code> model is generated implicitly by default).</p>
 <p>Since this multi-reference is not mapped by the ODM, we have to persist the authors
 manually.</p>
-<details class="abstract" open="open"><summary>Content of the <code>author</code> collection after execution</summary><div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="hll">  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a37dc7311be1362e1da4e&quot;</span><span class="err">)</span><span class="p">,</span>
-</span>  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;David Beazley&quot;</span>
-<span class="p">}</span>
-<span class="p">{</span>
-<span class="hll">  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a37dc7311be1362e1da4f&quot;</span><span class="err">)</span><span class="p">,</span>
-</span>  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Brian K. Jones&quot;</span>
-<span class="p">}</span>
+<details class="abstract" open="open">
+<summary>Content of the <code>author</code> collection after execution</summary>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="hll"><span class="w">  </span><span class="nt">&quot;_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a37dc7311be1362e1da4e&quot;</span><span class="err">)</span><span class="p">,</span><span class="w"></span>
+</span><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;David Beazley&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="hll"><span class="w">  </span><span class="nt">&quot;_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a37dc7311be1362e1da4f&quot;</span><span class="err">)</span><span class="p">,</span><span class="w"></span>
+</span><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Brian K. Jones&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 </details>
-<details class="abstract" open="open"><summary>Content of the <code>book</code> collection after execution</summary><div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a37dc7311be1362e1da50&quot;</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="nt">&quot;Python Cookbook&quot;</span>
-  <span class="nt">&quot;pages&quot;</span><span class="p">:</span><span class="mi">706</span><span class="p">,</span>
-<span class="hll">  <span class="nt">&quot;author_ids&quot;</span><span class="p">:[</span>
-</span><span class="hll">    <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a37dc7311be1362e1da4e&quot;</span><span class="err">)</span><span class="p">,</span>
-</span><span class="hll">    <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a37dc7311be1362e1da4f&quot;</span><span class="err">)</span>
-</span><span class="hll">  <span class="p">],</span>
-</span><span class="p">}</span>
-<span class="p">{</span>
-  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a37dc7311be1362e1da51&quot;</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="nt">&quot;Python Essential Reference&quot;</span>
-  <span class="nt">&quot;pages&quot;</span><span class="p">:</span><span class="mi">717</span><span class="p">,</span>
-<span class="hll">  <span class="nt">&quot;author_ids&quot;</span><span class="p">:[</span>
-</span><span class="hll">    <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a37dc7311be1362e1da4f&quot;</span><span class="err">)</span>
-</span><span class="hll">  <span class="p">],</span>
-</span><span class="p">}</span>
+<details class="abstract" open="open">
+<summary>Content of the <code>book</code> collection after execution</summary>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a37dc7311be1362e1da50&quot;</span><span class="err">)</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="nt">&quot;Python Cookbook&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;pages&quot;</span><span class="p">:</span><span class="mi">706</span><span class="p">,</span><span class="w"></span>
+<span class="hll"><span class="w">  </span><span class="nt">&quot;author_ids&quot;</span><span class="p">:[</span><span class="w"></span>
+</span><span class="hll"><span class="w">    </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a37dc7311be1362e1da4e&quot;</span><span class="err">)</span><span class="p">,</span><span class="w"></span>
+</span><span class="hll"><span class="w">    </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a37dc7311be1362e1da4f&quot;</span><span class="err">)</span><span class="w"></span>
+</span><span class="hll"><span class="w">  </span><span class="p">],</span><span class="w"></span>
+</span><span class="p">}</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a37dc7311be1362e1da51&quot;</span><span class="err">)</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="nt">&quot;Python Essential Reference&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;pages&quot;</span><span class="p">:</span><span class="mi">717</span><span class="p">,</span><span class="w"></span>
+<span class="hll"><span class="w">  </span><span class="nt">&quot;author_ids&quot;</span><span class="p">:[</span><span class="w"></span>
+</span><span class="hll"><span class="w">    </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f7a37dc7311be1362e1da4f&quot;</span><span class="err">)</span><span class="w"></span>
+</span><span class="hll"><span class="w">  </span><span class="p">],</span><span class="w"></span>
+</span><span class="p">}</span><span class="w"></span>
 </code></pre></div>
 </details>
 <div class="admonition example">
@@ -1509,7 +1567,8 @@ manually.</p>
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
-        <a href="../fields/" class="md-footer__link md-footer__link--prev" rel="prev">
+        
+        <a href="../fields/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Fields" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1524,7 +1583,8 @@ manually.</p>
         </a>
       
       
-        <a href="../engine/" class="md-footer__link md-footer__link--next" rel="next">
+        
+        <a href="../engine/" class="md-footer__link md-footer__link--next" aria-label="Next: Engine" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
@@ -1544,10 +1604,12 @@ manually.</p>
     <div class="md-footer-meta__inner md-grid">
       <div class="md-footer-copyright">
         
-        Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-          Material for MkDocs
-        </a>
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
         
       </div>
       
@@ -1590,10 +1652,10 @@ manually.</p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": ["instant"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.4fa0e4ee.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["instant"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.1d3bfcf1.min.js"></script>
+      <script src="../assets/javascripts/bundle.b1047164.min.js"></script>
       
         <script src="../js/gitter.js"></script>
       

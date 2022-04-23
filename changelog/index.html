@@ -14,7 +14,7 @@
         <link rel="canonical" href="https://art049.github.io/odmantic/changelog/">
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.4">
+      <meta name="generator" content="mkdocs-1.2.4, mkdocs-material-7.3.6">
     
     
       
@@ -22,10 +22,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.bde7dde4.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.a57b2b03.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.ef6f36e2.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
         
           
           
@@ -50,10 +50,19 @@
     
     
       
-        
-<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-180814888-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
-<script async src="https://www.google-analytics.com/analytics.js"></script>
-      
+
+  
+
+
+  
+
+  
+
+
+  <script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-180814888-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+  <script async src="https://www.google-analytics.com/analytics.js"></script>
+
+
     
     
   </head>
@@ -84,7 +93,9 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href=".." title="ODMantic" class="md-header__button md-logo" aria-label="ODMantic" data-md-component="logo">
       
@@ -122,14 +133,18 @@
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
       </label>
-      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
-      </button>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
@@ -159,11 +174,14 @@
       </div>
     
   </nav>
+  
 </header>
     
     <div class="md-container" data-md-component="container">
       
       
+        
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -336,10 +354,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
       
-      <label class="md-nav__link" for="__nav_9">
-        API Reference
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          API Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="API Reference" data-md-level="1">
         <label class="md-nav__title" for="__nav_9">
           <span class="md-nav__icon md-icon"></span>
@@ -348,6 +370,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -358,8 +381,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -370,8 +395,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -382,8 +409,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -394,8 +423,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -406,8 +437,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -418,8 +451,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -430,8 +465,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -442,6 +479,7 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -491,6 +529,8 @@
       </a>
       
         
+
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -508,6 +548,40 @@
   <a href="#unreleased" class="md-nav__link">
     Unreleased
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#040-2022-04-23" class="md-nav__link">
+    0.4.0 - 2022-04-23
+  </a>
+  
+    <nav class="md-nav" aria-label="0.4.0 - 2022-04-23">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added" class="md-nav__link">
+    Added
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed" class="md-nav__link">
+    Fixed
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internals" class="md-nav__link">
+    Internals
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -540,33 +614,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#fixed" class="md-nav__link">
-    Fixed
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#internals" class="md-nav__link">
-    Internals
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#033-2021-02-13" class="md-nav__link">
-    0.3.3 - 2021-02-13
-  </a>
-  
-    <nav class="md-nav" aria-label="0.3.3 - 2021-02-13">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#fixed_1" class="md-nav__link">
     Fixed
   </a>
@@ -586,6 +633,33 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#033-2021-02-13" class="md-nav__link">
+    0.3.3 - 2021-02-13
+  </a>
+  
+    <nav class="md-nav" aria-label="0.3.3 - 2021-02-13">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed_2" class="md-nav__link">
+    Fixed
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internals_2" class="md-nav__link">
+    Internals
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#032-2020-12-15" class="md-nav__link">
     0.3.2 - 2020-12-15
   </a>
@@ -594,14 +668,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added" class="md-nav__link">
+  <a href="#added_1" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#internals_2" class="md-nav__link">
+  <a href="#internals_3" class="md-nav__link">
     Internals
   </a>
   
@@ -621,14 +695,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_1" class="md-nav__link">
+  <a href="#added_2" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#fixed_2" class="md-nav__link">
+  <a href="#fixed_3" class="md-nav__link">
     Fixed
   </a>
   
@@ -655,7 +729,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#added_2" class="md-nav__link">
+  <a href="#added_3" class="md-nav__link">
     Added
   </a>
   
@@ -675,7 +749,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#fixed_3" class="md-nav__link">
+  <a href="#fixed_4" class="md-nav__link">
     Fixed
   </a>
   
@@ -702,14 +776,14 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#added_3" class="md-nav__link">
+  <a href="#added_4" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#fixed_4" class="md-nav__link">
+  <a href="#fixed_5" class="md-nav__link">
     Fixed
   </a>
   
@@ -767,6 +841,8 @@
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
+
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -784,6 +860,40 @@
   <a href="#unreleased" class="md-nav__link">
     Unreleased
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#040-2022-04-23" class="md-nav__link">
+    0.4.0 - 2022-04-23
+  </a>
+  
+    <nav class="md-nav" aria-label="0.4.0 - 2022-04-23">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added" class="md-nav__link">
+    Added
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed" class="md-nav__link">
+    Fixed
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internals" class="md-nav__link">
+    Internals
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -816,33 +926,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#fixed" class="md-nav__link">
-    Fixed
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#internals" class="md-nav__link">
-    Internals
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#033-2021-02-13" class="md-nav__link">
-    0.3.3 - 2021-02-13
-  </a>
-  
-    <nav class="md-nav" aria-label="0.3.3 - 2021-02-13">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#fixed_1" class="md-nav__link">
     Fixed
   </a>
@@ -862,6 +945,33 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#033-2021-02-13" class="md-nav__link">
+    0.3.3 - 2021-02-13
+  </a>
+  
+    <nav class="md-nav" aria-label="0.3.3 - 2021-02-13">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed_2" class="md-nav__link">
+    Fixed
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internals_2" class="md-nav__link">
+    Internals
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#032-2020-12-15" class="md-nav__link">
     0.3.2 - 2020-12-15
   </a>
@@ -870,14 +980,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added" class="md-nav__link">
+  <a href="#added_1" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#internals_2" class="md-nav__link">
+  <a href="#internals_3" class="md-nav__link">
     Internals
   </a>
   
@@ -897,14 +1007,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#added_1" class="md-nav__link">
+  <a href="#added_2" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#fixed_2" class="md-nav__link">
+  <a href="#fixed_3" class="md-nav__link">
     Fixed
   </a>
   
@@ -931,7 +1041,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#added_2" class="md-nav__link">
+  <a href="#added_3" class="md-nav__link">
     Added
   </a>
   
@@ -951,7 +1061,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#fixed_3" class="md-nav__link">
+  <a href="#fixed_4" class="md-nav__link">
     Fixed
   </a>
   
@@ -978,14 +1088,14 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#added_3" class="md-nav__link">
+  <a href="#added_4" class="md-nav__link">
     Added
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#fixed_4" class="md-nav__link">
+  <a href="#fixed_5" class="md-nav__link">
     Fixed
   </a>
   
@@ -1043,14 +1153,79 @@
                 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h1>
 <p><sub>The format is based on <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>,
 and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</sub></p>
-<h2 id="unreleased"><a href="https://github.com/art049/odmantic/compare/v0.3.5...HEAD">Unreleased</a><a class="headerlink" href="#unreleased" title="Permanent link">&para;</a></h2>
+<h2 id="unreleased"><a href="https://github.com/art049/odmantic/compare/v0.4.0...HEAD">Unreleased</a><a class="headerlink" href="#unreleased" title="Permanent link">&para;</a></h2>
+<h2 id="040-2022-04-23"><a href="https://github.com/art049/odmantic/compare/v0.3.5...v0.4.0">0.4.0</a> - 2022-04-23<a class="headerlink" href="#040-2022-04-23" title="Permanent link">&para;</a></h2>
+<h4 id="added">Added<a class="headerlink" href="#added" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p>Update and copy methods:</p>
+<ul>
+<li>Updating multiple fields at once is now directly possible from a pydantic model or
+  a dictionary (<a href="https://art049.github.io/odmantic/engine/#patching-multiple-fields-at-once">feature documentation</a>,
+  <a href="https://art049.github.io/odmantic/usage_fastapi/#updating-a-tree">sample use case with FastAPI</a>)</li>
+<li>Changing the primary field of an instance is now easier
+  (<a href="https://art049.github.io/odmantic/engine/#changing-the-primary-field">documentation</a>)</li>
+</ul>
+</li>
+<li>
+<p>Patch and copy Model instances (<a href="https://github.com/art049/odmantic/pull/39">#39</a> by <a href="https://github.com/art049">@art049</a>)</p>
+</li>
+</ul>
+<h4 id="fixed">Fixed<a class="headerlink" href="#fixed" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p>Update example in README (<a href="https://github.com/art049/odmantic/pull/192">#192</a> by <a href="https://github.com/jasper-moment">@jasper-moment</a>)</p>
+</li>
+<li>
+<p>Update README.md (<a href="https://github.com/art049/odmantic/pull/129">#129</a> by <a href="https://github.com/Kludex">@Kludex</a>)</p>
+</li>
+</ul>
+<h4 id="internals">Internals<a class="headerlink" href="#internals" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p>⬆️ Update motor requirement from &gt;=2.1.0,&lt;2.5.0 to &gt;=2.1.0,&lt;2.6.0 (<a href="https://github.com/art049/odmantic/pull/160">#160</a> by <a href="https://github.com/apps/dependabot">@dependabot[bot]</a>)</p>
+</li>
+<li>
+<p>⬆️ Update typer requirement from ^0.3.2 to ^0.4.1 (<a href="https://github.com/art049/odmantic/pull/214">#214</a> by <a href="https://github.com/apps/dependabot">@dependabot[bot]</a>)</p>
+</li>
+<li>
+<p>⬆️ Update mypy requirement from ^0.910 to ^0.942 (<a href="https://github.com/art049/odmantic/pull/215">#215</a> by <a href="https://github.com/apps/dependabot">@dependabot[bot]</a>)</p>
+</li>
+<li>
+<p>⬆️ Update fastapi requirement from &gt;=0.61.1,&lt;0.67.0 to &gt;=0.61.1,&lt;0.69.0 (<a href="https://github.com/art049/odmantic/pull/166">#166</a> by <a href="https://github.com/apps/dependabot">@dependabot[bot]</a>)</p>
+</li>
+<li>
+<p>⬆️ Update fastapi requirement from &gt;=0.61.1,&lt;0.64.0 to &gt;=0.61.1,&lt;0.67.0 (<a href="https://github.com/art049/odmantic/pull/150">#150</a> by <a href="https://github.com/apps/dependabot">@dependabot[bot]</a>)</p>
+</li>
+<li>
+<p>⬆️ Update mypy requirement from ^0.812 to ^0.910 (<a href="https://github.com/art049/odmantic/pull/142">#142</a> by <a href="https://github.com/apps/dependabot">@dependabot[bot]</a>)</p>
+</li>
+<li>
+<p>⬆️ Update pytest-asyncio requirement from ^0.14.0 to ^0.15.0 (<a href="https://github.com/art049/odmantic/pull/125">#125</a> by <a href="https://github.com/apps/dependabot">@dependabot[bot]</a>)</p>
+</li>
+<li>
+<p>⬆️ Update motor requirement from &gt;=2.1.0,&lt;2.4.0 to &gt;=2.1.0,&lt;2.5.0 (<a href="https://github.com/art049/odmantic/pull/124">#124</a> by <a href="https://github.com/apps/dependabot">@dependabot[bot]</a>)</p>
+</li>
+<li>
+<p>⬆️ Update importlib-metadata requirement from &gt;=1,&lt;4 to &gt;=1,&lt;5 (<a href="https://github.com/art049/odmantic/pull/126">#126</a> by <a href="https://github.com/apps/dependabot">@dependabot[bot]</a>)</p>
+</li>
+<li>
+<p>⬆️ Update pydocstyle requirement from ^5.1.1 to ^6.0.0 (<a href="https://github.com/art049/odmantic/pull/119">#119</a> by <a href="https://github.com/apps/dependabot">@dependabot[bot]</a>)</p>
+</li>
+<li>
+<p>⬆️ Update isort requirement from ~=5.7.0 to ~=5.8.0 (<a href="https://github.com/art049/odmantic/pull/122">#122</a> by <a href="https://github.com/apps/dependabot">@dependabot[bot]</a>)</p>
+</li>
+<li>
+<p>⬆️ Update flake8 requirement from ~=3.8.4 to ~=3.9.0 (<a href="https://github.com/art049/odmantic/pull/116">#116</a> by <a href="https://github.com/apps/dependabot">@dependabot[bot]</a>)</p>
+</li>
+</ul>
 <h2 id="035-2021-05-12"><a href="https://github.com/art049/odmantic/compare/v0.3.4...v0.3.5">0.3.5</a> - 2021-05-12<a class="headerlink" href="#035-2021-05-12" title="Permanent link">&para;</a></h2>
 <h4 id="security">Security<a class="headerlink" href="#security" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Change allowed pydantic versions to handle <a href="https://github.com/samuelcolvin/pydantic/security/advisories/GHSA-5jqp-qgf6-3pvh">CVE-2021-29510</a> by <a href="https://github.com/art049">@art049</a></li>
 </ul>
 <h2 id="034-2021-03-04"><a href="https://github.com/art049/odmantic/compare/v0.3.3...v0.3.4">0.3.4</a> - 2021-03-04<a class="headerlink" href="#034-2021-03-04" title="Permanent link">&para;</a></h2>
-<h4 id="fixed">Fixed<a class="headerlink" href="#fixed" title="Permanent link">&para;</a></h4>
+<h4 id="fixed_1">Fixed<a class="headerlink" href="#fixed_1" title="Permanent link">&para;</a></h4>
 <ul>
 <li>
 <p>Fix modified mark clearing on save for nested models (<a href="https://github.com/art049/odmantic/pull/88">#88</a> by <a href="https://github.com/Olegt0rr">@Olegt0rr</a>)</p>
@@ -1059,7 +1234,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <p>Don't replace default field description for ObjectId (<a href="https://github.com/art049/odmantic/pull/82">#82</a> by <a href="https://github.com/Olegt0rr">@Olegt0rr</a>)</p>
 </li>
 </ul>
-<h4 id="internals">Internals<a class="headerlink" href="#internals" title="Permanent link">&para;</a></h4>
+<h4 id="internals_1">Internals<a class="headerlink" href="#internals_1" title="Permanent link">&para;</a></h4>
 <ul>
 <li>
 <p>Support pydantic 1.8 (<a href="https://github.com/art049/odmantic/pull/113">#113</a> by <a href="https://github.com/art049">@art049</a>)</p>
@@ -1081,7 +1256,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 </li>
 </ul>
 <h2 id="033-2021-02-13"><a href="https://github.com/art049/odmantic/compare/v0.3.2...v0.3.3">0.3.3</a> - 2021-02-13<a class="headerlink" href="#033-2021-02-13" title="Permanent link">&para;</a></h2>
-<h4 id="fixed_1">Fixed<a class="headerlink" href="#fixed_1" title="Permanent link">&para;</a></h4>
+<h4 id="fixed_2">Fixed<a class="headerlink" href="#fixed_2" title="Permanent link">&para;</a></h4>
 <ul>
 <li>
 <p>Remove <code>bypass_document_validation</code> save option to avoid <code>Not Authorized</code> errors (<a href="https://github.com/art049/odmantic/pull/85">#85</a> by <a href="https://github.com/Olegt0rr">@Olegt0rr</a>)</p>
@@ -1096,7 +1271,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <p>Fix datetime field default example value naiveness (<a href="https://github.com/art049/odmantic/pull/103">#103</a> by <a href="https://github.com/art049">@art049</a>)</p>
 </li>
 </ul>
-<h4 id="internals_1">Internals<a class="headerlink" href="#internals_1" title="Permanent link">&para;</a></h4>
+<h4 id="internals_2">Internals<a class="headerlink" href="#internals_2" title="Permanent link">&para;</a></h4>
 <ul>
 <li>
 <p>Update pytz requirement from ^2020.1 to ^2021.1 (<a href="https://github.com/art049/odmantic/pull/98">#98</a> by <a href="https://github.com/apps/dependabot">@dependabot[bot]</a>)</p>
@@ -1115,7 +1290,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 </li>
 </ul>
 <h2 id="032-2020-12-15"><a href="https://github.com/art049/odmantic/compare/v0.3.1...v0.3.2">0.3.2</a> - 2020-12-15<a class="headerlink" href="#032-2020-12-15" title="Permanent link">&para;</a></h2>
-<h4 id="added">Added<a class="headerlink" href="#added" title="Permanent link">&para;</a></h4>
+<h4 id="added_1">Added<a class="headerlink" href="#added_1" title="Permanent link">&para;</a></h4>
 <ul>
 <li>
 <p>Fix embedded model field update (<a href="https://github.com/art049/odmantic/pull/77">#77</a> by <a href="https://github.com/art049">@art049</a>)</p>
@@ -1124,7 +1299,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <p>Fix <code>datetime</code> bson inheritance issue (<a href="https://github.com/art049/odmantic/pull/78">#78</a> by <a href="https://github.com/Olegt0rr">@Olegt0rr</a>)</p>
 </li>
 </ul>
-<h4 id="internals_2">Internals<a class="headerlink" href="#internals_2" title="Permanent link">&para;</a></h4>
+<h4 id="internals_3">Internals<a class="headerlink" href="#internals_3" title="Permanent link">&para;</a></h4>
 <ul>
 <li>
 <p>Migrate to the updated prettier precommit hook (<a href="https://github.com/art049/odmantic/pull/74">#74</a> by <a href="https://github.com/art049">@art049</a>)</p>
@@ -1149,11 +1324,11 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 </li>
 </ul>
 <h2 id="031-2020-11-16"><a href="https://github.com/art049/odmantic/compare/v0.3.0...v0.3.1">0.3.1</a> - 2020-11-16<a class="headerlink" href="#031-2020-11-16" title="Permanent link">&para;</a></h2>
-<h4 id="added_1">Added<a class="headerlink" href="#added_1" title="Permanent link">&para;</a></h4>
+<h4 id="added_2">Added<a class="headerlink" href="#added_2" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Add <code>schema_extra</code> config option (<a href="https://github.com/art049/odmantic/pull/41">#41</a> by <a href="https://github.com/art049">@art049</a>)</li>
 </ul>
-<h4 id="fixed_2">Fixed<a class="headerlink" href="#fixed_2" title="Permanent link">&para;</a></h4>
+<h4 id="fixed_3">Fixed<a class="headerlink" href="#fixed_3" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Fix <code>setattr</code> error on a manually initialized EmbeddedModel (<a href="https://github.com/art049/odmantic/pull/40">#40</a> by <a href="https://github.com/art049">@art049</a>)</li>
 </ul>
@@ -1164,7 +1339,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
   <code>collection</code> Config option (<a href="https://art049.github.io/odmantic/modeling/#collection">more
   details</a>)</li>
 </ul>
-<h4 id="added_2">Added<a class="headerlink" href="#added_2" title="Permanent link">&para;</a></h4>
+<h4 id="added_3">Added<a class="headerlink" href="#added_3" title="Permanent link">&para;</a></h4>
 <ul>
 <li>
 <p>Allow parsing document with unset fields defaults (<a href="https://art049.github.io/odmantic/raw_query_usage/#advanced-parsing-behavior">documentation</a>) (<a href="https://github.com/art049/odmantic/pull/28">#28</a> by <a href="https://github.com/art049">@art049</a>)</p>
@@ -1187,7 +1362,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 </li>
 </ul>
 <h2 id="021-2020-10-25"><a href="https://github.com/art049/odmantic/compare/v0.2.0...v0.2.1">0.2.1</a> - 2020-10-25<a class="headerlink" href="#021-2020-10-25" title="Permanent link">&para;</a></h2>
-<h4 id="fixed_3">Fixed<a class="headerlink" href="#fixed_3" title="Permanent link">&para;</a></h4>
+<h4 id="fixed_4">Fixed<a class="headerlink" href="#fixed_4" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Fix combined use of <code>skip</code> and <code>limit</code> with <code>engine.find</code> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/art049/odmantic/issues/25" title="GitHub Issue: art049/odmantic #25">#25</a> by <a class="magiclink magiclink-github magiclink-mention" href="https://github.com/art049" title="GitHub User: art049">@art049</a>)</li>
 </ul>
@@ -1198,12 +1373,12 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
   details</a> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/art049/odmantic/issues/21" title="GitHub Issue: art049/odmantic #21">#21</a> by
   <a class="magiclink magiclink-github magiclink-mention" href="https://github.com/art049" title="GitHub User: art049">@art049</a>)</li>
 </ul>
-<h4 id="added_3">Added<a class="headerlink" href="#added_3" title="Permanent link">&para;</a></h4>
+<h4 id="added_4">Added<a class="headerlink" href="#added_4" title="Permanent link">&para;</a></h4>
 <ul>
 <li><a href="https://art049.github.io/odmantic/querying/#sorting">Add sorting support</a> (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/art049/odmantic/issues/17" title="GitHub Issue: art049/odmantic #17">#17</a> by <a class="magiclink magiclink-github magiclink-mention" href="https://github.com/adriencaccia" title="GitHub User: adriencaccia">@adriencaccia</a>)</li>
 <li>Support motor 2.3.0 (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/art049/odmantic/issues/20" title="GitHub Issue: art049/odmantic #20">#20</a> by <a class="magiclink magiclink-github magiclink-mention" href="https://github.com/art049" title="GitHub User: art049">@art049</a>)</li>
 </ul>
-<h4 id="fixed_4">Fixed<a class="headerlink" href="#fixed_4" title="Permanent link">&para;</a></h4>
+<h4 id="fixed_5">Fixed<a class="headerlink" href="#fixed_5" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Fix FastAPI usage with References (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/art049/odmantic/issues/19" title="GitHub Issue: art049/odmantic #19">#19</a> by <a class="magiclink magiclink-github magiclink-mention" href="https://github.com/art049" title="GitHub User: art049">@art049</a>)</li>
 </ul>
@@ -1233,7 +1408,8 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
-        <a href="../contributing/" class="md-footer__link md-footer__link--prev" rel="prev">
+        
+        <a href="../contributing/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Contributing" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1254,10 +1430,12 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
     <div class="md-footer-meta__inner md-grid">
       <div class="md-footer-copyright">
         
-        Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-          Material for MkDocs
-        </a>
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
         
       </div>
       
@@ -1300,10 +1478,10 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": ["instant"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.4fa0e4ee.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["instant"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.1d3bfcf1.min.js"></script>
+      <script src="../assets/javascripts/bundle.b1047164.min.js"></script>
       
         <script src="../js/gitter.js"></script>
       

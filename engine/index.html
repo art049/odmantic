@@ -14,7 +14,7 @@
         <link rel="canonical" href="https://art049.github.io/odmantic/engine/">
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.4">
+      <meta name="generator" content="mkdocs-1.2.4, mkdocs-material-7.3.6">
     
     
       
@@ -22,10 +22,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.bde7dde4.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.a57b2b03.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.ef6f36e2.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
         
           
           
@@ -50,10 +50,19 @@
     
     
       
-        
-<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-180814888-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
-<script async src="https://www.google-analytics.com/analytics.js"></script>
-      
+
+  
+
+
+  
+
+  
+
+
+  <script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-180814888-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+  <script async src="https://www.google-analytics.com/analytics.js"></script>
+
+
     
     
   </head>
@@ -84,7 +93,9 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href=".." title="ODMantic" class="md-header__button md-logo" aria-label="ODMantic" data-md-component="logo">
       
@@ -122,14 +133,18 @@
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
       </label>
-      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
-      </button>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
@@ -159,11 +174,14 @@
       </div>
     
   </nav>
+  
 </header>
     
     <div class="md-container" data-md-component="container">
       
       
+        
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -275,6 +293,8 @@
       </a>
       
         
+
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -360,6 +380,33 @@
   <a href="#update" class="md-nav__link">
     Update
   </a>
+  
+    <nav class="md-nav" aria-label="Update">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modifying-one-field" class="md-nav__link">
+    Modifying one field
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#patching-multiple-fields-at-once" class="md-nav__link">
+    Patching multiple fields at once
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changing-the-primary-field" class="md-nav__link">
+    Changing the primary field
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -451,10 +498,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
       
-      <label class="md-nav__link" for="__nav_9">
-        API Reference
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          API Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="API Reference" data-md-level="1">
         <label class="md-nav__title" for="__nav_9">
           <span class="md-nav__icon md-icon"></span>
@@ -463,6 +514,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -473,8 +525,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -485,8 +539,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -497,8 +553,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -509,8 +567,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -521,8 +581,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -533,8 +595,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -545,8 +609,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -557,6 +623,7 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -606,6 +673,8 @@
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
+
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -691,6 +760,33 @@
   <a href="#update" class="md-nav__link">
     Update
   </a>
+  
+    <nav class="md-nav" aria-label="Update">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modifying-one-field" class="md-nav__link">
+    Modifying one field
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#patching-multiple-fields-at-once" class="md-nav__link">
+    Patching multiple fields at once
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changing-the-primary-field" class="md-nav__link">
+    Changing the primary field
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -806,26 +902,28 @@ Format</a>
 <span class="hll"><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save_all</span><span class="p">(</span><span class="n">players</span><span class="p">)</span>
 </span></code></pre></div>
 </td></tr></table>
-<details class="abstract"><summary>Resulting documents in the <code>player</code> collection</summary><div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f85f36d6dfecacc68428a46&quot;</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">&quot;game&quot;</span><span class="p">:</span> <span class="s2">&quot;World of Warcraft&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Leeroy Jenkins&quot;</span>
-<span class="p">}</span>
-<span class="p">{</span>
-  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f85f36d6dfecacc68428a47&quot;</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">&quot;game&quot;</span><span class="p">:</span> <span class="s2">&quot;Counter-Strike&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Shroud&quot;</span>
-<span class="p">}</span>
-<span class="p">{</span>
-  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f85f36d6dfecacc68428a49&quot;</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">&quot;game&quot;</span><span class="p">:</span> <span class="s2">&quot;Starcraft&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TLO&quot;</span>
-<span class="p">}</span>
-<span class="p">{</span>
-  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f85f36d6dfecacc68428a48&quot;</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">&quot;game&quot;</span><span class="p">:</span> <span class="s2">&quot;Starcraft&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Serral&quot;</span>
-<span class="p">}</span>
+<details class="abstract">
+<summary>Resulting documents in the <code>player</code> collection</summary>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f85f36d6dfecacc68428a46&quot;</span><span class="err">)</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;game&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;World of Warcraft&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Leeroy Jenkins&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f85f36d6dfecacc68428a47&quot;</span><span class="err">)</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;game&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Counter-Strike&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Shroud&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f85f36d6dfecacc68428a49&quot;</span><span class="err">)</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;game&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Starcraft&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TLO&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f85f36d6dfecacc68428a48&quot;</span><span class="err">)</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;game&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Starcraft&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Serral&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 </details>
 <div class="admonition tip">
@@ -1055,12 +1153,15 @@ as positional arguments. Those will be implicitly combined as single
 <a href="../api_reference/query/#odmantic.query.and_">and_</a> query.</p>
 </div>
 <h2 id="update">Update<a class="headerlink" href="#update" title="Permanent link">&para;</a></h2>
-<p>Updating an instance in the database can be done simply by modifying the instance
-locally and saving it again to the database.</p>
+<p>Updating an instance in the database can be done by modifying the instance locally and
+saving it again to the database.</p>
 <p>The <a href="../api_reference/engine/#odmantic.engine.AIOEngine.save">AIOEngine.save</a> and
 <a href="../api_reference/engine/#odmantic.engine.AIOEngine.save">AIOEngine.save_all</a> methods are actually behaving as
 <code>upsert</code> operations. In other words, if the instance already exists it will be updated.
 Otherwise, the related document will be created in the database.</p>
+<h3 id="modifying-one-field">Modifying one field<a class="headerlink" href="#modifying-one-field" title="Permanent link">&para;</a></h3>
+<p>Modifying a single field can be achieved by directly changing the instance attribute and
+saving the instance.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
@@ -1090,35 +1191,169 @@ Otherwise, the related document will be created in the database.</p>
 </span><span class="hll"><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">shroud</span><span class="p">)</span>
 </span></code></pre></div>
 </td></tr></table>
-<details class="abstract" open="open"><summary>Resulting documents in the <code>player</code> collection</summary><div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f85f36d6dfecacc68428a46&quot;</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">&quot;game&quot;</span><span class="p">:</span> <span class="s2">&quot;World of Warcraft&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Leeroy Jenkins&quot;</span>
-<span class="p">}</span>
-<span class="hll"><span class="p">{</span>
-</span><span class="hll">  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f85f36d6dfecacc68428a47&quot;</span><span class="err">)</span><span class="p">,</span>
-</span><span class="hll">  <span class="nt">&quot;game&quot;</span><span class="p">:</span> <span class="s2">&quot;Valorant&quot;</span><span class="p">,</span>
-</span><span class="hll">  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Shroud&quot;</span>
-</span><span class="hll"><span class="p">}</span>
-</span><span class="p">{</span>
-  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f85f36d6dfecacc68428a49&quot;</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">&quot;game&quot;</span><span class="p">:</span> <span class="s2">&quot;Starcraft&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TLO&quot;</span>
-<span class="p">}</span>
-<span class="p">{</span>
-  <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f85f36d6dfecacc68428a48&quot;</span><span class="err">)</span><span class="p">,</span>
-  <span class="nt">&quot;game&quot;</span><span class="p">:</span> <span class="s2">&quot;Starcraft&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Serral&quot;</span>
-<span class="p">}</span>
+<details class="abstract" open="open">
+<summary>Resulting documents in the <code>player</code> collection</summary>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f85f36d6dfecacc68428a46&quot;</span><span class="err">)</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;game&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;World of Warcraft&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Leeroy Jenkins&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="hll"><span class="p">{</span><span class="w"></span>
+</span><span class="hll"><span class="w">  </span><span class="nt">&quot;_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f85f36d6dfecacc68428a47&quot;</span><span class="err">)</span><span class="p">,</span><span class="w"></span>
+</span><span class="hll"><span class="w">  </span><span class="nt">&quot;game&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Valorant&quot;</span><span class="p">,</span><span class="w"></span>
+</span><span class="hll"><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Shroud&quot;</span><span class="w"></span>
+</span><span class="hll"><span class="p">}</span><span class="w"></span>
+</span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f85f36d6dfecacc68428a49&quot;</span><span class="err">)</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;game&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Starcraft&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TLO&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f85f36d6dfecacc68428a48&quot;</span><span class="err">)</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;game&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Starcraft&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Serral&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 </details>
-<div class="admonition warning">
-<p class="admonition-title">Primary field update</p>
-<p>Currently, changing the primary field value is disabled and a <code>NotImplementedError</code>
-exception will be raised if you try to do so. It is still possible to mutate the
-primary field if the field type is mutable but it might result in unexpected
-behaviors.</p>
-<details class="tip"><summary>Workaround to modify the primary key</summary><p>There is still a workaround to update the primary key of a document:
+<h3 id="patching-multiple-fields-at-once">Patching multiple fields at once<a class="headerlink" href="#patching-multiple-fields-at-once" title="Permanent link">&para;</a></h3>
+<p>The easiest way to change multiple fields at once is to use the
+<a href="../api_reference/model/#odmantic.model._BaseODMModel.update">Model.update</a> method. This method will take either a
+Pydantic object or a dictionary and update the matching fields of the instance.</p>
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">From a Pydantic Model</label><div class="tabbed-content">
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
+
+<span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span><span class="p">,</span> <span class="n">Model</span>
+
+
+<span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">game</span><span class="p">:</span> <span class="nb">str</span>
+
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">()</span>
+
+
+<span class="n">player_tlo</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">Player</span><span class="p">,</span> <span class="n">Player</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;TLO&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">player_tlo</span><span class="p">))</span>
+<span class="c1">#&gt; Player(id=ObjectId(...), name=&#39;TLO&#39;, game=&#39;Starcraft&#39;)</span>
+
+<span class="c1"># Create the structure of the patch object with pydantic</span>
+<span class="hll"><span class="k">class</span> <span class="nc">PatchPlayerSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span class="hll">    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+</span><span class="hll">    <span class="n">game</span><span class="p">:</span> <span class="nb">str</span>
+</span>
+
+<span class="c1"># Create the patch object containing the new values</span>
+<span class="hll"><span class="n">patch_object</span> <span class="o">=</span> <span class="n">PatchPlayerSchema</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;TheLittleOne&quot;</span><span class="p">,</span> <span class="n">game</span><span class="o">=</span><span class="s2">&quot;Starcraft II&quot;</span><span class="p">)</span>
+</span><span class="c1"># Apply the patch to the instance</span>
+<span class="hll"><span class="n">player_tlo</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">patch_object</span><span class="p">)</span>
+</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">player_tlo</span><span class="p">))</span>
+<span class="hll"><span class="c1">#&gt; Player(id=ObjectId(...), name=&#39;TheLittleOne&#39;, game=&#39;Starcraft II&#39;)</span>
+</span>
+<span class="c1"># Finally persist again the new instance</span>
+<span class="hll"><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">player_tlo</span><span class="p">)</span>
+</span></code></pre></div>
+</td></tr></table>
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">From a dictionary</label><div class="tabbed-content">
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">odmantic</span> <span class="kn">import</span> <span class="n">AIOEngine</span><span class="p">,</span> <span class="n">Model</span>
+
+
+<span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">game</span><span class="p">:</span> <span class="nb">str</span>
+
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">AIOEngine</span><span class="p">()</span>
+
+<span class="n">player_tlo</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">find_one</span><span class="p">(</span><span class="n">Player</span><span class="p">,</span> <span class="n">Player</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;TLO&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">player_tlo</span><span class="p">))</span>
+<span class="c1">#&gt; Player(id=ObjectId(...), name=&#39;TLO&#39;, game=&#39;Starcraft&#39;)</span>
+
+<span class="c1"># Create the patch dictionary containing the new values</span>
+<span class="hll"><span class="n">patch_object</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TheLittleOne&quot;</span><span class="p">,</span> <span class="s2">&quot;game&quot;</span><span class="p">:</span> <span class="s2">&quot;Starcraft II&quot;</span><span class="p">}</span>
+</span><span class="c1"># Update the local instance</span>
+<span class="hll"><span class="n">player_tlo</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">patch_object</span><span class="p">)</span>
+</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">player_tlo</span><span class="p">))</span>
+<span class="hll"><span class="c1">#&gt; Player(id=ObjectId(...), name=&#39;TheLittleOne&#39;, game=&#39;Starcraft II&#39;)</span>
+</span>
+<span class="c1"># Finally persist the instance</span>
+<span class="hll"><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">player_tlo</span><span class="p">)</span>
+</span></code></pre></div>
+</td></tr></table>
+</div>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Resulting document associated to the player</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f85f36d6dfecacc68428a49&quot;</span><span class="err">)</span><span class="p">,</span><span class="w"></span>
+<span class="hll"><span class="w">  </span><span class="nt">&quot;game&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Starcraft II&quot;</span><span class="p">,</span><span class="w"></span>
+</span><span class="hll"><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TheLittleOne&quot;</span><span class="w"></span>
+</span><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+</div>
+<h3 id="changing-the-primary-field">Changing the primary field<a class="headerlink" href="#changing-the-primary-field" title="Permanent link">&para;</a></h3>
+<p>Directly changing the primary field value as explained above is not
+possible and a <code>NotImplementedError</code> exception will be raised if you try to do so.</p>
+<p>The easiest way to change an instance primary field is to perform a local copy of the
+instance using the <a href="../api_reference/model/#odmantic.model._BaseODMModel.copy">Model.copy</a> method.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
@@ -1156,24 +1391,27 @@ behaviors.</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">shroud</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 <span class="c1">#&gt; 5f86074f6dfecacc68428a62</span>
 <span class="n">new_id</span> <span class="o">=</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s2">&quot;ffffffffffffffffffffffff&quot;</span><span class="p">)</span>
-<span class="c1"># First delete the remote instance</span>
+<span class="c1"># Copy the player instance with a new primary key</span>
+<span class="hll"><span class="n">new_shroud</span> <span class="o">=</span> <span class="n">shroud</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">update</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">new_id</span><span class="p">})</span>
+</span><span class="c1"># Delete the initial player instance</span>
 <span class="hll"><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">shroud</span><span class="p">)</span>
-</span><span class="c1"># Then, copy the player object with a new primary key</span>
-<span class="hll"><span class="n">new_shroud</span> <span class="o">=</span> <span class="n">Player</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="o">**</span><span class="n">shroud</span><span class="o">.</span><span class="n">dict</span><span class="p">(),</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">new_id</span><span class="p">})</span>
-</span><span class="c1"># Finally create again the document</span>
+</span><span class="c1"># Finally persist again the new instance</span>
 <span class="hll"><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">new_shroud</span><span class="p">)</span>
 </span></code></pre></div>
-</td></tr></table></p>
+</td></tr></table>
 <div class="admonition abstract">
 <p class="admonition-title">Resulting document associated to the player</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="hll">    <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;ffffffffffffffffffffffff&quot;</span><span class="err">)</span><span class="p">,</span>
-</span>    <span class="nt">&quot;game&quot;</span><span class="p">:</span> <span class="s2">&quot;Valorant&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Shroud&quot;</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="hll"><span class="w">    </span><span class="nt">&quot;_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;ffffffffffffffffffffffff&quot;</span><span class="err">)</span><span class="p">,</span><span class="w"></span>
+</span><span class="w">    </span><span class="nt">&quot;game&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Valorant&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Shroud&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 </div>
-</details>
+<div class="admonition danger">
+<p class="admonition-title">Update data used with the copy</p>
+<p>The data updated by the copy method is not validated: you should <strong>absolutely</strong>
+trust this data.</p>
 </div>
 <h2 id="delete">Delete<a class="headerlink" href="#delete" title="Permanent link">&para;</a></h2>
 <p>You can delete instance by passing them to the
@@ -1226,7 +1464,8 @@ behaviors.</p>
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
-        <a href="../modeling/" class="md-footer__link md-footer__link--prev" rel="prev">
+        
+        <a href="../modeling/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Modeling" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1241,7 +1480,8 @@ behaviors.</p>
         </a>
       
       
-        <a href="../querying/" class="md-footer__link md-footer__link--next" rel="next">
+        
+        <a href="../querying/" class="md-footer__link md-footer__link--next" aria-label="Next: Querying" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
@@ -1261,10 +1501,12 @@ behaviors.</p>
     <div class="md-footer-meta__inner md-grid">
       <div class="md-footer-copyright">
         
-        Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-          Material for MkDocs
-        </a>
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
         
       </div>
       
@@ -1307,10 +1549,10 @@ behaviors.</p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": ["instant"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.4fa0e4ee.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["instant"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.1d3bfcf1.min.js"></script>
+      <script src="../assets/javascripts/bundle.b1047164.min.js"></script>
       
         <script src="../js/gitter.js"></script>
       
