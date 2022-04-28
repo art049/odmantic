@@ -66,6 +66,8 @@ from odmantic.field import (
 from odmantic.index import Index, ODMBaseIndex, ODMSingleFieldIndex
 from odmantic.reference import ODMReferenceInfo
 from odmantic.typing import (
+    HAS_GENERIC_ALIAS_BUILTIN,
+    USES_OLD_TYPING_INTERFACE,
     dataclass_transform,
     get_first_type_argument_subclassing,
     get_origin,
@@ -77,6 +79,12 @@ from odmantic.utils import (
     raise_on_invalid_key_name,
     to_snake_case,
 )
+
+if HAS_GENERIC_ALIAS_BUILTIN:
+    from typing import GenericAlias  # type: ignore
+else:
+    from typing import _GenericAlias as GenericAlias  # type: ignore
+
 
 if TYPE_CHECKING:
 
@@ -186,8 +194,19 @@ def validate_type(type_: Type) -> Type:
     if type_origin is not None:
         type_args: Tuple[Type, ...] = getattr(type_, "__args__", ())
         new_arg_types = tuple(validate_type(subtype) for subtype in type_args)
-        setattr(type_, "__args__", new_arg_types)
-
+        type_ = GenericAlias(type_origin, new_arg_types)
+        if USES_OLD_TYPING_INTERFACE:
+            # FIXME: there is probably a more elegant way of doing this
+            subs_tree = type_._subs_tree()
+            if type_origin is Union:
+                tree_hash = hash(
+                    frozenset(subs_tree) if isinstance(subs_tree, tuple) else subs_tree
+                )
+            else:
+                tree_hash = hash(
+                    subs_tree if isinstance(subs_tree, tuple) else frozenset(subs_tree)
+                )
+            setattr(type_, "__tree_hash__", tree_hash)
     return type_
 
 
