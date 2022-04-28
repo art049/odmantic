@@ -6,7 +6,7 @@ import uuid
 import warnings
 from abc import ABCMeta
 from collections.abc import Callable as abcCallable
-from types import FunctionType
+from types import FunctionType, GenericAlias
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -178,7 +178,7 @@ def validate_type(type_: Type) -> Type:
     if type_origin is not None:
         type_args: Tuple[Type, ...] = getattr(type_, "__args__", ())
         new_arg_types = tuple(validate_type(subtype) for subtype in type_args)
-        setattr(type_, "__args__", new_arg_types)
+        type_ = GenericAlias(type_origin, new_arg_types)
         if USES_OLD_TYPING_INTERFACE:
             # FIXME: there is probably a more elegant way of doing this
             subs_tree = type_._subs_tree()
