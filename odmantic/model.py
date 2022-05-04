@@ -263,7 +263,7 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
             elif lenient_issubclass(field_type, Model):
                 if not isinstance(value, ODMReferenceInfo):
                     raise TypeError(
-                        "cannot define a reference {field_name} (in {name}) without"
+                        f"cannot define a reference {field_name} (in {name}) without"
                         " a Reference assigned to it"
                     )
                 key_name = value.key_name if value.key_name is not None else field_name
