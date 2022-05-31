@@ -47,16 +47,16 @@ Core features:
 
 ## Requirements
 
-**Python**: 3.6 and later (tested against 3.6, 3.7, 3.8 and 3.9)
+**Python**: 3.6.1 and later (tested against 3.6, 3.7, 3.8 and 3.9)
 
 **MongoDB**: 4.0 and later
 
 Two direct dependencies:
 
-- <a href="https://pydantic-docs.helpmanual.io/" target="_blank">pydantic</a>: makes
+- <a href="https://pydantic-docs.helpmanual.io/" target="_blank">pydantic</a> (_>=1.6.2_): makes
   data validation and schema definition both handy and elegant.
 
-- <a href="https://motor.readthedocs.io/en/stable/" target="_blank">motor</a>: an
+- <a href="https://motor.readthedocs.io/en/stable/" target="_blank">motor</a> (_>=2.1.0_): an
   asyncio MongoDB driver officially developed by the MongoDB team.
 
 ## Installation
