@@ -20,7 +20,7 @@ jobs:
         with:
           extra_args: --all-files
 
-  tests:
+  compatibility-tests:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -29,56 +29,97 @@ jobs:
           - 3.7
           - 3.8
           - 3.9
-        mongo-version:
-          - 4.0
-          - 4.2
-          - 4.4
-        mongo-mode:
-          - standalone
-        include:
-          - python-version: 3.8
-            mongo-version: 4.0
-            mongo-mode: replicaSet
-          - python-version: 3.8
-            mongo-version: 4.2
-            mongo-mode: sharded
-
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
       - name: Mongo Service
         id: mongo-service
         uses: ./.github/actions/mongo-service
         with:
-          version: ${{ matrix.mongo-version }}
-          mode: ${{ matrix.mongo-mode }}
+          version: "4.4"
+          mode: standalone
+      - name: "Set up Python ${{ matrix.python-version }}"
+        uses: actions/setup-python@v2
+        with:
+          python-version: "${{ matrix.python-version }}"
       - name: Cache environment
         uses: actions/cache@v2
         with:
-          path: .venv
-          key: venv-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml') }}
+          path: |
+            .venv
+            .tox
+            poetry.lock
+          key: env-compatibility-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml') }}
       - name: Install dependencies
         run: |
-          pip install poetry
+          pip install poetry tox
           poetry config virtualenvs.in-project true
           poetry config experimental.new-installer false
-          poetry install
-      - name: Run all tests
+          poetry lock
+      - name: Run compatibility checks.
         run: |
-          set -e
-          poetry run coverage run -m pytest -v
-          poetry run coverage report -m
-          poetry run coverage xml
-        env:
-          TEST_MONGO_URI: ${{ steps.mongo-service.outputs.connection-string }}
-          TEST_MONGO_MODE: ${{ matrix.mongo-mode }}
+          export VERSION_STR=$(echo ${{ matrix.python-version }} | sed -e "s/\.//g")
+          export TOX_SKIP_ENV=$(printf '^(?!py%s-)' $VERSION_STR)
+          tox auto
 
-      - uses: codecov/codecov-action@v1
-        if: github.event_name != 'schedule' # Don't report coverage for nightly builds
-        with:
-          file: ./coverage.xml
-          flags: tests-${{ matrix.python-version }}-${{ matrix.mongo-version }}-${{ matrix.mongo-mode }}
-          fail_ci_if_error: true
+  # tests:
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       python-version:
+  #         - 3.6
+  #         - 3.7
+  #         - 3.8
+  #         - 3.9
+  #       mongo-version:
+  #         - 4.0
+  #         - 4.2
+  #         - 4.4
+  #       mongo-mode:
+  #         - standalone
+  #       include:
+  #         - python-version: 3.8
+  #           mongo-version: 4.0
+  #           mongo-mode: replicaSet
+  #         - python-version: 3.8
+  #           mongo-version: 4.2
+  #           mongo-mode: sharded
+
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Set up Python ${{ matrix.python-version }}
+  #       uses: actions/setup-python@v2
+  #       with:
+  #         python-version: ${{ matrix.python-version }}
+  #     - name: Mongo Service
+  #       id: mongo-service
+  #       uses: ./.github/actions/mongo-service
+  #       with:
+  #         version: ${{ matrix.mongo-version }}
+  #         mode: ${{ matrix.mongo-mode }}
+  #     - name: Cache environment
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: .venv
+  #         key: venv-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml') }}
+  #     - name: Install dependencies
+  #       run: |
+  #         pip install poetry
+  #         poetry config virtualenvs.in-project true
+  #         poetry config experimental.new-installer false
+  #         poetry install
+  #     - name: Run all tests
+  #       run: |
+  #         set -e
+  #         poetry run coverage run -m pytest -v
+  #         poetry run coverage report -m
+  #         poetry run coverage xml
+  #       env:
+  #         TEST_MONGO_URI: ${{ steps.mongo-service.outputs.connection-string }}
+  #         TEST_MONGO_MODE: ${{ matrix.mongo-mode }}
+
+  #     - uses: codecov/codecov-action@v1
+  #       if: github.event_name != 'schedule' # Don't report coverage for nightly builds
+  #       with:
+  #         file: ./coverage.xml
+  #         flags: tests-${{ matrix.python-version }}-${{ matrix.mongo-version }}-${{ matrix.mongo-mode }}
+  #         fail_ci_if_error: true
