@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Support pydantic 1.9.0 ([#218](https://github.com/art049/odmantic/pull/218) by [@art049](https://github.com/art049))
+
 ## [0.4.0] - 2022-04-23
 
 #### Added
