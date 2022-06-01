@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- fix missing f string issue #163 ([#222](https://github.com/art049/odmantic/pull/222) by [@voglster](https://github.com/voglster))
+
 ## [0.5.0] - 2022-06-01
 
 - Support motor 3.0 ([#224](https://github.com/art049/odmantic/pull/224) by [@art049](https://github.com/art049))
