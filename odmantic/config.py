@@ -9,7 +9,7 @@ from odmantic.utils import is_dunder
 
 try:
     from pydantic.config import SchemaExtraCallable
-except ModuleNotFoundError:
+except ModuleNotFoundError:  # pragma: no cover
     # pydantic<1.9.0
     # Cannot use type: ignore for all versions
     # -> https://github.com/python/mypy/issues/8823
