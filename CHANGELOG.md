@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2022-06-01
+
 - Support motor 3.0 ([#224](https://github.com/art049/odmantic/pull/224) by [@art049](https://github.com/art049))
 
 - Support pydantic 1.9.0 ([#218](https://github.com/art049/odmantic/pull/218) by [@art049](https://github.com/art049))
@@ -207,4 +209,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.3.4]: https://github.com/art049/odmantic/compare/v0.3.3...v0.3.4
 [0.3.5]: https://github.com/art049/odmantic/compare/v0.3.4...v0.3.5
 [0.4.0]: https://github.com/art049/odmantic/compare/v0.3.5...v0.4.0
-[unreleased]: https://github.com/art049/odmantic/compare/v0.4.0...HEAD
+[0.5.0]: https://github.com/art049/odmantic/compare/v0.4.0...v0.5.0
+[unreleased]: https://github.com/art049/odmantic/compare/v0.5.0...HEAD

@@ -65,7 +65,7 @@ tasks:
     cmds:
       - task: setup:git-lfs
       - task: setup:pre-commit-hook
-      - task: setup:poetry-setup
+      - task: setup:deps-setup
 
   setup:git-lfs:
     cmds:
@@ -80,10 +80,8 @@ tasks:
     status:
       - test -f .git/hooks/pre-commit
 
-  setup:poetry-setup:
+  setup:deps-setup:
     cmds:
-      - poetry install
+      - flit install --deps=all
     sources:
       - pyproject.toml
-    generates:
-      - poetry.lock
