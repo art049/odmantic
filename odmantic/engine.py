@@ -226,7 +226,7 @@ class AIOEngine:
 
         Args:
             model: model to perform the operation on
-            queries: query filter to apply
+            *queries: query filter to apply
             sort: sort expression
             skip: number of document to skip
             limit: maximum number of instance fetched
@@ -275,7 +275,7 @@ class AIOEngine:
 
         Args:
             model: model to perform the operation on
-            queries: query filter to apply
+            *queries: query filter to apply
             sort: sort expression
 
         Raises:
@@ -401,7 +401,7 @@ class AIOEngine:
 
         Args:
             model: model to perform the operation on
-            queries: query filters to apply
+            *queries: query filters to apply
 
         Returns:
             number of document matching the query
