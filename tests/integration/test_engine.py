@@ -530,7 +530,7 @@ async def test_find_document_field_not_set_with_default_factory_disabled(
     engine: AIOEngine,
 ):
     class M(Model):
-        field: str = Field(default_factory=lambda: "hello")
+        field: str = Field(default_factory=lambda: "hello")  # pragma: no cover
 
     await engine.get_collection(M).insert_one({"_id": ObjectId()})
     with pytest.raises(DocumentParsingError, match="key not found in document"):
