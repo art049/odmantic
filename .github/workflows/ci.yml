@@ -47,7 +47,6 @@ jobs:
           path: |
             .venv
             .tox
-            poetry.lock
           key: env-compatibility-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml') }}
       - name: Install tox
         run: pip install tox flit
@@ -55,7 +54,7 @@ jobs:
         run: |
           export VERSION_STR=$(echo ${{ matrix.python-version }} | sed -e "s/\.//g")
           export TOX_SKIP_ENV=$(printf '^(?!py%s-)' $VERSION_STR)
-          tox auto
+          tox --parallel auto
 
   tests:
     runs-on: ubuntu-latest
