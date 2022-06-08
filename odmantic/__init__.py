@@ -1,10 +1,18 @@
 from .bson import ObjectId
-from .engine import AIOEngine
+from .engine import AIOEngine, SyncEngine
 from .field import Field
 from .model import EmbeddedModel, Model
 from .reference import Reference
 
-__all__ = ["AIOEngine", "Model", "EmbeddedModel", "Field", "Reference", "ObjectId"]
+__all__ = [
+    "AIOEngine",
+    "Model",
+    "EmbeddedModel",
+    "Field",
+    "Reference",
+    "ObjectId",
+    "SyncEngine",
+]
 
 # Cleanest way to handle version changes with poetry while not hardcoding the version
 # https://github.com/python-poetry/poetry/pull/2366#issuecomment-652418094
