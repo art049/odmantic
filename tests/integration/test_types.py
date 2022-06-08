@@ -7,8 +7,9 @@ from typing import Dict, Generic, List, Pattern, Tuple, Type, TypeVar, Union
 import pytest
 from bson import Binary, Decimal128, Int64, ObjectId, Regex
 from motor.motor_asyncio import AsyncIOMotorDatabase
+from pymongo.database import Database
 
-from odmantic.engine import AIOEngine
+from odmantic.engine import AIOEngine, SyncEngine
 from odmantic.model import Model
 
 pytestmark = pytest.mark.asyncio
@@ -93,6 +94,29 @@ async def test_bson_type_inference(
     assert recovered_instance.field == instance.field
 
 
+@pytest.mark.parametrize("case", type_test_data)
+def test_sync_bson_type_inference(
+    pymongo_database: Database, sync_engine: SyncEngine, case: TypeTestCase
+):
+    class ModelWithTypedField(Model):
+        field: case.python_type  # type: ignore
+
+    # TODO: Fix objectid optional (type: ignore)
+    instance = sync_engine.save(ModelWithTypedField(field=case.sample_value))
+    document = pymongo_database[ModelWithTypedField.__collection__].find_one(
+        {
+            +ModelWithTypedField.id: instance.id,
+            +ModelWithTypedField.field: {"$type": case.bson_type},
+        }
+    )
+    assert document is not None, (
+        f"Type inference error: {case.python_type} -> {case.bson_type}"
+        f" ({case.sample_value})"
+    )
+    recovered_instance = ModelWithTypedField(field=document["field"])
+    assert recovered_instance.field == instance.field
+
+
 async def test_custom_bson_serializable(
     motor_database: AsyncIOMotorDatabase, aio_engine
 ):
@@ -117,6 +141,38 @@ async def test_custom_bson_serializable(
     document = await motor_database[ModelWithCustomField.__collection__].find_one(
         {
             +ModelWithCustomField.id: instance.id,  # type: ignore
+            +ModelWithCustomField.field: {"$type": "string"},  # type: ignore
+        }
+    )
+    assert document is not None, "Couldn't retrieve the document with it's string value"
+    recovered_instance = ModelWithCustomField.parse_doc(document)
+    assert recovered_instance.field == instance.field
+
+
+def test_sync_custom_bson_serializable(
+    pymongo_database: Database, sync_engine: SyncEngine
+):
+    class FancyFloat:
+        @classmethod
+        def __get_validators__(cls):
+            yield cls.validate
+
+        @classmethod
+        def validate(cls, v):
+            return float(v)
+
+        @classmethod
+        def __bson__(cls, v):
+            # We store the float as a string in the DB
+            return str(v)
+
+    class ModelWithCustomField(Model):
+        field: FancyFloat
+
+    instance = sync_engine.save(ModelWithCustomField(field=3.14))
+    document = pymongo_database[ModelWithCustomField.__collection__].find_one(
+        {
+            +ModelWithCustomField.id: instance.id,
             +ModelWithCustomField.field: {"$type": "string"},  # type: ignore
         }
     )
