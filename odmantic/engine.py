@@ -541,7 +541,7 @@ class AIOEngine(BaseEngine):
         """
         if not lenient_issubclass(model, Model):
             raise TypeError("Can only call count with a Model class")
-        query = AIOEngine._build_query(*queries)
+        query = BaseEngine._build_query(*queries)
         collection = self.database[model.__collection__]
         count = await collection.count_documents(query)
         return int(count)
