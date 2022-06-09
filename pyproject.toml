@@ -42,6 +42,8 @@ dependencies = [
 [project.optional-dependencies]
 fastapi = ["fastapi >=0.61.1,<0.69.0"]
 test = [
+    "motor >=2.1.0,<3.1.0",
+    "pymongo >=3.11.0,<5.0.0",
     "black ~= 22.3.0",
     "isort ~=5.8.0",
     "flake8 ~= 4.0.1",
