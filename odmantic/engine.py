@@ -34,7 +34,7 @@ try:
     from pymongo.collection import Collection
     from pymongo.command_cursor import CommandCursor
     from pymongo.database import Database
-except ImportError:
+except ImportError:  # pragma: no cover
     pymongo = None
 
 try:
@@ -46,7 +46,7 @@ try:
         AsyncIOMotorCursor,
         AsyncIOMotorDatabase,
     )
-except ImportError:
+except ImportError:  # pragma: no cover
     motor = None
 
 
