@@ -176,16 +176,6 @@ async def aged_person_persisted(aio_engine: AIOEngine):
     return await aio_engine.save_all(initial_instances)
 
 
-@pytest.fixture(scope="function")
-def aged_sync_person_persisted(sync_engine: SyncEngine):
-    initial_instances = [
-        AgedPerson(name="Jean-Pierre", age=25),
-        AgedPerson(name="Jean-Paul", age=40),
-        AgedPerson(name="Michel", age=70),
-    ]
-    return sync_engine.save_all(initial_instances)
-
-
 @pytest.mark.usefixtures("aged_person_persisted")
 async def test_gt(aio_engine: AIOEngine):
     query = AgedPerson.age > 40
