@@ -51,6 +51,7 @@ from odmantic.exceptions import (
     ReferencedDocumentNotFoundError,
 )
 from odmantic.field import (
+    Field,
     FieldProxy,
     ODMBaseField,
     ODMEmbedded,
@@ -78,6 +79,18 @@ if TYPE_CHECKING:
 
 if USES_OLD_TYPING_INTERFACE:
     from typing import _subs_tree  # type: ignore  # noqa
+
+_T = TypeVar("_T")
+
+
+def __dataclass_transform__(
+    *,
+    eq_default: bool = True,
+    order_default: bool = False,
+    kw_only_default: bool = False,
+    field_specifiers: Tuple[Union[type, Callable[..., Any]], ...] = (()),
+) -> Callable[[_T], _T]:
+    return lambda a: a
 
 
 UNTOUCHED_TYPES = FunctionType, property, classmethod, staticmethod, type
@@ -372,6 +385,7 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
         return cls
 
 
+@__dataclass_transform__(kw_only_default=True, field_specifiers=(Field, ODMFieldInfo))
 class ModelMetaclass(BaseModelMetaclass):
     @no_type_check
     def __new__(  # noqa C901
@@ -433,6 +447,7 @@ class ModelMetaclass(BaseModelMetaclass):
         return cast(str, getattr(cls, "__collection__"))
 
 
+@__dataclass_transform__(kw_only_default=True, field_specifiers=(Field, ODMFieldInfo))
 class EmbeddedModelMetaclass(BaseModelMetaclass):
     @no_type_check
     def __new__(
@@ -474,7 +489,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         __mutable_fields__: ClassVar[FrozenSet[str]] = frozenset()
         __references__: ClassVar[Tuple[str, ...]] = ()
         __pydantic_model__: ClassVar[Type[BaseBSONModel]]
-        __fields_modified__: Set[str] = set()
+        __fields_modified__: ClassVar[Set[str]] = set()
 
     __slots__ = ("__fields_modified__",)
 
@@ -747,7 +762,7 @@ class Model(_BaseODMModel, metaclass=ModelMetaclass):
         __collection__: ClassVar[str] = ""
         __primary_field__: ClassVar[str] = ""
 
-        id: Union[ObjectId, Any]  # TODO fix basic id field typing
+        id: Union[ObjectId, Any] = None  # TODO fix basic id field typing
 
     def __setattr__(self, name: str, value: Any) -> None:
         if name == self.__primary_field__:
