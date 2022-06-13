@@ -316,6 +316,7 @@ class AIOEngine:
                 {"_id": getattr(instance, instance.__primary_field__)},
                 {"$set": doc},
                 upsert=True,
+                session=session,
             )
             object.__setattr__(instance, "__fields_modified__", set())
         return instance
