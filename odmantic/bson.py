@@ -1,7 +1,7 @@
 import decimal
 import re
 from datetime import datetime
-from typing import Any, Dict, Pattern, cast
+from typing import Any, Dict, Pattern
 
 import bson
 import bson.binary
@@ -169,7 +169,7 @@ class _decimalDecimal(decimal.Decimal):
         if isinstance(v, decimal.Decimal):
             return v
         elif isinstance(v, bson.decimal128.Decimal128):
-            return cast(decimal.Decimal, v.to_decimal())
+            return v.to_decimal()
 
         a = decimal_validator(v)
         return a

@@ -142,7 +142,7 @@ def is_type_mutable(type_: Type) -> bool:
         return not lenient_issubclass(type_origin, _IMMUTABLE_TYPES)
     else:
         return not (
-            type_ is None  # type:ignore
+            type_ is None
             or (
                 lenient_issubclass(type_, _IMMUTABLE_TYPES)
                 and not lenient_issubclass(type_, EmbeddedModel)
