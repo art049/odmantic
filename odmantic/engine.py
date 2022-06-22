@@ -21,21 +21,16 @@ from typing import (
 )
 
 from pydantic.utils import lenient_issubclass
+from pymongo import MongoClient
+from pymongo.client_session import ClientSession
+from pymongo.collection import Collection
+from pymongo.command_cursor import CommandCursor
+from pymongo.database import Database
 
 from odmantic.exceptions import DocumentNotFoundError
 from odmantic.field import FieldProxy, ODMReference
 from odmantic.model import Model
 from odmantic.query import QueryExpression, SortExpression, and_
-
-try:
-    import pymongo
-    from pymongo import MongoClient
-    from pymongo.client_session import ClientSession
-    from pymongo.collection import Collection
-    from pymongo.command_cursor import CommandCursor
-    from pymongo.database import Database
-except ImportError:  # pragma: no cover
-    pymongo = None
 
 try:
     import motor
@@ -546,16 +541,7 @@ class SyncEngine(BaseEngine):
             client: instance of a PyMongo client. If None, a default one
                     will be created
             database: name of the database to use
-
-        <!---
-        #noqa: DAR401 RuntimeError
-        -->
         """
-        if not pymongo:
-            raise RuntimeError(
-                "pymongo is required to use SyncEngine, install it with:\n\n"
-                + 'pip install "odmantic[pymongo]"'
-            )
         if client is None:
             client = MongoClient()
         super().__init__(client=client, database=database)
