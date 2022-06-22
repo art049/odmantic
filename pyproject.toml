@@ -38,6 +38,7 @@ dependencies = [
     "pydantic >=1.6.2,!=1.7,!=1.7.1,!=1.7.2,!=1.7.3,!=1.8,!=1.8.1,<1.10.0",
     "importlib-metadata >=1,<5; python_version<'3.8'",
     "typing-extensions >= 4.2.0; python_version<'3.11'",
+    "pymongo >=3.11.0,<5.0.0",
 ]
 [project.optional-dependencies]
 fastapi = ["fastapi >=0.61.1,<0.69.0"]
@@ -71,7 +72,6 @@ doc = [
 ]
 dev = ["ipython ~= 7.16.1"]
 motor = ["motor >=2.1.0,<3.1.0"]
-pymongo = ["pymongo >=3.11.0,<5.0.0"]
 
 [project.urls]
 Documentation = "https://art049.github.io/odmantic"
