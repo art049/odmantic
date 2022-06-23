@@ -1,5 +1,3 @@
-import asyncio
-from asyncio.tasks import gather
 from typing import (
     Any,
     AsyncGenerator,
@@ -300,12 +298,10 @@ class AIOEngine:
         self, instance: ModelType, session: AsyncIOMotorClientSession
     ) -> ModelType:
         """Perform an atomic save operation in the specified session"""
-        save_tasks = []
         for ref_field_name in instance.__references__:
             sub_instance = cast(Model, getattr(instance, ref_field_name))
-            save_tasks.append(self._save(sub_instance, session))
+            await self._save(sub_instance, session)
 
-        await gather(*save_tasks)
         fields_to_update = (
             instance.__fields_modified__ | instance.__mutable_fields__
         ) - set([instance.__primary_field__])
@@ -389,9 +385,7 @@ class AIOEngine:
         """
         s: AsyncIOMotorClientSession = session or await self.client.start_session()
         async with s:
-            added_instances = await asyncio.gather(
-                *[self._save(instance, s) for instance in instances]
-            )
+            added_instances = [await self._save(instance, s) for instance in instances]
         return added_instances
 
     async def delete(self, instance: ModelType) -> None:
