@@ -438,8 +438,8 @@ class AIOEngine(BaseEngine):
             instance: instance to persist
             session: An optional `AsyncIOMotorClientSession` to use, if not provided
                 one will be created. This could be used to start a transaction (only
-                supported in a MongoDB cluster with replicas) and then pass the session
-                with the transaction here.
+                supported in sharded or clustered MongoDB deployments) and then
+                pass the session with the transaction here.
 
         Returns:
             the saved instance
@@ -479,8 +479,8 @@ class AIOEngine(BaseEngine):
             instances: instances to persist
             session: An optional `AsyncIOMotorClientSession` to use, if not provided
                 one will be created. This could be used to start a transaction (only
-                supported in a MongoDB cluster with replicas) and then pass the session
-                with the transaction here.
+                supported in sharded or clustered MongoDB deployments) and then
+                pass the session with the transaction here.
 
         Returns:
             the saved instances
