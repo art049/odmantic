@@ -669,11 +669,17 @@ class SyncEngine(BaseEngine):
                 {"_id": getattr(instance, instance.__primary_field__)},
                 {"$set": doc},
                 upsert=True,
+                session=session,
             )
             object.__setattr__(instance, "__fields_modified__", set())
         return instance
 
-    def save(self, instance: ModelType) -> ModelType:
+    def save(
+        self,
+        instance: ModelType,
+        *,
+        session: Union[ClientSession, None] = None,
+    ) -> ModelType:
         """Persist an instance to the database
 
         This method behaves as an 'upsert' operation. If a document already exists
@@ -683,6 +689,10 @@ class SyncEngine(BaseEngine):
 
         Args:
             instance: instance to persist
+            session: An optional `ClientSession` to use, if not provided
+                one will be created. This could be used to start a transaction (only
+                supported in a MongoDB cluster with replicas) and then pass the session
+                with the transaction here.
 
         Returns:
             the saved instance
@@ -698,12 +708,19 @@ class SyncEngine(BaseEngine):
         if not isinstance(instance, Model):
             raise TypeError("Can only call find_one with a Model class")
 
-        with self.client.start_session() as s:
-            with s.start_transaction():
-                self._save(instance, s)
+        if session:
+            self._save(instance, session)
+        else:
+            with self.client.start_session() as local_session:
+                self._save(instance, local_session)
         return instance
 
-    def save_all(self, instances: Sequence[ModelType]) -> List[ModelType]:
+    def save_all(
+        self,
+        instances: Sequence[ModelType],
+        *,
+        session: Union[ClientSession, None] = None,
+    ) -> List[ModelType]:
         """Persist instances to the database
 
         This method behaves as multiple 'upsert' operations. If one of the document
@@ -714,6 +731,10 @@ class SyncEngine(BaseEngine):
 
         Args:
             instances: instances to persist
+            session: An optional `ClientSession` to use, if not provided
+                one will be created. This could be used to start a transaction (only
+                supported in a MongoDB cluster with replicas) and then pass the session
+                with the transaction here.
 
         Returns:
             the saved instances
@@ -722,9 +743,13 @@ class SyncEngine(BaseEngine):
             The save_all operation actually modify the arguments in place. However, the
             instances are still returned for convenience.
         """
-        with self.client.start_session() as s:
-            with s.start_transaction():
-                added_instances = [self._save(instance, s) for instance in instances]
+        if session:
+            added_instances = [self._save(instance, session) for instance in instances]
+        else:
+            with self.client.start_session() as local_session:
+                added_instances = [
+                    self._save(instance, local_session) for instance in instances
+                ]
         return added_instances
 
     def delete(self, instance: ModelType) -> None:
