@@ -98,14 +98,118 @@ def test_sync_save_deeply_nested_and_fetch(sync_engine: SyncEngine):
     assert fetched == instance
 
 
-async def test_multiple_save_deeply_nested_and_fetch(aio_engine: AIOEngine):
+@only_on_replica
+async def test_save_deeply_nested_and_fetch_with_transaction(aio_engine: AIOEngine):
+    # Before MongoDB 4.4 it's necessary to create the collections before trying to use
+    # them inside a transaction
+    await aio_engine.database.create_collection(
+        aio_engine.get_collection(NestedLevel1).name
+    )
+    await aio_engine.database.create_collection(
+        aio_engine.get_collection(NestedLevel2).name
+    )
+    await aio_engine.database.create_collection(
+        aio_engine.get_collection(NestedLevel3).name
+    )
+
+    instance = NestedLevel1(next_=NestedLevel2(next_=NestedLevel3(field=0)))
+    async with await aio_engine.client.start_session() as session:
+        async with session.start_transaction():
+            await aio_engine.save(instance, session=session)
+
+    fetched = await aio_engine.find_one(NestedLevel1)
+    assert fetched == instance
+
+
+@only_on_replica
+def test_sync_save_deeply_nested_and_fetch_with_transaction(sync_engine: SyncEngine):
+    # Before MongoDB 4.4 it's necessary to create the collections before trying to use
+    # them inside a transaction
+    sync_engine.database.create_collection(
+        sync_engine.get_collection(NestedLevel1).name
+    )
+    sync_engine.database.create_collection(
+        sync_engine.get_collection(NestedLevel2).name
+    )
+    sync_engine.database.create_collection(
+        sync_engine.get_collection(NestedLevel3).name
+    )
+
+    instance = NestedLevel1(next_=NestedLevel2(next_=NestedLevel3(field=0)))
+    with sync_engine.client.start_session() as session:
+        with session.start_transaction():
+            sync_engine.save(instance, session=session)
+
+    fetched = sync_engine.find_one(NestedLevel1)
+    assert fetched == instance
+
+
+async def test_multiple_save_deeply_nested_and_fetch(engine: AIOEngine):
     instances = [
         NestedLevel1(field=1, next_=NestedLevel2(field=2, next_=NestedLevel3(field=3))),
         NestedLevel1(field=4, next_=NestedLevel2(field=5, next_=NestedLevel3(field=6))),
     ]
-    await aio_engine.save_all(instances)
+    await engine.save_all(instances)
+
+    fetched = await engine.find(NestedLevel1)
+    assert len(fetched) == 2
+    assert fetched[0] in instances
+    assert fetched[1] in instances
+
+
+@only_on_replica
+async def test_multiple_save_deeply_nested_and_fetch_with_transaction(
+    aio_engine: AIOEngine,
+):
+    # Before MongoDB 4.4 it's necessary to create the collections before trying to use
+    # them inside a transaction
+    await aio_engine.database.create_collection(
+        aio_engine.get_collection(NestedLevel1).name
+    )
+    await aio_engine.database.create_collection(
+        aio_engine.get_collection(NestedLevel2).name
+    )
+    await aio_engine.database.create_collection(
+        aio_engine.get_collection(NestedLevel3).name
+    )
+    instances = [
+        NestedLevel1(field=1, next_=NestedLevel2(field=2, next_=NestedLevel3(field=3))),
+        NestedLevel1(field=4, next_=NestedLevel2(field=5, next_=NestedLevel3(field=6))),
+    ]
+    async with await aio_engine.client.start_session() as session:
+        async with session.start_transaction():
+            await aio_engine.save_all(instances, session=session)
 
     fetched = await aio_engine.find(NestedLevel1)
+    assert len(fetched) == 2
+    assert fetched[0] in instances
+    assert fetched[1] in instances
+
+
+@only_on_replica
+def test_sync_multiple_save_deeply_nested_and_fetch_with_transaction(
+    sync_engine: SyncEngine,
+):
+    # Before MongoDB 4.4 it's necessary to create the collections before trying to use
+    # them inside a transaction
+    sync_engine.database.create_collection(
+        sync_engine.get_collection(NestedLevel1).name
+    )
+    sync_engine.database.create_collection(
+        sync_engine.get_collection(NestedLevel2).name
+    )
+    sync_engine.database.create_collection(
+        sync_engine.get_collection(NestedLevel3).name
+    )
+    instances = [
+        NestedLevel1(field=1, next_=NestedLevel2(field=2, next_=NestedLevel3(field=3))),
+        NestedLevel1(field=4, next_=NestedLevel2(field=5, next_=NestedLevel3(field=6))),
+    ]
+    with sync_engine.client.start_session() as session:
+        with session.start_transaction():
+            sync_engine.save_all(instances, session=session)
+
+    fetched = list(sync_engine.find(NestedLevel1))
     assert len(fetched) == 2
     assert fetched[0] in instances
     assert fetched[1] in instances
