@@ -144,14 +144,14 @@ def test_sync_save_deeply_nested_and_fetch_with_transaction(sync_engine: SyncEng
     assert fetched == instance
 
 
-async def test_multiple_save_deeply_nested_and_fetch(engine: AIOEngine):
+async def test_multiple_save_deeply_nested_and_fetch(aio_engine: AIOEngine):
     instances = [
         NestedLevel1(field=1, next_=NestedLevel2(field=2, next_=NestedLevel3(field=3))),
         NestedLevel1(field=4, next_=NestedLevel2(field=5, next_=NestedLevel3(field=6))),
     ]
-    await engine.save_all(instances)
+    await aio_engine.save_all(instances)
 
-    fetched = await engine.find(NestedLevel1)
+    fetched = await aio_engine.find(NestedLevel1)
     assert len(fetched) == 2
     assert fetched[0] in instances
     assert fetched[1] in instances
