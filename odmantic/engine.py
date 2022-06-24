@@ -350,9 +350,12 @@ class AIOEngine:
         """
         if not isinstance(instance, Model):
             raise TypeError("Can only call find_one with a Model class")
-        s: AsyncIOMotorClientSession = session or await self.client.start_session()
-        async with s:
-            await self._save(instance, s)
+        if session:
+            await self._save(instance, session)
+        else:
+            async with await self.client.start_session() as local_session:
+                await self._save(instance, local_session)
+
         return instance
 
     async def save_all(
@@ -383,9 +386,15 @@ class AIOEngine:
             The save_all operation actually modify the arguments in place. However, the
             instances are still returned for convenience.
         """
-        s: AsyncIOMotorClientSession = session or await self.client.start_session()
-        async with s:
-            added_instances = [await self._save(instance, s) for instance in instances]
+        if session:
+            added_instances = [
+                await self._save(instance, session) for instance in instances
+            ]
+        else:
+            async with await self.client.start_session() as local_session:
+                added_instances = [
+                    await self._save(instance, local_session) for instance in instances
+                ]
         return added_instances
 
     async def delete(self, instance: ModelType) -> None:

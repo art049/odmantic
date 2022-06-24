@@ -62,6 +62,10 @@ async def test_save_deeply_nested_and_fetch(engine: AIOEngine):
 
 @only_on_replica
 async def test_save_deeply_nested_and_fetch_with_transaction(engine: AIOEngine):
+    await engine.database.create_collection(engine.get_collection(NestedLevel1).name)
+    await engine.database.create_collection(engine.get_collection(NestedLevel2).name)
+    await engine.database.create_collection(engine.get_collection(NestedLevel3).name)
+
     instance = NestedLevel1(next_=NestedLevel2(next_=NestedLevel3(field=0)))
     async with await engine.client.start_session() as session:
         async with session.start_transaction():
@@ -92,6 +96,9 @@ async def test_multiple_save_deeply_nested_and_fetch_with_transaction(
         NestedLevel1(field=1, next_=NestedLevel2(field=2, next_=NestedLevel3(field=3))),
         NestedLevel1(field=4, next_=NestedLevel2(field=5, next_=NestedLevel3(field=6))),
     ]
+    await engine.database.create_collection(engine.get_collection(NestedLevel1).name)
+    await engine.database.create_collection(engine.get_collection(NestedLevel2).name)
+    await engine.database.create_collection(engine.get_collection(NestedLevel3).name)
     async with await engine.client.start_session() as session:
         async with session.start_transaction():
             await engine.save_all(instances, session=session)
