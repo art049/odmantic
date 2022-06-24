@@ -12,7 +12,7 @@ from ..zoo.book_reference import Book, Publisher
 
 pytestmark = pytest.mark.asyncio
 only_on_replica = pytest.mark.skipif(
-    TEST_MONGO_MODE not in {MongoMode.REPLICA, MongoMode.SHARDED},
+    TEST_MONGO_MODE != MongoMode.REPLICA,
     reason="Test transactions only with replicas/shards, as it's only supported there",
 )
 
