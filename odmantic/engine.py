@@ -300,6 +300,7 @@ class AIOEngine:
         self, instance: ModelType, session: AsyncIOMotorClientSession
     ) -> ModelType:
         """Perform an atomic save operation in the specified session"""
+        instance.pre_save()
         save_tasks = []
         for ref_field_name in instance.__references__:
             sub_instance = cast(Model, getattr(instance, ref_field_name))

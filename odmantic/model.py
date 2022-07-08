@@ -792,6 +792,9 @@ class Model(_BaseODMModel, metaclass=ModelMetaclass):
             exclude_defaults=exclude_defaults,
             exclude_none=exclude_none,
         )
+    def pre_save() -> Any:
+        """This function is called before saving."""
+        pass
 
 
 class EmbeddedModel(_BaseODMModel, metaclass=EmbeddedModelMetaclass):
