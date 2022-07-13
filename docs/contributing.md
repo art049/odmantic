@@ -77,10 +77,10 @@ Here are the steps:
     python3 -m pipx ensurepath
     ```
 
-- [Poetry](https://python-poetry.org/){:target=blank_}: packaging system and dependency
+- [flit](https://flit.pypa.io/en/latest/){:target=blank_}: packaging system and dependency
   manager
   ```shell
-  pipx install poetry
+  pipx install flit
   ```
 
 - [tox](https://tox.readthedocs.io/en/latest/){:target=blank_}: multi-environment test runner
