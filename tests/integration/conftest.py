@@ -12,7 +12,7 @@ from odmantic.engine import AIOEngine
 try:
     from unittest.mock import AsyncMock
 except ImportError:
-    from mock import AsyncMock
+    from mock import AsyncMock  # type: ignore
 
 TEST_MONGO_URI: str = os.getenv("TEST_MONGO_URI", "mongodb://localhost:27017/")
 

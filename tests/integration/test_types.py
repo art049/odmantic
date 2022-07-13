@@ -81,7 +81,7 @@ async def test_bson_type_inference(
     instance = await engine.save(ModelWithTypedField(field=case.sample_value))
     document = await motor_database[ModelWithTypedField.__collection__].find_one(
         {
-            +ModelWithTypedField.id: instance.id,
+            +ModelWithTypedField.id: instance.id,  # type: ignore
             +ModelWithTypedField.field: {"$type": case.bson_type},
         }
     )
@@ -116,7 +116,7 @@ async def test_custom_bson_serializable(
     instance = await engine.save(ModelWithCustomField(field=3.14))
     document = await motor_database[ModelWithCustomField.__collection__].find_one(
         {
-            +ModelWithCustomField.id: instance.id,
+            +ModelWithCustomField.id: instance.id,  # type: ignore
             +ModelWithCustomField.field: {"$type": "string"},  # type: ignore
         }
     )

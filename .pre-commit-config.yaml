@@ -36,6 +36,7 @@ repos:
         additional_dependencies:
           - pydantic~=1.9.1
           - motor~=3.0.0
+          - types-pytz~=2022.1.1
         args: [--no-pretty, --show-error-codes]
   - repo: https://gitlab.com/pycqa/flake8.git
     rev: "3.8.3"
