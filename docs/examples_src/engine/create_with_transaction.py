@@ -22,4 +22,4 @@ players = [
 
 async with await engine.client.start_session() as session:
     async with session.start_transaction():
-        await engine.save_all(players)
+        await engine.save_all(players, session=session)

@@ -20,4 +20,4 @@ players = [
 ]
 
 async with await engine.client.start_session() as session:
-    await engine.save_all(players)
+    await engine.save_all(players, session=session)
