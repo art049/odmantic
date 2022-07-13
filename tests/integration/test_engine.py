@@ -17,14 +17,35 @@ from ..zoo.person import PersonModel
 pytestmark = pytest.mark.asyncio
 
 
-async def test_default_motor_client_creation():
+def test_default_motor_client_creation():
     engine = AIOEngine()
     assert isinstance(engine.client, AsyncIOMotorClient)
+
+
+def test_no_motor_raises_for_aioengine_client_creation():
+    import odmantic.engine
+
+    motor = odmantic.engine.motor
+    odmantic.engine.motor = None
+    with pytest.raises(RuntimeError) as e:
+        AIOEngine()
+    assert 'pip install "odmantic[motor]"' in str(e)
+    odmantic.engine.motor = motor
 
 
 def test_default_pymongo_client_creation():
     engine = SyncEngine()
     assert isinstance(engine.client, MongoClient)
+
+
+def test_no_motor_passes_with_syncengine_client_creation():
+    import odmantic.engine
+
+    motor = odmantic.engine.motor
+    odmantic.engine.motor = None
+    engine = SyncEngine()
+    assert isinstance(engine.client, MongoClient)
+    odmantic.engine.motor = motor
 
 
 @pytest.mark.parametrize("illegal_character", ("/", "\\", ".", '"', "$"))
