@@ -25,7 +25,6 @@ classifiers = [
     "License :: OSI Approved :: ISC License (ISCL)",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
@@ -33,7 +32,7 @@ classifiers = [
     "Programming Language :: Python",
 ]
 
-requires-python = ">=3.6.1"
+requires-python = ">=3.7"
 dependencies = [
     "pydantic >=1.6.2,!=1.7,!=1.7.1,!=1.7.2,!=1.7.3,!=1.8,!=1.8.1,<1.10.0",
     "motor >=2.1.0,<3.1.0",

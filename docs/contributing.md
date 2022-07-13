@@ -102,12 +102,11 @@ Here are the steps:
 
     ```shell
     # Install the versions
-    pyenv install "3.6.12"
     pyenv install "3.7.9"
     pyenv install "3.8.9"
     pyenv install "3.9.0"
     # Make the versions available locally in the project
-    pyenv local 3.8.6 3.7.9 3.6.12 3.9.0
+    pyenv local 3.8.6 3.7.9 3.9.0
     ```
 
 #### Configuring the local environment
