@@ -73,6 +73,31 @@ There are two ways of persisting instances to the database (i.e creating new doc
     details](engine.md#update)). Hence, you might overwrite documents if you save
     instances with an existing primary key already existing in the database.
 
+### Using a Session
+
+When you save one or multiple instances, a session is created and used automatically.
+
+But you can also create a session yourself and pass it as a parameter to [AIOEngine.save][odmantic.engine.AIOEngine.save] and [AIOEngine.save_all][odmantic.engine.AIOEngine.save].
+
+For example:
+
+```python linenums="1" hl_lines="13-14  22-23"
+--8<-- "engine/create_with_session.py"
+```
+
+The `engine.client` attribute of an `AIOEngine` instance is the [AsyncIOMotorClient](https://motor.readthedocs.io/en/stable/api-asyncio/asyncio_motor_client.html){:target=blank_} used internally. So, you can access its attributes and methods, in this case, to create a session.
+
+### Using a Transaction
+
+The same way that you can create a session, you can also start a transaction for your operations:
+
+```python linenums="1" hl_lines="14  24"
+--8<-- "engine/create_with_transaction.py"
+```
+
+!!! warning "Transaction support in MongoDB"
+    Have in mind that transactions are only supported in a replica set or `mongos`, if you use them in a standalone MongoDB instance you will get an error.
+
 ## Read
 
 !!! note "Examples database content"
