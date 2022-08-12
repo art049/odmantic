@@ -36,6 +36,7 @@ from pydantic.main import BaseModel
 from pydantic.tools import parse_obj_as
 from pydantic.typing import is_classvar, resolve_annotations
 from pydantic.utils import lenient_issubclass
+from typing_extensions import dataclass_transform
 
 from odmantic.bson import (
     _BSON_SUBSTITUTED_FIELDS,
@@ -51,6 +52,7 @@ from odmantic.exceptions import (
     ReferencedDocumentNotFoundError,
 )
 from odmantic.field import (
+    Field,
     FieldProxy,
     ODMBaseField,
     ODMEmbedded,
@@ -142,7 +144,7 @@ def is_type_mutable(type_: Type) -> bool:
         return not lenient_issubclass(type_origin, _IMMUTABLE_TYPES)
     else:
         return not (
-            type_ is None  # type:ignore
+            type_ is None
             or (
                 lenient_issubclass(type_, _IMMUTABLE_TYPES)
                 and not lenient_issubclass(type_, EmbeddedModel)
@@ -372,6 +374,7 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
         return cls
 
 
+@dataclass_transform(kw_only_default=True, field_specifiers=(Field, ODMFieldInfo))
 class ModelMetaclass(BaseModelMetaclass):
     @no_type_check
     def __new__(  # noqa C901
@@ -433,6 +436,7 @@ class ModelMetaclass(BaseModelMetaclass):
         return cast(str, getattr(cls, "__collection__"))
 
 
+@dataclass_transform(kw_only_default=True, field_specifiers=(Field, ODMFieldInfo))
 class EmbeddedModelMetaclass(BaseModelMetaclass):
     @no_type_check
     def __new__(
@@ -747,7 +751,7 @@ class Model(_BaseODMModel, metaclass=ModelMetaclass):
         __collection__: ClassVar[str] = ""
         __primary_field__: ClassVar[str] = ""
 
-        id: Union[ObjectId, Any]  # TODO fix basic id field typing
+        id: Union[ObjectId, Any] = None  # TODO fix basic id field typing
 
     def __setattr__(self, name: str, value: Any) -> None:
         if name == self.__primary_field__:
