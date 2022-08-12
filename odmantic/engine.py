@@ -1,5 +1,3 @@
-import asyncio
-from asyncio.tasks import gather
 from typing import (
     Any,
     AsyncGenerator,
@@ -300,12 +298,10 @@ class AIOEngine:
         self, instance: ModelType, session: AsyncIOMotorClientSession
     ) -> ModelType:
         """Perform an atomic save operation in the specified session"""
-        save_tasks = []
         for ref_field_name in instance.__references__:
             sub_instance = cast(Model, getattr(instance, ref_field_name))
-            save_tasks.append(self._save(sub_instance, session))
+            await self._save(sub_instance, session)
 
-        await gather(*save_tasks)
         fields_to_update = (
             instance.__fields_modified__ | instance.__mutable_fields__
         ) - set([instance.__primary_field__])
@@ -316,11 +312,17 @@ class AIOEngine:
                 {"_id": getattr(instance, instance.__primary_field__)},
                 {"$set": doc},
                 upsert=True,
+                session=session,
             )
             object.__setattr__(instance, "__fields_modified__", set())
         return instance
 
-    async def save(self, instance: ModelType) -> ModelType:
+    async def save(
+        self,
+        instance: ModelType,
+        *,
+        session: Union[AsyncIOMotorClientSession, None] = None,
+    ) -> ModelType:
         """Persist an instance to the database
 
         This method behaves as an 'upsert' operation. If a document already exists
@@ -330,6 +332,10 @@ class AIOEngine:
 
         Args:
             instance: instance to persist
+            session: An optional `AsyncIOMotorClientSession` to use, if not provided
+                one will be created. This could be used to start a transaction (only
+                supported in a MongoDB cluster with replicas) and then pass the session
+                with the transaction here.
 
         Returns:
             the saved instance
@@ -344,13 +350,19 @@ class AIOEngine:
         """
         if not isinstance(instance, Model):
             raise TypeError("Can only call find_one with a Model class")
-
-        async with await self.client.start_session() as s:
-            async with s.start_transaction():
-                await self._save(instance, s)
+        if session:
+            await self._save(instance, session)
+        else:
+            async with await self.client.start_session() as local_session:
+                await self._save(instance, local_session)
         return instance
 
-    async def save_all(self, instances: Sequence[ModelType]) -> List[ModelType]:
+    async def save_all(
+        self,
+        instances: Sequence[ModelType],
+        *,
+        session: Union[AsyncIOMotorClientSession, None] = None,
+    ) -> List[ModelType]:
         """Persist instances to the database
 
         This method behaves as multiple 'upsert' operations. If one of the document
@@ -361,6 +373,10 @@ class AIOEngine:
 
         Args:
             instances: instances to persist
+            session: An optional `AsyncIOMotorClientSession` to use, if not provided
+                one will be created. This could be used to start a transaction (only
+                supported in a MongoDB cluster with replicas) and then pass the session
+                with the transaction here.
 
         Returns:
             the saved instances
@@ -369,11 +385,15 @@ class AIOEngine:
             The save_all operation actually modify the arguments in place. However, the
             instances are still returned for convenience.
         """
-        async with await self.client.start_session() as s:
-            async with s.start_transaction():
-                added_instances = await asyncio.gather(
-                    *[self._save(instance, s) for instance in instances]
-                )
+        if session:
+            added_instances = [
+                await self._save(instance, session) for instance in instances
+            ]
+        else:
+            async with await self.client.start_session() as local_session:
+                added_instances = [
+                    await self._save(instance, local_session) for instance in instances
+                ]
         return added_instances
 
     async def delete(self, instance: ModelType) -> None:
