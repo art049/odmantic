@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- 🐛 Fix using the shared session when updating a document ([#227](https://github.com/art049/odmantic/pull/227) by [@tiangolo](https://github.com/tiangolo))
+
 - Finalize flit migration ([#232](https://github.com/art049/odmantic/pull/232) by [@art049](https://github.com/art049))
 
 - fix missing f string issue #163 ([#222](https://github.com/art049/odmantic/pull/222) by [@voglster](https://github.com/voglster))
