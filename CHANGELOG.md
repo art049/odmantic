@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Support Python 3.10 ([#235](https://github.com/art049/odmantic/pull/235) by [@art049](https://github.com/art049))
+
 - ✨ Upgrade types and add support for instance autocompletion with dataclass_transform (VS Code autocompletion), drop support for Python 3.6 ([#230](https://github.com/art049/odmantic/pull/230) by [@tiangolo](https://github.com/tiangolo))
 
 - 🐛 Fix using the shared session when updating a document ([#227](https://github.com/art049/odmantic/pull/227) by [@tiangolo](https://github.com/tiangolo))
