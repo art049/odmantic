@@ -17,8 +17,7 @@
     "ms-python.python",
     "ms-python.vscode-pylance",
     "littlefoxteam.vscode-python-test-adapter",
-    "hbenl.vscode-test-explorer",
-    "paulvarache.vscode-taskfile"
+    "hbenl.vscode-test-explorer"
   ],
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.

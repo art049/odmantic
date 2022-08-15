@@ -18,22 +18,14 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.8
-
-      - name: Cache environment
-        uses: actions/cache@v2
-        with:
-          path: .venv
-          key: doc-${{ hashFiles('pyproject.toml') }}
+          cache: pip
+          cache-dependency-path: "pyproject.toml"
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install poetry
-          poetry config --local virtualenvs.in-project true
-          poetry install
-
+          pip install flit
+          pip install ".[doc]"
       - name: Build documentation
-        run: poetry run mkdocs build -f ./docs/mkdocs.yml
-
+        run: mkdocs build -f ./docs/mkdocs.yml
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:

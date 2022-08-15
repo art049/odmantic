@@ -22,7 +22,7 @@ tasks:
     deps:
       - task: "mongodb:check"
     cmds:
-      - poetry run pytest -rs
+      - pytest -rs
 
   default:
     desc: |
@@ -30,24 +30,24 @@ tasks:
     deps:
       - task: mongodb
     cmds:
-      - poetry run pytest -rs --testmon
+      - pytest -rs --testmon
 
   coverage:
     desc: Get the test coverage (xml and html) with the current version.
     deps:
       - task: "mongodb:check"
     cmds:
-      - poetry run coverage run -m pytest -rs
-      - poetry run coverage report -m
-      - poetry run coverage xml
+      - coverage run -m pytest -rs
+      - coverage report -m
+      - coverage xml
       - 'echo "Generated XML report: ./coverage.xml"'
-      - poetry run coverage html
+      - coverage html
       - 'echo "Generated HTML report: ./htmlcov/index.html"'
 
   docs:
     desc: Start the local documentation server.
     cmds:
-      - poetry run mkdocs serve -f ./docs/mkdocs.yml
+      - mkdocs serve -f ./docs/mkdocs.yml
 
   lint:
     desc: Run the linting checks.
@@ -57,15 +57,15 @@ tasks:
   format:
     desc: Format the code (and imports).
     cmds:
-      - poetry run isort -y
-      - poetry run black ./
+      - isort odmantic tests
+      - black odmantic tests
 
   setup:
     desc: Configure the development environment.
     cmds:
       - task: setup:git-lfs
       - task: setup:pre-commit-hook
-      - task: setup:poetry-setup
+      - task: setup:deps-setup
 
   setup:git-lfs:
     cmds:
@@ -80,10 +80,8 @@ tasks:
     status:
       - test -f .git/hooks/pre-commit
 
-  setup:poetry-setup:
+  setup:deps-setup:
     cmds:
-      - poetry install
+      - flit install --deps=all
     sources:
       - pyproject.toml
-    generates:
-      - poetry.lock

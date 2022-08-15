@@ -5,6 +5,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Support Python 3.10 in tox ([#236](https://github.com/art049/odmantic/pull/236) by [@art049](https://github.com/art049))
+
+- Support Python 3.10 ([#235](https://github.com/art049/odmantic/pull/235) by [@art049](https://github.com/art049))
+
+- ✨ Upgrade types and add support for instance autocompletion with dataclass_transform (VS Code autocompletion), drop support for Python 3.6 ([#230](https://github.com/art049/odmantic/pull/230) by [@tiangolo](https://github.com/tiangolo))
+
+- 🐛 Fix using the shared session when updating a document ([#227](https://github.com/art049/odmantic/pull/227) by [@tiangolo](https://github.com/tiangolo))
+
+- Finalize flit migration ([#232](https://github.com/art049/odmantic/pull/232) by [@art049](https://github.com/art049))
+
+- fix missing f string issue #163 ([#222](https://github.com/art049/odmantic/pull/222) by [@voglster](https://github.com/voglster))
+
+## [0.5.0] - 2022-06-01
+
+- Support motor 3.0 ([#224](https://github.com/art049/odmantic/pull/224) by [@art049](https://github.com/art049))
+
+- Support pydantic 1.9.0 ([#218](https://github.com/art049/odmantic/pull/218) by [@art049](https://github.com/art049))
+
 ## [0.4.0] - 2022-04-23
 
 #### Added
@@ -203,4 +221,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.3.4]: https://github.com/art049/odmantic/compare/v0.3.3...v0.3.4
 [0.3.5]: https://github.com/art049/odmantic/compare/v0.3.4...v0.3.5
 [0.4.0]: https://github.com/art049/odmantic/compare/v0.3.5...v0.4.0
-[unreleased]: https://github.com/art049/odmantic/compare/v0.4.0...HEAD
+[0.5.0]: https://github.com/art049/odmantic/compare/v0.4.0...v0.5.0
+[unreleased]: https://github.com/art049/odmantic/compare/v0.5.0...HEAD

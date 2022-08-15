@@ -84,14 +84,14 @@ def test_field_required_in_doc_implicit_optional_default():
 
 def test_field_required_in_doc_default_factory_disabled():
     class M(Model):
-        field: str = Field(default_factory=lambda: "hi")
+        field: str = Field(default_factory=lambda: "hi")  # pragma: no cover
 
     assert M.__odm_fields__["field"].is_required_in_doc()
 
 
 def test_field_required_in_doc_default_factory_enabled():
     class M(Model):
-        field: str = Field(default_factory=lambda: "hi")
+        field: str = Field(default_factory=lambda: "hi")  # pragma: no cover
 
         class Config:
             parse_doc_with_default_factories = True
