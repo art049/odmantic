@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Fixes #194 ([#195](https://github.com/art049/odmantic/pull/195) by [@jvanegmond](https://github.com/jvanegmond))
+
 - Support Python 3.10 in tox ([#236](https://github.com/art049/odmantic/pull/236) by [@art049](https://github.com/art049))
 
 - Support Python 3.10 ([#235](https://github.com/art049/odmantic/pull/235) by [@art049](https://github.com/art049))
