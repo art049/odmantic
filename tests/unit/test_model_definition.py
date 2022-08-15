@@ -396,3 +396,15 @@ def test_forbidden_config_parameter_validate_assignment():
         class M(Model):
             class Config:
                 validate_assignment = False
+
+
+def test_embedded_model_alternate_key_name():
+    class Em(EmbeddedModel):
+        name: str = Field(key_name="username")
+
+    class M(Model):
+        f: Em
+
+    instance = M(f=Em(name="Jack"))
+    doc = instance.doc()
+    assert doc["f"] == {"username": "Jack"}
