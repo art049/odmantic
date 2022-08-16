@@ -642,6 +642,28 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
             exclude_none=exclude_none,
         )
 
+    def __doc(
+        self,
+        raw_doc: Dict[str, Any],
+        model: Type["_BaseODMModel"],
+        include: Optional["AbstractSetIntStr"] = None,
+    ) -> Dict[str, Any]:
+        doc: Dict[str, Any] = {}
+        for field_name, field in model.__odm_fields__.items():
+            if include is not None and field_name not in include:
+                continue
+            if isinstance(field, ODMReference):
+                doc[field.key_name] = raw_doc[field_name][field.model.__primary_field__]
+            elif isinstance(field, ODMEmbedded):
+                doc[field.key_name] = self.__doc(raw_doc[field_name], field.model, None)
+            elif field_name in model.__bson_serialized_fields__:
+                doc[field.key_name] = model.__fields__[field_name].type_.__bson__(
+                    raw_doc[field_name]
+                )
+            else:
+                doc[field.key_name] = raw_doc[field_name]
+        return doc
+
     def doc(self, include: Optional["AbstractSetIntStr"] = None) -> Dict[str, Any]:
         """Generate a document representation of the instance (as a dictionary).
 
@@ -653,19 +675,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
             the document associated to the instance
         """
         raw_doc = self.dict()
-        doc: Dict[str, Any] = {}
-        for field_name, field in self.__odm_fields__.items():
-            if include is not None and field_name not in include:
-                continue
-            if isinstance(field, ODMReference):
-                doc[field.key_name] = raw_doc[field_name][field.model.__primary_field__]
-            else:
-                if field_name in self.__bson_serialized_fields__:
-                    doc[field.key_name] = self.__fields__[field_name].type_.__bson__(
-                        raw_doc[field_name]
-                    )
-                else:
-                    doc[field.key_name] = raw_doc[field_name]
+        doc = self.__doc(raw_doc, type(self), include)
         return doc
 
     @classmethod
