@@ -33,24 +33,6 @@ class DocumentNotFoundError(BaseEngineException):
         )
 
 
-class DocumentsNotFoundError(BaseEngineException):
-    """The targetted document(s) have not been found by the engine.
-
-    Attributes:
-      instances: the instance(s) that have not been found
-    """
-
-    def __init__(self, instances: Sequence["Model"]):
-        self.instances: Sequence["Model"] = instances
-        super().__init__(
-            (
-                f"Document(s) not found for : {type(instances[0]).__name__}"
-                f"Instances: {', '.join([str(instance) for instance in instances])}"
-            ),
-            type(instances[0]),
-        )
-
-
 ErrorList = List[Union[Sequence[Any], ErrorWrapper]]
 
 

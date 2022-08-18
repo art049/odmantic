@@ -1,15 +1,11 @@
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple
 
 import pytest
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from odmantic.bson import ObjectId
 from odmantic.engine import AIOEngine
-from odmantic.exceptions import (
-    DocumentNotFoundError,
-    DocumentParsingError,
-    DocumentsNotFoundError,
-)
+from odmantic.exceptions import DocumentNotFoundError, DocumentParsingError
 from odmantic.field import Field
 from odmantic.model import EmbeddedModel, Model
 from odmantic.query import asc, desc
@@ -283,15 +279,14 @@ async def test_remove_just_one(engine: AIOEngine):
 
 @pytest.mark.usefixtures("person_persisted")
 async def test_remove_not_existing(engine: AIOEngine):
-    # Force engine.delete to raise an exception
-    async def mock_delete(instance: Any) -> None:
-        raise DocumentNotFoundError(instance)
-
-    instance = await engine.find_one(PersonModel, PersonModel.last_name == "Drucker")
-    setattr(engine, "delete", mock_delete)
-    with pytest.raises(DocumentsNotFoundError) as exc:
-        await engine.remove(PersonModel, PersonModel.last_name == "Drucker")
-    assert exc.value.instances == [instance]
+    instance = await engine.find_one(
+        PersonModel, PersonModel.last_name == "NotInDatabase"
+    )
+    assert instance is None
+    deleted_count = await engine.remove(
+        PersonModel, PersonModel.last_name == "NotInDatabase"
+    )
+    assert deleted_count == 0
 
 
 async def test_modified_fields_cleared_on_document_saved(engine: AIOEngine):

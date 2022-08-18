@@ -24,7 +24,7 @@ from motor.motor_asyncio import (
 )
 from pydantic.utils import lenient_issubclass
 
-from odmantic.exceptions import DocumentNotFoundError, DocumentsNotFoundError
+from odmantic.exceptions import DocumentNotFoundError
 from odmantic.field import FieldProxy, ODMReference
 from odmantic.model import Model
 from odmantic.query import QueryExpression, SortExpression, and_
@@ -404,7 +404,6 @@ class AIOEngine:
 
         Raises:
             DocumentNotFoundError: the instance has not been persisted to the database
-
         """
         # TODO handle cascade deletion
         collection = self.database[instance.__collection__]
@@ -419,38 +418,29 @@ class AIOEngine:
         model: Type[ModelType],
         *queries: Union[QueryExpression, Dict, bool],
         just_one: bool = False,
-        # bool: allow using binary operators with mypy
     ) -> int:
         """Delete Model instances matching the query filter provided
 
         Args:
             model: model to perform the operation on
-            queries: query filter to apply
+            *queries: query filter to apply
             just_one: limit the deletion to just one document
 
-        Raises:
-            DocumentsNotFoundError: the instance(s) that have not been persisted to
-            the database
-
         Returns:
-            int: the number of instances deleted from the database.
+            the number of instances deleted from the database.
 
+        <!---
+        -->
         """
-        delete_count = 0
-        not_found_instances: List[ModelType] = []
-        motor_cursor = self.find(model, *queries)
-        async for instance in motor_cursor:
-            if just_one and delete_count > 0:
-                break
-            try:
-                await self.delete(instance)
-            except DocumentNotFoundError:
-                not_found_instances.append(instance)
-            else:
-                delete_count += 1
-        if not_found_instances:
-            raise DocumentsNotFoundError(not_found_instances)
-        return delete_count
+        query = AIOEngine._build_query(*queries)
+        collection = self.get_collection(model)
+
+        if just_one:
+            result = await collection.delete_one(query)
+        else:
+            result = await collection.delete_many(query)
+
+        return cast(int, result.deleted_count)
 
     async def count(
         self, model: Type[ModelType], *queries: Union[QueryExpression, Dict, bool]
