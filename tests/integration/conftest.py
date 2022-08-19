@@ -26,6 +26,11 @@ class MongoMode(str, Enum):
 
 TEST_MONGO_MODE = MongoMode(os.getenv("TEST_MONGO_MODE", "default"))
 
+only_on_replica = pytest.mark.skipif(
+    TEST_MONGO_MODE != MongoMode.REPLICA,
+    reason="Test transactions only with replicas/shards, as it's only supported there",
+)
+
 
 @pytest.fixture(scope="session")
 def event_loop():

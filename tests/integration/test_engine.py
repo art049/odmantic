@@ -9,6 +9,7 @@ from odmantic.exceptions import DocumentNotFoundError, DocumentParsingError
 from odmantic.field import Field
 from odmantic.model import EmbeddedModel, Model
 from odmantic.query import asc, desc
+from tests.integration.conftest import only_on_replica
 from tests.zoo.book_reference import Book, Publisher
 
 from ..zoo.person import PersonModel
@@ -275,6 +276,36 @@ async def test_remove_just_one(engine: AIOEngine):
     )
     assert actual_delete_count == 1
     assert await engine.count(PersonModel) == 2
+
+
+@only_on_replica
+@pytest.mark.usefixtures("person_persisted")
+async def test_remove_just_one_transaction(engine: AIOEngine):
+    async with await engine.client.start_session() as session:
+        async with session.start_transaction():
+            actual_delete_count = await engine.remove(
+                PersonModel,
+                PersonModel.first_name == "Jean-Pierre",
+                just_one=True,
+                session=session,
+            )
+    assert actual_delete_count == 1
+    assert await engine.count(PersonModel) == 2
+
+
+@only_on_replica
+@pytest.mark.usefixtures("person_persisted")
+async def test_remove_transaction_failure(engine: AIOEngine):
+    with pytest.raises(Exception):
+        async with await engine.client.start_session() as session:
+            async with session.start_transaction():
+                await engine.remove(
+                    PersonModel,
+                    PersonModel.first_name == "Jean-Pierre",
+                    session=session,
+                )
+                raise Exception("oops")
+    assert await engine.count(PersonModel) == 3  # type: ignore
 
 
 @pytest.mark.usefixtures("person_persisted")
