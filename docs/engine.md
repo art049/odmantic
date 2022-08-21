@@ -13,9 +13,7 @@ It's possible to provide a custom
 to the [AIOEngine][odmantic.engine.AIOEngine] constructor. In the same way, the database
 name can be changed using the `database` keyword argument.
 
-```python linenums="1"
---8<-- "engine/async/engine_creation.py"
-```
+{{ async_sync_snippet("engine", "engine_creation.py") }}
 
 For additional information about the MongoDB connection strings, see [this
 section](https://docs.mongodb.com/manual/reference/connection-string/){:target=blank_}
@@ -35,9 +33,7 @@ There are two ways of persisting instances to the database (i.e creating new doc
 - [AIOEngine.save_all][odmantic.engine.AIOEngine.save]: to save multiple instances at
   once
 
-```python linenums="1" hl_lines="12 19"
---8<-- "engine/async/create.py"
-```
+{{ async_sync_snippet("engine", "create.py", hl_lines="12 19") }}
 
 ??? abstract "Resulting documents in the `player` collection"
     ```json
@@ -111,9 +107,7 @@ As with regular MongoDB driver, you can use the
 instance of a specific Model. This method will either return an instance matching the
 specified criteriums or `None` if no instances have been found.
 
-```python linenums="1" hl_lines="11 15-17"
---8<-- "engine/async/fetch_find_one.py"
-```
+{{ async_sync_snippet("engine", "fetch_find_one.py", hl_lines="11 15-17") }}
 
 !!! info "Missing values in documents"
     While parsing the MongoDB documents into Model instances, ODMantic will use the
@@ -137,10 +131,10 @@ To get more than one instance from the database at once, you can use the
 This method will return an [AIOCursor][odmantic.engine.AIOCursor] object, that can be
 used in two different ways.
 
-#### Usage as an async iterator
-```python linenums="1" hl_lines="11"
---8<-- "engine/async/fetch_async_for.py"
-```
+#### Usage as an iterator
+
+{{ async_sync_snippet("engine", "fetch_async_for.py", hl_lines="11") }}
+
 
 !!! tip "Ordering instances"
     The `sort` parameter allows to order the query in ascending or descending order on
@@ -155,9 +149,7 @@ used in two different ways.
 Even if the async iterator usage should be preferred, in some cases it might be required
 to gather all the documents from the database before processing them.
 
-```python linenums="1" hl_lines="11"
---8<-- "engine/async/fetch_await.py"
-```
+{{ async_sync_snippet("engine", "fetch_await.py", hl_lines="11") }}
 
 !!! note "Pagination"
     You can as well use the `skip` and `limit` keyword arguments when using
@@ -180,9 +172,7 @@ You can count instances in the database by using the
 [AIOEngine.count][odmantic.engine.AIOEngine.count] method. It's possible as well to use
 this method with filtering queries.
 
-```python linenums="1" hl_lines="11 14 17"
---8<-- "engine/async/count.py"
-```
+{{ async_sync_snippet("engine", "count.py", hl_lines="11 14 17") }}
 
 !!! tip "Combining multiple queries in read operations"
     While using [find][odmantic.engine.AIOEngine.find],
@@ -206,9 +196,7 @@ Otherwise, the related document will be created in the database.
 Modifying a single field can be achieved by directly changing the instance attribute and
 saving the instance.
 
-```python linenums="1" hl_lines="13-14"
---8<-- "engine/async/update.py"
-```
+{{ async_sync_snippet("engine", "update.py", hl_lines="13-14") }}
 
 ???+abstract "Resulting documents in the `player` collection"
     ```json hl_lines="6-10"
@@ -241,15 +229,11 @@ Pydantic object or a dictionary and update the matching fields of the instance.
 
 === "From a Pydantic Model"
 
-    ```python linenums="1" hl_lines="19-21 25 27 30 33"
-    --8<-- "engine/async/patch_multiple_fields_pydantic.py"
-    ```
+    {{ async_sync_snippet("engine", "patch_multiple_fields_pydantic.py", hl_lines="19-21 25 27 30 33") }}
 
 === "From a dictionary"
 
-    ```python linenums="1" hl_lines="16 18 21 24"
-    --8<-- "engine/async/patch_multiple_fields_dict.py"
-    ```
+    {{ async_sync_snippet("engine", "patch_multiple_fields_dict.py", hl_lines="16 18 21 24") }}
 
 !!! abstract "Resulting document associated to the player"
     ```json hl_lines="3 4"
@@ -268,9 +252,7 @@ possible and a `NotImplementedError` exception will be raised if you try to do s
 The easiest way to change an instance primary field is to perform a local copy of the
 instance using the [Model.copy][odmantic.model._BaseODMModel.copy] method.
 
-```python linenums="1" hl_lines="18 20 22"
---8<-- "engine/async/primary_key_update.py"
-```
+{{ async_sync_snippet("engine", "primary_key_update.py", hl_lines="18 20 22") }}
 
 !!! abstract "Resulting document associated to the player"
     ```json hl_lines="2"
@@ -292,8 +274,6 @@ instance using the [Model.copy][odmantic.model._BaseODMModel.copy] method.
 You can delete instance by passing them to the
 [AIOEngine.delete][odmantic.engine.AIOEngine.delete] method.
 
-```python linenums="1" hl_lines="14"
---8<-- "engine/async/delete.py"
-```
+{{ async_sync_snippet("engine", "delete.py", hl_lines="14") }}
 
 The collection is now empty :broom:.
