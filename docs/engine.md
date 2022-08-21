@@ -14,7 +14,7 @@ to the [AIOEngine][odmantic.engine.AIOEngine] constructor. In the same way, the 
 name can be changed using the `database` keyword argument.
 
 ```python linenums="1"
---8<-- "engine/engine_creation.py"
+--8<-- "engine/async/engine_creation.py"
 ```
 
 For additional information about the MongoDB connection strings, see [this
@@ -36,7 +36,7 @@ There are two ways of persisting instances to the database (i.e creating new doc
   once
 
 ```python linenums="1" hl_lines="12 19"
---8<-- "engine/create.py"
+--8<-- "engine/async/create.py"
 ```
 
 ??? abstract "Resulting documents in the `player` collection"
@@ -112,7 +112,7 @@ instance of a specific Model. This method will either return an instance matchin
 specified criteriums or `None` if no instances have been found.
 
 ```python linenums="1" hl_lines="11 15-17"
---8<-- "engine/fetch_find_one.py"
+--8<-- "engine/async/fetch_find_one.py"
 ```
 
 !!! info "Missing values in documents"
@@ -139,7 +139,7 @@ used in two different ways.
 
 #### Usage as an async iterator
 ```python linenums="1" hl_lines="11"
---8<-- "engine/fetch_async_for.py"
+--8<-- "engine/async/fetch_async_for.py"
 ```
 
 !!! tip "Ordering instances"
@@ -156,7 +156,7 @@ Even if the async iterator usage should be preferred, in some cases it might be 
 to gather all the documents from the database before processing them.
 
 ```python linenums="1" hl_lines="11"
---8<-- "engine/fetch_await.py"
+--8<-- "engine/async/fetch_await.py"
 ```
 
 !!! note "Pagination"
@@ -181,7 +181,7 @@ You can count instances in the database by using the
 this method with filtering queries.
 
 ```python linenums="1" hl_lines="11 14 17"
---8<-- "engine/count.py"
+--8<-- "engine/async/count.py"
 ```
 
 !!! tip "Combining multiple queries in read operations"
@@ -207,7 +207,7 @@ Modifying a single field can be achieved by directly changing the instance attri
 saving the instance.
 
 ```python linenums="1" hl_lines="13-14"
---8<-- "engine/update.py"
+--8<-- "engine/async/update.py"
 ```
 
 ???+abstract "Resulting documents in the `player` collection"
@@ -242,13 +242,13 @@ Pydantic object or a dictionary and update the matching fields of the instance.
 === "From a Pydantic Model"
 
     ```python linenums="1" hl_lines="19-21 25 27 30 33"
-    --8<-- "engine/patch_multiple_fields_pydantic.py"
+    --8<-- "engine/async/patch_multiple_fields_pydantic.py"
     ```
 
 === "From a dictionary"
 
     ```python linenums="1" hl_lines="16 18 21 24"
-    --8<-- "engine/patch_multiple_fields_dict.py"
+    --8<-- "engine/async/patch_multiple_fields_dict.py"
     ```
 
 !!! abstract "Resulting document associated to the player"
@@ -269,7 +269,7 @@ The easiest way to change an instance primary field is to perform a local copy o
 instance using the [Model.copy][odmantic.model._BaseODMModel.copy] method.
 
 ```python linenums="1" hl_lines="18 20 22"
---8<-- "engine/primary_key_update.py"
+--8<-- "engine/async/primary_key_update.py"
 ```
 
 !!! abstract "Resulting document associated to the player"
@@ -293,7 +293,7 @@ You can delete instance by passing them to the
 [AIOEngine.delete][odmantic.engine.AIOEngine.delete] method.
 
 ```python linenums="1" hl_lines="14"
---8<-- "engine/delete.py"
+--8<-- "engine/async/delete.py"
 ```
 
 The collection is now empty :broom:.
