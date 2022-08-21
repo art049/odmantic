@@ -21,10 +21,31 @@ def test_datetime_non_naive():
         field: datetime
 
     with pytest.raises(ValueError):
-        ModelWithDate(field=datetime.now(tz=pytz.utc))
+        ModelWithDate(field=datetime.now(tz=pytz.timezone("Europe/Amsterdam")))
 
     with pytest.raises(ValueError):
-        ModelWithDate(field=datetime.now(tz=pytz.timezone("Europe/Amsterdam")))
+        ModelWithDate(field="2018-11-02T23:59:01.824+10:00")
+
+
+def test_datetime_non_naive_utc():
+    class ModelWithDate(Model):
+        field: datetime = Field(datetime.now(tz=pytz.utc))
+
+    ModelWithDate()
+
+
+def test_datetime_non_naive_utc_as_simplified_extended_iso_format_string():
+    class ModelWithDate(Model):
+        field: datetime = Field("2018-11-02T23:59:01.824Z")
+
+    ModelWithDate()
+
+
+def test_datetime_non_naive_utc_as_gmt_zero_offset_string():
+    class ModelWithDate(Model):
+        field: datetime = Field("2018-11-02T23:59:01.824+00:00")
+
+    ModelWithDate()
 
 
 def test_datetime_naive():
