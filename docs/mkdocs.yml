@@ -17,6 +17,7 @@ theme:
     logo: material/spa
   features:
     - instant
+    - content.tabs.link
 
 extra_css:
   - css/extra.css
@@ -41,7 +42,8 @@ markdown_extensions:
   - pymdownx.snippets:
       base_path: docs/examples_src
       check_paths: true # Fail when the document to include is not found
-  - pymdownx.tabbed
+  - pymdownx.tabbed:
+      alternate_style: true
   - pymdownx.superfences
   - pymdownx.details
   - pymdownx.inlinehilite
@@ -54,6 +56,7 @@ markdown_extensions:
 
 plugins:
   - search
+  - macros
   - mkdocstrings:
       custom_templates: docs/api_reference/templates
       default_handler: python
