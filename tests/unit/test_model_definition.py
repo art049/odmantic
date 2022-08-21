@@ -333,6 +333,9 @@ def test_untouched_types_function():
         return str(self.id)
 
     class M(Model):
+        class Config:
+            arbitrary_types_allowed = True
+
         id_: FunctionType = id_str  # type: ignore
 
     assert "id_" not in M.__odm_fields__.keys()
@@ -393,3 +396,15 @@ def test_forbidden_config_parameter_validate_assignment():
         class M(Model):
             class Config:
                 validate_assignment = False
+
+
+def test_embedded_model_alternate_key_name():
+    class Em(EmbeddedModel):
+        name: str = Field(key_name="username")
+
+    class M(Model):
+        f: Em
+
+    instance = M(f=Em(name="Jack"))
+    doc = instance.doc()
+    assert doc["f"] == {"username": "Jack"}

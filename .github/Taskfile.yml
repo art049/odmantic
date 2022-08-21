@@ -24,7 +24,7 @@ tasks:
 
   prepare-workspace:
     cmds:
-      - poetry run python .github/release.py
+      - python .github/release.py
   publish-release:
     vars:
       RELEASE_NOTE:
@@ -38,7 +38,7 @@ tasks:
       - git tag v{{.NEW_VERSION}}
       - git push --tags
       - hub release create -d -t {{.RELEASE_BRANCH}} -m v{{.NEW_VERSION}} -m "$(cat {{.RELEASE_NOTE_FILE}} )" v{{.NEW_VERSION}}
-      - poetry publish --build
+      - flit publish --build
 
   clean:
     cmds:

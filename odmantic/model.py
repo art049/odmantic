@@ -36,6 +36,7 @@ from pydantic.main import BaseModel
 from pydantic.tools import parse_obj_as
 from pydantic.typing import is_classvar, resolve_annotations
 from pydantic.utils import lenient_issubclass
+from typing_extensions import dataclass_transform
 
 from odmantic.bson import (
     _BSON_SUBSTITUTED_FIELDS,
@@ -51,6 +52,7 @@ from odmantic.exceptions import (
     ReferencedDocumentNotFoundError,
 )
 from odmantic.field import (
+    Field,
     FieldProxy,
     ODMBaseField,
     ODMEmbedded,
@@ -142,7 +144,7 @@ def is_type_mutable(type_: Type) -> bool:
         return not lenient_issubclass(type_origin, _IMMUTABLE_TYPES)
     else:
         return not (
-            type_ is None  # type:ignore
+            type_ is None
             or (
                 lenient_issubclass(type_, _IMMUTABLE_TYPES)
                 and not lenient_issubclass(type_, EmbeddedModel)
@@ -263,7 +265,7 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
             elif lenient_issubclass(field_type, Model):
                 if not isinstance(value, ODMReferenceInfo):
                     raise TypeError(
-                        "cannot define a reference {field_name} (in {name}) without"
+                        f"cannot define a reference {field_name} (in {name}) without"
                         " a Reference assigned to it"
                     )
                 key_name = value.key_name if value.key_name is not None else field_name
@@ -372,6 +374,7 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
         return cls
 
 
+@dataclass_transform(kw_only_default=True, field_specifiers=(Field, ODMFieldInfo))
 class ModelMetaclass(BaseModelMetaclass):
     @no_type_check
     def __new__(  # noqa C901
@@ -433,6 +436,7 @@ class ModelMetaclass(BaseModelMetaclass):
         return cast(str, getattr(cls, "__collection__"))
 
 
+@dataclass_transform(kw_only_default=True, field_specifiers=(Field, ODMFieldInfo))
 class EmbeddedModelMetaclass(BaseModelMetaclass):
     @no_type_check
     def __new__(
@@ -638,6 +642,28 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
             exclude_none=exclude_none,
         )
 
+    def __doc(
+        self,
+        raw_doc: Dict[str, Any],
+        model: Type["_BaseODMModel"],
+        include: Optional["AbstractSetIntStr"] = None,
+    ) -> Dict[str, Any]:
+        doc: Dict[str, Any] = {}
+        for field_name, field in model.__odm_fields__.items():
+            if include is not None and field_name not in include:
+                continue
+            if isinstance(field, ODMReference):
+                doc[field.key_name] = raw_doc[field_name][field.model.__primary_field__]
+            elif isinstance(field, ODMEmbedded):
+                doc[field.key_name] = self.__doc(raw_doc[field_name], field.model, None)
+            elif field_name in model.__bson_serialized_fields__:
+                doc[field.key_name] = model.__fields__[field_name].type_.__bson__(
+                    raw_doc[field_name]
+                )
+            else:
+                doc[field.key_name] = raw_doc[field_name]
+        return doc
+
     def doc(self, include: Optional["AbstractSetIntStr"] = None) -> Dict[str, Any]:
         """Generate a document representation of the instance (as a dictionary).
 
@@ -649,19 +675,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
             the document associated to the instance
         """
         raw_doc = self.dict()
-        doc: Dict[str, Any] = {}
-        for field_name, field in self.__odm_fields__.items():
-            if include is not None and field_name not in include:
-                continue
-            if isinstance(field, ODMReference):
-                doc[field.key_name] = raw_doc[field_name]["id"]
-            else:
-                if field_name in self.__bson_serialized_fields__:
-                    doc[field.key_name] = self.__fields__[field_name].type_.__bson__(
-                        raw_doc[field_name]
-                    )
-                else:
-                    doc[field.key_name] = raw_doc[field_name]
+        doc = self.__doc(raw_doc, type(self), include)
         return doc
 
     @classmethod
@@ -747,7 +761,7 @@ class Model(_BaseODMModel, metaclass=ModelMetaclass):
         __collection__: ClassVar[str] = ""
         __primary_field__: ClassVar[str] = ""
 
-        id: Union[ObjectId, Any]  # TODO fix basic id field typing
+        id: Union[ObjectId, Any] = None  # TODO fix basic id field typing
 
     def __setattr__(self, name: str, value: Any) -> None:
         if name == self.__primary_field__:
