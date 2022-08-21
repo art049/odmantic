@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Allow models to contain string-based datetime fields that indicate UTC ([#136](https://github.com/art049/odmantic/pull/136) by [@kfox](https://github.com/kfox))
+
 - _BaseODMModel.doc fix ([#184](https://github.com/art049/odmantic/pull/184) by [@dynalz](https://github.com/dynalz))
 
 - Fixes #194 ([#195](https://github.com/art049/odmantic/pull/195) by [@jvanegmond](https://github.com/jvanegmond))
