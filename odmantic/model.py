@@ -537,8 +537,18 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         copied = super().copy(
             include=include, exclude=exclude, update=update, deep=deep  # type: ignore
         )
-        object.__setattr__(copied, "__fields_modified__", set(copied.__fields__))
+        copied._post_copy_update()
         return copied
+
+    def _post_copy_update(self: BaseT) -> None:
+        """Recursively update internal fields of the copied model after it has been
+        copied.
+        """
+        object.__setattr__(self, "__fields_modified__", set(self.__fields__))
+        for field_name, field in self.__odm_fields__.items():
+            if isinstance(field, ODMEmbedded):
+                value = getattr(self, field_name)
+                value._post_copy_update()
 
     def update(
         self,
