@@ -204,6 +204,22 @@ def test_model_copy_deep_embedded():
     assert instance.e is not copied.e
 
 
+def test_model_copy_deep_embedded_mutability():
+    class F(EmbeddedModel):
+        g: int
+
+    class E(EmbeddedModel):
+        f: F
+
+    class M(Model):
+        e: E
+
+    instance = M(e=E(f=F(g=1)))
+    copied = instance.copy(deep=True)
+    copied.e.f.g = 42
+    assert instance.e.f.g != copied.e.f.g
+
+
 def test_model_copy_not_deep_embedded():
     class E(EmbeddedModel):
         f: int
