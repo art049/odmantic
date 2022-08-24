@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Documentation for the sync engine ([#238](https://github.com/art049/odmantic/pull/238) by [@art049](https://github.com/art049))
+
 - Add new SyncEngine, support async and sync code rebased ([#242](https://github.com/art049/odmantic/pull/242) by [@art049](https://github.com/art049))
 
 - Remove unnecessary Python 3.6 type fixes ([#243](https://github.com/art049/odmantic/pull/243) by [@art049](https://github.com/art049))
