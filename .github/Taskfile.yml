@@ -13,8 +13,8 @@ vars:
 tasks:
   default:
     preconditions:
-      - sh: which hub
-        msg: hub not found
+      - sh: which gh
+        msg: gh not found
       - sh: "[ {{.CURRENT_BRANCH}} = {{.RELEASE_BRANCH}} ]"
         msg: "Please switch to {{.RELEASE_BRANCH}} to create a release"
     cmds:
@@ -37,7 +37,7 @@ tasks:
       - git push
       - git tag v{{.NEW_VERSION}}
       - git push --tags
-      - hub release create -d -t {{.RELEASE_BRANCH}} -m v{{.NEW_VERSION}} -m "$(cat {{.RELEASE_NOTE_FILE}} )" v{{.NEW_VERSION}}
+      - gh release create -d --target {{.RELEASE_BRANCH}} --title v{{.NEW_VERSION}} --notes-file {{.RELEASE_NOTE_FILE}} v{{.NEW_VERSION}}
       - flit publish --build
 
   clean:
