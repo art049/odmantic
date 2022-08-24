@@ -1,5 +1,7 @@
 # Engine
 
+This engine documentation present how to work with both the Sync ([SyncEngine][odmantic.engine.SyncEngine]) and the Async ([AIOEngine][odmantic.engine.AIOEngine]) engines. The methods available for both are very close but the main difference is that the Async engine exposes coroutines instead of functions for the Sync engine.
+
 ## Creating the engine
 
 In the previous examples, we created the engine using default parameters:
@@ -8,10 +10,7 @@ In the previous examples, we created the engine using default parameters:
 
 - Database name: `test`
 
-It's possible to provide a custom
-[AsyncIOMotorClient](https://motor.readthedocs.io/en/stable/api-asyncio/asyncio_motor_client.html){:target=blank_}
-to the [AIOEngine][odmantic.engine.AIOEngine] constructor. In the same way, the database
-name can be changed using the `database` keyword argument.
+It's possible to provide a custom client ([AsyncIOMotorClient](https://motor.readthedocs.io/en/stable/api-asyncio/asyncio_motor_client.html){:target=blank_} or [PyMongoClient](https://pymongo.readthedocs.io/en/stable/api/pymongo/mongo_client.html){:target=blank_}) to the engine constructor. In the same way, the database name can be changed using the `database` keyword argument.
 
 {{ async_sync_snippet("engine", "engine_creation.py") }}
 
@@ -25,12 +24,13 @@ of the MongoDB documentation.
     (i.e `mongodb+srv://...`), you will need to install the
     [dnspython](https://pypi.org/project/dnspython/){:target=blank_} package.
 
+
 ## Create
 There are two ways of persisting instances to the database (i.e creating new documents):
 
-- [AIOEngine.save][odmantic.engine.AIOEngine.save]: to save a single instance
+- `engine.save`: to save a single instance
 
-- [AIOEngine.save_all][odmantic.engine.AIOEngine.save]: to save multiple instances at
+- `engine.save_all`: to save multiple instances at
   once
 
 {{ async_sync_snippet("engine", "create.py", hl_lines="12 19") }}
@@ -60,39 +60,14 @@ There are two ways of persisting instances to the database (i.e creating new doc
     ```
 
 !!! tip "Referenced instances"
-    When calling [AIOEngine.save][odmantic.engine.AIOEngine.save] or
-    [AIOEngine.save_all][odmantic.engine.AIOEngine.save], the referenced models will be persisted
+    When calling `engine.save` or
+    `engine.save_all`, the referenced models will are persisted
     as well.
 
 !!! warning "Upsert behavior"
     The `save` and `save_all` methods behave as upsert operations ([more
     details](engine.md#update)). Hence, you might overwrite documents if you save
     instances with an existing primary key already existing in the database.
-
-### Using a Session
-
-When you save one or multiple instances, a session is created and used automatically.
-
-But you can also create a session yourself and pass it as a parameter to [AIOEngine.save][odmantic.engine.AIOEngine.save] and [AIOEngine.save_all][odmantic.engine.AIOEngine.save].
-
-For example:
-
-```python linenums="1" hl_lines="13-14  22-23"
---8<-- "engine/create_with_session.py"
-```
-
-The `engine.client` attribute of an `AIOEngine` instance is the [AsyncIOMotorClient](https://motor.readthedocs.io/en/stable/api-asyncio/asyncio_motor_client.html){:target=blank_} used internally. So, you can access its attributes and methods, in this case, to create a session.
-
-### Using a Transaction
-
-The same way that you can create a session, you can also start a transaction for your operations:
-
-```python linenums="1" hl_lines="14  24"
---8<-- "engine/create_with_transaction.py"
-```
-
-!!! warning "Transaction support in MongoDB"
-    Have in mind that transactions are only supported in a replica set or `mongos`, if you use them in a standalone MongoDB instance you will get an error.
 
 ## Read
 
@@ -103,7 +78,7 @@ The same way that you can create a session, you can also start a transaction for
 ### Fetch a single instance
 
 As with regular MongoDB driver, you can use the
-[AIOEngine.find_one][odmantic.engine.AIOEngine.find_one] method to get at most one
+`engine.find_one` method to get at most one
 instance of a specific Model. This method will either return an instance matching the
 specified criteriums or `None` if no instances have been found.
 
@@ -126,11 +101,11 @@ specified criteriums or `None` if no instances have been found.
 ### Fetch multiple instances
 
 To get more than one instance from the database at once, you can use the
-[AIOEngine.find][odmantic.engine.AIOEngine.find] method.
+`engine.find` method.
 
-This method will return an [AIOCursor][odmantic.engine.AIOCursor] object, that can be
-used in two different ways.
+This method will return a cursor: an [AIOCursor][odmantic.engine.AIOCursor] object for the [AIOEngine][odmantic.engine.AIOEngine] and a [SyncCursor][odmantic.engine.SyncCursor] object for the [SyncEngine][odmantic.engine.SyncEngine].
 
+Those cursors can mainly be used in two different ways:
 #### Usage as an iterator
 
 {{ async_sync_snippet("engine", "fetch_async_for.py", hl_lines="11") }}
@@ -144,22 +119,21 @@ used in two different ways.
     ```
     Find out more on `sort` in [the dedicated section](querying.md#sorting).
 
-#### Usage as an awaitable
+#### Usage as an awaitable/list
 
-Even if the async iterator usage should be preferred, in some cases it might be required
+Even if the iterator usage should be preferred, in some cases it might be required
 to gather all the documents from the database before processing them.
 
 {{ async_sync_snippet("engine", "fetch_await.py", hl_lines="11") }}
 
 !!! note "Pagination"
-    You can as well use the `skip` and `limit` keyword arguments when using
-    [AIOEngine.find][odmantic.engine.AIOEngine.find], respectively to skip a specified
-    number of instances and to limit the number of fetched instances.
+    When using [AIOEngine.find][odmantic.engine.AIOEngine.find] or [SyncEngine.find][odmantic.engine.SyncEngine.find]
+    you can as well use the `skip` and `limit` keyword arguments , respectively to skip
+    a specified number of instances and to limit the number of fetched instances.
 
 !!! tip "Referenced instances"
-    When calling [AIOEngine.find][odmantic.engine.AIOEngine.find] or
-    [AIOEngine.find_one][odmantic.engine.AIOEngine.find_one], the referenced models will
-    be recursively resolved as well.
+    When calling `engine.find` or `engine.find_one`, the referenced models will
+    be recursively resolved as well by design.
 
 !!! info "Passing the model class to `find` and `find_one`"
     When using the method to retrieve instances from the database, you have to specify
@@ -168,9 +142,8 @@ to gather all the documents from the database before processing them.
 
 ### Count instances
 
-You can count instances in the database by using the
-[AIOEngine.count][odmantic.engine.AIOEngine.count] method. It's possible as well to use
-this method with filtering queries.
+You can count instances in the database by using the `engine.count` method and as with
+other read methods, it's still possible to use this method with filtering queries.
 
 {{ async_sync_snippet("engine", "count.py", hl_lines="11 14 17") }}
 
@@ -186,8 +159,7 @@ this method with filtering queries.
 Updating an instance in the database can be done by modifying the instance locally and
 saving it again to the database.
 
-The [AIOEngine.save][odmantic.engine.AIOEngine.save] and
-[AIOEngine.save_all][odmantic.engine.AIOEngine.save] methods are actually behaving as
+The `engine.save` and `engine.save_all` methods are actually behaving as
 `upsert` operations. In other words, if the instance already exists it will be updated.
 Otherwise, the related document will be created in the database.
 
@@ -227,11 +199,11 @@ The easiest way to change multiple fields at once is to use the
 [Model.update][odmantic.model._BaseODMModel.update] method. This method will take either a
 Pydantic object or a dictionary and update the matching fields of the instance.
 
-=== "From a Pydantic Model"
+#### From a Pydantic Model
 
     {{ async_sync_snippet("engine", "patch_multiple_fields_pydantic.py", hl_lines="19-21 25 27 30 33") }}
 
-=== "From a dictionary"
+#### From a dictionary
 
     {{ async_sync_snippet("engine", "patch_multiple_fields_dict.py", hl_lines="16 18 21 24") }}
 
@@ -271,9 +243,31 @@ instance using the [Model.copy][odmantic.model._BaseODMModel.copy] method.
 
 ## Delete
 
-You can delete instance by passing them to the
-[AIOEngine.delete][odmantic.engine.AIOEngine.delete] method.
+You can delete instance by passing them to the `engine.delete` method.
 
 {{ async_sync_snippet("engine", "delete.py", hl_lines="14") }}
 
 The collection is now empty :broom:.
+
+## Consistency
+### Using a Session
+
+When you save one or multiple instances, a session is created and used automatically.
+
+But you can also create a session yourself and pass it as a parameter to `engine.save` and `engine.save_all`.
+
+For example:
+
+{{ async_sync_snippet("engine", "create_with_session.py", hl_lines="13-14 22-23") }}
+
+!!! Tip "Using the underlying driver client"
+    The `engine.client` attribute of an engine instance is the [AsyncIOMotorClient](https://motor.readthedocs.io/en/stable/api-asyncio/asyncio_motor_client.html){:target=blank_} or the [PyMongoClient](https://pymongo.readthedocs.io/en/stable/api/pymongo/mongo_client.html){:target=blank_} used internally. So, you can access its attributes and methods, in this case, to create a session.
+
+### Using a Transaction
+
+The same way that you can create a session, you can also start a transaction for your operations:
+
+{{ async_sync_snippet("engine", "create_with_transaction.py", hl_lines="14 24") }}
+
+!!! warning "Transaction support in MongoDB"
+    Have in mind that transactions are only supported in a replica set or sharded clusters, if you use them in a standalone MongoDB instance you will get an error.
