@@ -61,7 +61,6 @@ from odmantic.field import (
     ODMReference,
 )
 from odmantic.reference import ODMReferenceInfo
-from odmantic.typing import USES_OLD_TYPING_INTERFACE
 from odmantic.utils import (
     is_dunder,
     raise_on_invalid_collection_name,
@@ -77,9 +76,6 @@ if TYPE_CHECKING:
         MappingIntStrAny,
         ReprArgs,
     )
-
-if USES_OLD_TYPING_INTERFACE:
-    from typing import _subs_tree  # type: ignore  # noqa
 
 
 UNTOUCHED_TYPES = FunctionType, property, classmethod, staticmethod, type
@@ -181,18 +177,7 @@ def validate_type(type_: Type) -> Type:
         type_args: Tuple[Type, ...] = getattr(type_, "__args__", ())
         new_arg_types = tuple(validate_type(subtype) for subtype in type_args)
         setattr(type_, "__args__", new_arg_types)
-        if USES_OLD_TYPING_INTERFACE:
-            # FIXME: there is probably a more elegant way of doing this
-            subs_tree = type_._subs_tree()
-            if type_origin is Union:
-                tree_hash = hash(
-                    frozenset(subs_tree) if isinstance(subs_tree, tuple) else subs_tree
-                )
-            else:
-                tree_hash = hash(
-                    subs_tree if isinstance(subs_tree, tuple) else frozenset(subs_tree)
-                )
-            setattr(type_, "__tree_hash__", tree_hash)
+
     return type_
 
 
