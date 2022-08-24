@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Remove unnecessary Python 3.6 type fixes ([#243](https://github.com/art049/odmantic/pull/243) by [@art049](https://github.com/art049))
+
 ## [0.6.0] - 2022-08-24
 
 #### Breaking Changes
