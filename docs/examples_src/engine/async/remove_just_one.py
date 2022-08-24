@@ -8,6 +8,8 @@ class Player(Model):
 
 engine = AIOEngine()
 
-delete_count = await engine.remove(Player, Player.game == "Warzone", just_one = True)
+delete_count = await engine.remove(
+    Player, Player.game == "Warzone", just_one=True
+)
 print(delete_count)
 #> 1

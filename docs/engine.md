@@ -254,7 +254,7 @@ You can delete instance by passing them to the `engine.delete` method.
 You can delete instances that match a filter by using the
 `engine.remove` method.
 
-{{ async_sync_snippet("engine", "remove.py", hl_lines="14") }}
+{{ async_sync_snippet("engine", "remove.py", hl_lines="11") }}
 
 
 #### Just one
@@ -262,7 +262,7 @@ You can delete instances that match a filter by using the
 You can limit `engine.remove` to removing only one
 instance by passing `just_one`.
 
-{{ async_sync_snippet("engine", "remove_just_one.py", hl_lines="14") }}
+{{ async_sync_snippet("engine", "remove_just_one.py", hl_lines="12") }}
 ## Consistency
 ### Using a Session
 
