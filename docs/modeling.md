@@ -363,7 +363,7 @@ multiple authors and an author can be authoring multiple books, we will model th
     Currently, ODMantic does not support mapped multi-references yet. But we will still
     define the relationship in a manual way.
 
-```python hl_lines="14 18-19 22 25 29" linenums="1"
+```python hl_lines="15 18-19 22 25 29" linenums="1"
 --8<-- "modeling/many_to_many.py"
 ```
 
