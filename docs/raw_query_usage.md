@@ -23,6 +23,17 @@ linked to the motor client used by the engine. To achieve this, you can use the
 --8<-- "raw_query_usage/motor_collection.py"
 ```
 
+### PyMongo collection
+The [SyncEngine][odmantic.engine.SyncEngine] object can provide you directly the PyMongo
+collection
+([pymongo.collection.Collection](https://pymongo.readthedocs.io/en/stable/api/pymongo/collection.html){:target=blank_})
+linked to the PyMongo client used by the engine. To achieve this, you can use the
+[SyncEngine.get_collection][odmantic.engine.SyncEngine.get_collection] method.
+
+```python linenums="1" hl_lines="9"
+--8<-- "raw_query_usage/pymongo_collection.py"
+```
+
 ### Key name of a field
 Since some field might have some [customized key names](fields.md#document-structure),
 you can get the key name associated to a field by using the unary `+` operator on the
