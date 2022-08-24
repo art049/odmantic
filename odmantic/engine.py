@@ -796,11 +796,19 @@ class SyncEngine(BaseEngine):
                 ]
         return added_instances
 
-    def delete(self, instance: ModelType) -> None:
+    def delete(
+        self,
+        instance: ModelType,
+        session: Union[ClientSession, None] = None,
+    ) -> None:
         """Delete an instance from the database
 
         Args:
             instance: the instance to delete
+            session: An optional `ClientSession` to use, if not provided
+                one will be created. This could be used to start a transaction (only
+                supported in a MongoDB cluster with replicas) and then pass the session
+                with the transaction here.
 
         Raises:
             DocumentNotFoundError: the instance has not been persisted to the database
@@ -809,8 +817,10 @@ class SyncEngine(BaseEngine):
         # TODO handle cascade deletion
         collection = self.database[instance.__collection__]
         pk_name = instance.__primary_field__
-        result = collection.delete_many({"_id": getattr(instance, pk_name)})
-        count = int(result.deleted_count)
+        result = collection.delete_many(
+            {"_id": getattr(instance, pk_name)}, session=session
+        )
+        count = result.deleted_count
         if count == 0:
             raise DocumentNotFoundError(instance)
 
@@ -819,7 +829,7 @@ class SyncEngine(BaseEngine):
         model: Type[ModelType],
         *queries: Union[QueryExpression, Dict, bool],
         just_one: bool = False,
-        session: Union[AsyncIOMotorClientSession, None] = None,
+        session: Union[ClientSession, None] = None,
     ) -> int:
         """Delete Model instances matching the query filter provided
 
