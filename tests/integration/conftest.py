@@ -48,7 +48,7 @@ def motor_client(event_loop):
 @pytest.fixture(scope="session")
 def pymongo_client():
     mongo_uri = TEST_MONGO_URI
-    client = MongoClient(mongo_uri)
+    client: MongoClient = MongoClient(mongo_uri)
     yield client
     client.close()
 

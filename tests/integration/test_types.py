@@ -105,7 +105,7 @@ def test_sync_bson_type_inference(
     instance = sync_engine.save(ModelWithTypedField(field=case.sample_value))
     document = pymongo_database[ModelWithTypedField.__collection__].find_one(
         {
-            +ModelWithTypedField.id: instance.id,
+            +ModelWithTypedField.id: instance.id,  # type: ignore
             +ModelWithTypedField.field: {"$type": case.bson_type},
         }
     )
@@ -172,7 +172,7 @@ def test_sync_custom_bson_serializable(
     instance = sync_engine.save(ModelWithCustomField(field=3.14))
     document = pymongo_database[ModelWithCustomField.__collection__].find_one(
         {
-            +ModelWithCustomField.id: instance.id,
+            +ModelWithCustomField.id: instance.id,  # type: ignore
             +ModelWithCustomField.field: {"$type": "string"},  # type: ignore
         }
     )
