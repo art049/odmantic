@@ -3,7 +3,6 @@ site_description: AsyncIO MongoDB ODM (Object Document Mapper) using python type
 repo_name: art049/odmantic
 repo_url: https://github.com/art049/odmantic
 site_url: https://art049.github.io/odmantic/
-strict: true
 docs_dir: .
 site_dir: ../site
 

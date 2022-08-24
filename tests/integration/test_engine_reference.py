@@ -5,16 +5,12 @@ from odmantic.engine import AIOEngine, SyncEngine
 from odmantic.exceptions import DocumentParsingError
 from odmantic.model import Model
 from odmantic.reference import Reference
-from tests.integration.conftest import TEST_MONGO_MODE, MongoMode
+from tests.integration.conftest import only_on_replica
 from tests.zoo.deeply_nested import NestedLevel1, NestedLevel2, NestedLevel3
 
 from ..zoo.book_reference import Book, Publisher
 
 pytestmark = pytest.mark.asyncio
-only_on_replica = pytest.mark.skipif(
-    TEST_MONGO_MODE != MongoMode.REPLICA,
-    reason="Test transactions only with replicas/shards, as it's only supported there",
-)
 
 
 async def test_add_with_references(aio_engine: AIOEngine):

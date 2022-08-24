@@ -500,23 +500,67 @@ class AIOEngine(BaseEngine):
                 ]
         return added_instances
 
-    async def delete(self, instance: ModelType) -> None:
+    async def delete(
+        self,
+        instance: ModelType,
+        *,
+        session: Union[AsyncIOMotorClientSession, None] = None,
+    ) -> None:
         """Delete an instance from the database
 
         Args:
             instance: the instance to delete
+            session: An optional `AsyncIOMotorClientSession` to use, if not provided
+                one will be created. This could be used to start a transaction (only
+                supported in a MongoDB cluster with replicas) and then pass the session
+                with the transaction here.
 
         Raises:
             DocumentNotFoundError: the instance has not been persisted to the database
-
         """
         # TODO handle cascade deletion
         collection = self.database[instance.__collection__]
         pk_name = instance.__primary_field__
-        result = await collection.delete_many({"_id": getattr(instance, pk_name)})
+        result = await collection.delete_many(
+            {"_id": getattr(instance, pk_name)}, session=session
+        )
         count = int(result.deleted_count)
         if count == 0:
             raise DocumentNotFoundError(instance)
+
+    async def remove(
+        self,
+        model: Type[ModelType],
+        *queries: Union[QueryExpression, Dict, bool],
+        just_one: bool = False,
+        session: Union[AsyncIOMotorClientSession, None] = None,
+    ) -> int:
+        """Delete Model instances matching the query filter provided
+
+        Args:
+            model: model to perform the operation on
+            *queries: query filter to apply
+            just_one: limit the deletion to just one document
+            session: An optional `AsyncIOMotorClientSession` to use, if not provided
+                one will be created. This could be used to start a transaction (only
+                supported in a MongoDB cluster with replicas) and then pass the session
+                with the transaction here.
+
+        Returns:
+            the number of instances deleted from the database.
+
+        <!---
+        -->
+        """
+        query = AIOEngine._build_query(*queries)
+        collection = self.get_collection(model)
+
+        if just_one:
+            result = await collection.delete_one(query, session=session)
+        else:
+            result = await collection.delete_many(query, session=session)
+
+        return cast(int, result.deleted_count)
 
     async def count(
         self, model: Type[ModelType], *queries: Union[QueryExpression, Dict, bool]
@@ -752,11 +796,19 @@ class SyncEngine(BaseEngine):
                 ]
         return added_instances
 
-    def delete(self, instance: ModelType) -> None:
+    def delete(
+        self,
+        instance: ModelType,
+        session: Union[ClientSession, None] = None,
+    ) -> None:
         """Delete an instance from the database
 
         Args:
             instance: the instance to delete
+            session: An optional `ClientSession` to use, if not provided
+                one will be created. This could be used to start a transaction (only
+                supported in a MongoDB cluster with replicas) and then pass the session
+                with the transaction here.
 
         Raises:
             DocumentNotFoundError: the instance has not been persisted to the database
@@ -765,10 +817,46 @@ class SyncEngine(BaseEngine):
         # TODO handle cascade deletion
         collection = self.database[instance.__collection__]
         pk_name = instance.__primary_field__
-        result = collection.delete_many({"_id": getattr(instance, pk_name)})
-        count = int(result.deleted_count)
+        result = collection.delete_many(
+            {"_id": getattr(instance, pk_name)}, session=session
+        )
+        count = result.deleted_count
         if count == 0:
             raise DocumentNotFoundError(instance)
+
+    def remove(
+        self,
+        model: Type[ModelType],
+        *queries: Union[QueryExpression, Dict, bool],
+        just_one: bool = False,
+        session: Union[ClientSession, None] = None,
+    ) -> int:
+        """Delete Model instances matching the query filter provided
+
+        Args:
+            model: model to perform the operation on
+            *queries: query filter to apply
+            just_one: limit the deletion to just one document
+            session: An optional `ClientSession` to use, if not provided
+                one will be created. This could be used to start a transaction (only
+                supported in a MongoDB cluster with replicas) and then pass the session
+                with the transaction here.
+
+        Returns:
+            the number of instances deleted from the database.
+
+        <!---
+        -->
+        """
+        query = SyncEngine._build_query(*queries)
+        collection = self.get_collection(model)
+
+        if just_one:
+            result = collection.delete_one(query, session=session)
+        else:
+            result = collection.delete_many(query, session=session)
+
+        return result.deleted_count
 
     def count(
         self, model: Type[ModelType], *queries: Union[QueryExpression, Dict, bool]

@@ -10,6 +10,7 @@ from odmantic.exceptions import DocumentNotFoundError, DocumentParsingError
 from odmantic.field import Field
 from odmantic.model import EmbeddedModel, Model
 from odmantic.query import asc, desc
+from tests.integration.conftest import only_on_replica
 from tests.zoo.book_reference import Book, Publisher
 
 from ..zoo.person import PersonModel
@@ -518,6 +519,126 @@ def test_sync_delete_not_existing(sync_engine: SyncEngine):
     with pytest.raises(DocumentNotFoundError) as exc:
         sync_engine.delete(non_persisted_instance)
     assert exc.value.instance == non_persisted_instance
+
+
+@pytest.mark.usefixtures("person_persisted")
+async def test_remove_and_count(aio_engine: AIOEngine):
+    actual_delete_count = await aio_engine.remove(
+        PersonModel, PersonModel.first_name == "Jean-Pierre"
+    )
+    assert actual_delete_count == 2
+    assert await aio_engine.count(PersonModel) == 1
+
+
+@pytest.mark.usefixtures("person_persisted")
+def test_sync_remove_and_count(sync_engine: SyncEngine):
+    actual_delete_count = sync_engine.remove(
+        PersonModel, PersonModel.first_name == "Jean-Pierre"
+    )
+    assert actual_delete_count == 2
+    assert sync_engine.count(PersonModel) == 1
+
+
+@pytest.mark.usefixtures("person_persisted")
+async def test_remove_just_one(aio_engine: AIOEngine):
+    actual_delete_count = await aio_engine.remove(
+        PersonModel, PersonModel.first_name == "Jean-Pierre", just_one=True
+    )
+    assert actual_delete_count == 1
+    assert await aio_engine.count(PersonModel) == 2
+
+
+@pytest.mark.usefixtures("person_persisted")
+def test_sync_remove_just_one(sync_engine: SyncEngine):
+    actual_delete_count = sync_engine.remove(
+        PersonModel, PersonModel.first_name == "Jean-Pierre", just_one=True
+    )
+    assert actual_delete_count == 1
+    assert sync_engine.count(PersonModel) == 2
+
+
+@only_on_replica
+@pytest.mark.usefixtures("person_persisted")
+async def test_remove_just_one_transaction(aio_engine: AIOEngine):
+    async with await aio_engine.client.start_session() as session:
+        async with session.start_transaction():
+            actual_delete_count = await aio_engine.remove(
+                PersonModel,
+                PersonModel.first_name == "Jean-Pierre",
+                just_one=True,
+                session=session,
+            )
+    assert actual_delete_count == 1
+    assert await aio_engine.count(PersonModel) == 2
+
+
+@only_on_replica
+@pytest.mark.usefixtures("person_persisted")
+def test_sync_remove_just_one_transaction(sync_engine: SyncEngine):
+    with sync_engine.client.start_session() as session:
+        with session.start_transaction():
+            actual_delete_count = sync_engine.remove(
+                PersonModel,
+                PersonModel.first_name == "Jean-Pierre",
+                just_one=True,
+                session=session,
+            )
+    assert actual_delete_count == 1
+    assert sync_engine.count(PersonModel) == 2
+
+
+@only_on_replica
+@pytest.mark.usefixtures("person_persisted")
+async def test_remove_transaction_failure(aio_engine: AIOEngine):
+    with pytest.raises(Exception):
+        async with await aio_engine.client.start_session() as session:
+            async with session.start_transaction():
+                await aio_engine.remove(
+                    PersonModel,
+                    PersonModel.first_name == "Jean-Pierre",
+                    session=session,
+                )
+                raise Exception("oops")
+    assert await aio_engine.count(PersonModel) == 3  # type: ignore
+
+
+@only_on_replica
+@pytest.mark.usefixtures("person_persisted")
+def test_sync_remove_transaction_failure(sync_engine: SyncEngine):
+    with pytest.raises(Exception):
+        with sync_engine.client.start_session() as session:
+            with session.start_transaction():
+                sync_engine.remove(
+                    PersonModel,
+                    PersonModel.first_name == "Jean-Pierre",
+                    session=session,
+                )
+                raise Exception("oops")
+    assert sync_engine.count(PersonModel) == 3  # type: ignore
+
+
+@pytest.mark.usefixtures("person_persisted")
+async def test_remove_not_existing(aio_engine: AIOEngine):
+    instance = await aio_engine.find_one(
+        PersonModel, PersonModel.last_name == "NotInDatabase"
+    )
+    assert instance is None
+    deleted_count = await aio_engine.remove(
+        PersonModel, PersonModel.last_name == "NotInDatabase"
+    )
+    assert deleted_count == 0
+
+
+@pytest.mark.usefixtures("person_persisted")
+def test_sync_remove_not_existing(sync_engine: SyncEngine):
+    instance = sync_engine.find_one(
+        PersonModel, PersonModel.last_name == "NotInDatabase"
+    )
+    assert instance is None
+    deleted_count = sync_engine.remove(
+        PersonModel, PersonModel.last_name == "NotInDatabase"
+    )
+    assert deleted_count == 0
 
 
 async def test_modified_fields_cleared_on_document_saved(aio_engine: AIOEngine):

@@ -243,12 +243,26 @@ instance using the [Model.copy][odmantic.model._BaseODMModel.copy] method.
 
 ## Delete
 
+### Delete a single instance
+
 You can delete instance by passing them to the `engine.delete` method.
 
 {{ async_sync_snippet("engine", "delete.py", hl_lines="14") }}
 
-The collection is now empty :broom:.
+### Remove
 
+You can delete instances that match a filter by using the
+`engine.remove` method.
+
+{{ async_sync_snippet("engine", "remove.py", hl_lines="11") }}
+
+
+#### Just one
+
+You can limit `engine.remove` to removing only one
+instance by passing `just_one`.
+
+{{ async_sync_snippet("engine", "remove_just_one.py", hl_lines="12") }}
 ## Consistency
 ### Using a Session
 
