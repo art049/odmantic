@@ -22,8 +22,8 @@
 
 ---
 
-Asynchronous ODM (Object Document Mapper) for <a href="https://www.mongodb.com/"
-target="_blank">MongoDB</a> based on standard python type hints. It's built on top of <a
+Sync and Async ODM (Object Document Mapper) for <a href="https://www.mongodb.com/"
+target="_blank">MongoDB</a> based on standard python type hints. Built on top of <a
 href="https://pydantic-docs.helpmanual.io/" target="_blank">pydantic</a> for model
 definition and validation.
 
@@ -37,11 +37,11 @@ Core features:
 
 - **Fully typed**: leverage static analysis to reduce runtime issues
 
-- **AsyncIO**: works well with ASGI frameworks (<a href="https://fastapi.tiangolo.com/"
+- **AsyncIO support**: works well with ASGI frameworks (<a href="https://fastapi.tiangolo.com/"
   target="_blank">FastAPI</a>, <a href="https://pgjones.gitlab.io/quart/"
   target="_blank">quart</a>, <a href="https://sanicframework.org/"
   target="_blank">sanic</a>, <a href="https://www.starlette.io/"
-  target="_blank">Starlette</a>, ...)
+  target="_blank">Starlette</a>, ...) but works also perfectly in synchronous environments
 
 - **Serialization**: built in JSON serialization and JSON schema generation
 
@@ -50,14 +50,6 @@ Core features:
 **Python**: 3.7 and later (tested against 3.7, 3.8, 3.9 and 3.10)
 
 **MongoDB**: 4.0 and later
-
-Two direct dependencies:
-
-- <a href="https://pydantic-docs.helpmanual.io/" target="_blank">pydantic</a> (_>=1.6.2_): makes
-  data validation and schema definition both handy and elegant.
-
-- <a href="https://motor.readthedocs.io/en/stable/" target="_blank">motor</a> (_>=2.1.0_): an
-  asyncio MongoDB driver officially developed by the MongoDB team.
 
 ## Installation
 
@@ -307,7 +299,7 @@ target="_blank">pydantic</a>.
 
 ### Next steps
 
-If you already have experience with Pydantic and FastAPI, the [Usage with FastAPI](https://art049.github.io/odmantic/usage_fastapi/) example might be interesting for you.
+If you already have experience with Pydantic and FastAPI, the [Usage with FastAPI](https://art049.github.io/odmantic/usage_fastapi/) example sould be interesting for you to get kickstarted.
 
 Otherwise, to get started on more advanced practices like relations and building more
 advanced queries, you can directly check the other sections of the
