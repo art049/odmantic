@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Switch Mongo action to art049/mongodb-cluster-action ([#245](https://github.com/art049/odmantic/pull/245) by [@art049](https://github.com/art049))
+
 - Implement the `engine.remove` method to allow instance deletion from a query ([#237](https://github.com/art049/odmantic/pull/237) by [@art049](https://github.com/art049))
 
 - Documentation for the sync engine ([#238](https://github.com/art049/odmantic/pull/238) by [@art049](https://github.com/art049))
