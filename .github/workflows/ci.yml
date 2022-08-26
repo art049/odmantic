@@ -34,7 +34,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Mongo Service
         id: mongo-service
-        uses: ./.github/actions/mongo-service
+        uses: art049/mongodb-cluster-action@v0
         with:
           version: "4.4"
           mode: standalone
@@ -90,7 +90,7 @@ jobs:
           cache-dependency-path: "pyproject.toml"
       - name: Mongo Service
         id: mongo-service
-        uses: ./.github/actions/mongo-service
+        uses: art049/mongodb-cluster-action@v0
         with:
           version: ${{ matrix.mongo-version }}
           mode: ${{ matrix.mongo-mode }}
