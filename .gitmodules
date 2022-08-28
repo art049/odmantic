@@ -1,0 +1,3 @@
+[submodule ".mongodb-cluster-action"]
+	path = .mongodb-cluster-action
+	url = https://github.com/art049/mongodb-cluster-action.git

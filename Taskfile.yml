@@ -6,7 +6,10 @@ silent: true
 
 includes:
   release: ./.github
-  mongodb: ./.github/actions/mongo-service/Taskfile.yml
+  mongodb:
+    taskfile: ./.mongodb-cluster-action/Taskfile.yml
+    dir: .mongodb-cluster-action
+    optional: true
 
 tasks:
   full-test:
@@ -64,6 +67,7 @@ tasks:
     desc: Configure the development environment.
     cmds:
       - task: setup:git-lfs
+      - task: setup:git-submodules
       - task: setup:pre-commit-hook
       - task: setup:deps-setup
 
@@ -73,6 +77,12 @@ tasks:
       - git lfs pull
     status:
       - test -d .git/lfs/
+
+  setup:git-submodules:
+    cmds:
+      - git submodule update --init
+    status:
+      - test -f .mongodb-cluster-action/README.md
 
   setup:pre-commit-hook:
     cmds:
