@@ -114,3 +114,56 @@ jobs:
           file: ./coverage.xml
           flags: tests-${{ matrix.python-version }}-${{ matrix.mongo-version }}-${{ matrix.mongo-mode }}
           fail_ci_if_error: true
+
+  integrated-realworld-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          path: odmantic-current
+      - uses: actions/checkout@v3
+        with:
+          repository: art049/fastapi-odmantic-realworld-example
+          submodules: recursive
+          path: fastapi-odmantic-realworld-example
+      - name: Install poetry and flit
+        run: |
+          pipx install poetry
+          pipx install flit
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          cache: "poetry"
+      - name: Install dependencies
+        working-directory: fastapi-odmantic-realworld-example
+        run: |
+          echo "$(grep -v 'odmantic =' ./pyproject.toml)" > pyproject.toml
+          poetry install
+      - name: Build current ODMantic version
+        working-directory: odmantic-current
+        run: |
+          flit build
+      - name: Install current ODMantic version
+        working-directory: fastapi-odmantic-realworld-example
+        run: poetry add ../odmantic-current/dist/*.tar.gz
+      - name: Start the MongoDB instance
+        uses: art049/mongodb-cluster-action@v0
+        id: mongodb-cluster-action
+      - name: Start the FastAPI server
+        working-directory: fastapi-odmantic-realworld-example
+        run: |
+          ./scripts/start.sh &
+          # Wait for the server
+          while ! curl "http://localhost:8000/health" > /dev/null 2>&1
+          do
+            sleep 1;
+          done
+          echo "Server ready."
+        env:
+          MONGO_URI: ${{ steps.mongodb-cluster-action.outputs.connection-string }}
+      - name: Run realworld backend tests
+        working-directory: fastapi-odmantic-realworld-example
+        run: ./realworld/api/run-api-tests.sh
+        env:
+          APIURL: http://localhost:8000

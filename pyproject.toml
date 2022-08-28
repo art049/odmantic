@@ -42,7 +42,7 @@ dependencies = [
     "pymongo >=3.11.0,<5.0.0",
 ]
 [project.optional-dependencies]
-fastapi = ["fastapi >=0.61.1,<0.69.0"]
+fastapi = ["fastapi >=0.61.1"]
 test = [
     "black ~= 22.3.0",
     "isort ~=5.8.0",
