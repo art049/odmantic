@@ -29,7 +29,14 @@ from odmantic.exceptions import DocumentNotFoundError
 from odmantic.field import FieldProxy, ODMReference
 from odmantic.model import Model
 from odmantic.query import QueryExpression, SortExpression, and_
-from odmantic.session import AIOSession, AIOTransaction, SyncSession, SyncTransaction
+from odmantic.session import (
+    AIOSession,
+    AIOSessionBase,
+    AIOTransaction,
+    SyncSession,
+    SyncSessionBase,
+    SyncTransaction,
+)
 
 try:
     import motor
@@ -48,8 +55,8 @@ ModelType = TypeVar("ModelType", bound=Model)
 
 SortExpressionType = Optional[Union[FieldProxy, Tuple[FieldProxy]]]
 
-AIOSessionType = Union[AsyncIOMotorClientSession, AIOSession, None]
-SyncSessionType = Union[ClientSession, SyncSession, None]
+AIOSessionType = Union[AsyncIOMotorClientSession, AIOSession, AIOTransaction, None]
+SyncSessionType = Union[ClientSession, SyncSession, SyncTransaction, None]
 
 
 class BaseCursor(Generic[ModelType]):
@@ -328,9 +335,12 @@ class AIOEngine(BaseEngine):
         return self.database[model.__collection__]
 
     @staticmethod
-    def _get_session(session: AIOSessionType) -> Optional[AsyncIOMotorClientSession]:
-        if isinstance(session, AIOSession):
-            return session.session
+    def _get_session(
+        session: Union[AIOSessionType, AIOSessionBase]
+    ) -> Optional[AsyncIOMotorClientSession]:
+        if isinstance(session, (AIOSession, AIOTransaction)):
+            return session.get_driver_session()
+        assert not isinstance(session, AIOSessionBase)  # Abstract class
         return session
 
     def session(self) -> AIOSession:
@@ -658,9 +668,12 @@ class SyncEngine(BaseEngine):
         return collection
 
     @staticmethod
-    def _get_session(session: SyncSessionType) -> Optional[ClientSession]:
-        if isinstance(session, SyncSession):
-            return session.session
+    def _get_session(
+        session: Union[SyncSessionType, SyncSessionBase]
+    ) -> Optional[ClientSession]:
+        if isinstance(session, (SyncSession, SyncTransaction)):
+            return session.get_driver_session()
+        assert not isinstance(session, SyncSessionBase)  # Abstract class
         return session
 
     def session(self) -> SyncSession:

@@ -599,7 +599,7 @@ async def test_remove_transaction_failure(aio_engine: AIOEngine):
                     session=session,
                 )
                 raise Exception("oops")
-    assert await aio_engine.count(PersonModel) == 3  # type: ignore
+    assert await aio_engine.count(PersonModel) == 3  # type: ignore # (unreachable)
 
 
 @only_on_replica
@@ -614,7 +614,7 @@ def test_sync_remove_transaction_failure(sync_engine: SyncEngine):
                     session=session,
                 )
                 raise Exception("oops")
-    assert sync_engine.count(PersonModel) == 3  # type: ignore
+    assert sync_engine.count(PersonModel) == 3  # type: ignore # (unreachable)
 
 
 @pytest.mark.usefixtures("person_persisted")
