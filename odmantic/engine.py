@@ -29,6 +29,7 @@ from odmantic.exceptions import DocumentNotFoundError
 from odmantic.field import FieldProxy, ODMReference
 from odmantic.model import Model
 from odmantic.query import QueryExpression, SortExpression, and_
+from odmantic.session import AIOSession, AIOTransaction, SyncSession, SyncTransaction
 
 try:
     import motor
@@ -46,6 +47,9 @@ except ImportError:  # pragma: no cover
 ModelType = TypeVar("ModelType", bound=Model)
 
 SortExpressionType = Optional[Union[FieldProxy, Tuple[FieldProxy]]]
+
+AIOSessionType = Union[AsyncIOMotorClientSession, AIOSession, None]
+SyncSessionType = Union[ClientSession, SyncSession, None]
 
 
 class BaseCursor(Generic[ModelType]):
@@ -323,6 +327,20 @@ class AIOEngine(BaseEngine):
         """
         return self.database[model.__collection__]
 
+    @staticmethod
+    def _get_session(session: AIOSessionType) -> Optional[AsyncIOMotorClientSession]:
+        if isinstance(session, AIOSession):
+            return session.session
+        return session
+
+    def session(self) -> AIOSession:
+        """Get a new session for the engine."""
+        return AIOSession(self)
+
+    def transaction(self) -> AIOTransaction:
+        """Get a new transaction for the engine."""
+        return AIOTransaction(self)
+
     def find(
         self,
         model: Type[ModelType],
@@ -332,6 +350,7 @@ class AIOEngine(BaseEngine):
         sort: Optional[Any] = None,
         skip: int = 0,
         limit: Optional[int] = None,
+        session: AIOSessionType = None,
     ) -> AIOCursor[ModelType]:
         """Search for Model instances matching the query filter provided
 
@@ -341,6 +360,7 @@ class AIOEngine(BaseEngine):
             sort: sort expression
             skip: number of document to skip
             limit: maximum number of instance fetched
+            session: an optional session to use for the operation
 
         Raises:
             DocumentParsingError: unable to parse one of the resulting documents
@@ -362,7 +382,9 @@ class AIOEngine(BaseEngine):
             limit=limit,
         )
         collection = self.get_collection(model)
-        motor_cursor = collection.aggregate(pipeline)
+        motor_cursor = collection.aggregate(
+            pipeline, session=self._get_session(session)
+        )
         return AIOCursor(model, motor_cursor)
 
     async def find_one(
@@ -372,6 +394,7 @@ class AIOEngine(BaseEngine):
             QueryExpression, Dict, bool
         ],  # bool: allow using binary operators w/o plugin
         sort: Optional[Any] = None,
+        session: AIOSessionType = None,
     ) -> Optional[ModelType]:
         """Search for a Model instance matching the query filter provided
 
@@ -379,6 +402,7 @@ class AIOEngine(BaseEngine):
             model: model to perform the operation on
             *queries: query filter to apply
             sort: sort expression
+            session: an optional session to use for the operation
 
         Raises:
             DocumentParsingError: unable to parse the resulting document
@@ -393,7 +417,7 @@ class AIOEngine(BaseEngine):
         """
         if not lenient_issubclass(model, Model):
             raise TypeError("Can only call find_one with a Model class")
-        results = await self.find(model, *queries, sort=sort, limit=1)
+        results = await self.find(model, *queries, sort=sort, limit=1, session=session)
         if len(results) == 0:
             return None
         return results[0]
@@ -425,7 +449,7 @@ class AIOEngine(BaseEngine):
         self,
         instance: ModelType,
         *,
-        session: "Union[AsyncIOMotorClientSession, None]" = None,
+        session: AIOSessionType = None,
     ) -> ModelType:
         """Persist an instance to the database
 
@@ -455,7 +479,7 @@ class AIOEngine(BaseEngine):
         if not isinstance(instance, Model):
             raise TypeError("Can only call find_one with a Model class")
         if session:
-            await self._save(instance, session)
+            await self._save(instance, self._get_session(session))
         else:
             async with await self.client.start_session() as local_session:
                 await self._save(instance, local_session)
@@ -465,7 +489,7 @@ class AIOEngine(BaseEngine):
         self,
         instances: Sequence[ModelType],
         *,
-        session: "Union[AsyncIOMotorClientSession, None]" = None,
+        session: AIOSessionType = None,
     ) -> List[ModelType]:
         """Persist instances to the database
 
@@ -491,7 +515,8 @@ class AIOEngine(BaseEngine):
         """
         if session:
             added_instances = [
-                await self._save(instance, session) for instance in instances
+                await self._save(instance, self._get_session(session))
+                for instance in instances
             ]
         else:
             async with await self.client.start_session() as local_session:
@@ -504,7 +529,7 @@ class AIOEngine(BaseEngine):
         self,
         instance: ModelType,
         *,
-        session: Union[AsyncIOMotorClientSession, None] = None,
+        session: AIOSessionType = None,
     ) -> None:
         """Delete an instance from the database
 
@@ -522,7 +547,7 @@ class AIOEngine(BaseEngine):
         collection = self.database[instance.__collection__]
         pk_name = instance.__primary_field__
         result = await collection.delete_many(
-            {"_id": getattr(instance, pk_name)}, session=session
+            {"_id": getattr(instance, pk_name)}, session=self._get_session(session)
         )
         count = int(result.deleted_count)
         if count == 0:
@@ -533,7 +558,7 @@ class AIOEngine(BaseEngine):
         model: Type[ModelType],
         *queries: Union[QueryExpression, Dict, bool],
         just_one: bool = False,
-        session: Union[AsyncIOMotorClientSession, None] = None,
+        session: AIOSessionType = None,
     ) -> int:
         """Delete Model instances matching the query filter provided
 
@@ -556,20 +581,28 @@ class AIOEngine(BaseEngine):
         collection = self.get_collection(model)
 
         if just_one:
-            result = await collection.delete_one(query, session=session)
+            result = await collection.delete_one(
+                query, session=self._get_session(session)
+            )
         else:
-            result = await collection.delete_many(query, session=session)
+            result = await collection.delete_many(
+                query, session=self._get_session(session)
+            )
 
         return cast(int, result.deleted_count)
 
     async def count(
-        self, model: Type[ModelType], *queries: Union[QueryExpression, Dict, bool]
+        self,
+        model: Type[ModelType],
+        *queries: Union[QueryExpression, Dict, bool],
+        session: AIOSessionType = None,
     ) -> int:
         """Get the count of documents matching a query
 
         Args:
             model: model to perform the operation on
             *queries: query filters to apply
+            session: an optional session to use for the operation
 
         Returns:
             number of document matching the query
@@ -582,7 +615,9 @@ class AIOEngine(BaseEngine):
             raise TypeError("Can only call count with a Model class")
         query = BaseEngine._build_query(*queries)
         collection = self.database[model.__collection__]
-        count = await collection.count_documents(query)
+        count = await collection.count_documents(
+            query, session=self._get_session(session)
+        )
         return int(count)
 
 
@@ -622,6 +657,20 @@ class SyncEngine(BaseEngine):
         collection = self.database[model.__collection__]
         return collection
 
+    @staticmethod
+    def _get_session(session: SyncSessionType) -> Optional[ClientSession]:
+        if isinstance(session, SyncSession):
+            return session.session
+        return session
+
+    def session(self) -> SyncSession:
+        """Get a new session for the engine."""
+        return SyncSession(self)
+
+    def transaction(self) -> SyncTransaction:
+        """Get a new transaction for the engine."""
+        return SyncTransaction(self)
+
     def find(
         self,
         model: Type[ModelType],
@@ -631,6 +680,7 @@ class SyncEngine(BaseEngine):
         sort: Optional[Any] = None,
         skip: int = 0,
         limit: Optional[int] = None,
+        session: SyncSessionType = None,
     ) -> SyncCursor[ModelType]:
         """Search for Model instances matching the query filter provided
 
@@ -640,6 +690,7 @@ class SyncEngine(BaseEngine):
             sort: sort expression
             skip: number of document to skip
             limit: maximum number of instance fetched
+            session: an optional session to use for the operation
 
         Raises:
             DocumentParsingError: unable to parse one of the resulting documents
@@ -661,7 +712,7 @@ class SyncEngine(BaseEngine):
             limit=limit,
         )
         collection = self.get_collection(model)
-        cursor = collection.aggregate(pipeline)
+        cursor = collection.aggregate(pipeline, session=self._get_session(session))
         return SyncCursor(model, cursor)
 
     def find_one(
@@ -671,6 +722,7 @@ class SyncEngine(BaseEngine):
             QueryExpression, Dict, bool
         ],  # bool: allow using binary operators w/o plugin
         sort: Optional[Any] = None,
+        session: SyncSessionType = None,
     ) -> Optional[ModelType]:
         """Search for a Model instance matching the query filter provided
 
@@ -678,6 +730,7 @@ class SyncEngine(BaseEngine):
             model: model to perform the operation on
             *queries: query filter to apply
             sort: sort expression
+            session: an optional session to use for the operation
 
         Raises:
             DocumentParsingError: unable to parse the resulting document
@@ -692,7 +745,7 @@ class SyncEngine(BaseEngine):
         """
         if not lenient_issubclass(model, Model):
             raise TypeError("Can only call find_one with a Model class")
-        results = list(self.find(model, *queries, sort=sort, limit=1))
+        results = list(self.find(model, *queries, sort=sort, limit=1, session=session))
         if len(results) == 0:
             return None
         return results[0]
@@ -722,7 +775,7 @@ class SyncEngine(BaseEngine):
         self,
         instance: ModelType,
         *,
-        session: Union[ClientSession, None] = None,
+        session: SyncSessionType = None,
     ) -> ModelType:
         """Persist an instance to the database
 
@@ -753,7 +806,7 @@ class SyncEngine(BaseEngine):
             raise TypeError("Can only call find_one with a Model class")
 
         if session:
-            self._save(instance, session)
+            self._save(instance, self._get_session(session))  # type: ignore
         else:
             with self.client.start_session() as local_session:
                 self._save(instance, local_session)
@@ -763,7 +816,7 @@ class SyncEngine(BaseEngine):
         self,
         instances: Sequence[ModelType],
         *,
-        session: Union[ClientSession, None] = None,
+        session: SyncSessionType = None,
     ) -> List[ModelType]:
         """Persist instances to the database
 
@@ -788,7 +841,10 @@ class SyncEngine(BaseEngine):
             instances are still returned for convenience.
         """
         if session:
-            added_instances = [self._save(instance, session) for instance in instances]
+            added_instances = [
+                self._save(instance, self._get_session(session))  # type: ignore
+                for instance in instances
+            ]
         else:
             with self.client.start_session() as local_session:
                 added_instances = [
@@ -799,7 +855,7 @@ class SyncEngine(BaseEngine):
     def delete(
         self,
         instance: ModelType,
-        session: Union[ClientSession, None] = None,
+        session: SyncSessionType = None,
     ) -> None:
         """Delete an instance from the database
 
@@ -818,7 +874,7 @@ class SyncEngine(BaseEngine):
         collection = self.database[instance.__collection__]
         pk_name = instance.__primary_field__
         result = collection.delete_many(
-            {"_id": getattr(instance, pk_name)}, session=session
+            {"_id": getattr(instance, pk_name)}, session=self._get_session(session)
         )
         count = result.deleted_count
         if count == 0:
@@ -829,7 +885,7 @@ class SyncEngine(BaseEngine):
         model: Type[ModelType],
         *queries: Union[QueryExpression, Dict, bool],
         just_one: bool = False,
-        session: Union[ClientSession, None] = None,
+        session: SyncSessionType = None,
     ) -> int:
         """Delete Model instances matching the query filter provided
 
@@ -852,20 +908,24 @@ class SyncEngine(BaseEngine):
         collection = self.get_collection(model)
 
         if just_one:
-            result = collection.delete_one(query, session=session)
+            result = collection.delete_one(query, session=self._get_session(session))
         else:
-            result = collection.delete_many(query, session=session)
+            result = collection.delete_many(query, session=self._get_session(session))
 
         return result.deleted_count
 
     def count(
-        self, model: Type[ModelType], *queries: Union[QueryExpression, Dict, bool]
+        self,
+        model: Type[ModelType],
+        *queries: Union[QueryExpression, Dict, bool],
+        session: SyncSessionType = None,
     ) -> int:
         """Get the count of documents matching a query
 
         Args:
             model: model to perform the operation on
             *queries: query filters to apply
+            session: an optional session to use for the operation
 
         Returns:
             number of document matching the query
@@ -878,5 +938,5 @@ class SyncEngine(BaseEngine):
             raise TypeError("Can only call count with a Model class")
         query = BaseEngine._build_query(*queries)
         collection = self.database[model.__collection__]
-        count = collection.count_documents(query)
+        count = collection.count_documents(query, session=self._get_session(session))
         return int(count)
