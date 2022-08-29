@@ -25,7 +25,7 @@ jobs:
           pip install flit
           pip install ".[doc]"
       - name: Build documentation
-        run: mkdocs build -f ./docs/mkdocs.yml
+        run: mkdocs build -f ./mkdocs.yml
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:

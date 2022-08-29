@@ -264,24 +264,63 @@ instance by passing `just_one`.
 
 {{ async_sync_snippet("engine", "remove_just_one.py", hl_lines="12") }}
 ## Consistency
+
+
 ### Using a Session
 
-When you save one or multiple instances, a session is created and used automatically.
+!!! Tip "Why are sessions needed ?"
+    A session is a way to
+    guarantee that the data you read is consistent with the data you write.
+    This is especially useful when you need to perform multiple operations on the
+    same data.
 
-But you can also create a session yourself and pass it as a parameter to `engine.save` and `engine.save_all`.
+    See [this document](https://www.mongodb.com/docs/manual/core/read-isolation-consistency-recency/#causal-consistency){:target=blank_} for more details on causal consistency.
 
-For example:
+You can create a session by using the `engine.session` method. This method will return
+either a [SyncSession][odmantic.session.SyncSession] or an
+[AIOSession][odmantic.session.AIOSession] object, depending on the type of engine used.
+Those session objects are context manager and can be used along with the `with` or the
+`async with` keywords. Once the context is entered the `session` object exposes the same
+database operation methods as the related `engine` object but execute each operation in
+the session context.
 
-{{ async_sync_snippet("engine", "create_with_session.py", hl_lines="13-14 22-23") }}
 
-!!! Tip "Using the underlying driver client"
-    The `engine.client` attribute of an engine instance is the [AsyncIOMotorClient](https://motor.readthedocs.io/en/stable/api-asyncio/asyncio_motor_client.html){:target=blank_} or the [PyMongoClient](https://pymongo.readthedocs.io/en/stable/api/pymongo/mongo_client.html){:target=blank_} used internally. So, you can access its attributes and methods, in this case, to create a session.
+{{ async_sync_snippet("engine", "save_with_session.py", hl_lines="13-23") }}
+
+!!! Tip "Directly using driver sessions"
+    Every single engine method also accepts a `session` parameter. You can use this
+    parameter to provide an existing driver (motor or PyMongo) session that you created
+    manually.
+
+!!! Tip "Accessing the underlying driver session object"
+    The `session.get_driver_session` method exposes the underlying driver session. This
+    is useful if you want to use the driver session directly to perform raw operations.
 
 ### Using a Transaction
 
-The same way that you can create a session, you can also start a transaction for your operations:
+!!! Tip "Why are transactions needed ?"
+    A transaction is a mechanism that allows you to execute multiple operations in a
+    single atomic operation. This is useful when you want to ensure that a set of
+    operations is atomicly on a specific document.
 
-{{ async_sync_snippet("engine", "create_with_transaction.py", hl_lines="14 24") }}
+!!! Error "MongoDB transaction support"
+    Transactions are only supported in a replica sets (Mongo 4.0+) or sharded clusters
+    with replication enabled (Mongo 4.2+), if you use them in a standalone MongoDB
+    instance an error will be raised.
 
-!!! warning "Transaction support in MongoDB"
-    Have in mind that transactions are only supported in a replica set or sharded clusters, if you use them in a standalone MongoDB instance you will get an error.
+You can create a transaction directly from the engine by using the `engine.transaction`
+method. This methods will either return a
+[SyncTransaction][odmantic.session.SyncTransaction] or an
+[AIOTransaction][odmantic.session.AIOTransaction] object. As for sessions, transaction
+objects exposes the same database operation methods as the related `engine` object but
+execute each operation in a transactional context.
+
+In order to terminate a transaction you must either call the `commit` method to persist
+all the changes or call the `abort` method to drop the changes introduced in the
+transaction.
+
+{{ async_sync_snippet("engine", "save_with_transaction.py", hl_lines="11-13 18-21") }}
+
+It is also possible to create a transaction within an existing session by using
+the `session.transaction` method:
+{{ async_sync_snippet("engine", "transaction_from_session.py", hl_lines="11-19") }}
