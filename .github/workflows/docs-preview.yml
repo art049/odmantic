@@ -23,7 +23,7 @@ jobs:
           pip install ".[doc]"
 
       - name: Build documentation
-        run: mkdocs build -f ./docs/mkdocs.yml
+        run: mkdocs build -f ./mkdocs.yml
 
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.1

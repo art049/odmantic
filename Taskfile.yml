@@ -50,7 +50,7 @@ tasks:
   docs:
     desc: Start the local documentation server.
     cmds:
-      - mkdocs serve -f ./docs/mkdocs.yml
+      - mkdocs serve -f ./mkdocs.yml
 
   lint:
     desc: Run the linting checks.

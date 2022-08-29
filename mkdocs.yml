@@ -3,8 +3,8 @@ site_description: AsyncIO MongoDB ODM (Object Document Mapper) using python type
 repo_name: art049/odmantic
 repo_url: https://github.com/art049/odmantic
 site_url: https://art049.github.io/odmantic/
-docs_dir: .
-site_dir: ../site
+docs_dir: ./docs
+site_dir: ./site
 
 theme:
   name: material
@@ -55,7 +55,8 @@ markdown_extensions:
 
 plugins:
   - search
-  - macros
+  - macros:
+      module_name: docs/main
   - mkdocstrings:
       custom_templates: docs/api_reference/templates
       default_handler: python
@@ -79,6 +80,7 @@ nav:
   - API Reference:
       - odmantic.model: ./api_reference/model.md
       - odmantic.engine: ./api_reference/engine.md
+      - odmantic.session: ./api_reference/session.md
       - odmantic.query: ./api_reference/query.md
       - odmantic.field: ./api_reference/field.md
       - odmantic.reference: ./api_reference/reference.md

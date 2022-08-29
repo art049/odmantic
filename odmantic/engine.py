@@ -344,11 +344,43 @@ class AIOEngine(BaseEngine):
         return session
 
     def session(self) -> AIOSession:
-        """Get a new session for the engine."""
+        """Get a new session for the engine to allow ordering sequential operations.
+
+        Returns:
+            a new session object
+
+        Example usage:
+
+        ```python
+        engine = AIOEngine(...)
+        async with engine.session() as session:
+            john = await session.find(User, User.name == "John")
+            john.name = "Doe"
+            await session.save(john)
+        ```
+        """
         return AIOSession(self)
 
     def transaction(self) -> AIOTransaction:
-        """Get a new transaction for the engine."""
+        """Get a new transaction for the engine to aggregate sequential operations.
+
+        Returns:
+            a new transaction object
+
+        Example usage:
+        ```python
+        engine = AIOEngine(...)
+        async with engine.transaction() as transaction:
+            john = transaction.find(User, User.name == "John")
+            john.name = "Doe"
+            await transaction.save(john)
+            await transaction.commit()
+        ```
+
+        Warning:
+            MongoDB transaction are only supported on replicated clusters: either
+            directly a replicaSet or a sharded cluster with replication enabled.
+        """
         return AIOTransaction(self)
 
     def find(
@@ -470,10 +502,9 @@ class AIOEngine(BaseEngine):
 
         Args:
             instance: instance to persist
-            session: An optional `AsyncIOMotorClientSession` to use, if not provided
-                one will be created. This could be used to start a transaction (only
-                supported in a MongoDB cluster with replicas) and then pass the session
-                with the transaction here.
+            session: An optional session to use for the operation. If not provided, an
+                     internal session will be used to persist the instance and
+                     sub-instances.
 
         Returns:
             the saved instance
@@ -511,10 +542,8 @@ class AIOEngine(BaseEngine):
 
         Args:
             instances: instances to persist
-            session: An optional `AsyncIOMotorClientSession` to use, if not provided
-                one will be created. This could be used to start a transaction (only
-                supported in a MongoDB cluster with replicas) and then pass the session
-                with the transaction here.
+            session: An optional session to use for the operation. If not provided, an
+                     internal session will be used to persist the instances.
 
         Returns:
             the saved instances
@@ -545,10 +574,8 @@ class AIOEngine(BaseEngine):
 
         Args:
             instance: the instance to delete
-            session: An optional `AsyncIOMotorClientSession` to use, if not provided
-                one will be created. This could be used to start a transaction (only
-                supported in a MongoDB cluster with replicas) and then pass the session
-                with the transaction here.
+            session: an optional session to use for the operation
+
 
         Raises:
             DocumentNotFoundError: the instance has not been persisted to the database
@@ -576,16 +603,11 @@ class AIOEngine(BaseEngine):
             model: model to perform the operation on
             *queries: query filter to apply
             just_one: limit the deletion to just one document
-            session: An optional `AsyncIOMotorClientSession` to use, if not provided
-                one will be created. This could be used to start a transaction (only
-                supported in a MongoDB cluster with replicas) and then pass the session
-                with the transaction here.
+            session: an optional session to use for the operation
 
         Returns:
             the number of instances deleted from the database.
 
-        <!---
-        -->
         """
         query = AIOEngine._build_query(*queries)
         collection = self.get_collection(model)
@@ -677,11 +699,43 @@ class SyncEngine(BaseEngine):
         return session
 
     def session(self) -> SyncSession:
-        """Get a new session for the engine."""
+        """Get a new session for the engine to allow ordering sequential operations.
+
+        Returns:
+            a new session object
+
+        Example usage:
+
+        ```python
+        engine = SyncEngine(...)
+        with engine.session() as session:
+            john = session.find(User, User.name == "John")
+            john.name = "Doe"
+            session.save(john)
+        ```
+        """
         return SyncSession(self)
 
     def transaction(self) -> SyncTransaction:
-        """Get a new transaction for the engine."""
+        """Get a new transaction for the engine to aggregate sequential operations.
+
+        Returns:
+            a new transaction object
+
+        Example usage:
+        ```python
+        engine = SyncEngine(...)
+        with engine.transaction() as transaction:
+            john = transaction.find(User, User.name == "John")
+            john.name = "Doe"
+            transaction.save(john)
+            transaction.commit()
+        ```
+
+        Warning:
+            MongoDB transaction are only supported on replicated clusters: either
+            directly a replicaSet or a sharded cluster with replication enabled.
+        """
         return SyncTransaction(self)
 
     def find(
@@ -799,10 +853,9 @@ class SyncEngine(BaseEngine):
 
         Args:
             instance: instance to persist
-            session: An optional `ClientSession` to use, if not provided
-                one will be created. This could be used to start a transaction (only
-                supported in a MongoDB cluster with replicas) and then pass the session
-                with the transaction here.
+            session: An optional session to use for the operation. If not provided, an
+                     internal session will be used to persist the instance and
+                     sub-instances.
 
         Returns:
             the saved instance
@@ -841,10 +894,8 @@ class SyncEngine(BaseEngine):
 
         Args:
             instances: instances to persist
-            session: An optional `ClientSession` to use, if not provided
-                one will be created. This could be used to start a transaction (only
-                supported in a MongoDB cluster with replicas) and then pass the session
-                with the transaction here.
+            session: An optional session to use for the operation. If not provided an
+                     internal session will be used to persist the instances.
 
         Returns:
             the saved instances
@@ -874,10 +925,7 @@ class SyncEngine(BaseEngine):
 
         Args:
             instance: the instance to delete
-            session: An optional `ClientSession` to use, if not provided
-                one will be created. This could be used to start a transaction (only
-                supported in a MongoDB cluster with replicas) and then pass the session
-                with the transaction here.
+            session: an optional session to use for the operation
 
         Raises:
             DocumentNotFoundError: the instance has not been persisted to the database
@@ -906,16 +954,10 @@ class SyncEngine(BaseEngine):
             model: model to perform the operation on
             *queries: query filter to apply
             just_one: limit the deletion to just one document
-            session: An optional `ClientSession` to use, if not provided
-                one will be created. This could be used to start a transaction (only
-                supported in a MongoDB cluster with replicas) and then pass the session
-                with the transaction here.
+            session: an optional session to use for the operation
 
         Returns:
             the number of instances deleted from the database.
-
-        <!---
-        -->
         """
         query = SyncEngine._build_query(*queries)
         collection = self.get_collection(model)
