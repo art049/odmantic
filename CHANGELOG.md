@@ -5,19 +5,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.0] - 2022-08-30
+
+#### Added
+
+- Add new SyncEngine, support async and sync code ([#231](https://github.com/art049/odmantic/pull/231) by  [@tiangolo](https://github.com/tiangolo))
+
+- Sync engine documentation ([#238](https://github.com/art049/odmantic/pull/238) by [@art049](https://github.com/art049))
+
 - Friendly interface for session and transactions ([#244](https://github.com/art049/odmantic/pull/244) by [@art049](https://github.com/art049))
 
-- Add Realworld API integrated test ([#246](https://github.com/art049/odmantic/pull/246) by [@art049](https://github.com/art049))
+- Implement the `engine.remove` method to allow instance deletion from a query ([#147](https://github.com/art049/odmantic/pull/147) & [#237](https://github.com/art049/odmantic/pull/237) by [@joeriddles](https://github.com/joeriddles) & [@art049](https://github.com/art049))
+
+#### Internals
+
+- Remove unnecessary Python 3.6 type fixes ([#243](https://github.com/art049/odmantic/pull/243) by [@art049](https://github.com/art049))
 
 - Switch Mongo action to art049/mongodb-cluster-action ([#245](https://github.com/art049/odmantic/pull/245) by [@art049](https://github.com/art049))
 
-- Implement the `engine.remove` method to allow instance deletion from a query ([#237](https://github.com/art049/odmantic/pull/237) by [@art049](https://github.com/art049))
-
-- Documentation for the sync engine ([#238](https://github.com/art049/odmantic/pull/238) by [@art049](https://github.com/art049))
-
-- Add new SyncEngine, support async and sync code rebased ([#242](https://github.com/art049/odmantic/pull/242) by [@art049](https://github.com/art049))
-
-- Remove unnecessary Python 3.6 type fixes ([#243](https://github.com/art049/odmantic/pull/243) by [@art049](https://github.com/art049))
+- Add Realworld API integrated test ([#246](https://github.com/art049/odmantic/pull/246) by [@art049](https://github.com/art049))
 
 ## [0.6.0] - 2022-08-24
 
@@ -256,4 +262,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.4.0]: https://github.com/art049/odmantic/compare/v0.3.5...v0.4.0
 [0.5.0]: https://github.com/art049/odmantic/compare/v0.4.0...v0.5.0
 [0.6.0]: https://github.com/art049/odmantic/compare/v0.5.0...v0.6.0
-[unreleased]: https://github.com/art049/odmantic/compare/v0.6.0...HEAD
+[0.7.0]: https://github.com/art049/odmantic/compare/v0.6.0...v0.7.0
+[unreleased]: https://github.com/art049/odmantic/compare/v0.7.0...HEAD
