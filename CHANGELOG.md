@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Friendly interface for session and transactions ([#244](https://github.com/art049/odmantic/pull/244) by [@art049](https://github.com/art049))
+
 - Add Realworld API integrated test ([#246](https://github.com/art049/odmantic/pull/246) by [@art049](https://github.com/art049))
 
 - Switch Mongo action to art049/mongodb-cluster-action ([#245](https://github.com/art049/odmantic/pull/245) by [@art049](https://github.com/art049))
