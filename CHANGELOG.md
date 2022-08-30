@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Update Mongo version in the CI build matrix ([#247](https://github.com/art049/odmantic/pull/247) by [@art049](https://github.com/art049))
+
 ## [0.7.0] - 2022-08-30
 
 #### Added
