@@ -9,11 +9,23 @@ site_dir: ./site
 theme:
   name: material
   palette:
-    primary: light green
-    accent: light green
-    scheme: preference
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: green
+      accent: green
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: green
+      accent: green
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
   icon:
     logo: material/spa
+    repo: fontawesome/brands/github
   features:
     - instant
     - content.tabs.link
