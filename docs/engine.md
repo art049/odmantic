@@ -301,7 +301,7 @@ the session context.
 !!! Tip "Why are transactions needed ?"
     A transaction is a mechanism that allows you to execute multiple operations in a
     single atomic operation. This is useful when you want to ensure that a set of
-    operations is atomicly on a specific document.
+    operations is atomicly performed on a specific document.
 
 !!! Error "MongoDB transaction support"
     Transactions are only supported in a replica sets (Mongo 4.0+) or sharded clusters
