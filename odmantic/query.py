@@ -27,7 +27,7 @@ class QueryExpression(Dict[str, Any]):
             parent_repr = ""
         return f"QueryExpression({parent_repr})"
 
-    def __or__(self, other: "QueryExpression") -> "QueryExpression":
+    def __or__(self, other: "QueryExpression") -> "QueryExpression":  # type: ignore
         return or_(self, other)
 
     def __and__(self, other: "QueryExpression") -> "QueryExpression":

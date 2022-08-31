@@ -1,3 +1,4 @@
+import sys
 from types import FunctionType
 from typing import (
     Any,
@@ -501,3 +502,42 @@ def test_extra_field_document_parsing():
     instance = M.parse_doc({"_id": ObjectId(), "f": 1, "extra": "hello"})
 
     assert "extra" in instance.doc()
+
+
+class EmForGenericDefinitionTest(EmbeddedModel):
+    f: int
+
+
+@pytest.mark.skipif(
+    sys.version_info[:3] < (3, 9, 0),
+    reason="Standard collection generics not supported by python < 3.9",
+)
+@pytest.mark.parametrize(
+    "get_type, value",
+    [
+        (lambda: list[int], [1, 2, 3]),
+        (lambda: dict[str, int], {"a": 1, "b": 2}),
+        (lambda: set[int], {1, 2, 3}),
+        (lambda: tuple[int, ...], (1, 2, 3)),
+        (
+            lambda: list[EmForGenericDefinitionTest],
+            [EmForGenericDefinitionTest(f=1), EmForGenericDefinitionTest(f=2)],
+        ),
+        (
+            lambda: dict[str, EmForGenericDefinitionTest],
+            {
+                "a": EmForGenericDefinitionTest(f=1),
+                "b": EmForGenericDefinitionTest(f=2),
+            },
+        ),
+        (
+            lambda: tuple[EmForGenericDefinitionTest, ...],
+            (EmForGenericDefinitionTest(f=1), EmForGenericDefinitionTest(f=2)),
+        ),
+    ],
+)
+def test_model_definition_with_new_generics(get_type: Callable, value: Any):
+    class M(Model):
+        f: get_type()  # type: ignore # 3.9 + syntax
+
+    assert M(f=value).f == value
