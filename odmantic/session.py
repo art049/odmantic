@@ -19,6 +19,7 @@ from pymongo.client_session import ClientSession
 
 import odmantic.engine as ODMEngine
 from odmantic.query import QueryExpression
+from odmantic.updater import AIOUpdater, SyncUpdater
 
 
 class AIOSessionBase(metaclass=ABCMeta):
@@ -150,6 +151,21 @@ class AIOSessionBase(metaclass=ABCMeta):
         """
         return await self.engine.save_all(
             instances, session=self.engine._get_session(self)
+        )
+
+    def update(
+        self,
+        model: Type[ODMEngine.ModelType],
+        *queries: Union[
+            QueryExpression, Dict, bool
+        ],  # bool: allow using binary operators w/o plugin
+        just_one: bool = False,
+    ) -> AIOUpdater[ODMEngine.ModelType]:
+        return self.engine.update(
+            model,
+            *queries,
+            session=self.engine._get_session(self),
+            just_one=just_one,
         )
 
     async def delete(
@@ -497,6 +513,21 @@ class SyncSessionBase(metaclass=ABCMeta):
             instances are still returned for convenience.
         """
         return self.engine.save_all(instances, session=self.engine._get_session(self))
+
+    def update(
+        self,
+        model: Type[ODMEngine.ModelType],
+        *queries: Union[
+            QueryExpression, Dict, bool
+        ],  # bool: allow using binary operators w/o plugin
+        just_one: bool = False,
+    ) -> SyncUpdater[ODMEngine.ModelType]:
+        return self.engine.update(
+            model,
+            *queries,
+            session=self.engine._get_session(self),
+            just_one=just_one,
+        )
 
     def delete(
         self,
