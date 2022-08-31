@@ -463,7 +463,9 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         __mutable_fields__: ClassVar[FrozenSet[str]] = frozenset()
         __references__: ClassVar[Tuple[str, ...]] = ()
         __pydantic_model__: ClassVar[Type[BaseBSONModel]]
-        __fields_modified__: Set[str] = set()
+        # __fields_modified__ is not a ClassVar but this allows to hide this field from
+        # the dataclass transform generated constructor
+        __fields_modified__: ClassVar[Set[str]] = set()
 
     __slots__ = ("__fields_modified__",)
 
@@ -756,7 +758,7 @@ class Model(_BaseODMModel, metaclass=ModelMetaclass):
         __collection__: ClassVar[str] = ""
         __primary_field__: ClassVar[str] = ""
 
-        id: Union[ObjectId, Any] = None  # TODO fix basic id field typing
+        id: Union[ObjectId, Any] = Field(init=False)  # TODO fix basic id field typing
 
     def __setattr__(self, name: str, value: Any) -> None:
         if name == self.__primary_field__:
