@@ -1,6 +1,6 @@
 [project]
 name = "odmantic"
-version = "0.7.0"
+version = "0.7.1"
 description = "ODMantic, an AsyncIO MongoDB Object Document Mapper for Python using type hints "
 authors = [{ name = "Arthur Pastel", email = "arthur.pastel@gmail.com" }]
 license = { file = "LICENSE" }

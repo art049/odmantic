@@ -5,7 +5,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.1] - 2022-09-02
+
+#### Fixed
+
 - Fix dataclass transform constructor type hints ([#249](https://github.com/art049/odmantic/pull/249) by [@art049](https://github.com/art049))
+
+#### Internals
 
 - Update Mongo version in the CI build matrix ([#247](https://github.com/art049/odmantic/pull/247) by [@art049](https://github.com/art049))
 
@@ -267,4 +273,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.5.0]: https://github.com/art049/odmantic/compare/v0.4.0...v0.5.0
 [0.6.0]: https://github.com/art049/odmantic/compare/v0.5.0...v0.6.0
 [0.7.0]: https://github.com/art049/odmantic/compare/v0.6.0...v0.7.0
-[unreleased]: https://github.com/art049/odmantic/compare/v0.7.0...HEAD
+[0.7.1]: https://github.com/art049/odmantic/compare/v0.7.0...v0.7.1
+[unreleased]: https://github.com/art049/odmantic/compare/v0.7.1...HEAD
