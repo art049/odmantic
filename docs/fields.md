@@ -218,9 +218,8 @@ descriptor using the `default` keyword argument.
 By default, the MongoDB documents fields will be named after the field name. It is
 possible to override this naming policy by using the `key_name` argument in the
 [Field][odmantic.field.Field] descriptor.
-```python hl_lines="5" linenums="1"
---8<-- "fields/custom_key_name.py"
-```
+
+{{ async_sync_snippet("fields", "custom_key_name.py", hl_lines="5") }}
 
 !!! abstract "Resulting documents in the collection `player` after execution"
 
@@ -239,10 +238,7 @@ possible to override this naming policy by using the `key_name` argument in the
 While ODMantic will by default populate the `id` field as a primary key, you can use any
 other field as the primary key.
 
-
-```python linenums="1"
---8<-- "fields/custom_primary_field.py"
-```
+{{ async_sync_snippet("fields", "custom_primary_field.py", hl_lines="5") }}
 
 !!! abstract "Resulting documents in the collection `player` after execution"
     ```json
@@ -257,6 +253,44 @@ other field as the primary key.
 !!! warning
     Using mutable types (Set, List, ...) as primary field might result in inconsistent
     behaviors.
+
+
+
+### Indexed fields
+
+You can define an index on a single field by using the `index` argument of the
+[Field][odmantic.field.Field] descriptor.
+
+More details about index creation can be found in the
+[Indexes](modeling.md#indexes) section.
+
+{{ async_sync_snippet("fields", "indexed_field.py", hl_lines="6 10") }}
+
+
+!!! warning
+    When using indexes, make sure to call the `configure_database` method
+    ([AIOEngine.configure_database][odmantic.engine.AIOEngine.configure_database] or
+    [SyncEngine.configure_database][odmantic.engine.SyncEngine.configure_database]) to
+    persist the indexes to the database.
+
+
+### Unique fields
+
+In the same way, you can define unique constrains on a single field by using the
+`unique` argument of the [Field][odmantic.field.Field] descriptor. This will ensure that
+values of this fields are unique among all the instances saved in the database.
+
+More details about unique index creation can be found in the
+[Indexes](modeling.md#indexes) section.
+
+{{ async_sync_snippet("fields", "unique_field.py", hl_lines="5 9 15-18") }}
+
+!!! warning
+    When using indexes, make sure to call the `configure_database` method
+    ([AIOEngine.configure_database][odmantic.engine.AIOEngine.configure_database] or
+    [SyncEngine.configure_database][odmantic.engine.SyncEngine.configure_database]) to
+    persist the indexes to the database.
+
 
 ## Validation
 

@@ -36,6 +36,83 @@ option in the `Config` class.
 !!! warning
     Models and Embedded models inheritance is not supported yet.
 
+### Indexes
+
+#### Index definition
+
+There are two ways to create indexes on a model in ODMantic. The first one is to use the
+Field descriptors as explained in [Indexed fields](fields.md#indexed-fields) or
+[Unique fields](fields.md#unique-fields). However, this way doesn't allow a great
+flexibility on index definition.
+
+That's why you can also use the `Config.indexes` generator to specify advanced indexes
+(compound indexes, custom names). This static function defined in the `Config` class
+should yield [odmantic.Index][odmantic.index.Index].
+
+
+For example:
+
+```python hl_lines="8 11-19" linenums="1"
+--8<-- "modeling/compound_index.py"
+```
+
+This snippet creates 3 indexes on the `Product` model:
+
+- A unique index on the `sku` field defined with
+  [the field descriptor](fields.md#unique-fields), enforcing uniqueness of the `sku`
+  field.
+
+- A compound index on the `name` and `stock` fields, making sure the following query
+  will be efficient (i.e. avoid a full collection scan):
+
+    ```python
+    engine.find(Product, Product.name == "banana", Product.stock > 5)
+    ```
+
+- A unique index on the `name` and `category` fields, making sure each category has
+  unique product name.
+
+!!! Tip "Sort orders with index definition"
+    You can also specify the sort order of the fields in the index definition using
+    [query.asc][odmantic.query.asc] and [query.desc][odmantic.query.desc] as presented
+    in the [Sorting](querying.md#sorting) section.
+
+    For example defining the following index on the `Event` model:
+    ```python linenums="1" hl_lines="11-14"
+    --8<-- "modeling/compound_index_sort_order.py"
+    ```
+
+    Will greatly improve the performance of the query:
+    ```python
+    engine.find(Event, sort=(asc(Event.name), desc(Event.date))
+    ```
+#### Index creation
+
+In order to create and enable the indexes in the database, you need to call the
+`engine.configure_database` method
+(either [AIOEngine.configure_database][odmantic.engine.AIOEngine.configure_database] or
+[SyncEngine.configure_database][odmantic.engine.SyncEngine.configure_database]).
+
+{{ async_sync_snippet("modeling", "index_creation.py", hl_lines="6") }}
+
+This method can also take a `#!python update_existing_indexes=True` parameter to update existing
+indexes when the index definition changes. If not enabled, an exception will be thrown
+when a conflicting index update happens.
+
+#### Advanced indexes
+
+In some cases, you might need a greater flexibility on the index definition (Geo2D,
+Hashed, Text indexes for example), the
+`Config.indexes` generator can also yield [pymongo.IndexModel](https://pymongo.readthedocs.io/en/stable/api/pymongo/operations.html?highlight=indexmodel#pymongo.operations.IndexModel){:target=blank_}
+objects.
+
+For example, defining a [text index](https://www.mongodb.com/docs/manual/core/index-text/){:target=blank_} :
+
+```python hl_lines="11-15" linenums="1"
+--8<-- "modeling/custom_text_index.py"
+```
+
+
 ### Custom model validators
 
 Exactly as done with pydantic, it's possible to define custom model validators as
@@ -65,15 +142,22 @@ in the model body.
 **Available options**:
 
  `#!python collection: str`
- :    Customize the collection name associated to the model. see [this
+ :    Customize the collection name associated to the model. See [this
       section](modeling.md#collection) for more details about default collection naming.
 
  `#!python parse_doc_with_default_factories: bool`
  :    Wether to allow populating field values with default factories while parsing
-      documents from the database. See [this
-      section](raw_query_usage.md#advanced-parsing-behavior) for more details.
+      documents from the database. See
+      [Advanced parsing behavior](raw_query_usage.md#advanced-parsing-behavior) for more
+      details.
 
       Default: `#!python False`
+
+`#!python indexes: Callable[[],Iterable[Union[Index, pymongo.IndexModel]]]`
+ :    Define additional indexes for the model. See [Indexes](modeling.md#indexes) for
+      more details.
+
+      Default: `#!python lambda: []`
 
  `#!python title: str` *(inherited from Pydantic)*
  :    Title inferred in the JSON schema.
