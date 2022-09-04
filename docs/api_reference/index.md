@@ -1,0 +1,1 @@
+::: odmantic.index.Index

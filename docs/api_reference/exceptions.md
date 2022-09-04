@@ -6,3 +6,8 @@
     selection:
         members:
           -
+
+::: odmantic.exceptions.DuplicateKeyError
+    selection:
+        members:
+          -
