@@ -28,6 +28,7 @@ from typing import (
 
 import bson
 import pydantic
+import pymongo
 from pydantic.error_wrappers import ErrorWrapper, ValidationError
 from pydantic.fields import Field as PDField
 from pydantic.fields import FieldInfo as PDFieldInfo
@@ -55,11 +56,13 @@ from odmantic.field import (
     Field,
     FieldProxy,
     ODMBaseField,
+    ODMBaseIndexableField,
     ODMEmbedded,
     ODMField,
     ODMFieldInfo,
     ODMReference,
 )
+from odmantic.index import Index, ODMBaseIndex, ODMSingleFieldIndex
 from odmantic.reference import ODMReferenceInfo
 from odmantic.utils import (
     is_dunder,
@@ -237,15 +240,21 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
                         value.key_name if value.key_name is not None else field_name
                     )
                     primary_field = value.primary_field
+                    index = value.index
+                    unique = value.unique
                 else:
                     key_name = field_name
                     primary_field = False
+                    index = False
+                    unique = False
 
                 odm_fields[field_name] = ODMEmbedded(
                     primary_field=primary_field,
                     model=field_type,
                     key_name=key_name,
                     model_config=config,
+                    index=index,
+                    unique=unique,
                 )
             elif lenient_issubclass(field_type, Model):
                 if not isinstance(value, ODMReferenceInfo):
@@ -270,6 +279,8 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
                         primary_field=value.primary_field,
                         key_name=key_name,
                         model_config=config,
+                        index=value.index,
+                        unique=value.unique,
                     )
                     namespace[field_name] = value.pydantic_field_info
 
@@ -290,11 +301,12 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
                         primary_field=False, key_name=field_name, model_config=config
                     )
 
+        # NOTE: Duplicate key detection make sur that at most one primary key is
+        # defined
         duplicate_key = find_duplicate_key(odm_fields.values())
         if duplicate_key is not None:
             raise TypeError(f"Duplicated key_name: {duplicate_key} in {name}")
-        # NOTE: Duplicate key detection make sur that at most one primary key is
-        # defined
+
         namespace["__annotations__"] = annotations
         namespace["__odm_fields__"] = odm_fields
         namespace["__references__"] = tuple(references)
@@ -780,6 +792,24 @@ class Model(_BaseODMModel, metaclass=ModelMetaclass):
                 "Reassigning a new primary key is not supported yet"
             )
         super().__setattr__(name, value)
+
+    @classmethod
+    def __indexes__(cls) -> Tuple[Union[ODMBaseIndex, pymongo.IndexModel], ...]:
+        indexes: List[Union[ODMBaseIndex, pymongo.IndexModel]] = []
+        for field in cls.__odm_fields__.values():
+            if isinstance(field, ODMBaseIndexableField) and (
+                field.index or field.unique
+            ):
+                indexes.append(
+                    ODMSingleFieldIndex(
+                        key_name=field.key_name,
+                        unique=field.unique,
+                    )
+                )
+
+        for index in cast(BaseODMConfig, cls.Config).indexes():
+            indexes.append(index.to_odm_index() if isinstance(index, Index) else index)
+        return tuple(indexes)
 
     def update(
         self,

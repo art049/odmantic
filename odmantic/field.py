@@ -43,6 +43,8 @@ def Field(
     *,
     key_name: Optional[str] = None,
     primary_field: bool = False,
+    index: bool = False,
+    unique: bool = False,
     default_factory: Optional[NoArgAnyCallable] = None,
     # alias: str = None, # FIXME not supported yet
     title: Optional[str] = None,
@@ -66,7 +68,7 @@ def Field(
 
     Tip:
         The main additions of ODMantic to the regular pydantic `Field` are the
-        `key_name` and the `primary_field` options.
+        `key_name`, `index`, `unique` and the `primary_field` options.
 
     Warning:
         If both `default` and `default_factory` are set, an error is raised.
@@ -82,6 +84,8 @@ def Field(
             default value
         key_name: the name to use in the the mongo document structure
         primary_field: this field should be considered as a primary key.
+        index: this field should be considered as an index
+        unique: this field should be considered as a unique index
         default_factory: callable that will be called when a default value is needed
             for this field.
         title: can be any string, used in the schema
@@ -155,13 +159,15 @@ def Field(
         pydantic_field_info=pydantic_field,
         primary_field=primary_field,
         key_name=key_name,
+        index=index,
+        unique=unique,
     )
 
 
 class ODMFieldInfo:
     """Extra data for an ODM field."""
 
-    __slots__ = ("pydantic_field_info", "primary_field", "key_name", "default")
+    __slots__ = ("pydantic_field_info", "primary_field", "key_name", "index", "unique")
 
     def __init__(
         self,
@@ -169,10 +175,14 @@ class ODMFieldInfo:
         pydantic_field_info: FieldInfo,
         primary_field: bool,
         key_name: Optional[str],
+        index: bool,
+        unique: bool,
     ):
         self.pydantic_field_info = pydantic_field_info
         self.primary_field = primary_field
         self.key_name = key_name
+        self.index = index
+        self.unique = unique
 
 
 class ODMBaseField(metaclass=abc.ABCMeta):
@@ -197,7 +207,23 @@ class ODMBaseField(metaclass=abc.ABCMeta):
             )
 
 
-class ODMField(ODMBaseField):
+class ODMBaseIndexableField(ODMBaseField, metaclass=abc.ABCMeta):
+
+    __slots__ = ("index", "unique")
+
+    def __init__(
+        self,
+        key_name: str,
+        model_config: Type[BaseODMConfig],
+        index: bool,
+        unique: bool,
+    ):
+        super().__init__(key_name, model_config)
+        self.index = index
+        self.unique = unique
+
+
+class ODMField(ODMBaseIndexableField):
     """Used to interact with the ODM model class."""
 
     __slots__ = ("primary_field",)
@@ -206,11 +232,16 @@ class ODMField(ODMBaseField):
     )
 
     def __init__(
-        self, *, primary_field: bool, key_name: str, model_config: Type["BaseODMConfig"]
+        self,
+        *,
+        key_name: str,
+        model_config: Type["BaseODMConfig"],
+        primary_field: bool,
+        index: bool = False,
+        unique: bool = False,
     ):
-        super().__init__(key_name, model_config)
+        super().__init__(key_name, model_config, index, unique)
         self.primary_field = primary_field
-        self.model_config = model_config
 
     def get_default_importing_value(self) -> Any:
         # The default importing value doesn't consider the default_factory setting by
@@ -251,9 +282,15 @@ class ODMEmbedded(ODMField):
         key_name: str,
         model_config: Type[BaseODMConfig],
         model: Type["EmbeddedModel"],
+        index: bool = False,
+        unique: bool = False,
     ):
         super().__init__(
-            primary_field=primary_field, key_name=key_name, model_config=model_config
+            primary_field=primary_field,
+            key_name=key_name,
+            model_config=model_config,
+            index=index,
+            unique=unique,
         )
         self.model = model
 
