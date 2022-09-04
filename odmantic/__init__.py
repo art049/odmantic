@@ -1,6 +1,7 @@
 from .bson import ObjectId
 from .engine import AIOEngine, SyncEngine
 from .field import Field
+from .index import Index
 from .model import EmbeddedModel, Model
 from .reference import Reference
 
@@ -10,6 +11,7 @@ __all__ = [
     "EmbeddedModel",
     "Field",
     "Reference",
+    "Index",
     "ObjectId",
     "SyncEngine",
 ]

@@ -1,6 +1,7 @@
 from abc import ABCMeta
 from typing import TYPE_CHECKING, Any, List, Sequence, Type, TypeVar, Union
 
+import pymongo
 from pydantic.error_wrappers import ErrorWrapper, ValidationError
 
 if TYPE_CHECKING:
@@ -29,6 +30,27 @@ class DocumentNotFoundError(BaseEngineException):
         super().__init__(
             f"Document not found for : {type(instance).__name__}. "
             f"Instance: {self.instance}",
+            type(instance),
+        )
+
+
+class DuplicateKeyError(BaseEngineException):
+    """The targetted document is duplicated according to a unique index.
+
+    Attributes:
+      instance: the instance that has not been found
+      driver_error: the original driver error
+    """
+
+    def __init__(
+        self, instance: "Model", driver_error: pymongo.errors.DuplicateKeyError
+    ):
+        self.instance: "Model" = instance
+        self.driver_error = driver_error
+        super().__init__(
+            f"Duplicate key error for: {type(instance).__name__}. "
+            f"Instance: {self.instance} "
+            f"Driver error: {self.driver_error}",
             type(instance),
         )
 
