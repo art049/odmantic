@@ -472,14 +472,12 @@ class AIOEngine(BaseEngine):
             sub_instance = cast(Model, getattr(instance, ref_field_name))
             await self._save(sub_instance, session)
 
-        fields_to_update = (
-            instance.__fields_modified__ | instance.__mutable_fields__
-        ) - set([instance.__primary_field__])
+        fields_to_update = instance.__fields_modified__ | instance.__mutable_fields__
         if len(fields_to_update) > 0:
             doc = instance.doc(include=fields_to_update)
             collection = self.get_collection(type(instance))
             await collection.update_one(
-                {"_id": getattr(instance, instance.__primary_field__)},
+                instance.doc(include={instance.__primary_field__}),
                 {"$set": doc},
                 upsert=True,
                 session=session,
@@ -823,14 +821,12 @@ class SyncEngine(BaseEngine):
             sub_instance = cast(Model, getattr(instance, ref_field_name))
             self._save(sub_instance, session)
 
-        fields_to_update = (
-            instance.__fields_modified__ | instance.__mutable_fields__
-        ) - set([instance.__primary_field__])
+        fields_to_update = instance.__fields_modified__ | instance.__mutable_fields__
         if len(fields_to_update) > 0:
             doc = instance.doc(include=fields_to_update)
             collection = self.get_collection(type(instance))
             collection.update_one(
-                {"_id": getattr(instance, instance.__primary_field__)},
+                instance.doc(include={instance.__primary_field__}),
                 {"$set": doc},
                 upsert=True,
                 session=session,

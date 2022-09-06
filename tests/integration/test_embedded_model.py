@@ -3,6 +3,7 @@ from typing import Tuple
 import pytest
 
 from odmantic.engine import AIOEngine, SyncEngine
+from odmantic.field import Field
 from odmantic.model import EmbeddedModel, Model
 
 from ..zoo.book_embedded import Book, Publisher
@@ -196,3 +197,31 @@ def test_sync_fields_modified_embedded_model_modification(sync_engine: SyncEngin
     fetched = sync_engine.find_one(M)
     assert fetched is not None
     assert fetched.e.f == 1
+
+
+async def test_embedded_model_as_primary_field_named_id(aio_engine: AIOEngine):
+    class Id(EmbeddedModel):
+        user: int
+        chat: int
+
+    class User(Model):
+        id: Id = Field(primary_field=True)
+
+    user = User(id=Id(user=1, chat=1001))
+    await aio_engine.save(user)
+    assert (
+        await aio_engine.find_one(User, User.id == Id(user=1, chat=1001))
+    ) is not None
+
+
+async def test_sync_embedded_model_as_primary_field_named_id(sync_engine: SyncEngine):
+    class Id(EmbeddedModel):
+        user: int
+        chat: int
+
+    class User(Model):
+        id: Id = Field(primary_field=True)
+
+    user = User(id=Id(user=1, chat=1001))
+    sync_engine.save(user)
+    assert sync_engine.find_one(User, User.id == Id(user=1, chat=1001)) is not None
