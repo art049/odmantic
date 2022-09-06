@@ -108,6 +108,11 @@ in the model body.
                 }
         ```
 
+`#!python extra: pydantic.Extra` *(inherited from Pydantic)*
+ :    Whether to ignore, allow, or forbid extra attributes during model initialization. Accepts the string values of 'ignore', 'allow', or 'forbid', or values of the Extra enum. 'forbid' will cause validation to fail if extra attributes are included, 'ignore' will silently ignore any extra attributes, and 'allow' will assign the attributes to the model, reflecting them in the saved database documents and fetched instances.
+
+      Default: `#!python Extra.ignore`
+
  `#!python json_loads` *(inherited from Pydantic)*
  :    Function used to decode JSON data
 
@@ -117,6 +122,9 @@ in the model body.
  :    Function used to encode JSON data
 
       Default: `#!python json.dumps`
+
+
+
 
 For more details and examples about the options inherited from Pydantic, you can have a
 look to [Pydantic: Model

@@ -20,6 +20,7 @@ from bson.regex import Regex
 from pydantic import Field as PDField
 from pydantic.error_wrappers import ValidationError
 
+from odmantic import ObjectId as ODMObjectId
 from odmantic.field import Field
 from odmantic.model import EmbeddedModel, Model
 from odmantic.reference import Reference
@@ -408,3 +409,60 @@ def test_embedded_model_alternate_key_name():
     instance = M(f=Em(name="Jack"))
     doc = instance.doc()
     assert doc["f"] == {"username": "Jack"}
+
+
+def test_model_definition_extra_allow():
+    class M(Model):
+        class Config:
+            extra = "allow"
+
+        f: int
+
+    instance = M(f=1, g=2)
+    assert instance.doc(include={"f", "g"}) == {"f": 1, "g": 2}
+
+
+def test_model_definition_extra_ignore():
+    class M(Model):
+        class Config:
+            extra = "ignore"
+
+        f: int
+
+    instance = M(f=1, g=2)
+    assert instance.doc(include={"f", "g"}) == {"f": 1}
+
+
+def test_model_definition_extra_forbid():
+    class M(Model):
+        class Config:
+            extra = "forbid"
+
+        f: int
+
+    with pytest.raises(ValidationError, match="extra fields not permitted"):
+        M(f=1, g=2)
+
+
+def test_extra_field_type_subst():
+    class M(Model):
+        class Config:
+            extra = "allow"
+
+        f: int
+
+    instance = M(f=1, oid=ODMObjectId())
+
+    assert isinstance(instance.doc()["oid"], ObjectId)
+
+
+def test_extra_field_document_parsing():
+    class M(Model):
+        class Config:
+            extra = "allow"
+
+        f: int
+
+    instance = M.parse_doc({"_id": ObjectId(), "f": 1, "extra": "hello"})
+
+    assert "extra" in instance.doc()
