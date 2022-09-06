@@ -659,6 +659,14 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
                 )
             else:
                 doc[field.key_name] = raw_doc[field_name]
+
+        if model.Config.extra == "allow":
+            extras = set(raw_doc.keys()) - set(model.__odm_fields__.keys())
+            for extra in extras:
+                value = raw_doc[extra]
+                subst_type = validate_type(type(value))
+                bson_serialization_method = getattr(subst_type, "__bson__", lambda x: x)
+                doc[extra] = bson_serialization_method(raw_doc[extra])
         return doc
 
     def doc(self, include: Optional["AbstractSetIntStr"] = None) -> Dict[str, Any]:
@@ -743,6 +751,11 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
                     )
                 else:
                     obj[field_name] = value
+
+        if cls.Config.extra == "allow":
+            extras = set(raw_doc.keys()) - set(obj.keys())
+            for extra in extras:
+                obj[extra] = raw_doc[extra]
 
         return errors, obj
 
