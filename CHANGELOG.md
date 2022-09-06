@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Fix save using an embedded model as a primary key ([#258](https://github.com/art049/odmantic/pull/258) by [@art049](https://github.com/art049))
+
 - Fix engine creation typo ([#257](https://github.com/art049/odmantic/pull/257) by [@art049](https://github.com/art049))
 
 ## [0.7.1] - 2022-09-02
