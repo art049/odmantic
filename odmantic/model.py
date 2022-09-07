@@ -750,6 +750,13 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
                         )
                     )
                 else:
+                    # iXB3 changes: recursively parse embedded document to dict with model keys
+                    if isinstance(field, ODMEmbedded):
+                        sub_errors, value = field.model._parse_doc_to_obj(
+                            value, base_loc=base_loc + (field_name,)
+                        )
+                        errors.extend(sub_errors)
+                    # end iXB3 changes
                     obj[field_name] = value
 
         if cls.Config.extra == "allow":
