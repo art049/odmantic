@@ -5,15 +5,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Fix embedded models parsing with `key_name`  ([#262](https://github.com/art049/odmantic/pull/262) by [@art049](https://github.com/art049))
+## [0.8.0] - 2022-09-09
 
-- Support Index definition ([#255](https://github.com/art049/odmantic/pull/255) by [@art049](https://github.com/art049))
+#### Added
 
-- Allow using the config.extra attribute from pydantic ([#259](https://github.com/art049/odmantic/pull/259) by [@art049](https://github.com/art049))
+- Allow Index definition ([feature documentation](https://art049.github.io/odmantic/modeling/#indexes)) ([#255](https://github.com/art049/odmantic/pull/255) by [@art049](https://github.com/art049))
 
-- Fix save using an embedded model as a primary key ([#258](https://github.com/art049/odmantic/pull/258) by [@art049](https://github.com/art049))
+- Allow using the `Config.extra` attribute from pydantic ([#259](https://github.com/art049/odmantic/pull/259) by [@art049](https://github.com/art049))
 
-- Fix engine creation typo ([#257](https://github.com/art049/odmantic/pull/257) by [@art049](https://github.com/art049))
+#### Fixed
+
+- Fix embedded models parsing with custom `key_name`  ([#262](https://github.com/art049/odmantic/pull/262) by [@iXB3](https://github.com/iXB3))
+
+- Fix `engine.save` using an embedded model as a primary key ([#258](https://github.com/art049/odmantic/pull/258) by [@art049](https://github.com/art049))
+
+- Fix engine creation typo in the documentation ([#257](https://github.com/art049/odmantic/pull/257) by [@art049](https://github.com/art049))
 
 ## [0.7.1] - 2022-09-02
 
@@ -284,4 +290,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.6.0]: https://github.com/art049/odmantic/compare/v0.5.0...v0.6.0
 [0.7.0]: https://github.com/art049/odmantic/compare/v0.6.0...v0.7.0
 [0.7.1]: https://github.com/art049/odmantic/compare/v0.7.0...v0.7.1
-[unreleased]: https://github.com/art049/odmantic/compare/v0.7.1...HEAD
+[0.8.0]: https://github.com/art049/odmantic/compare/v0.7.1...v0.8.0
+[unreleased]: https://github.com/art049/odmantic/compare/v0.8.0...HEAD
