@@ -225,3 +225,29 @@ async def test_sync_embedded_model_as_primary_field_named_id(sync_engine: SyncEn
     user = User(id=Id(user=1, chat=1001))
     sync_engine.save(user)
     assert sync_engine.find_one(User, User.id == Id(user=1, chat=1001)) is not None
+
+
+async def test_embedded_model_custom_key_name_save_and_fetch(aio_engine: AIOEngine):
+    class In(EmbeddedModel):
+        a: int = Field(key_name="in-a")
+
+    class Out(Model):
+        inner: In = Field(key_name="in")
+
+    instance = Out(inner=In(a=3))
+    await aio_engine.save(instance)
+    fetched = await aio_engine.find_one(Out)
+    assert instance == fetched
+
+
+def test_sync_embedded_model_custom_key_name_save_and_fetch(sync_engine: SyncEngine):
+    class In(EmbeddedModel):
+        a: int = Field(key_name="in-a")
+
+    class Out(Model):
+        inner: In = Field(key_name="in")
+
+    instance = Out(inner=In(a=3))
+    sync_engine.save(instance)
+    fetched = sync_engine.find_one(Out)
+    assert instance == fetched
