@@ -134,9 +134,7 @@ def test_document_parsing_error_embedded_keyname():
     with pytest.raises(DocumentParsingError) as exc_info:
         M.parse_doc({"_id": ObjectId(), "e": {"f": {}}})
     assert (
-        "1 validation error for M\n"
-        "e -> f -> a\n"
-        "  field required (type=value_error.missing)"
+        "1 validation error for M\n" "e -> f -> a\n" "  key not found in document"
     ) in str(exc_info.value)
 
 
@@ -151,6 +149,19 @@ def test_embedded_document_parsing_error():
         "f\n"
         "  key not found in document "
         "(type=value_error.keynotfoundindocument; key_name='f')"
+    )
+
+
+def test_embedded_document_parsing_validation_error():
+    class E(EmbeddedModel):
+        f: int
+
+    with pytest.raises(DocumentParsingError) as exc_info:
+        E.parse_doc({"f": "aa"})
+    assert str(exc_info.value) == (
+        "1 validation error for E\n"
+        "f\n"
+        "  value is not a valid integer (type=type_error.integer)"
     )
 
 

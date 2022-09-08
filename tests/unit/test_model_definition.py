@@ -21,6 +21,7 @@ from pydantic import Field as PDField
 from pydantic.error_wrappers import ValidationError
 
 from odmantic import ObjectId as ODMObjectId
+from odmantic.exceptions import DocumentParsingError
 from odmantic.field import Field
 from odmantic.model import EmbeddedModel, Model
 from odmantic.reference import Reference
@@ -409,6 +410,34 @@ def test_embedded_model_alternate_key_name():
     instance = M(f=Em(name="Jack"))
     doc = instance.doc()
     assert doc["f"] == {"username": "Jack"}
+    parsed = M.parse_doc(doc)
+    assert parsed == instance
+
+
+def test_embedded_model_alternate_key_name_with_default():
+    class Em(EmbeddedModel):
+        name: str = Field(key_name="username")
+
+    class M(Model):
+        f: Em = Em(name="Jack")
+
+    _id = ObjectId()
+    doc = {"_id": _id}
+    parsed = M.parse_doc(doc)
+    assert parsed.f.name == "Jack"
+
+
+def test_embedded_model_alternate_key_name_parsing_exception():
+    class Em(EmbeddedModel):
+        name: str = Field(key_name="username")
+
+    class M(Model):
+        f: Em
+
+    _id = ObjectId()
+    doc = {"_id": _id}
+    with pytest.raises(DocumentParsingError):
+        M.parse_doc(doc)
 
 
 def test_model_definition_extra_allow():
