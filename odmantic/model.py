@@ -727,7 +727,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         return instance
 
     @classmethod
-    def _parse_doc_to_obj(
+    def _parse_doc_to_obj(  # noqa C901 # TODO: refactor document parsing
         cls: Type[BaseT], raw_doc: Dict, base_loc: Tuple[str, ...] = ()
     ) -> Tuple[ErrorList, Dict[str, Any]]:
         errors: ErrorList = []
@@ -748,8 +748,26 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
                     )
                     errors.extend(sub_errors)
                     obj[field_name] = sub_obj
+            elif isinstance(field, ODMEmbedded):
+                value = raw_doc.get(field.key_name, Undefined)
+                if value is not Undefined:
+                    sub_errors, value = field.model._parse_doc_to_obj(
+                        value, base_loc=base_loc + (field_name,)
+                    )
+                    errors.extend(sub_errors)
+                else:
+                    if not field.is_required_in_doc():
+                        value = field.get_default_importing_value()
+                    if value is Undefined:
+                        errors.append(
+                            ErrorWrapper(
+                                exc=KeyNotFoundInDocumentError(field.key_name),
+                                loc=base_loc + (field_name,),
+                            )
+                        )
+                obj[field_name] = value
             else:
-                field = cast(Union[ODMField, ODMEmbedded], field)
+                field = cast(ODMField, field)
                 value = raw_doc.get(field.key_name, Undefined)
                 if value is Undefined and not field.is_required_in_doc():
                     value = field.get_default_importing_value()
