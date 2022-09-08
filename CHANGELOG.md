@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Fix embedded models parsing with `key_name`  ([#262](https://github.com/art049/odmantic/pull/262) by [@art049](https://github.com/art049))
+
 - Support Index definition ([#255](https://github.com/art049/odmantic/pull/255) by [@art049](https://github.com/art049))
 
 - Allow using the config.extra attribute from pydantic ([#259](https://github.com/art049/odmantic/pull/259) by [@art049](https://github.com/art049))
