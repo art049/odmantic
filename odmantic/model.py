@@ -179,8 +179,11 @@ def validate_type(type_: Type) -> Type:
     if type_origin is not None:
         type_args: Tuple[Type, ...] = getattr(type_, "__args__", ())
         new_arg_types = tuple(validate_type(subtype) for subtype in type_args)
-        setattr(type_, "__args__", new_arg_types)
-
+        try:
+            setattr(type_, "__args__", new_arg_types)
+        except AttributeError:
+            if type_.__args__ != new_arg_types:  # ignore exception in case of same type
+                raise
     return type_
 
 
