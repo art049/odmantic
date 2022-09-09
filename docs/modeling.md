@@ -52,11 +52,15 @@ should yield [odmantic.Index][odmantic.index.Index].
 
 For example:
 
-```python hl_lines="8 11-19" linenums="1"
+```python hl_lines="5 8 11-19" linenums="1"
 --8<-- "modeling/compound_index.py"
 ```
 
-This snippet creates 3 indexes on the `Product` model:
+This snippet creates 4 indexes on the `Product` model:
+
+- An index on the `name` field defined with
+  [the field descriptor](fields.md#indexed-fields), improving lookup performance by
+  product name.
 
 - A unique index on the `sku` field defined with
   [the field descriptor](fields.md#unique-fields), enforcing uniqueness of the `sku`
