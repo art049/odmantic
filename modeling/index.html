@@ -961,7 +961,7 @@ should yield <a class="autorefs autorefs-internal" href="../api_reference/#odman
 
 
 <span class="k">class</span> <span class="nc">Product</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">stock</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">category</span><span class="p">:</span> <span class="nb">str</span>
 <span class="hll">    <span class="n">sku</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -972,8 +972,13 @@ should yield <a class="autorefs autorefs-internal" href="../api_reference/#odman
 </span><span class="hll">            <span class="k">yield</span> <span class="n">Index</span><span class="p">(</span><span class="n">Product</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">Product</span><span class="o">.</span><span class="n">stock</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;name_stock_index&quot;</span><span class="p">)</span>
 </span><span class="hll">            <span class="k">yield</span> <span class="n">Index</span><span class="p">(</span><span class="n">Product</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">Product</span><span class="o">.</span><span class="n">category</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
-<p>This snippet creates 3 indexes on the <code>Product</code> model:</p>
+<p>This snippet creates 4 indexes on the <code>Product</code> model:</p>
 <ul>
+<li>
+<p>An index on the <code>name</code> field defined with
+  <a href="../fields/#indexed-fields">the field descriptor</a>, improving lookup performance by
+  product name.</p>
+</li>
 <li>
 <p>A unique index on the <code>sku</code> field defined with
   <a href="../fields/#unique-fields">the field descriptor</a>, enforcing uniqueness of the <code>sku</code>
