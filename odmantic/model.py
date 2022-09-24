@@ -269,7 +269,7 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
                     if value.primary_field:
                         raise TypeError(
                             "Declaring a generic type of embedded models as a primary "
-                            f"field is not possible: {field_name} in {name}"
+                            f"field is not allowed: {field_name} in {name}"
                         )
                     namespace[field_name] = value.pydantic_field_info
                     key_name = (
@@ -283,6 +283,11 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
                     unique = False
                 model = get_first_type_argument_subclassing(field_type, EmbeddedModel)
                 assert model is not None
+                if len(model.__references__) > 0:
+                    raise TypeError(
+                        "Declaring a generic type of embedded models containing "
+                        f"references is not allowed: {field_name} in {name}"
+                    )
                 generic_origin = get_origin(field_type)
                 assert generic_origin is not None
                 odm_fields[field_name] = ODMEmbeddedGeneric(
@@ -815,6 +820,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
                         )
                 obj[field_name] = value
             elif isinstance(field, ODMEmbeddedGeneric):
+                value = Undefined
                 raw_value = raw_doc.get(field.key_name, Undefined)
                 if raw_value is not Undefined:
                     if isinstance(raw_value, list) and (

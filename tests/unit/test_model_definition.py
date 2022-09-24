@@ -284,11 +284,38 @@ def test_embedded_model_generics_as_primary_key(generic: Type):
     with pytest.raises(
         TypeError,
         match="Declaring a generic type of embedded models as a primary field"
-        " is not possible",
+        " is not allowed",
     ):
 
         class M(Model):
             e: generic[E] = Field(primary_field=True)  # type: ignore
+
+
+@pytest.mark.parametrize(
+    "generic",
+    [
+        lambda e: List[e],  # type: ignore
+        lambda e: Set[e],  # type: ignore
+        lambda e: Dict[str, e],  # type: ignore
+        lambda e: Tuple[e],
+        lambda e: Tuple[e, ...],
+    ],
+)
+def test_embedded_model_generics_with_references(generic: Callable[[Type], Type]):
+    class AnotherModel(Model):
+        a: float
+
+    class E(EmbeddedModel):
+        f: AnotherModel = Reference()
+
+    with pytest.raises(
+        TypeError,
+        match="Declaring a generic type of embedded models containing references"
+        " is not allowed",
+    ):
+
+        class M(Model):
+            e: generic(E)  # type: ignore
 
 
 def test_invalid_collection_name_dollar():

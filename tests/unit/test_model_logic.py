@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 
 import pytest
 from bson.objectid import ObjectId
@@ -219,6 +219,20 @@ def test_embedded_model_list_alternate_key_name():
     assert parsed == instance
 
 
+def test_embedded_model_tuple_alternate_key_name():
+    class Em(EmbeddedModel):
+        name: str = Field(key_name="username")
+
+    class M(Model):
+        f: Tuple[Em, ...]
+
+    instance = M(f=(Em(name="Jack"),))
+    doc = instance.doc()
+    assert doc["f"] == [{"username": "Jack"}]
+    parsed = M.parse_doc(doc)
+    assert parsed == instance
+
+
 def test_embedded_model_list_parsing_invalid_type():
     class Em(EmbeddedModel):
         name: str
@@ -232,6 +246,36 @@ def test_embedded_model_list_parsing_invalid_type():
         M.parse_doc({"_id": 1, "f": {1: {"name": "Jack"}}})
 
 
+def test_embedded_model_list_parsing_missing_value():
+    class Em(EmbeddedModel):
+        name: str
+
+    class M(Model):
+        f: List[Em]
+
+    with pytest.raises(
+        DocumentParsingError,
+        match="key not found in document",
+    ) as exc_info:
+        M.parse_doc({"_id": 1})
+    assert (
+        "1 validation error for M\n"
+        "f\n"
+        "  key not found in document" in str(exc_info.value)
+    )
+
+
+def test_embedded_model_list_parsing_missing_value_with_default():
+    class Em(EmbeddedModel):
+        name: str
+
+    class M(Model):
+        f: List[Em] = [Em(name="John")]
+
+    parsed = M.parse_doc({"_id": ObjectId()})
+    assert parsed.f == [Em(name="John")]
+
+
 def test_embedded_model_dict_parsing_invalid_value():
     class Em(EmbeddedModel):
         name: str
@@ -243,6 +287,40 @@ def test_embedded_model_dict_parsing_invalid_value():
         DocumentParsingError, match="incorrect generic embedded model value"
     ):
         M.parse_doc({"_id": 1, "f": []})
+
+
+def test_embedded_model_dict_parsing_invalid_sub_value():
+    class Em(EmbeddedModel):
+        e: int
+
+    class M(Model):
+        f: Dict[str, Em]
+
+    with pytest.raises(ValidationError, match="key not found in document") as exc_info:
+        M.parse_doc({"_id": ObjectId(), "f": {"key": {"not_there": "a"}}})
+    assert (
+        "1 validation error for M\n"
+        'f -> ["key"] -> e\n'
+        "  key not found in document "
+        "(type=value_error.keynotfoundindocument; key_name='e')"
+    ) in str(exc_info.value)
+
+
+def test_embedded_model_list_parsing_invalid_sub_value():
+    class Em(EmbeddedModel):
+        e: int
+
+    class M(Model):
+        f: List[Em]
+
+    with pytest.raises(ValidationError, match="key not found in document") as exc_info:
+        M.parse_doc({"_id": ObjectId(), "f": [{"not_there": "a"}]})
+    assert (
+        "1 validation error for M\n"
+        "f -> [0] -> e\n"
+        "  key not found in document "
+        "(type=value_error.keynotfoundindocument; key_name='e')"
+    ) in str(exc_info.value)
 
 
 def test_fields_modified_on_object_parsing():
