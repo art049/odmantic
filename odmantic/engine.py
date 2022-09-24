@@ -39,6 +39,7 @@ from odmantic.session import (
     SyncSessionBase,
     SyncTransaction,
 )
+from odmantic.updater import AIOUpdater, SyncUpdater
 
 try:
     import motor
@@ -623,6 +624,23 @@ class AIOEngine(BaseEngine):
                 ]
         return added_instances
 
+    def update(
+        self,
+        model: Type[ModelType],
+        *queries: Union[
+            QueryExpression, Dict, bool
+        ],  # bool: allow using binary operators w/o plugin
+        session: AIOSessionType = None,
+        just_one: bool = False,
+    ) -> AIOUpdater[ModelType]:
+        return AIOUpdater(
+            model,
+            engine=self,
+            session=self._get_session(session),
+            query=and_(*queries),
+            just_one=just_one,
+        )
+
     async def delete(
         self,
         instance: ModelType,
@@ -1028,6 +1046,23 @@ class SyncEngine(BaseEngine):
                     self._save(instance, local_session) for instance in instances
                 ]
         return added_instances
+
+    def update(
+        self,
+        model: Type[ModelType],
+        *queries: Union[
+            QueryExpression, Dict, bool
+        ],  # bool: allow using binary operators w/o plugin
+        session: SyncSessionType = None,
+        just_one: bool = False,
+    ) -> SyncUpdater[ModelType]:
+        return SyncUpdater(
+            model,
+            engine=self,
+            session=self._get_session(session),
+            query=and_(*queries),
+            just_one=just_one,
+        )
 
     def delete(
         self,
