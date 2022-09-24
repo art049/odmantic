@@ -70,6 +70,12 @@ class ReferencedDocumentNotFoundError(ValueError):
         self.foreign_key_name = f"'{key_name}'"
 
 
+class IncorrectGenericEmbeddedModelValue(ValueError):
+    def __init__(self, value: Any):
+        super().__init__("incorrect generic embedded model value")
+        self.value = value
+
+
 class DocumentParsingError(ValidationError):
     """Unable to parse the document into an instance.
 

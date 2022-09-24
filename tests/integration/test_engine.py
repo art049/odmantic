@@ -893,7 +893,11 @@ async def test_only_tuple_of_embedded_set_on_save(
     collection.update_one.assert_awaited_once()
     (_, set_arg), _ = collection.update_one.await_args
     set_dict = set_arg["$set"]
-    assert set_dict == {"field": ({"a": "world"},)}
+    assert set_dict == {
+        "field": [
+            {"a": "world"},
+        ]
+    }
 
 
 def test_sync_only_tuple_of_embedded_set_on_save(
@@ -913,7 +917,11 @@ def test_sync_only_tuple_of_embedded_set_on_save(
     collection.update_one.assert_called_once()
     (_, set_arg), _ = collection.update_one.call_args
     set_dict = set_arg["$set"]
-    assert set_dict == {"field": ({"a": "world"},)}
+    assert set_dict == {
+        "field": [
+            {"a": "world"},
+        ]
+    }
 
 
 async def test_find_sort_asc(
