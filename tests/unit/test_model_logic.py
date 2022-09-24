@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Dict, List, Optional
 
 import pytest
 from bson.objectid import ObjectId
@@ -163,6 +163,86 @@ def test_embedded_document_parsing_validation_error():
         "f\n"
         "  value is not a valid integer (type=type_error.integer)"
     )
+
+
+def test_embedded_model_alternate_key_name_with_default():
+    class Em(EmbeddedModel):
+        name: str = Field(key_name="username")
+
+    class M(Model):
+        f: Em = Em(name="Jack")
+
+    _id = ObjectId()
+    doc = {"_id": _id}
+    parsed = M.parse_doc(doc)
+    assert parsed.f.name == "Jack"
+
+
+def test_embedded_model_alternate_key_name_parsing_exception():
+    class Em(EmbeddedModel):
+        name: str = Field(key_name="username")
+
+    class M(Model):
+        f: Em
+
+    _id = ObjectId()
+    doc = {"_id": _id}
+    with pytest.raises(DocumentParsingError):
+        M.parse_doc(doc)
+
+
+def test_embedded_model_alternate_key_name():
+    class Em(EmbeddedModel):
+        name: str = Field(key_name="username")
+
+    class M(Model):
+        f: Em
+
+    instance = M(f=Em(name="Jack"))
+    doc = instance.doc()
+    assert doc["f"] == {"username": "Jack"}
+    parsed = M.parse_doc(doc)
+    assert parsed == instance
+
+
+def test_embedded_model_list_alternate_key_name():
+    class Em(EmbeddedModel):
+        name: str = Field(key_name="username")
+
+    class M(Model):
+        f: List[Em]
+
+    instance = M(f=[Em(name="Jack")])
+    doc = instance.doc()
+    assert doc["f"] == [{"username": "Jack"}]
+    parsed = M.parse_doc(doc)
+    assert parsed == instance
+
+
+def test_embedded_model_list_parsing_invalid_type():
+    class Em(EmbeddedModel):
+        name: str
+
+    class M(Model):
+        f: List[Em]
+
+    with pytest.raises(
+        DocumentParsingError, match="incorrect generic embedded model value"
+    ):
+        M.parse_doc({"_id": 1, "f": {1: {"name": "Jack"}}})
+
+
+def test_embedded_model_dict_parsing_invalid_value():
+    class Em(EmbeddedModel):
+        name: str
+
+    class M(Model):
+        f: Dict[str, Em]
+
+    with pytest.raises(
+        DocumentParsingError, match="incorrect generic embedded model value"
+    ):
+        M.parse_doc({"_id": 1, "f": []})
 
 
 def test_fields_modified_on_object_parsing():

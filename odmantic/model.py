@@ -37,7 +37,6 @@ from pydantic.main import BaseModel
 from pydantic.tools import parse_obj_as
 from pydantic.typing import is_classvar, resolve_annotations
 from pydantic.utils import lenient_issubclass
-from typing_extensions import dataclass_transform
 
 from odmantic.bson import (
     _BSON_SUBSTITUTED_FIELDS,
@@ -49,6 +48,7 @@ from odmantic.config import BaseODMConfig, validate_config
 from odmantic.exceptions import (
     DocumentParsingError,
     ErrorList,
+    IncorrectGenericEmbeddedModelValue,
     KeyNotFoundInDocumentError,
     ReferencedDocumentNotFoundError,
 )
@@ -58,12 +58,19 @@ from odmantic.field import (
     ODMBaseField,
     ODMBaseIndexableField,
     ODMEmbedded,
+    ODMEmbeddedGeneric,
     ODMField,
     ODMFieldInfo,
     ODMReference,
 )
 from odmantic.index import Index, ODMBaseIndex, ODMSingleFieldIndex
 from odmantic.reference import ODMReferenceInfo
+from odmantic.typing import (
+    dataclass_transform,
+    get_first_type_argument_subclassing,
+    get_origin,
+    is_type_argument_subclass,
+)
 from odmantic.utils import (
     is_dunder,
     raise_on_invalid_collection_name,
@@ -256,6 +263,37 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
                     index=index,
                     unique=unique,
                 )
+
+            elif is_type_argument_subclass(field_type, EmbeddedModel):
+                if isinstance(value, ODMFieldInfo):
+                    if value.primary_field:
+                        raise TypeError(
+                            "Declaring a generic type of embedded models as a primary "
+                            f"field is not possible: {field_name} in {name}"
+                        )
+                    namespace[field_name] = value.pydantic_field_info
+                    key_name = (
+                        value.key_name if value.key_name is not None else field_name
+                    )
+                    index = value.index
+                    unique = value.unique
+                else:
+                    key_name = field_name
+                    index = False
+                    unique = False
+                model = get_first_type_argument_subclassing(field_type, EmbeddedModel)
+                assert model is not None
+                generic_origin = get_origin(field_type)
+                assert generic_origin is not None
+                odm_fields[field_name] = ODMEmbeddedGeneric(
+                    model=model,
+                    generic_origin=generic_origin,
+                    key_name=key_name,
+                    model_config=config,
+                    index=index,
+                    unique=unique,
+                )
+
             elif lenient_issubclass(field_type, Model):
                 if not isinstance(value, ODMReferenceInfo):
                     raise TypeError(
@@ -665,6 +703,16 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
                 doc[field.key_name] = raw_doc[field_name][field.model.__primary_field__]
             elif isinstance(field, ODMEmbedded):
                 doc[field.key_name] = self.__doc(raw_doc[field_name], field.model, None)
+            elif isinstance(field, ODMEmbeddedGeneric):
+                if field.generic_origin is dict:
+                    doc[field.key_name] = {
+                        item_key: self.__doc(item_value, field.model)
+                        for item_key, item_value in raw_doc[field_name].items()
+                    }
+                else:
+                    doc[field.key_name] = [
+                        self.__doc(item, field.model) for item in raw_doc[field_name]
+                    ]
             elif field_name in model.__bson_serialized_fields__:
                 doc[field.key_name] = model.__fields__[field_name].type_.__bson__(
                     raw_doc[field_name]
@@ -766,6 +814,55 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
                             )
                         )
                 obj[field_name] = value
+            elif isinstance(field, ODMEmbeddedGeneric):
+                raw_value = raw_doc.get(field.key_name, Undefined)
+                if raw_value is not Undefined:
+                    if isinstance(raw_value, list) and (
+                        field.generic_origin is list
+                        or field.generic_origin is tuple
+                        or field.generic_origin is set
+                    ):
+                        value = []
+                        for i, item in enumerate(raw_value):
+                            sub_errors, item = field.model._parse_doc_to_obj(
+                                item, base_loc=base_loc + (field_name, f"[{i}]")
+                            )
+                            if len(sub_errors) > 0:
+                                errors.extend(sub_errors)
+                            else:
+                                value.append(item)
+                        obj[field_name] = value
+                    elif isinstance(raw_value, dict) and field.generic_origin is dict:
+                        value = {}
+                        for item_key, item_value in raw_value.items():
+                            sub_errors, item_value = field.model._parse_doc_to_obj(
+                                item_value,
+                                base_loc=base_loc + (field_name, f'["{item_key}"]'),
+                            )
+                            if len(sub_errors) > 0:
+                                errors.extend(sub_errors)
+                            else:
+                                value[item_key] = item_value
+                        obj[field_name] = value
+                    else:
+                        errors.append(
+                            ErrorWrapper(
+                                exc=IncorrectGenericEmbeddedModelValue(raw_value),
+                                loc=base_loc + (field_name,),
+                            )
+                        )
+                else:
+                    if not field.is_required_in_doc():
+                        value = field.get_default_importing_value()
+                    if value is Undefined:
+                        errors.append(
+                            ErrorWrapper(
+                                exc=KeyNotFoundInDocumentError(field.key_name),
+                                loc=base_loc + (field_name,),
+                            )
+                        )
+                    else:
+                        obj[field_name] = value
             else:
                 field = cast(ODMField, field)
                 value = raw_doc.get(field.key_name, Undefined)

@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Dict, List, Tuple
 
 import pytest
 
@@ -248,6 +248,66 @@ def test_sync_embedded_model_custom_key_name_save_and_fetch(sync_engine: SyncEng
         inner: In = Field(key_name="in")
 
     instance = Out(inner=In(a=3))
+    sync_engine.save(instance)
+    fetched = sync_engine.find_one(Out)
+    assert instance == fetched
+
+
+async def test_embedded_model_list_custom_key_name_save_and_fetch(
+    aio_engine: AIOEngine,
+):
+    class In(EmbeddedModel):
+        a: int = Field(key_name="in-a")
+
+    class Out(Model):
+        inner: List[In] = Field(key_name="in")
+
+    instance = Out(inner=[In(a=3)])
+    await aio_engine.save(instance)
+    fetched = await aio_engine.find_one(Out)
+    assert instance == fetched
+
+
+def test_sync_embedded_model_list_custom_key_name_save_and_fetch(
+    sync_engine: SyncEngine,
+):
+    class In(EmbeddedModel):
+        a: int = Field(key_name="in-a")
+
+    class Out(Model):
+        inner: List[In] = Field(key_name="in")
+
+    instance = Out(inner=[In(a=3)])
+    sync_engine.save(instance)
+    fetched = sync_engine.find_one(Out)
+    assert instance == fetched
+
+
+async def test_embedded_model_dict_custom_key_name_save_and_fetch(
+    aio_engine: AIOEngine,
+):
+    class In(EmbeddedModel):
+        a: int = Field(key_name="in-a")
+
+    class Out(Model):
+        inner: Dict[str, In] = Field(key_name="in")
+
+    instance = Out(inner={"key": In(a=3)})
+    await aio_engine.save(instance)
+    fetched = await aio_engine.find_one(Out)
+    assert instance == fetched
+
+
+def test_sync_embedded_model_dict_custom_key_name_save_and_fetch(
+    sync_engine: SyncEngine,
+):
+    class In(EmbeddedModel):
+        a: int = Field(key_name="in-a")
+
+    class Out(Model):
+        inner: Dict[str, In] = Field(key_name="in")
+
+    instance = Out(inner={"key": In(a=3)})
     sync_engine.save(instance)
     fetched = sync_engine.find_one(Out)
     assert instance == fetched

@@ -295,6 +295,31 @@ class ODMEmbedded(ODMField):
         self.model = model
 
 
+class ODMEmbeddedGeneric(ODMField):
+    # Only dict,set and list are "officially" supported for now
+    __slots__ = ("model", "generic_origin")
+    __allowed_operators__ = set(("eq", "ne"))
+
+    def __init__(
+        self,
+        key_name: str,
+        model_config: Type[BaseODMConfig],
+        model: Type["EmbeddedModel"],
+        generic_origin: Any,
+        index: bool = False,
+        unique: bool = False,
+    ):
+        super().__init__(
+            primary_field=False,
+            key_name=key_name,
+            model_config=model_config,
+            index=index,
+            unique=unique,
+        )
+        self.model = model
+        self.generic_origin = generic_origin
+
+
 class KeyNameProxy(str):
     """Used to provide the `++` operator enabling reference key name creation"""
 
