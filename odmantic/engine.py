@@ -19,7 +19,6 @@ from typing import (
 )
 
 import pymongo
-from pydantic.utils import lenient_issubclass
 from pymongo import MongoClient
 from pymongo.client_session import ClientSession
 from pymongo.collection import Collection
@@ -39,6 +38,7 @@ from odmantic.session import (
     SyncSessionBase,
     SyncTransaction,
 )
+from odmantic.typing import lenient_issubclass
 
 try:
     import motor

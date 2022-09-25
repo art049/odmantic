@@ -3,8 +3,6 @@ from typing import Any
 from typing import Callable as TypingCallable
 from typing import Tuple, Type, TypeVar, Union
 
-from pydantic.utils import lenient_issubclass
-
 NoArgAnyCallable = TypingCallable[[], Any]
 
 # Handles globally the typing imports from typing or the typing_extensions backport
@@ -26,8 +24,21 @@ else:
     from typing import _GenericAlias as GenericAlias  # type: ignore # noqa: F401
 
 
+# Taken from https://github.com/pydantic/pydantic/pull/2392
+# Reimplemented here to avoid a dependency deprecation on pydantic1.7
+def lenient_issubclass(
+    cls: Any, class_or_tuple: Union[Type[Any], Tuple[Type[Any], ...]]
+) -> bool:
+    try:
+        return isinstance(cls, type) and issubclass(cls, class_or_tuple)
+    except TypeError:
+        if isinstance(cls, GenericAlias):
+            return False
+        raise  # pragma: no cover
+
+
 def is_type_argument_subclass(
-    type_: Type, class_or_tuple: Union[Type[Any], Tuple[Type[Any], ...], None]
+    type_: Type, class_or_tuple: Union[Type[Any], Tuple[Type[Any], ...]]
 ) -> bool:
     args = get_args(type_)
     return any(lenient_issubclass(arg, class_or_tuple) for arg in args)

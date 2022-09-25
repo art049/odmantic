@@ -36,7 +36,6 @@ from pydantic.fields import Undefined
 from pydantic.main import BaseModel
 from pydantic.tools import parse_obj_as
 from pydantic.typing import is_classvar, resolve_annotations
-from pydantic.utils import lenient_issubclass
 
 from odmantic.bson import (
     _BSON_SUBSTITUTED_FIELDS,
@@ -72,6 +71,7 @@ from odmantic.typing import (
     get_first_type_argument_subclassing,
     get_origin,
     is_type_argument_subclass,
+    lenient_issubclass,
 )
 from odmantic.utils import (
     is_dunder,
