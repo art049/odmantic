@@ -13,6 +13,7 @@ from typing import (
 
 import bson
 import pytest
+from typing_utils import are_generics_equal
 
 from odmantic.bson import (
     _BSON_SUBSTITUTED_FIELDS,
@@ -32,13 +33,15 @@ def test_validate_type_bson_substituted(base, replacement):
 
 @pytest.mark.parametrize("base, replacement", _BSON_SUBSTITUTED_FIELDS.items())
 def test_optional_bson_subst(base, replacement):
-    assert validate_type(Optional[base]) == Optional[replacement]  # type: ignore
+    assert are_generics_equal(
+        validate_type(Optional[base]), Optional[replacement]  # type: ignore
+    )
 
 
 @pytest.mark.parametrize("origin", (List, Set, FrozenSet, Sequence))
 @pytest.mark.parametrize("base, replacement", _BSON_SUBSTITUTED_FIELDS.items())
 def test_single_arg_type_bson_subst(origin, base, replacement):
-    assert validate_type(origin[base]) == origin[replacement]
+    assert are_generics_equal(validate_type(origin[base]), origin[replacement])
 
 
 def test_forbidden_field():
@@ -47,17 +50,17 @@ def test_forbidden_field():
 
 
 def test_deep_nest_bson_subst():
-    assert (
+    assert are_generics_equal(
         validate_type(
             Union[  # type: ignore
                 Dict[List[bson.ObjectId], Dict[bson.ObjectId, bson.Decimal128]],
                 Dict[Dict[Set[bson.Int64], bson.Binary], Tuple[bson.Regex, ...]],
             ]
-        )
-        == Union[
+        ),
+        Union[
             Dict[List[ObjectId], Dict[ObjectId, Decimal128]],
             Dict[Dict[Set[Int64], Binary], Tuple[Regex, ...]],
-        ]
+        ],
     )
 
 

@@ -2,7 +2,7 @@ import dataclasses
 import re
 from datetime import datetime
 from decimal import Decimal
-from typing import Dict, Generic, List, Pattern, Tuple, Type, TypeVar, Union
+from typing import Any, Dict, Generic, List, Pattern, Tuple, Type, TypeVar, Union
 
 import pytest
 from bson import Binary, Decimal128, Int64, ObjectId, Regex
@@ -47,7 +47,7 @@ type_test_data = [
         Decimal, "decimal", "3.14159265359"
     ),  # TODO split tests for  odmantic type inference
     TypeTestCase(Decimal128, "decimal", Decimal128(Decimal("3.14159265359"))),
-    TypeTestCase(Dict, "object", {"foo": "bar", "fizz": {"foo": "bar"}}),
+    TypeTestCase(Dict[str, Any], "object", {"foo": "bar", "fizz": {"foo": "bar"}}),
     TypeTestCase(bool, "bool", False),
     TypeTestCase(Pattern, "regex", re.compile(r"^.*$")),
     TypeTestCase(Pattern, "regex", re.compile(r"^.*$", flags=re.IGNORECASE)),
@@ -59,7 +59,7 @@ type_test_data = [
     TypeTestCase(bytes, "binData", b"\xf0\xf1\xf2"),
     TypeTestCase(Binary, "binData", Binary(b"\xf0\xf1\xf2")),
     TypeTestCase(datetime, "date", sample_datetime),
-    TypeTestCase(List, "array", ["one"]),
+    TypeTestCase(List[str], "array", ["one"]),
     # Compound Types
     TypeTestCase(Tuple[str, ...], "array", ("one",)),  # type: ignore
     TypeTestCase(List[ObjectId], "array", [ObjectId() for _ in range(5)]),
