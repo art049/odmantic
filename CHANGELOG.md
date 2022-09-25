@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Allow using generators with `in_` and `not_in`  ([#270](https://github.com/art049/odmantic/pull/270) by [@art049](https://github.com/art049))
+
 - Fix `EmbeddedModel` generics definition with a custom `key_name` ([#269](https://github.com/art049/odmantic/pull/269) by [@art049](https://github.com/art049))
 
 ## [0.8.0] - 2022-09-09
