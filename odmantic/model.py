@@ -66,9 +66,9 @@ from odmantic.field import (
 from odmantic.index import Index, ODMBaseIndex, ODMSingleFieldIndex
 from odmantic.reference import ODMReferenceInfo
 from odmantic.typing import (
-    HAS_GENERIC_ALIAS_BUILTIN,
-    USES_OLD_TYPING_INTERFACE,
+    GenericAlias,
     dataclass_transform,
+    get_args,
     get_first_type_argument_subclassing,
     get_origin,
     is_type_argument_subclass,
@@ -79,12 +79,6 @@ from odmantic.utils import (
     raise_on_invalid_key_name,
     to_snake_case,
 )
-
-if HAS_GENERIC_ALIAS_BUILTIN:
-    from typing import GenericAlias  # type: ignore
-else:
-    from typing import _GenericAlias as GenericAlias  # type: ignore
-
 
 if TYPE_CHECKING:
 
@@ -185,28 +179,11 @@ def validate_type(type_: Type) -> Type:
     if subst_type is not None:
         return subst_type
 
-    # Typing replacement
-    # 3.7+:
-    # https://github.com/python/cpython/blob/e022bbc169ca1428dc3017187012de17ce6e0bc7/Lib/typing.py#L605
-    # 3.6:
-    # https://github.com/python/cpython/blob/aed26482c7baab078f39d5cd52216fb8ee9f276f/Lib/typing.py#L570
-    type_origin: Optional[Type] = getattr(type_, "__origin__", None)
+    type_origin: Optional[Type] = get_origin(type_)
     if type_origin is not None:
-        type_args: Tuple[Type, ...] = getattr(type_, "__args__", ())
+        type_args: Tuple[Type, ...] = get_args(type_)
         new_arg_types = tuple(validate_type(subtype) for subtype in type_args)
         type_ = GenericAlias(type_origin, new_arg_types)
-        if USES_OLD_TYPING_INTERFACE:
-            # FIXME: there is probably a more elegant way of doing this
-            subs_tree = type_._subs_tree()
-            if type_origin is Union:
-                tree_hash = hash(
-                    frozenset(subs_tree) if isinstance(subs_tree, tuple) else subs_tree
-                )
-            else:
-                tree_hash = hash(
-                    subs_tree if isinstance(subs_tree, tuple) else frozenset(subs_tree)
-                )
-            setattr(type_, "__tree_hash__", tree_hash)
     return type_
 
 
