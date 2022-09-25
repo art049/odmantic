@@ -140,6 +140,28 @@ def test_sync_in_(sync_engine: SyncEngine):
 
 
 @pytest.mark.usefixtures("person_persisted")
+async def test_in__generator(aio_engine: AIOEngine):
+    query = in_(PersonModel.first_name, ["Michel", "Jean-Pierre"])
+    # TODO allow this with a mypy plugin
+    assert query == PersonModel.first_name.in_(  # type: ignore
+        e for e in ["Michel", "Jean-Pierre"]
+    )
+    count = await aio_engine.count(PersonModel, query)
+    assert count == 3
+
+
+@pytest.mark.usefixtures("person_persisted")
+def test_sync_in__generator(sync_engine: SyncEngine):
+    query = in_(PersonModel.first_name, ["Michel", "Jean-Pierre"])
+    # TODO allow this with a mypy plugin
+    assert query == PersonModel.first_name.in_(  # type: ignore
+        e for e in ["Michel", "Jean-Pierre"]
+    )
+    count = sync_engine.count(PersonModel, query)
+    assert count == 3
+
+
+@pytest.mark.usefixtures("person_persisted")
 async def test_not_in(aio_engine: AIOEngine):
     query = not_in(PersonModel.first_name, ["Michel", "Jean-Pierre"])
     # TODO allow this with a mypy plugin
@@ -156,6 +178,28 @@ def test_sync_not_in(sync_engine: SyncEngine):
     # TODO allow this with a mypy plugin
     assert query == PersonModel.first_name.not_in(  # type: ignore
         ["Michel", "Jean-Pierre"]
+    )
+    count = sync_engine.count(PersonModel, query)
+    assert count == 0
+
+
+@pytest.mark.usefixtures("person_persisted")
+async def test_not_in_generator(aio_engine: AIOEngine):
+    query = not_in(PersonModel.first_name, ["Michel", "Jean-Pierre"])
+    # TODO allow this with a mypy plugin
+    assert query == PersonModel.first_name.not_in(  # type: ignore
+        e for e in ["Michel", "Jean-Pierre"]
+    )
+    count = await aio_engine.count(PersonModel, query)
+    assert count == 0
+
+
+@pytest.mark.usefixtures("person_persisted")
+def test_sync_not_in_generator(sync_engine: SyncEngine):
+    query = not_in(PersonModel.first_name, ["Michel", "Jean-Pierre"])
+    # TODO allow this with a mypy plugin
+    assert query == PersonModel.first_name.not_in(  # type: ignore
+        e for e in ["Michel", "Jean-Pierre"]
     )
     count = sync_engine.count(PersonModel, query)
     assert count == 0

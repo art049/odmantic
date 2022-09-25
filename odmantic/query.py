@@ -1,6 +1,6 @@
 import re
 from enum import Enum
-from typing import TYPE_CHECKING, Any, Dict, Pattern, Sequence, Union
+from typing import TYPE_CHECKING, Any, Dict, Iterable, Pattern, Union
 
 from odmantic.typing import Literal
 
@@ -98,14 +98,14 @@ def lte(field: FieldProxyAny, value: Any) -> QueryExpression:
     return _cmp_expression(field, "$lte", value)
 
 
-def in_(field: FieldProxyAny, sequence: Sequence) -> QueryExpression:
+def in_(field: FieldProxyAny, sequence: Iterable) -> QueryExpression:
     """Select instances where `field` is contained in `sequence`."""
-    return _cmp_expression(field, "$in", sequence)
+    return _cmp_expression(field, "$in", list(sequence))
 
 
-def not_in(field: FieldProxyAny, sequence: Sequence) -> QueryExpression:
+def not_in(field: FieldProxyAny, sequence: Iterable) -> QueryExpression:
     """Select instances where `field` is **not** contained in `sequence`."""
-    return _cmp_expression(field, "$nin", sequence)
+    return _cmp_expression(field, "$nin", list(sequence))
 
 
 def match(field: FieldProxyAny, pattern: Union[Pattern, str]) -> QueryExpression:

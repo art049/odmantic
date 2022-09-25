@@ -3,9 +3,9 @@ from copy import deepcopy
 from typing import (
     TYPE_CHECKING,
     Any,
+    Iterable,
     Optional,
     Pattern,
-    Sequence,
     Set,
     Type,
     Union,
@@ -385,10 +385,10 @@ class FieldProxy:
     def __ne__(self, value: Any) -> QueryExpression:  # type: ignore
         return self.ne(value)
 
-    def in_(self, value: Sequence) -> QueryExpression:
+    def in_(self, value: Iterable) -> QueryExpression:
         return in_(self, value)
 
-    def not_in(self, value: Sequence) -> QueryExpression:
+    def not_in(self, value: Iterable) -> QueryExpression:
         return not_in(self, value)
 
     def match(self, pattern: Union[Pattern, str]) -> QueryExpression:
