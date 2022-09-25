@@ -5,11 +5,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
--  Create new types instead of changing type args for structural types ([#240](https://github.com/art049/odmantic/pull/240) by [@art049](https://github.com/art049))
+## [0.9.0] - 2022-09-25
+
+#### Added
+
+
+-  Create new generic types to support generic collection types ([#240](https://github.com/art049/odmantic/pull/240) by [@erny](https://github.com/erny) & [@art049](https://github.com/art049))
+
+   Thus, it's now possible to define models like this in python **3.9+** 🚀:
+    ```python
+    class User(Model):
+        scopes: list[str]
+        friendsIds: list[ObjectId]
+        skills: set[str]
+    ```
 
 - Allow using generators with `in_` and `not_in`  ([#270](https://github.com/art049/odmantic/pull/270) by [@art049](https://github.com/art049))
 
+#### Fixed
+
+
 - Fix `EmbeddedModel` generics definition with a custom `key_name` ([#269](https://github.com/art049/odmantic/pull/269) by [@art049](https://github.com/art049))
+
+- Raise a `TypeError` when defining a `Reference` in a generic(List, Dict, Tuple, ...) containing EmbeddedModels ([#269](https://github.com/art049/odmantic/pull/269) by [@art049](https://github.com/art049))
 
 ## [0.8.0] - 2022-09-09
 
@@ -297,4 +315,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.7.0]: https://github.com/art049/odmantic/compare/v0.6.0...v0.7.0
 [0.7.1]: https://github.com/art049/odmantic/compare/v0.7.0...v0.7.1
 [0.8.0]: https://github.com/art049/odmantic/compare/v0.7.1...v0.8.0
-[unreleased]: https://github.com/art049/odmantic/compare/v0.8.0...HEAD
+[0.9.0]: https://github.com/art049/odmantic/compare/v0.8.0...v0.9.0
+[unreleased]: https://github.com/art049/odmantic/compare/v0.9.0...HEAD
