@@ -121,6 +121,7 @@ jobs:
 
   integrated-realworld-test:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v3
         with:
@@ -139,18 +140,14 @@ jobs:
         with:
           python-version: "3.10"
           cache: "poetry"
-      - name: Install dependencies
+      - name: Install dependencies (w/o ODMantic)
         working-directory: fastapi-odmantic-realworld-example
         run: |
           echo "$(grep -v 'odmantic =' ./pyproject.toml)" > pyproject.toml
           poetry install
-      - name: Build current ODMantic version
-        working-directory: odmantic-current
-        run: |
-          flit build
       - name: Install current ODMantic version
         working-directory: fastapi-odmantic-realworld-example
-        run: poetry add ../odmantic-current/dist/*.tar.gz
+        run: poetry run pip install ../odmantic-current/
       - name: Start the MongoDB instance
         uses: art049/mongodb-cluster-action@v0
         id: mongodb-cluster-action
