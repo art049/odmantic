@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://art049.github.io/odmantic/api_reference/query/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.4.3">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.4.4">
     
     
       
@@ -979,7 +979,7 @@ to avoid python operator precedence issues.</p>
             <span class="n">parent_repr</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;QueryExpression(</span><span class="si">{</span><span class="n">parent_repr</span><span class="si">}</span><span class="s2">)&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__or__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;QueryExpression&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;QueryExpression&quot;</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__or__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;QueryExpression&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;QueryExpression&quot;</span><span class="p">:</span>  <span class="c1"># type: ignore</span>
         <span class="k">return</span> <span class="n">or_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__and__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;QueryExpression&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;QueryExpression&quot;</span><span class="p">:</span>
@@ -1270,9 +1270,9 @@ to avoid python operator precedence issues.</p>
         <summary>Source code in <code>odmantic/query.py</code></summary>
         <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">101</span>
 <span class="normal">102</span>
-<span class="normal">103</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">in_</span><span class="p">(</span><span class="n">field</span><span class="p">:</span> <span class="n">FieldProxyAny</span><span class="p">,</span> <span class="n">sequence</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QueryExpression</span><span class="p">:</span>
+<span class="normal">103</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">in_</span><span class="p">(</span><span class="n">field</span><span class="p">:</span> <span class="n">FieldProxyAny</span><span class="p">,</span> <span class="n">sequence</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QueryExpression</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Select instances where `field` is contained in `sequence`.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">_cmp_expression</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="s2">&quot;$in&quot;</span><span class="p">,</span> <span class="n">sequence</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_cmp_expression</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="s2">&quot;$in&quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">sequence</span><span class="p">))</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -1297,9 +1297,9 @@ to avoid python operator precedence issues.</p>
         <summary>Source code in <code>odmantic/query.py</code></summary>
         <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">106</span>
 <span class="normal">107</span>
-<span class="normal">108</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">not_in</span><span class="p">(</span><span class="n">field</span><span class="p">:</span> <span class="n">FieldProxyAny</span><span class="p">,</span> <span class="n">sequence</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QueryExpression</span><span class="p">:</span>
+<span class="normal">108</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">not_in</span><span class="p">(</span><span class="n">field</span><span class="p">:</span> <span class="n">FieldProxyAny</span><span class="p">,</span> <span class="n">sequence</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QueryExpression</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Select instances where `field` is **not** contained in `sequence`.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">_cmp_expression</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="s2">&quot;$nin&quot;</span><span class="p">,</span> <span class="n">sequence</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_cmp_expression</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="s2">&quot;$nin&quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">sequence</span><span class="p">))</span>
 </code></pre></div></td></tr></table></div>
       </details>
   </div>
@@ -1461,6 +1461,7 @@ to avoid python operator precedence issues.</p>
 
 
   
+
 
 
 
