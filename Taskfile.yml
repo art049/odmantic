@@ -95,3 +95,9 @@ tasks:
       - flit install --deps=all
     sources:
       - pyproject.toml
+
+  clean:
+    cmds:
+      - rm -rf dist/
+      - rm -rf htmlcov/ ./.coverage ./coverage.xml
+      - rm -rf .task/ ./__release_notes__.md ./__version__.txt
