@@ -3,6 +3,7 @@ from copy import deepcopy
 from typing import (
     TYPE_CHECKING,
     Any,
+    List,
     Optional,
     Pattern,
     Sequence,
@@ -228,7 +229,19 @@ class ODMField(ODMBaseIndexableField):
 
     __slots__ = ("primary_field",)
     __allowed_operators__ = set(
-        ("eq", "ne", "in_", "not_in", "lt", "lte", "gt", "gte", "match", "asc", "desc")
+        (
+            "eq",
+            "ne",
+            "in_",
+            "not_in",
+            "lt",
+            "lte",
+            "gt",
+            "gte",
+            "match",
+            "asc",
+            "desc",
+        )
     )
 
     def __init__(
@@ -339,6 +352,16 @@ class FieldProxy:
                         f"attribute {name} not found in {field.model.__name__}"
                     )
             return FieldProxy(parent=self, field=child_field)
+        elif isinstance(field, ODMField) and name == "any":
+            if name == "any":
+                return FieldProxy(
+                    parent=self,
+                    field=ODMField(
+                        primary_field=False,
+                        key_name="$any",
+                        model_config=field.model_config,
+                    ),
+                )
 
         if name not in field.__allowed_operators__:
             raise AttributeError(

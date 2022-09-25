@@ -119,6 +119,27 @@ def match(field: FieldProxyAny, pattern: Union[Pattern, str]) -> QueryExpression
     return QueryExpression({+field: r})
 
 
+def contain(field: FieldProxyAny, expected_content: Sequence[Any]) -> QueryExpression:
+    """Select the instances where `field` contains elements in `expected_content`.
+
+    !!! warning
+        The order of the elements is not taken into account and this will only check
+        that the `expected_content` are included in the actual content of the field. To
+        have stricter conditions, it's possible to use `eq`(==) directly.
+    """
+    return _cmp_expression(field, "$all", expected_content)
+
+
+def size(field: FieldProxyAny, length: int) -> QueryExpression:
+    """Select the instances where `field` is an array of size `length`."""
+    return _cmp_expression(field, "$size", length)
+
+
+def any_(field: FieldProxyAny, expression: QueryDictBool) -> Any:
+    """Select instances where an element of `field` matches the `expression`."""
+    return _cmp_expression(field, "$elemMatch", expression)
+
+
 class SortExpression(Dict[str, Literal[-1, 1]]):
     """Base object used to build sort queries."""
 
