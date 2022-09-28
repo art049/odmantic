@@ -97,7 +97,9 @@ def aio_mock_collection(aio_engine: AIOEngine, monkeypatch):
         collection.update_one = AsyncMock()
         collection.aggregate = AsyncMock()
         collection.bulk_write = AsyncMock()
-        monkeypatch.setattr(aio_engine, "get_collection", lambda _: collection)
+        monkeypatch.setattr(
+            aio_engine, "_get_collection_from_name", lambda _: collection
+        )
         return collection
 
     return f
@@ -110,7 +112,9 @@ def sync_mock_collection(sync_engine: SyncEngine, monkeypatch):
         collection.update_one = Mock()
         collection.aggregate = Mock()
         collection.bulk_write = Mock()
-        monkeypatch.setattr(sync_engine, "get_collection", lambda _: collection)
+        monkeypatch.setattr(
+            sync_engine, "_get_collection_from_name", lambda _: collection
+        )
         return collection
 
     return f

@@ -16,7 +16,6 @@ from typing import (
     TypeVar,
     Union,
     cast,
-    overload,
 )
 
 import pymongo
@@ -61,8 +60,7 @@ SortExpressionType = Optional[Union[FieldProxy, Tuple[FieldProxy]]]
 
 AIOSessionType = Union[AsyncIOMotorClientSession, AIOSession, AIOTransaction, None]
 SyncSessionType = Union[ClientSession, SyncSession, SyncTransaction, None]
-AIOCollectionUpdatesType = Dict["AsyncIOMotorCollection", List[Tuple[UpdateOne, Model]]]
-SyncCollectionUpdatesType = Dict[Collection, List[Tuple[UpdateOne, Model]]]
+CollectionUpdatesType = Dict[str, List[Tuple[UpdateOne, Model]]]
 
 
 class BaseCursor(Generic[ModelType]):
@@ -300,48 +298,15 @@ class BaseEngine:
     ) -> Union["Collection", "AsyncIOMotorCollection"]:
         raise NotImplementedError()
 
-    @overload
-    def _prepare_document_updates(  # type: ignore
-        self: "AIOEngine",
-        instance: ModelType,
-        *,
-        collection_updates: Union[AIOCollectionUpdatesType, None] = None,
-    ) -> AIOCollectionUpdatesType:
-        ...
-
-    @overload
-    def _prepare_document_updates(  # type: ignore
-        self: "SyncEngine",
-        instance: ModelType,
-        *,
-        collection_updates: Union[SyncCollectionUpdatesType, None] = None,
-    ) -> SyncCollectionUpdatesType:
-        ...
-
-    @overload
-    def _prepare_document_updates(
-        self: "BaseEngine",
-        instance: ModelType,
-        *,
-        collection_updates: Union[
-            AIOCollectionUpdatesType, SyncCollectionUpdatesType, None
-        ] = None,
-    ) -> Union[AIOCollectionUpdatesType, SyncCollectionUpdatesType]:
-        ...
-
     def _prepare_document_updates(
         self,
         instance: ModelType,
         *,
-        collection_updates: Union[
-            AIOCollectionUpdatesType, SyncCollectionUpdatesType, None
-        ] = None,
-    ) -> Union[AIOCollectionUpdatesType, SyncCollectionUpdatesType]:
+        collection_updates: Union[CollectionUpdatesType, None] = None,
+    ) -> CollectionUpdatesType:
         """Perform an atomic save operation in the specified session"""
         if collection_updates is None:
-            current_collection_updates = cast(
-                Union[AIOCollectionUpdatesType, SyncCollectionUpdatesType], {}
-            )
+            current_collection_updates = {}
         else:
             current_collection_updates = collection_updates
         for ref_field_name in instance.__references__:
@@ -353,8 +318,8 @@ class BaseEngine:
         fields_to_update = instance.__fields_modified__ | instance.__mutable_fields__
         if len(fields_to_update) > 0:
             doc = instance.doc(include=fields_to_update)
-            collection = self.get_collection(type(instance))
-            current_collection_updates.setdefault(collection, []).append(
+            collection_name = type(instance).__collection__
+            current_collection_updates.setdefault(collection_name, []).append(
                 (
                     UpdateOne(
                         filter=instance.doc(include={instance.__primary_field__}),
@@ -400,6 +365,11 @@ class AIOEngine(BaseEngine):
             client = AsyncIOMotorClient()
         super().__init__(client=client, database=database)
 
+    def _get_collection_from_name(
+        self, collection_name: str
+    ) -> "AsyncIOMotorCollection":
+        return self.database[collection_name]
+
     def get_collection(self, model: Type[ModelType]) -> "AsyncIOMotorCollection":
         """Get the motor collection associated to a Model.
 
@@ -409,7 +379,7 @@ class AIOEngine(BaseEngine):
         Returns:
             the AsyncIO motor collection object
         """
-        return self.database[model.__collection__]
+        return self._get_collection_from_name(model.__collection__)
 
     @staticmethod
     def _get_session(
@@ -588,12 +558,13 @@ class AIOEngine(BaseEngine):
 
     async def _save_collection_updates(
         self,
-        collection_updates: AIOCollectionUpdatesType,
+        collection_updates: CollectionUpdatesType,
         session: "AsyncIOMotorClientSession",
     ) -> None:
         # reverse so that the last collections added, the ones for sub-documents, are
         # saved first
-        for collection, updates in reversed(collection_updates.items()):
+        for collection_name, updates in reversed(collection_updates.items()):
+            collection = self._get_collection_from_name(collection_name)
             update_operations = [update[0] for update in updates]
             update_instances = [update[1] for update in updates]
             await collection.bulk_write(
@@ -696,7 +667,7 @@ class AIOEngine(BaseEngine):
         #noqa: DAR402 DuplicateKeyError
         -->
         """
-        collections_updates: AIOCollectionUpdatesType = {}
+        collections_updates: CollectionUpdatesType = {}
         for instance in instances:
             self._prepare_document_updates(
                 instance, collection_updates=collections_updates
@@ -826,6 +797,9 @@ class SyncEngine(BaseEngine):
             client = MongoClient()
         super().__init__(client=client, database=database)
 
+    def _get_collection_from_name(self, collection_name: str) -> "Collection":
+        return self.database[collection_name]
+
     def get_collection(self, model: Type[ModelType]) -> "Collection":
         """Get the pymongo collection associated to a Model.
 
@@ -835,8 +809,7 @@ class SyncEngine(BaseEngine):
         Returns:
             the pymongo collection object
         """
-        collection = self.database[model.__collection__]
-        return collection
+        return self._get_collection_from_name(model.__collection__)
 
     @staticmethod
     def _get_session(
@@ -1011,14 +984,15 @@ class SyncEngine(BaseEngine):
 
     def _save_collection_updates(
         self,
-        collection_updates: SyncCollectionUpdatesType,
+        collection_updates: CollectionUpdatesType,
         session: ClientSession,
     ) -> None:
         # reverse so that the last collections added, the ones for sub-documents, are
         # saved first
-        for collection, updates in reversed(collection_updates.items()):
+        for collection_name, updates in reversed(collection_updates.items()):
             update_operations = [update[0] for update in updates]
             update_instances = [update[1] for update in updates]
+            collection = self._get_collection_from_name(collection_name)
             collection.bulk_write(
                 update_operations,
                 session=session,
@@ -1118,7 +1092,7 @@ class SyncEngine(BaseEngine):
         #noqa: DAR402 DuplicateKeyError
         -->
         """
-        collections_updates: SyncCollectionUpdatesType = {}
+        collections_updates: CollectionUpdatesType = {}
         for instance in instances:
             self._prepare_document_updates(
                 instance, collection_updates=collections_updates
