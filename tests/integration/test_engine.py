@@ -2,7 +2,7 @@ from typing import Dict, List, Optional, Tuple
 
 import pytest
 from motor.motor_asyncio import AsyncIOMotorClient
-from pymongo import MongoClient
+from pymongo import MongoClient, UpdateOne
 
 from odmantic.bson import ObjectId
 from odmantic.engine import AIOEngine, SyncEngine
@@ -742,9 +742,10 @@ async def test_only_modified_set_on_save(aio_engine: AIOEngine, aio_mock_collect
     instance.first_name = "John"
     collection = aio_mock_collection()
     await aio_engine.save(instance)
-    collection.update_one.assert_awaited_once()
-    (_, set_arg), _ = collection.update_one.await_args
-    assert set_arg == {"$set": {"first_name": "John"}}
+    collection.bulk_write.assert_awaited_once()
+    (update_operations,), session = collection.bulk_write.await_args
+    update_operation: UpdateOne = update_operations[0]
+    assert update_operation._doc == {"$set": {"first_name": "John"}}
 
 
 @pytest.mark.usefixtures("engine_one_person")
@@ -755,9 +756,10 @@ def test_sync_only_modified_set_on_save(sync_engine: SyncEngine, sync_mock_colle
     instance.first_name = "John"
     collection = sync_mock_collection()
     sync_engine.save(instance)
-    collection.update_one.assert_called_once()
-    (_, set_arg), _ = collection.update_one.call_args
-    assert set_arg == {"$set": {"first_name": "John"}}
+    collection.bulk_write.assert_called_once()
+    (update_operations,), session = collection.bulk_write.call_args
+    update_operation: UpdateOne = update_operations[0]
+    assert update_operation._doc == {"$set": {"first_name": "John"}}
 
 
 async def test_only_mutable_list_set_on_save(
@@ -772,9 +774,10 @@ async def test_only_mutable_list_set_on_save(
 
     collection = aio_mock_collection()
     await aio_engine.save(instance)
-    collection.update_one.assert_awaited_once()
-    (_, set_arg), _ = collection.update_one.await_args
-    set_dict = set_arg["$set"]
+    collection.bulk_write.assert_awaited_once()
+    (update_operations,), session = collection.bulk_write.await_args
+    update_operation: UpdateOne = update_operations[0]
+    set_dict = update_operation._doc["$set"]
     assert list(set_dict.keys()) == ["field"]
 
 
@@ -790,9 +793,10 @@ def test_sync_only_mutable_list_set_on_save(
 
     collection = sync_mock_collection()
     sync_engine.save(instance)
-    collection.update_one.assert_called_once()
-    (_, set_arg), _ = collection.update_one.call_args
-    set_dict = set_arg["$set"]
+    collection.bulk_write.assert_called_once()
+    (update_operations,), session = collection.bulk_write.call_args
+    update_operation: UpdateOne = update_operations[0]
+    set_dict = update_operation._doc["$set"]
     assert list(set_dict.keys()) == ["field"]
 
 
@@ -810,9 +814,10 @@ async def test_only_mutable_list_of_embedded_set_on_save(
 
     collection = aio_mock_collection()
     await aio_engine.save(instance)
-    collection.update_one.assert_awaited_once()
-    (_, set_arg), _ = collection.update_one.await_args
-    set_dict = set_arg["$set"]
+    collection.bulk_write.assert_awaited_once()
+    (update_operations,), session = collection.bulk_write.await_args
+    update_operation: UpdateOne = update_operations[0]
+    set_dict = update_operation._doc["$set"]
     assert set_dict == {"field": [{"a": "hello"}]}
 
 
@@ -830,9 +835,10 @@ def test_sync_only_mutable_list_of_embedded_set_on_save(
 
     collection = sync_mock_collection()
     sync_engine.save(instance)
-    collection.update_one.assert_called_once()
-    (_, set_arg), _ = collection.update_one.call_args
-    set_dict = set_arg["$set"]
+    collection.bulk_write.assert_called_once()
+    (update_operations,), session = collection.bulk_write.call_args
+    update_operation: UpdateOne = update_operations[0]
+    set_dict = update_operation._doc["$set"]
     assert set_dict == {"field": [{"a": "hello"}]}
 
 
@@ -850,9 +856,10 @@ async def test_only_mutable_dict_of_embedded_set_on_save(
 
     collection = aio_mock_collection()
     await aio_engine.save(instance)
-    collection.update_one.assert_awaited_once()
-    (_, set_arg), _ = collection.update_one.await_args
-    set_dict = set_arg["$set"]
+    collection.bulk_write.assert_called_once()
+    (update_operations,), session = collection.bulk_write.call_args
+    update_operation: UpdateOne = update_operations[0]
+    set_dict = update_operation._doc["$set"]
     assert set_dict == {"field": {"hello": {"a": "world"}}}
 
 
@@ -870,9 +877,10 @@ def test_sync_only_mutable_dict_of_embedded_set_on_save(
 
     collection = sync_mock_collection()
     sync_engine.save(instance)
-    collection.update_one.assert_called_once()
-    (_, set_arg), _ = collection.update_one.call_args
-    set_dict = set_arg["$set"]
+    collection.bulk_write.assert_called_once()
+    (update_operations,), session = collection.bulk_write.call_args
+    update_operation: UpdateOne = update_operations[0]
+    set_dict = update_operation._doc["$set"]
     assert set_dict == {"field": {"hello": {"a": "world"}}}
 
 
@@ -890,9 +898,10 @@ async def test_only_tuple_of_embedded_set_on_save(
 
     collection = aio_mock_collection()
     await aio_engine.save(instance)
-    collection.update_one.assert_awaited_once()
-    (_, set_arg), _ = collection.update_one.await_args
-    set_dict = set_arg["$set"]
+    collection.bulk_write.assert_awaited_once()
+    (update_operations,), session = collection.bulk_write.await_args
+    update_operation: UpdateOne = update_operations[0]
+    set_dict = update_operation._doc["$set"]
     assert set_dict == {
         "field": [
             {"a": "world"},
@@ -914,9 +923,10 @@ def test_sync_only_tuple_of_embedded_set_on_save(
 
     collection = sync_mock_collection()
     sync_engine.save(instance)
-    collection.update_one.assert_called_once()
-    (_, set_arg), _ = collection.update_one.call_args
-    set_dict = set_arg["$set"]
+    collection.bulk_write.assert_called_once()
+    (update_operations,), session = collection.bulk_write.call_args
+    update_operation: UpdateOne = update_operations[0]
+    set_dict = update_operation._doc["$set"]
     assert set_dict == {
         "field": [
             {"a": "world"},
