@@ -2,6 +2,7 @@ from abc import ABCMeta
 from typing import TYPE_CHECKING, Any, List, Sequence, Type, TypeVar, Union
 
 import pymongo
+import pymongo.errors
 from pydantic.error_wrappers import ErrorWrapper, ValidationError
 
 if TYPE_CHECKING:
@@ -43,7 +44,11 @@ class DuplicateKeyError(BaseEngineException):
     """
 
     def __init__(
-        self, instance: "Model", driver_error: pymongo.errors.DuplicateKeyError
+        self,
+        instance: "Model",
+        driver_error: Union[
+            pymongo.errors.DuplicateKeyError, pymongo.errors.BulkWriteError
+        ],
     ):
         self.instance: "Model" = instance
         self.driver_error = driver_error
