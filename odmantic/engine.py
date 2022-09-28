@@ -581,7 +581,7 @@ class AIOEngine(BaseEngine):
         except pymongo.errors.BulkWriteError as e:
             if e.details["writeErrors"][0]["code"] == 11000:
                 raise DuplicateKeyError(instance, e)
-            raise
+            raise  # pragma: no cover
         return instance
 
     async def save(
@@ -1004,7 +1004,7 @@ class SyncEngine(BaseEngine):
         except pymongo.errors.BulkWriteError as e:
             if e.details["writeErrors"][0]["code"] == 11000:
                 raise DuplicateKeyError(instance, e)
-            raise
+            raise  # pragma: no cover
         return instance
 
     def save(
