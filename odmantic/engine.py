@@ -293,11 +293,6 @@ class BaseEngine:
         pipeline.extend(BaseEngine._cascade_find_pipeline(model))
         return pipeline
 
-    def get_collection(
-        self, model: Type[ModelType]
-    ) -> Union["Collection", "AsyncIOMotorCollection"]:
-        raise NotImplementedError()
-
     def _prepare_document_updates(
         self,
         instance: ModelType,
@@ -583,8 +578,6 @@ class AIOEngine(BaseEngine):
             await self._save_collection_updates(
                 collection_updates=collection_updates, session=session
             )
-        except pymongo.errors.DuplicateKeyError as e:
-            raise DuplicateKeyError(instance, e)
         except pymongo.errors.BulkWriteError as e:
             if e.details["writeErrors"][0]["code"] == 11000:
                 raise DuplicateKeyError(instance, e)
@@ -1008,8 +1001,6 @@ class SyncEngine(BaseEngine):
             self._save_collection_updates(
                 collection_updates=collection_updates, session=session
             )
-        except pymongo.errors.DuplicateKeyError as e:
-            raise DuplicateKeyError(instance, e)
         except pymongo.errors.BulkWriteError as e:
             if e.details["writeErrors"][0]["code"] == 11000:
                 raise DuplicateKeyError(instance, e)
