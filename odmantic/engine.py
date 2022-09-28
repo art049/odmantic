@@ -563,7 +563,7 @@ class AIOEngine(BaseEngine):
     ) -> None:
         # reverse so that the last collections added, the ones for sub-documents, are
         # saved first
-        for collection_name, updates in reversed(collection_updates.items()):
+        for collection_name, updates in reversed(list(collection_updates.items())):
             collection = self._get_collection_from_name(collection_name)
             update_operations = [update[0] for update in updates]
             update_instances = [update[1] for update in updates]
@@ -989,7 +989,7 @@ class SyncEngine(BaseEngine):
     ) -> None:
         # reverse so that the last collections added, the ones for sub-documents, are
         # saved first
-        for collection_name, updates in reversed(collection_updates.items()):
+        for collection_name, updates in reversed(list(collection_updates.items())):
             update_operations = [update[0] for update in updates]
             update_instances = [update[1] for update in updates]
             collection = self._get_collection_from_name(collection_name)
