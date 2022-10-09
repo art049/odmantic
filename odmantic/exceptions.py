@@ -55,6 +55,24 @@ class DuplicateKeyError(BaseEngineException):
         )
 
 
+class ReferenceNotFoundError(BaseEngineException):
+    """The referenced document has not been found by the engine.
+
+    Attributes:
+      model: the referenced model class that has not been found
+      pointer: the pointer to the referenced document (value of the primary field)
+    """
+
+    def __init__(self, model: Type["Model"], pointer: Any):
+        self.model = model
+        self.pointer = pointer
+        super().__init__(
+            f"Document not found for : {model.__name__}. "
+            f"Reference details: {model.__primary_field__} -> {pointer}",
+            model,
+        )
+
+
 ErrorList = List[Union[Sequence[Any], ErrorWrapper]]
 
 
