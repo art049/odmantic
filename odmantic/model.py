@@ -705,7 +705,9 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
             elif isinstance(field, ODMEmbedded):
                 doc[field.key_name] = self.__doc(raw_doc[field_name], field.model, None)
             elif isinstance(field, ODMEmbeddedGeneric):
-                if field.generic_origin is dict:
+                if raw_doc[field_name] is None:
+                    doc[field.key_name] = None
+                elif field.generic_origin is dict:
                     doc[field.key_name] = {
                         item_key: self.__doc(item_value, field.model)
                         for item_key, item_value in raw_doc[field_name].items()
@@ -846,6 +848,8 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
                             else:
                                 value[item_key] = item_value
                         obj[field_name] = value
+                    elif raw_value is None:
+                        value = None
                     else:
                         errors.append(
                             ErrorWrapper(
