@@ -7,9 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.9.1] - 2022-11-24
 
-- chore: migrate to ruff ([#299](https://github.com/art049/odmantic/pull/299) by [@art049](https://github.com/art049))
+### Fixed
 
-- Update motor version depends ([#296](https://github.com/art049/odmantic/pull/296) by [@valeriiduz](https://github.com/valeriiduz))
+- Bump motor version ([#296](https://github.com/art049/odmantic/pull/296) by [@valeriiduz](https://github.com/valeriiduz))
+
+
+### Internals
+
+- Migrate to ruff ([#299](https://github.com/art049/odmantic/pull/299) by [@art049](https://github.com/art049))
 
 ## [0.9.0] - 2022-09-25
 
