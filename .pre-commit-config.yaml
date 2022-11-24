@@ -38,15 +38,20 @@ repos:
           - motor~=3.0.0
           - types-pytz~=2022.1.1
         args: [--no-pretty, --show-error-codes]
-  - repo: https://gitlab.com/pycqa/flake8.git
-    rev: "3.8.3"
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.0.137
     hooks:
-      - id: flake8
+      - id: ruff
         exclude: "^docs/.*|.github/release.py"
-        additional_dependencies:
-          - darglint~=1.8.1
+
   - repo: https://github.com/pycqa/pydocstyle
-    rev: 5.1.1 # pick a git hash / tag to point to
+    rev: 6.1.1 # pick a git hash / tag to point to
     hooks:
       - id: pydocstyle
         files: "^odmantic/"
+        additional_dependencies:
+          - toml
+  - repo: https://github.com/terrencepreilly/darglint
+    rev: v1.8.1
+    hooks:
+      - id: darglint
