@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Update motor version depends ([#296](https://github.com/art049/odmantic/pull/296) by [@valeriiduz](https://github.com/valeriiduz))
+
 ## [0.9.0] - 2022-09-25
 
 #### Added
