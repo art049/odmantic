@@ -20,7 +20,7 @@ except ModuleNotFoundError:  # pragma: no cover
     # pydantic<1.9.0
     # Cannot use type: ignore for all versions
     # -> https://github.com/python/mypy/issues/8823
-    from pydantic.main import SchemaExtraCallable  # type: ignore
+    from pydantic.main import SchemaExtraCallable  # type: ignore # noqa: F401
 
 
 class BaseODMConfig:

@@ -1,0 +1,4 @@
+[darglint]
+# Allow one line docstrings without arg spec
+strictness = short
+docstring_style = google
