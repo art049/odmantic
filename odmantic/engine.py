@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from typing import (
     Any,
     AsyncGenerator,
@@ -60,7 +61,15 @@ SortExpressionType = Optional[Union[FieldProxy, Tuple[FieldProxy]]]
 
 AIOSessionType = Union[AsyncIOMotorClientSession, AIOSession, AIOTransaction, None]
 SyncSessionType = Union[ClientSession, SyncSession, SyncTransaction, None]
-CollectionUpdatesType = Dict[str, List[Tuple[UpdateOne, Model]]]
+
+
+@dataclass()
+class ModelUpdateOne:
+    instance: Model
+    update_one: UpdateOne
+
+
+CollectionUpdatesType = Dict[str, List[ModelUpdateOne]]
 
 
 class BaseCursor(Generic[ModelType]):
@@ -315,13 +324,13 @@ class BaseEngine:
             doc = instance.doc(include=fields_to_update)
             collection_name = type(instance).__collection__
             current_collection_updates.setdefault(collection_name, []).append(
-                (
-                    UpdateOne(
+                ModelUpdateOne(
+                    instance=instance,
+                    update_one=UpdateOne(
                         filter=instance.doc(include={instance.__primary_field__}),
                         update={"$set": doc},
                         upsert=True,
                     ),
-                    instance,
                 )
             )
         return current_collection_updates
@@ -560,8 +569,8 @@ class AIOEngine(BaseEngine):
         # saved first
         for collection_name, updates in reversed(list(collection_updates.items())):
             collection = self._get_collection_from_name(collection_name)
-            update_operations = [update[0] for update in updates]
-            update_instances = [update[1] for update in updates]
+            update_operations = [update.update_one for update in updates]
+            update_instances = [update.instance for update in updates]
             await collection.bulk_write(
                 update_operations,
                 session=session,
@@ -983,8 +992,8 @@ class SyncEngine(BaseEngine):
         # reverse so that the last collections added, the ones for sub-documents, are
         # saved first
         for collection_name, updates in reversed(list(collection_updates.items())):
-            update_operations = [update[0] for update in updates]
-            update_instances = [update[1] for update in updates]
+            update_operations = [update.update_one for update in updates]
+            update_instances = [update.instance for update in updates]
             collection = self._get_collection_from_name(collection_name)
             collection.bulk_write(
                 update_operations,
