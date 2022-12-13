@@ -299,7 +299,7 @@ class BaseEngine:
         *,
         collection_updates: Union[CollectionUpdatesType, None] = None,
     ) -> CollectionUpdatesType:
-        """Perform an atomic save operation in the specified session"""
+        """Generate update operations"""
         if collection_updates is None:
             current_collection_updates = {}
         else:
