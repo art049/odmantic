@@ -46,9 +46,7 @@ class DuplicateKeyError(BaseEngineException):
     def __init__(
         self,
         instance: "Model",
-        driver_error: Union[
-            pymongo.errors.DuplicateKeyError, pymongo.errors.BulkWriteError
-        ],
+        driver_error: pymongo.errors.BulkWriteError,
     ):
         self.instance: "Model" = instance
         self.driver_error = driver_error
