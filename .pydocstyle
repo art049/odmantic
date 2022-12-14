@@ -1,4 +1,0 @@
-[pydocstyle]
-convention=google
-match_dir=odmantic
-add_ignore=D1,D415,D205

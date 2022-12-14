@@ -167,7 +167,7 @@ mongo --eval "db.publisher.find({})"
 
 Output:
 
-```json
+```js
 connecting to: mongodb://127.0.0.1:27017
 {
   "_id": ObjectId("5f67b331514d6855bc5c54c9"),
