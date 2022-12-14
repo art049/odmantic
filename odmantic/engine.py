@@ -587,6 +587,9 @@ class AIOEngine(BaseEngine):
             await self._save_collection_updates(
                 collection_updates=collection_updates, session=session
             )
+        # Ref:
+        # https://github.com/mongodb/mongo/blob/master/src/mongo/base/error_codes.yml
+        # DuplicateKey Error
         except pymongo.errors.BulkWriteError as e:
             if e.details["writeErrors"][0]["code"] == 11000:
                 raise DuplicateKeyError(instance, e)
