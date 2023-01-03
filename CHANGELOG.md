@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- fix: properly handle literals among generic types ([#313](https://github.com/art049/odmantic/pull/313) by [@art049](https://github.com/art049))
+
 - 👷 Pin tox to fix CI ([#308](https://github.com/art049/odmantic/pull/308) by [@tiangolo](https://github.com/tiangolo))
 
 ## [0.9.1] - 2022-11-24
