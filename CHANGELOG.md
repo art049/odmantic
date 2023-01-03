@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- 👷 Pin tox to fix CI ([#308](https://github.com/art049/odmantic/pull/308) by [@tiangolo](https://github.com/tiangolo))
+
 ## [0.9.1] - 2022-11-24
 
 ### Fixed
