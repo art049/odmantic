@@ -66,6 +66,7 @@ from odmantic.index import Index, ODMBaseIndex, ODMSingleFieldIndex
 from odmantic.reference import ODMReferenceInfo
 from odmantic.typing import (
     GenericAlias,
+    Literal,
     dataclass_transform,
     get_args,
     get_first_type_argument_subclassing,
@@ -180,7 +181,7 @@ def validate_type(type_: Type) -> Type:
         return subst_type
 
     type_origin: Optional[Type] = get_origin(type_)
-    if type_origin is not None:
+    if type_origin is not None and type_origin is not Literal:
         type_args: Tuple[Type, ...] = get_args(type_)
         new_arg_types = tuple(validate_type(subtype) for subtype in type_args)
         type_ = GenericAlias(type_origin, new_arg_types)
