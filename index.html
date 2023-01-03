@@ -843,7 +843,7 @@ definition and validation.</p>
 <p><strong>Python</strong>: 3.7 and later (tested against 3.7, 3.8, 3.9 and 3.10)</p>
 <p><strong>MongoDB</strong>: 4.0 and later</p>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>pip install odmantic
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>odmantic
 </code></pre></div>
 <h2 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h2>
 <blockquote>
@@ -907,7 +907,7 @@ next step.</p>
 <p>For the next steps, you'll need to start a local MongoDB server.The easiest way is
 to use docker. Simply run the next command in a terminal (closing the terminal will
 terminate the MongoDB instance and remove the container).</p>
-<div class="highlight"><pre><span></span><code>docker run --rm -p <span class="m">27017</span>:27017 mongo
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-p<span class="w"> </span><span class="m">27017</span>:27017<span class="w"> </span>mongo
 </code></pre></div>
 </blockquote>
 <p>First, let's connect to the database using the engine. In ODMantic, every database
@@ -929,28 +929,28 @@ database. You can use <a href="https://www.mongodb.com/products/compass"
 target="_blank">Compass</a> or <a href="https://robomongo.org/"
 target="_blank">RoboMongo</a> if you'd like to have a graphical interface.</p>
 <p>Another possibility is to use <code>mongo</code> CLI directly:</p>
-<div class="highlight"><pre><span></span><code>mongo --eval <span class="s2">&quot;db.publisher.find({})&quot;</span>
+<div class="highlight"><pre><span></span><code>mongo<span class="w"> </span>--eval<span class="w"> </span><span class="s2">&quot;db.publisher.find({})&quot;</span>
 </code></pre></div>
 <p>Output:</p>
-<div class="highlight"><pre><span></span><code><span class="nx">connecting</span><span class="w"> </span><span class="nx">to</span><span class="o">:</span><span class="w"> </span><span class="nx">mongodb</span><span class="o">:</span><span class="c1">//127.0.0.1:27017</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="s2">&quot;_id&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5f67b331514d6855bc5c54c9&quot;</span><span class="p">),</span><span class="w"></span>
-<span class="w">  </span><span class="s2">&quot;founded&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">1989</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="s2">&quot;location&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;US&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;HarperCollins&quot;</span><span class="w"></span>
-<span class="p">},</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="s2">&quot;_id&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5f67b331514d6855bc5c54ca&quot;</span><span class="p">),</span><span class="w"></span>
-<span class="w">  </span><span class="s2">&quot;founded&quot;</span><span class="o">:</span><span class="mf">1826</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="s2">&quot;location&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;FR&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Hachette Livre&quot;</span><span class="w"></span>
-<span class="p">},</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="s2">&quot;_id&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5f67b331514d6855bc5c54cb&quot;</span><span class="p">),</span><span class="w"></span>
-<span class="w">  </span><span class="s2">&quot;founded&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">2002</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="s2">&quot;location&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Lulu&quot;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nx">connecting</span><span class="w"> </span><span class="nx">to</span><span class="o">:</span><span class="w"> </span><span class="nx">mongodb</span><span class="o">:</span><span class="c1">//127.0.0.1:27017</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="s2">&quot;_id&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5f67b331514d6855bc5c54c9&quot;</span><span class="p">),</span>
+<span class="w">  </span><span class="s2">&quot;founded&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">1989</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;location&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;US&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;HarperCollins&quot;</span>
+<span class="p">},</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="s2">&quot;_id&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5f67b331514d6855bc5c54ca&quot;</span><span class="p">),</span>
+<span class="w">  </span><span class="s2">&quot;founded&quot;</span><span class="o">:</span><span class="mf">1826</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;location&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;FR&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Hachette Livre&quot;</span>
+<span class="p">},</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="s2">&quot;_id&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5f67b331514d6855bc5c54cb&quot;</span><span class="p">),</span>
+<span class="w">  </span><span class="s2">&quot;founded&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">2002</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;location&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Lulu&quot;</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>The created instances are stored in the <code>test</code> database under the <code>publisher</code> collection.</p>
 <p>We can see that an <code>_id</code> field has been added to each document. MongoDB need this field
@@ -1001,16 +1001,16 @@ save the document:</p>
 <div class="highlight"><pre><span></span><code><span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">lulu</span><span class="p">)</span>
 </code></pre></div>
 <p>We can now check the database state:</p>
-<div class="highlight"><pre><span></span><code>mongo --eval <span class="s2">&quot;db.publisher.find({name: &#39;Lulu&#39;})&quot;</span>
+<div class="highlight"><pre><span></span><code>mongo<span class="w"> </span>--eval<span class="w"> </span><span class="s2">&quot;db.publisher.find({name: &#39;Lulu&#39;})&quot;</span>
 </code></pre></div>
 <p>Output:</p>
-<div class="highlight"><pre><span></span><code><span class="err">co</span><span class="kc">nne</span><span class="err">c</span><span class="kc">t</span><span class="err">i</span><span class="kc">n</span><span class="err">g</span><span class="w"> </span><span class="kc">t</span><span class="err">o</span><span class="p">:</span><span class="w"> </span><span class="err">mo</span><span class="kc">n</span><span class="err">godb</span><span class="p">:</span><span class="c1">//127.0.0.1:27017</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f67b331514d6855bc5c54cb&quot;</span><span class="err">)</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;founded&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2002</span><span class="p">,</span><span class="w"></span>
-<span class="hll"><span class="w">  </span><span class="nt">&quot;location&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;US&quot;</span><span class="p">,</span><span class="w"></span>
-</span><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Lulu&quot;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="err">co</span><span class="kc">nne</span><span class="err">c</span><span class="kc">t</span><span class="err">i</span><span class="kc">n</span><span class="err">g</span><span class="w"> </span><span class="kc">t</span><span class="err">o</span><span class="p">:</span><span class="w"> </span><span class="err">mo</span><span class="kc">n</span><span class="err">godb</span><span class="p">:</span><span class="c1">//127.0.0.1:27017</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">Objec</span><span class="kc">t</span><span class="err">Id(</span><span class="s2">&quot;5f67b331514d6855bc5c54cb&quot;</span><span class="err">)</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;founded&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2002</span><span class="p">,</span>
+<span class="hll"><span class="w">  </span><span class="nt">&quot;location&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;US&quot;</span><span class="p">,</span>
+</span><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Lulu&quot;</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>The document have been successfully updated !</p>
 <p>Now, what if we would like to change the foundation date with an invalid one (before 1440) ?</p>

@@ -725,7 +725,7 @@
 <span class="normal">16</span>
 <span class="normal">17</span>
 <span class="normal">18</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">BaseEngineException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Base Exception raised by the engine while operating with the database.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base Exception raised by the engine while operating with the database.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="s2">&quot;Model&quot;</span><span class="p">]):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="s2">&quot;Model&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span>
@@ -808,7 +808,7 @@
 <span class="normal">32</span>
 <span class="normal">33</span>
 <span class="normal">34</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">DocumentNotFoundError</span><span class="p">(</span><span class="n">BaseEngineException</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;The targetted document has not been found by the engine.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The targetted document has not been found by the engine.</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">      instance: the instance that has not been found</span>
@@ -917,7 +917,7 @@ instanciated</p></td>
 <span class="normal">106</span>
 <span class="normal">107</span>
 <span class="normal">108</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">DocumentParsingError</span><span class="p">(</span><span class="n">ValidationError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Unable to parse the document into an instance.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Unable to parse the document into an instance.</span>
 
 <span class="sd">    Inherits from the `ValidationError` defined by Pydantic.</span>
 
@@ -1035,7 +1035,7 @@ instanciated</p></td>
 <span class="normal">53</span>
 <span class="normal">54</span>
 <span class="normal">55</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">DuplicateKeyError</span><span class="p">(</span><span class="n">BaseEngineException</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;The targetted document is duplicated according to a unique index.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The targetted document is duplicated according to a unique index.</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">      instance: the instance that has not been found</span>

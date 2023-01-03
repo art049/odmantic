@@ -1498,7 +1498,7 @@ in an asynchronous way using motor.</p>
 <span class="normal">710</span>
 <span class="normal">711</span>
 <span class="normal">712</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">AIOEngine</span><span class="p">(</span><span class="n">BaseEngine</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;The AIOEngine object is responsible for handling database operations with MongoDB</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The AIOEngine object is responsible for handling database operations with MongoDB</span>
 <span class="sd">    in an asynchronous way using motor.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -1510,7 +1510,7 @@ in an asynchronous way using motor.</p>
         <span class="n">client</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="s2">&quot;AsyncIOMotorClient&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">database</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Engine constructor.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Engine constructor.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            client: instance of an AsyncIO motor client. If None, a default one</span>
@@ -1531,7 +1531,7 @@ in an asynchronous way using motor.</p>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="n">database</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">get_collection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ModelType</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;AsyncIOMotorCollection&quot;</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Get the motor collection associated to a Model.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the motor collection associated to a Model.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            model: model class</span>
@@ -1557,7 +1557,7 @@ in an asynchronous way using motor.</p>
         <span class="n">update_existing_indexes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">session</span><span class="p">:</span> <span class="n">SyncSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Apply model constraints to the database.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply model constraints to the database.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            models: list of models to initialize the database with</span>
@@ -1596,7 +1596,7 @@ in an asynchronous way using motor.</p>
                         <span class="k">raise</span>
 
     <span class="k">def</span> <span class="nf">session</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AIOSession</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Get a new session for the engine to allow ordering sequential operations.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a new session for the engine to allow ordering sequential operations.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            a new session object</span>
@@ -1614,7 +1614,7 @@ in an asynchronous way using motor.</p>
         <span class="k">return</span> <span class="n">AIOSession</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AIOTransaction</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Get a new transaction for the engine to aggregate sequential operations.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a new transaction for the engine to aggregate sequential operations.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            a new transaction object</span>
@@ -1646,7 +1646,7 @@ in an asynchronous way using motor.</p>
         <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">session</span><span class="p">:</span> <span class="n">AIOSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AIOCursor</span><span class="p">[</span><span class="n">ModelType</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Search for Model instances matching the query filter provided</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Search for Model instances matching the query filter provided</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            model: model to perform the operation on</span>
@@ -1690,7 +1690,7 @@ in an asynchronous way using motor.</p>
         <span class="n">sort</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">session</span><span class="p">:</span> <span class="n">AIOSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ModelType</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Search for a Model instance matching the query filter provided</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Search for a Model instance matching the query filter provided</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            model: model to perform the operation on</span>
@@ -1719,7 +1719,7 @@ in an asynchronous way using motor.</p>
     <span class="k">async</span> <span class="k">def</span> <span class="nf">_save</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">:</span> <span class="n">ModelType</span><span class="p">,</span> <span class="n">session</span><span class="p">:</span> <span class="s2">&quot;AsyncIOMotorClientSession&quot;</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModelType</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Perform an atomic save operation in the specified session&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Perform an atomic save operation in the specified session&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">ref_field_name</span> <span class="ow">in</span> <span class="n">instance</span><span class="o">.</span><span class="n">__references__</span><span class="p">:</span>
             <span class="n">sub_instance</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">Model</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">ref_field_name</span><span class="p">))</span>
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_save</span><span class="p">(</span><span class="n">sub_instance</span><span class="p">,</span> <span class="n">session</span><span class="p">)</span>
@@ -1746,7 +1746,7 @@ in an asynchronous way using motor.</p>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">session</span><span class="p">:</span> <span class="n">AIOSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModelType</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Persist an instance to the database</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Persist an instance to the database</span>
 
 <span class="sd">        This method behaves as an &#39;upsert&#39; operation. If a document already exists</span>
 <span class="sd">        with the same primary key, it will be overwritten.</span>
@@ -1789,7 +1789,7 @@ in an asynchronous way using motor.</p>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">session</span><span class="p">:</span> <span class="n">AIOSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ModelType</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Persist instances to the database</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Persist instances to the database</span>
 
 <span class="sd">        This method behaves as multiple &#39;upsert&#39; operations. If one of the document</span>
 <span class="sd">        already exists with the same primary key, it will be overwritten.</span>
@@ -1834,7 +1834,7 @@ in an asynchronous way using motor.</p>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">session</span><span class="p">:</span> <span class="n">AIOSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Delete an instance from the database</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete an instance from the database</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            instance: the instance to delete</span>
@@ -1861,7 +1861,7 @@ in an asynchronous way using motor.</p>
         <span class="n">just_one</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">session</span><span class="p">:</span> <span class="n">AIOSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Delete Model instances matching the query filter provided</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete Model instances matching the query filter provided</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            model: model to perform the operation on</span>
@@ -1893,7 +1893,7 @@ in an asynchronous way using motor.</p>
         <span class="o">*</span><span class="n">queries</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">QueryExpression</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="nb">bool</span><span class="p">],</span>
         <span class="n">session</span><span class="p">:</span> <span class="n">AIOSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Get the count of documents matching a query</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the count of documents matching a query</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            model: model to perform the operation on</span>
@@ -2012,7 +2012,7 @@ in an asynchronous way using motor.</p>
     <span class="n">client</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="s2">&quot;AsyncIOMotorClient&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">database</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Engine constructor.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Engine constructor.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        client: instance of an AsyncIO motor client. If None, a default one</span>
@@ -2154,7 +2154,7 @@ in an asynchronous way using motor.</p>
     <span class="n">update_existing_indexes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">session</span><span class="p">:</span> <span class="n">SyncSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Apply model constraints to the database.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply model constraints to the database.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        models: list of models to initialize the database with</span>
@@ -2315,7 +2315,7 @@ in an asynchronous way using motor.</p>
     <span class="o">*</span><span class="n">queries</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">QueryExpression</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="nb">bool</span><span class="p">],</span>
     <span class="n">session</span><span class="p">:</span> <span class="n">AIOSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Get the count of documents matching a query</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the count of documents matching a query</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        model: model to perform the operation on</span>
@@ -2445,7 +2445,7 @@ in an asynchronous way using motor.</p>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">session</span><span class="p">:</span> <span class="n">AIOSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Delete an instance from the database</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Delete an instance from the database</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        instance: the instance to delete</span>
@@ -2656,7 +2656,7 @@ in an asynchronous way using motor.</p>
     <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">session</span><span class="p">:</span> <span class="n">AIOSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AIOCursor</span><span class="p">[</span><span class="n">ModelType</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Search for Model instances matching the query filter provided</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Search for Model instances matching the query filter provided</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        model: model to perform the operation on</span>
@@ -2852,7 +2852,7 @@ in an asynchronous way using motor.</p>
     <span class="n">sort</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">session</span><span class="p">:</span> <span class="n">AIOSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ModelType</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Search for a Model instance matching the query filter provided</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Search for a Model instance matching the query filter provided</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        model: model to perform the operation on</span>
@@ -2951,7 +2951,7 @@ in an asynchronous way using motor.</p>
 <span class="normal">335</span>
 <span class="normal">336</span>
 <span class="normal">337</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_collection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ModelType</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;AsyncIOMotorCollection&quot;</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Get the motor collection associated to a Model.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the motor collection associated to a Model.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        model: model class</span>
@@ -3096,7 +3096,7 @@ in an asynchronous way using motor.</p>
     <span class="n">just_one</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">session</span><span class="p">:</span> <span class="n">AIOSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Delete Model instances matching the query filter provided</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Delete Model instances matching the query filter provided</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        model: model to perform the operation on</span>
@@ -3278,7 +3278,7 @@ the instance is still returned for convenience.</p>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">session</span><span class="p">:</span> <span class="n">AIOSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModelType</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Persist an instance to the database</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Persist an instance to the database</span>
 
 <span class="sd">    This method behaves as an &#39;upsert&#39; operation. If a document already exists</span>
 <span class="sd">    with the same primary key, it will be overwritten.</span>
@@ -3472,7 +3472,7 @@ instances are still returned for convenience.</p>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">session</span><span class="p">:</span> <span class="n">AIOSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ModelType</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Persist instances to the database</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Persist instances to the database</span>
 
 <span class="sd">    This method behaves as multiple &#39;upsert&#39; operations. If one of the document</span>
 <span class="sd">    already exists with the same primary key, it will be overwritten.</span>
@@ -3574,7 +3574,7 @@ instances are still returned for convenience.</p>
 <span class="normal">407</span>
 <span class="normal">408</span>
 <span class="normal">409</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">session</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AIOSession</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Get a new session for the engine to allow ordering sequential operations.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get a new session for the engine to allow ordering sequential operations.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        a new session object</span>
@@ -3664,7 +3664,7 @@ directly a replicaSet or a sharded cluster with replication enabled.</p>
 <span class="normal">429</span>
 <span class="normal">430</span>
 <span class="normal">431</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AIOTransaction</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Get a new transaction for the engine to aggregate sequential operations.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get a new transaction for the engine to aggregate sequential operations.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        a new transaction object</span>
@@ -3766,7 +3766,7 @@ directly a replicaSet or a sharded cluster with replication enabled.</p>
 <span class="normal">125</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">AIOCursor</span><span class="p">(</span>
     <span class="n">BaseCursor</span><span class="p">[</span><span class="n">ModelType</span><span class="p">],</span> <span class="n">AsyncIterable</span><span class="p">[</span><span class="n">ModelType</span><span class="p">],</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">ModelType</span><span class="p">]]</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This object has to be built from the [odmantic.engine.AIOEngine.find][] method.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This object has to be built from the [odmantic.engine.AIOEngine.find][] method.</span>
 
 <span class="sd">    An AIOCursor object support multiple async operations:</span>
 
@@ -4242,7 +4242,7 @@ MongoDB in an synchronous way using pymongo.</p>
 <span class="normal">1108</span>
 <span class="normal">1109</span>
 <span class="normal">1110</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">SyncEngine</span><span class="p">(</span><span class="n">BaseEngine</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;The SyncEngine object is responsible for handling database operations with</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The SyncEngine object is responsible for handling database operations with</span>
 <span class="sd">    MongoDB in an synchronous way using pymongo.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -4254,7 +4254,7 @@ MongoDB in an synchronous way using pymongo.</p>
         <span class="n">client</span><span class="p">:</span> <span class="s2">&quot;Union[MongoClient, None]&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">database</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Engine constructor.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Engine constructor.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            client: instance of a PyMongo client. If None, a default one</span>
@@ -4266,7 +4266,7 @@ MongoDB in an synchronous way using pymongo.</p>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="n">database</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">get_collection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ModelType</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;Collection&quot;</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Get the pymongo collection associated to a Model.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the pymongo collection associated to a Model.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            model: model class</span>
@@ -4293,7 +4293,7 @@ MongoDB in an synchronous way using pymongo.</p>
         <span class="n">update_existing_indexes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">session</span><span class="p">:</span> <span class="n">SyncSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Apply model constraints to the database.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply model constraints to the database.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            models: list of models to initialize the database with</span>
@@ -4330,7 +4330,7 @@ MongoDB in an synchronous way using pymongo.</p>
                         <span class="k">raise</span>
 
     <span class="k">def</span> <span class="nf">session</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SyncSession</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Get a new session for the engine to allow ordering sequential operations.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a new session for the engine to allow ordering sequential operations.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            a new session object</span>
@@ -4348,7 +4348,7 @@ MongoDB in an synchronous way using pymongo.</p>
         <span class="k">return</span> <span class="n">SyncSession</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SyncTransaction</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Get a new transaction for the engine to aggregate sequential operations.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a new transaction for the engine to aggregate sequential operations.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            a new transaction object</span>
@@ -4380,7 +4380,7 @@ MongoDB in an synchronous way using pymongo.</p>
         <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">session</span><span class="p">:</span> <span class="n">SyncSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SyncCursor</span><span class="p">[</span><span class="n">ModelType</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Search for Model instances matching the query filter provided</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Search for Model instances matching the query filter provided</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            model: model to perform the operation on</span>
@@ -4422,7 +4422,7 @@ MongoDB in an synchronous way using pymongo.</p>
         <span class="n">sort</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">session</span><span class="p">:</span> <span class="n">SyncSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ModelType</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Search for a Model instance matching the query filter provided</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Search for a Model instance matching the query filter provided</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            model: model to perform the operation on</span>
@@ -4449,7 +4449,7 @@ MongoDB in an synchronous way using pymongo.</p>
         <span class="k">return</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">_save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">:</span> <span class="n">ModelType</span><span class="p">,</span> <span class="n">session</span><span class="p">:</span> <span class="s2">&quot;ClientSession&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModelType</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Perform an atomic save operation in the specified session&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Perform an atomic save operation in the specified session&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">ref_field_name</span> <span class="ow">in</span> <span class="n">instance</span><span class="o">.</span><span class="n">__references__</span><span class="p">:</span>
             <span class="n">sub_instance</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">Model</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">ref_field_name</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_save</span><span class="p">(</span><span class="n">sub_instance</span><span class="p">,</span> <span class="n">session</span><span class="p">)</span>
@@ -4476,7 +4476,7 @@ MongoDB in an synchronous way using pymongo.</p>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">session</span><span class="p">:</span> <span class="n">SyncSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModelType</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Persist an instance to the database</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Persist an instance to the database</span>
 
 <span class="sd">        This method behaves as an &#39;upsert&#39; operation. If a document already exists</span>
 <span class="sd">        with the same primary key, it will be overwritten.</span>
@@ -4520,7 +4520,7 @@ MongoDB in an synchronous way using pymongo.</p>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">session</span><span class="p">:</span> <span class="n">SyncSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ModelType</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Persist instances to the database</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Persist instances to the database</span>
 
 <span class="sd">        This method behaves as multiple &#39;upsert&#39; operations. If one of the document</span>
 <span class="sd">        already exists with the same primary key, it will be overwritten.</span>
@@ -4563,7 +4563,7 @@ MongoDB in an synchronous way using pymongo.</p>
         <span class="n">instance</span><span class="p">:</span> <span class="n">ModelType</span><span class="p">,</span>
         <span class="n">session</span><span class="p">:</span> <span class="n">SyncSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Delete an instance from the database</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete an instance from the database</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            instance: the instance to delete</span>
@@ -4590,7 +4590,7 @@ MongoDB in an synchronous way using pymongo.</p>
         <span class="n">just_one</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">session</span><span class="p">:</span> <span class="n">SyncSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Delete Model instances matching the query filter provided</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete Model instances matching the query filter provided</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            model: model to perform the operation on</span>
@@ -4617,7 +4617,7 @@ MongoDB in an synchronous way using pymongo.</p>
         <span class="o">*</span><span class="n">queries</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">QueryExpression</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="nb">bool</span><span class="p">],</span>
         <span class="n">session</span><span class="p">:</span> <span class="n">SyncSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Get the count of documents matching a query</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the count of documents matching a query</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            model: model to perform the operation on</span>
@@ -4722,7 +4722,7 @@ MongoDB in an synchronous way using pymongo.</p>
     <span class="n">client</span><span class="p">:</span> <span class="s2">&quot;Union[MongoClient, None]&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">database</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Engine constructor.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Engine constructor.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        client: instance of a PyMongo client. If None, a default one</span>
@@ -4849,7 +4849,7 @@ MongoDB in an synchronous way using pymongo.</p>
     <span class="n">update_existing_indexes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">session</span><span class="p">:</span> <span class="n">SyncSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Apply model constraints to the database.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply model constraints to the database.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        models: list of models to initialize the database with</span>
@@ -5002,7 +5002,7 @@ MongoDB in an synchronous way using pymongo.</p>
     <span class="o">*</span><span class="n">queries</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">QueryExpression</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="nb">bool</span><span class="p">],</span>
     <span class="n">session</span><span class="p">:</span> <span class="n">SyncSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Get the count of documents matching a query</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the count of documents matching a query</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        model: model to perform the operation on</span>
@@ -5124,7 +5124,7 @@ MongoDB in an synchronous way using pymongo.</p>
     <span class="n">instance</span><span class="p">:</span> <span class="n">ModelType</span><span class="p">,</span>
     <span class="n">session</span><span class="p">:</span> <span class="n">SyncSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Delete an instance from the database</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Delete an instance from the database</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        instance: the instance to delete</span>
@@ -5333,7 +5333,7 @@ MongoDB in an synchronous way using pymongo.</p>
     <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">session</span><span class="p">:</span> <span class="n">SyncSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SyncCursor</span><span class="p">[</span><span class="n">ModelType</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Search for Model instances matching the query filter provided</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Search for Model instances matching the query filter provided</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        model: model to perform the operation on</span>
@@ -5523,7 +5523,7 @@ MongoDB in an synchronous way using pymongo.</p>
     <span class="n">sort</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">session</span><span class="p">:</span> <span class="n">SyncSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ModelType</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Search for a Model instance matching the query filter provided</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Search for a Model instance matching the query filter provided</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        model: model to perform the operation on</span>
@@ -5623,7 +5623,7 @@ MongoDB in an synchronous way using pymongo.</p>
 <span class="normal">747</span>
 <span class="normal">748</span>
 <span class="normal">749</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_collection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ModelType</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;Collection&quot;</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Get the pymongo collection associated to a Model.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the pymongo collection associated to a Model.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        model: model class</span>
@@ -5760,7 +5760,7 @@ MongoDB in an synchronous way using pymongo.</p>
     <span class="n">just_one</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">session</span><span class="p">:</span> <span class="n">SyncSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Delete Model instances matching the query filter provided</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Delete Model instances matching the query filter provided</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        model: model to perform the operation on</span>
@@ -5934,7 +5934,7 @@ the instance is still returned for convenience.</p>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">session</span><span class="p">:</span> <span class="n">SyncSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModelType</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Persist an instance to the database</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Persist an instance to the database</span>
 
 <span class="sd">    This method behaves as an &#39;upsert&#39; operation. If a document already exists</span>
 <span class="sd">    with the same primary key, it will be overwritten.</span>
@@ -6124,7 +6124,7 @@ instances are still returned for convenience.</p>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">session</span><span class="p">:</span> <span class="n">SyncSessionType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ModelType</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Persist instances to the database</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Persist instances to the database</span>
 
 <span class="sd">    This method behaves as multiple &#39;upsert&#39; operations. If one of the document</span>
 <span class="sd">    already exists with the same primary key, it will be overwritten.</span>
@@ -6225,7 +6225,7 @@ instances are still returned for convenience.</p>
 <span class="normal">817</span>
 <span class="normal">818</span>
 <span class="normal">819</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">session</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SyncSession</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Get a new session for the engine to allow ordering sequential operations.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get a new session for the engine to allow ordering sequential operations.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        a new session object</span>
@@ -6315,7 +6315,7 @@ directly a replicaSet or a sharded cluster with replication enabled.</p>
 <span class="normal">839</span>
 <span class="normal">840</span>
 <span class="normal">841</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SyncTransaction</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Get a new transaction for the engine to aggregate sequential operations.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get a new transaction for the engine to aggregate sequential operations.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        a new transaction object</span>
@@ -6396,7 +6396,7 @@ directly a replicaSet or a sharded cluster with replication enabled.</p>
 <span class="normal">149</span>
 <span class="normal">150</span>
 <span class="normal">151</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">SyncCursor</span><span class="p">(</span><span class="n">BaseCursor</span><span class="p">[</span><span class="n">ModelType</span><span class="p">],</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">ModelType</span><span class="p">]):</span>
-    <span class="sd">&quot;&quot;&quot;This object has to be built from the [odmantic.engine.SyncEngine.find][] method.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This object has to be built from the [odmantic.engine.SyncEngine.find][] method.</span>
 
 <span class="sd">    A SyncCursor object supports iterating over the query results using **`for`**.</span>
 

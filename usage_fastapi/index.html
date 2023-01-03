@@ -828,7 +828,7 @@
 <div class="admonition info">
 <p class="admonition-title">Requirements</p>
 <p>To run the following example, you'll need to install FastAPI and Uvicorn.
-<div class="highlight"><pre><span></span><code>pip install fastapi uvicorn
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>fastapi<span class="w"> </span>uvicorn
 </code></pre></div></p>
 </div>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
@@ -1006,7 +1006,7 @@ database and we return it.</p>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>Send the request:
-<div class="highlight"><pre><span></span><code>http PUT localhost:8080/trees/ <span class="nv">name</span><span class="o">=</span><span class="s2">&quot;Spruce&quot;</span> <span class="nv">discovery_year</span><span class="o">=</span><span class="m">1995</span> <span class="nv">average_size</span><span class="o">=</span><span class="m">2</span>
+<div class="highlight"><pre><span></span><code>http<span class="w"> </span>PUT<span class="w"> </span>localhost:8080/trees/<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;Spruce&quot;</span><span class="w"> </span><span class="nv">discovery_year</span><span class="o">=</span><span class="m">1995</span><span class="w"> </span><span class="nv">average_size</span><span class="o">=</span><span class="m">2</span>
 </code></pre></div>
 Output:
 <div class="highlight"><pre><span></span><code>HTTP/1.1 200 OK
@@ -1025,9 +1025,9 @@ server: uvicorn
 </div>
 <div class="tabbed-block">
 <p>Send the request:
-<div class="highlight"><pre><span></span><code>curl -X PUT <span class="s2">&quot;http://localhost:8080/trees/&quot;</span> <span class="se">\</span>
-     -H  <span class="s2">&quot;Content-Type: application/json&quot;</span> <span class="se">\</span>
-     -d <span class="s1">&#39;{&quot;name&quot;:&quot;Spruce&quot;, &quot;discovery_year&quot;:1995, &quot;average_size&quot;:2}&#39;</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>PUT<span class="w"> </span><span class="s2">&quot;http://localhost:8080/trees/&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>-H<span class="w">  </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;name&quot;:&quot;Spruce&quot;, &quot;discovery_year&quot;:1995, &quot;average_size&quot;:2}&#39;</span>
 </code></pre></div>
 Output:
 <div class="highlight"><pre><span></span><code>{&quot;name&quot;:&quot;Spruce&quot;,&quot;average_size&quot;:2.0,&quot;discovery_year&quot;:1995,&quot;id&quot;:&quot;5f8c8c1ff1d33aa1012f3086&quot;}
@@ -1053,9 +1053,9 @@ details</a>), you can overwrite instances stored in the database
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>Send the request:
-<div class="highlight"><pre><span></span><code>http PUT localhost:8080/trees/ <span class="se">\</span>
-    <span class="nv">name</span><span class="o">=</span><span class="s2">&quot;Norway Spruce&quot;</span> <span class="nv">discovery_year</span><span class="o">=</span><span class="m">1795</span> <span class="se">\</span>
-    <span class="nv">average_size</span><span class="o">=</span><span class="m">200</span> <span class="nv">id</span><span class="o">=</span><span class="s2">&quot;5f8c8c1ff1d33aa1012f3086&quot;</span>
+<div class="highlight"><pre><span></span><code>http<span class="w"> </span>PUT<span class="w"> </span>localhost:8080/trees/<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;Norway Spruce&quot;</span><span class="w"> </span><span class="nv">discovery_year</span><span class="o">=</span><span class="m">1795</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="nv">average_size</span><span class="o">=</span><span class="m">200</span><span class="w"> </span><span class="nv">id</span><span class="o">=</span><span class="s2">&quot;5f8c8c1ff1d33aa1012f3086&quot;</span>
 </code></pre></div>
 Output:
 <div class="highlight"><pre><span></span><code>HTTP/1.1 200 OK
@@ -1074,9 +1074,9 @@ server: uvicorn
 </div>
 <div class="tabbed-block">
 <p>Send the request:
-<div class="highlight"><pre><span></span><code>curl -X PUT <span class="s2">&quot;http://localhost:8080/trees/&quot;</span> <span class="se">\</span>
-     -H  <span class="s2">&quot;Content-Type: application/json&quot;</span> <span class="se">\</span>
-     -d <span class="s1">&#39;{&quot;name&quot;:&quot;Norway Spruce&quot;, &quot;discovery_year&quot;:1795,</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>PUT<span class="w"> </span><span class="s2">&quot;http://localhost:8080/trees/&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>-H<span class="w">  </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;name&quot;:&quot;Norway Spruce&quot;, &quot;discovery_year&quot;:1795,</span>
 <span class="s1">          &quot;average_size&quot;:200, &quot;id&quot;:&quot;5f8c8c1ff1d33aa1012f3086&quot;}&#39;</span>
 </code></pre></div>
 Output:
@@ -1100,7 +1100,7 @@ the error.</p>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>Send the request:
-<div class="highlight"><pre><span></span><code>http PUT localhost:8080/trees/ <span class="nv">name</span><span class="o">=</span><span class="s2">&quot;Spruce&quot;</span> <span class="nv">discovery_year</span><span class="o">=</span><span class="m">1995</span>
+<div class="highlight"><pre><span></span><code>http<span class="w"> </span>PUT<span class="w"> </span>localhost:8080/trees/<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;Spruce&quot;</span><span class="w"> </span><span class="nv">discovery_year</span><span class="o">=</span><span class="m">1995</span>
 </code></pre></div>
 Output:
 <div class="highlight"><pre><span></span><code><span class="hll">HTTP/1.1 422 Unprocessable Entity
@@ -1125,9 +1125,9 @@ server: uvicorn
 </div>
 <div class="tabbed-block">
 <p>Send the request:
-<div class="highlight"><pre><span></span><code>curl -v -X PUT <span class="s2">&quot;http://localhost:8080/trees/&quot;</span> <span class="se">\</span>
-     -H  <span class="s2">&quot;Content-Type: application/json&quot;</span> <span class="se">\</span>
-     -d <span class="s1">&#39;{&quot;name&quot;:&quot;Spruce&quot;, &quot;discovery_year&quot;:1995}&#39;</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>-X<span class="w"> </span>PUT<span class="w"> </span><span class="s2">&quot;http://localhost:8080/trees/&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>-H<span class="w">  </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;name&quot;:&quot;Spruce&quot;, &quot;discovery_year&quot;:1995}&#39;</span>
 </code></pre></div>
 Output:
 <div class="highlight"><pre><span></span><code>*   Trying 127.0.0.1...
@@ -1175,11 +1175,11 @@ instances that we can return directly:</p>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>Create some trees:
-<div class="highlight"><pre><span></span><code>http PUT localhost:8080/trees/ <span class="nv">name</span><span class="o">=</span><span class="s2">&quot;Spruce&quot;</span> <span class="nv">discovery_year</span><span class="o">=</span><span class="m">1995</span> <span class="nv">average_size</span><span class="o">=</span><span class="m">10</span>.2
-http PUT localhost:8080/trees/ <span class="nv">name</span><span class="o">=</span><span class="s2">&quot;Pine&quot;</span> <span class="nv">discovery_year</span><span class="o">=</span><span class="m">1850</span> <span class="nv">average_size</span><span class="o">=</span><span class="m">5</span>
+<div class="highlight"><pre><span></span><code>http<span class="w"> </span>PUT<span class="w"> </span>localhost:8080/trees/<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;Spruce&quot;</span><span class="w"> </span><span class="nv">discovery_year</span><span class="o">=</span><span class="m">1995</span><span class="w"> </span><span class="nv">average_size</span><span class="o">=</span><span class="m">10</span>.2
+http<span class="w"> </span>PUT<span class="w"> </span>localhost:8080/trees/<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;Pine&quot;</span><span class="w"> </span><span class="nv">discovery_year</span><span class="o">=</span><span class="m">1850</span><span class="w"> </span><span class="nv">average_size</span><span class="o">=</span><span class="m">5</span>
 </code></pre></div></p>
 <p>Get the trees:
-<div class="highlight"><pre><span></span><code>http localhost:8080/trees/
+<div class="highlight"><pre><span></span><code>http<span class="w"> </span>localhost:8080/trees/
 </code></pre></div>
 Output:
 <div class="highlight"><pre><span></span><code>HTTP/1.1 200 OK
@@ -1206,15 +1206,15 @@ server: uvicorn
 </div>
 <div class="tabbed-block">
 <p>Create some trees:
-<div class="highlight"><pre><span></span><code>curl -v -X PUT <span class="s2">&quot;http://localhost:8080/trees/&quot;</span> <span class="se">\</span>
-     -H  <span class="s2">&quot;Content-Type: application/json&quot;</span> <span class="se">\</span>
-     -d <span class="s1">&#39;{&quot;name&quot;:&quot;Spruce&quot;, &quot;discovery_year&quot;:1995, &quot;average_size&quot;:10.2}&#39;</span>
-curl -v  -X PUT <span class="s2">&quot;http://localhost:8080/trees/&quot;</span> <span class="se">\</span>
-     -H  <span class="s2">&quot;Content-Type: application/json&quot;</span> <span class="se">\</span>
-     -d <span class="s1">&#39;{&quot;name&quot;:&quot;Pine&quot;, &quot;discovery_year&quot;:1850, &quot;average_size&quot;:5}&#39;</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>-X<span class="w"> </span>PUT<span class="w"> </span><span class="s2">&quot;http://localhost:8080/trees/&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>-H<span class="w">  </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;name&quot;:&quot;Spruce&quot;, &quot;discovery_year&quot;:1995, &quot;average_size&quot;:10.2}&#39;</span>
+curl<span class="w"> </span>-v<span class="w">  </span>-X<span class="w"> </span>PUT<span class="w"> </span><span class="s2">&quot;http://localhost:8080/trees/&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>-H<span class="w">  </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;name&quot;:&quot;Pine&quot;, &quot;discovery_year&quot;:1850, &quot;average_size&quot;:5}&#39;</span>
 </code></pre></div>
 Get the trees:
-<div class="highlight"><pre><span></span><code>curl http://localhost:8080/trees/ <span class="p">|</span> python -mjson.tool
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8080/trees/<span class="w"> </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-mjson.tool
 </code></pre></div>
 Output:
 <div class="highlight"><pre><span></span><code>[
@@ -1256,7 +1256,7 @@ parameters (to directly get the total count of instances).</p>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>Get the count:
-<div class="highlight"><pre><span></span><code>http localhost:8080/trees/count
+<div class="highlight"><pre><span></span><code>http<span class="w"> </span>localhost:8080/trees/count
 </code></pre></div>
 Output:
 <div class="highlight"><pre><span></span><code>HTTP/1.1 200 OK
@@ -1270,7 +1270,7 @@ server: uvicorn
 </div>
 <div class="tabbed-block">
 <p>Get the count:
-<div class="highlight"><pre><span></span><code>curl http://localhost:8080/trees/count
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8080/trees/count
 </code></pre></div>
 Output:
 <div class="highlight"><pre><span></span><code>2
@@ -1325,7 +1325,7 @@ Otherwise, we found the requested instance. We can return it !
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>Get the tree <code>5f8c8266f1d33aa1012f3082</code>:
-<div class="highlight"><pre><span></span><code>http localhost:8080/trees/5f8c8266f1d33aa1012f3082
+<div class="highlight"><pre><span></span><code>http<span class="w"> </span>localhost:8080/trees/5f8c8266f1d33aa1012f3082
 </code></pre></div>
 Output:
 <div class="highlight"><pre><span></span><code>HTTP/1.1 200 OK
@@ -1344,7 +1344,7 @@ server: uvicorn
 </div>
 <div class="tabbed-block">
 <p>Get the tree <code>5f8c8266f1d33aa1012f3082</code>:</p>
-<p><div class="highlight"><pre><span></span><code>curl http://localhost:8080/trees/5f8c8266f1d33aa1012f3082
+<p><div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8080/trees/5f8c8266f1d33aa1012f3082
 </code></pre></div>
 Output:
 <div class="highlight"><pre><span></span><code>{&quot;name&quot;:&quot;Spruce&quot;,&quot;average_size&quot;:10.2,&quot;discovery_year&quot;:1995,&quot;id&quot;:&quot;5f8c8266f1d33aa1012f3082&quot;}
@@ -1359,7 +1359,7 @@ Output:
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>Try to get the tree <code>f0f0f0f0f0f0f0f0f0f0f0f0</code> (it has not been created):
-<div class="highlight"><pre><span></span><code>http localhost:8080/trees/f0f0f0f0f0f0f0f0f0f0f0f0
+<div class="highlight"><pre><span></span><code>http<span class="w"> </span>localhost:8080/trees/f0f0f0f0f0f0f0f0f0f0f0f0
 </code></pre></div>
 Output:
 <div class="highlight"><pre><span></span><code><span class="hll">HTTP/1.1 404 Not Found
@@ -1375,7 +1375,7 @@ server: uvicorn
 </div>
 <div class="tabbed-block">
 <p>Try to get the tree <code>f0f0f0f0f0f0f0f0f0f0f0f0</code> (it has not been created):
-<div class="highlight"><pre><span></span><code>curl http://localhost:8080/trees/f0f0f0f0f0f0f0f0f0f0f0f0
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8080/trees/f0f0f0f0f0f0f0f0f0f0f0f0
 </code></pre></div>
 Output:
 <div class="highlight"><pre><span></span><code>{&quot;detail&quot;:&quot;Not Found&quot;}
@@ -1394,7 +1394,7 @@ Unprocessable Entity</code> error will be returned:</p>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>Get the tree identified by <code>invalid_object_id</code>:
-<div class="highlight"><pre><span></span><code>http localhost:8080/trees/invalid_object_id
+<div class="highlight"><pre><span></span><code>http<span class="w"> </span>localhost:8080/trees/invalid_object_id
 </code></pre></div>
 Output:
 <div class="highlight"><pre><span></span><code><span class="hll">HTTP/1.1 422 Unprocessable Entity
@@ -1419,7 +1419,7 @@ server: uvicorn
 </div>
 <div class="tabbed-block">
 <p>Get the tree identified by <code>invalid_object_id</code>:</p>
-<p><div class="highlight"><pre><span></span><code>curl http://localhost:8080/trees/invalid_object_id
+<p><div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8080/trees/invalid_object_id
 </code></pre></div>
 Output:
 <div class="highlight"><pre><span></span><code>{&quot;detail&quot;:[{&quot;loc&quot;:[&quot;path&quot;,&quot;id&quot;],&quot;msg&quot;:&quot;invalid ObjectId specified&quot;,&quot;type&quot;:&quot;type_error&quot;}]}
@@ -1506,7 +1506,7 @@ instance. Once we have the instance, we call the
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>Delete the tree identified by <code>5f8c8266f1d33aa1012f3082</code>:
-<div class="highlight"><pre><span></span><code>http DELETE localhost:8080/trees/5f8c8266f1d33aa1012f3082
+<div class="highlight"><pre><span></span><code>http<span class="w"> </span>DELETE<span class="w"> </span>localhost:8080/trees/5f8c8266f1d33aa1012f3082
 </code></pre></div>
 Output:
 <div class="highlight"><pre><span></span><code><span class="hll">HTTP/1.1 200 OK
@@ -1523,7 +1523,7 @@ server: uvicorn
 }
 </code></pre></div></p>
 <p>Check that the tree is not stored anymore:</p>
-<p><div class="highlight"><pre><span></span><code>http localhost:8080/trees/5f8c8266f1d33aa1012f3082
+<p><div class="highlight"><pre><span></span><code>http<span class="w"> </span>localhost:8080/trees/5f8c8266f1d33aa1012f3082
 </code></pre></div>
 Output:
 <div class="highlight"><pre><span></span><code><span class="hll">HTTP/1.1 404 Not Found
@@ -1539,13 +1539,13 @@ server: uvicorn
 </div>
 <div class="tabbed-block">
 <p>Delete the tree identified by <code>5f8c8266f1d33aa1012f3082</code>:
-<div class="highlight"><pre><span></span><code>curl -X DELETE http://localhost:8080/trees/5f8c8266f1d33aa1012f3082
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>DELETE<span class="w"> </span>http://localhost:8080/trees/5f8c8266f1d33aa1012f3082
 </code></pre></div>
 Output:
 <div class="highlight"><pre><span></span><code>{&quot;name&quot;:&quot;Spruce&quot;,&quot;average_size&quot;:10.2,&quot;discovery_year&quot;:1995,&quot;id&quot;:&quot;5f8c8266f1d33aa1012f3082&quot;}
 </code></pre></div>
 Check that the tree is not stored anymore:
-<div class="highlight"><pre><span></span><code>curl http://localhost:8080/trees/5f8c8266f1d33aa1012f3082
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8080/trees/5f8c8266f1d33aa1012f3082
 </code></pre></div>
 Output:
 <div class="highlight"><pre><span></span><code>{&quot;detail&quot;:&quot;Not Found&quot;}
@@ -1689,8 +1689,8 @@ explicitely set <code>None</code> values in the example, we used fields defined 
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>Update the tree identified by <code>5f8c8266f1d33aa1012f3083</code>:
-<div class="highlight"><pre><span></span><code>http PATCH localhost:8080/trees/5f8c8266f1d33aa1012f3083 <span class="se">\</span>
-    <span class="nv">discovery_year</span><span class="o">=</span><span class="m">1825</span> <span class="nv">name</span><span class="o">=</span><span class="s2">&quot;Stone Pine&quot;</span>
+<div class="highlight"><pre><span></span><code>http<span class="w"> </span>PATCH<span class="w"> </span>localhost:8080/trees/5f8c8266f1d33aa1012f3083<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="nv">discovery_year</span><span class="o">=</span><span class="m">1825</span><span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="s2">&quot;Stone Pine&quot;</span>
 </code></pre></div>
 Output:
 <div class="highlight"><pre><span></span><code><span class="hll">HTTP/1.1 200 OK
@@ -1707,7 +1707,7 @@ server: uvicorn
 }
 </code></pre></div></p>
 <p>Check that the tree has been updated properly:</p>
-<p><div class="highlight"><pre><span></span><code>http localhost:8080/trees/5f8c8266f1d33aa1012f3083
+<p><div class="highlight"><pre><span></span><code>http<span class="w"> </span>localhost:8080/trees/5f8c8266f1d33aa1012f3083
 </code></pre></div>
 Output:
 <div class="highlight"><pre><span></span><code>HTTP/1.1 200 OK
@@ -1726,15 +1726,15 @@ server: uvicorn
 </div>
 <div class="tabbed-block">
 <p>Update the tree identified by <code>5f8c8266f1d33aa1012f3083</code>:
-<div class="highlight"><pre><span></span><code>curl -X PATCH <span class="s2">&quot;http://localhost:8080/trees/5f8c8266f1d33aa1012f3083&quot;</span> <span class="se">\</span>
-     -H  <span class="s2">&quot;Content-Type: application/json&quot;</span> <span class="se">\</span>
-     -d <span class="s1">&#39;{&quot;name&quot;:&quot;Stone Pine&quot;, &quot;discovery_year&quot;:1825}&#39;</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>PATCH<span class="w"> </span><span class="s2">&quot;http://localhost:8080/trees/5f8c8266f1d33aa1012f3083&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>-H<span class="w">  </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;name&quot;:&quot;Stone Pine&quot;, &quot;discovery_year&quot;:1825}&#39;</span>
 </code></pre></div>
 Output:
 <div class="highlight"><pre><span></span><code>{&quot;name&quot;:&quot;Stone Pine&quot;,&quot;average_size&quot;:5.0,&quot;discovery_year&quot;:1825,&quot;id&quot;:&quot;5f8c8266f1d33aa1012f3083&quot;}
 </code></pre></div>
 Check that the tree has been updated properly:
-<div class="highlight"><pre><span></span><code>curl http://localhost:8080/trees/5f8c8266f1d33aa1012f3083
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8080/trees/5f8c8266f1d33aa1012f3083
 </code></pre></div>
 Output:
 <div class="highlight"><pre><span></span><code>{&quot;name&quot;:&quot;Stone Pine&quot;,&quot;average_size&quot;:5.0,&quot;discovery_year&quot;:1825,&quot;id&quot;:&quot;5f8c8266f1d33aa1012f3083&quot;}

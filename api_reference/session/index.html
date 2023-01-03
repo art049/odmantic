@@ -1327,7 +1327,7 @@
 <span class="normal">264</span>
 <span class="normal">265</span>
 <span class="normal">266</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">AIOSession</span><span class="p">(</span><span class="n">AIOSessionBase</span><span class="p">,</span> <span class="n">AsyncContextManager</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;An AsyncIO session object for ordering sequential operations.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;An AsyncIO session object for ordering sequential operations.</span>
 
 
 <span class="sd">    Sessions can be created from the engine directly by using the</span>
@@ -1363,19 +1363,19 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">get_driver_session</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIOMotorClientSession</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Return the underlying Motor Session&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the underlying Motor Session&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;session not started&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Start the logical Mongo session.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Start the logical Mongo session.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_started</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Session is already started&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">start_session</span><span class="p">()</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">end</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Finish the logical session.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Finish the logical session.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Session is not started&quot;</span><span class="p">)</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">end_session</span><span class="p">()</span>
@@ -1394,7 +1394,7 @@
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AIOTransaction</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Create a transaction in the existing session&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a transaction in the existing session&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">AIOTransaction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
         </details>
@@ -1437,7 +1437,7 @@
 <span class="normal">248</span>
 <span class="normal">249</span>
 <span class="normal">250</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">end</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Finish the logical session.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Finish the logical session.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Session is not started&quot;</span><span class="p">)</span>
     <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">end_session</span><span class="p">()</span>
@@ -1469,7 +1469,7 @@
 <span class="normal">235</span>
 <span class="normal">236</span>
 <span class="normal">237</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_driver_session</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIOMotorClientSession</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Return the underlying Motor Session&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the underlying Motor Session&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;session not started&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span>
@@ -1504,7 +1504,7 @@
 <span class="normal">241</span>
 <span class="normal">242</span>
 <span class="normal">243</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Start the logical Mongo session.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Start the logical Mongo session.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_started</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Session is already started&quot;</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">start_session</span><span class="p">()</span>
@@ -1533,7 +1533,7 @@
         <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">264</span>
 <span class="normal">265</span>
 <span class="normal">266</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AIOTransaction</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Create a transaction in the existing session&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a transaction in the existing session&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">AIOTransaction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
       </details>
@@ -1697,7 +1697,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
 <span class="normal">367</span>
 <span class="normal">368</span>
 <span class="normal">369</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">AIOTransaction</span><span class="p">(</span><span class="n">AIOSessionBase</span><span class="p">,</span> <span class="n">AsyncContextManager</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A transaction object to aggregate sequential operations.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A transaction object to aggregate sequential operations.</span>
 
 <span class="sd">    Transactions can be created from the engine using the</span>
 <span class="sd">    [AIOEngine.transaction][odmantic.engine.AIOEngine.transaction]</span>
@@ -1747,13 +1747,13 @@ replicaSet or a sharded cluster with replication enabled.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_context</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">AsyncContextManager</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">get_driver_session</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIOMotorClientSession</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Return the underlying Motor Session&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the underlying Motor Session&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_started</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;transaction not started&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get_driver_session</span><span class="p">()</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Initiate the transaction.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initiate the transaction.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_started</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Transaction already started&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session_provided</span><span class="p">:</span>
@@ -1765,7 +1765,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_started</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">commit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Commit the changes and close the transaction.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Commit the changes and close the transaction.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_started</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Transaction not started&quot;</span><span class="p">)</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">session</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
@@ -1775,7 +1775,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">abort</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Discard the changes and drop the transaction&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Discard the changes and drop the transaction&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_started</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Transaction not started&quot;</span><span class="p">)</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">session</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
@@ -1841,7 +1841,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
 <span class="normal">353</span>
 <span class="normal">354</span>
 <span class="normal">355</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">abort</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Discard the changes and drop the transaction&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Discard the changes and drop the transaction&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_started</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Transaction not started&quot;</span><span class="p">)</span>
     <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">session</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
@@ -1884,7 +1884,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
 <span class="normal">343</span>
 <span class="normal">344</span>
 <span class="normal">345</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">commit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Commit the changes and close the transaction.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Commit the changes and close the transaction.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_started</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Transaction not started&quot;</span><span class="p">)</span>
     <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">session</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
@@ -1919,7 +1919,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
 <span class="normal">321</span>
 <span class="normal">322</span>
 <span class="normal">323</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_driver_session</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIOMotorClientSession</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Return the underlying Motor Session&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the underlying Motor Session&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_started</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;transaction not started&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get_driver_session</span><span class="p">()</span>
@@ -1960,7 +1960,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
 <span class="normal">333</span>
 <span class="normal">334</span>
 <span class="normal">335</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Initiate the transaction.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initiate the transaction.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_started</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Transaction already started&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session_provided</span><span class="p">:</span>
@@ -2184,7 +2184,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
         <span class="n">skip</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
         <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ODMEngine</span><span class="o">.</span><span class="n">AIOCursor</span><span class="p">[</span><span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Search for Model instances matching the query filter provided</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Search for Model instances matching the query filter provided</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            model: model to perform the operation on</span>
@@ -2214,7 +2214,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
         <span class="p">],</span>  <span class="c1"># bool: allow using binary operators w/o plugin</span>
         <span class="n">sort</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Search for a Model instance matching the query filter provided</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Search for a Model instance matching the query filter provided</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            model: model to perform the operation on</span>
@@ -2240,7 +2240,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
         <span class="n">model</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">],</span>
         <span class="o">*</span><span class="n">queries</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">QueryExpression</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="nb">bool</span><span class="p">],</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Get the count of documents matching a query</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the count of documents matching a query</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            model: model to perform the operation on</span>
@@ -2257,7 +2257,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">instance</span><span class="p">:</span> <span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Persist an instance to the database</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Persist an instance to the database</span>
 
 <span class="sd">        This method behaves as an &#39;upsert&#39; operation. If a document already exists</span>
 <span class="sd">        with the same primary key, it will be overwritten.</span>
@@ -2280,7 +2280,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">instances</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">],</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Persist instances to the database</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Persist instances to the database</span>
 
 <span class="sd">        This method behaves as multiple &#39;upsert&#39; operations. If one of the document</span>
 <span class="sd">        already exists with the same primary key, it will be overwritten.</span>
@@ -2306,7 +2306,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">instance</span><span class="p">:</span> <span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Delete an instance from the database</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete an instance from the database</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            instance: the instance to delete</span>
@@ -2329,7 +2329,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
         <span class="o">*</span><span class="n">queries</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">QueryExpression</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="nb">bool</span><span class="p">],</span>
         <span class="n">just_one</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Delete Model instances matching the query filter provided</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete Model instances matching the query filter provided</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            model: model to perform the operation on</span>
@@ -2450,7 +2450,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
     <span class="n">model</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">],</span>
     <span class="o">*</span><span class="n">queries</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">QueryExpression</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="nb">bool</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Get the count of documents matching a query</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the count of documents matching a query</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        model: model to perform the operation on</span>
@@ -2557,7 +2557,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">instance</span><span class="p">:</span> <span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Delete an instance from the database</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Delete an instance from the database</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        instance: the instance to delete</span>
@@ -2717,7 +2717,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
     <span class="n">skip</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
     <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ODMEngine</span><span class="o">.</span><span class="n">AIOCursor</span><span class="p">[</span><span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Search for Model instances matching the query filter provided</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Search for Model instances matching the query filter provided</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        model: model to perform the operation on</span>
@@ -2882,7 +2882,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
     <span class="p">],</span>  <span class="c1"># bool: allow using binary operators w/o plugin</span>
     <span class="n">sort</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Search for a Model instance matching the query filter provided</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Search for a Model instance matching the query filter provided</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        model: model to perform the operation on</span>
@@ -3014,7 +3014,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
     <span class="o">*</span><span class="n">queries</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">QueryExpression</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="nb">bool</span><span class="p">],</span>
     <span class="n">just_one</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Delete Model instances matching the query filter provided</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Delete Model instances matching the query filter provided</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        model: model to perform the operation on</span>
@@ -3128,7 +3128,7 @@ the instance is still returned for convenience.</p>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">instance</span><span class="p">:</span> <span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Persist an instance to the database</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Persist an instance to the database</span>
 
 <span class="sd">    This method behaves as an &#39;upsert&#39; operation. If a document already exists</span>
 <span class="sd">    with the same primary key, it will be overwritten.</span>
@@ -3251,7 +3251,7 @@ instances are still returned for convenience.</p>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">instances</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Persist instances to the database</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Persist instances to the database</span>
 
 <span class="sd">    This method behaves as multiple &#39;upsert&#39; operations. If one of the document</span>
 <span class="sd">    already exists with the same primary key, it will be overwritten.</span>
@@ -3394,7 +3394,7 @@ instances are still returned for convenience.</p>
 <span class="normal">608</span>
 <span class="normal">609</span>
 <span class="normal">610</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">SyncSession</span><span class="p">(</span><span class="n">SyncSessionBase</span><span class="p">,</span> <span class="n">ContextManager</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A session object for ordering sequential operations.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A session object for ordering sequential operations.</span>
 
 <span class="sd">    Sessions can be created from the engine directly by using the</span>
 <span class="sd">    [SyncEngine.session][odmantic.engine.SyncEngine.session] method.</span>
@@ -3429,19 +3429,19 @@ instances are still returned for convenience.</p>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">get_driver_session</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ClientSession</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Return the underlying PyMongo Session&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the underlying PyMongo Session&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;session not started&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span>
 
     <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Start the logical session.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Start the logical session.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_started</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Session is already started&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">start_session</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">end</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Finish the logical session.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Finish the logical session.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Session is not started&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">end_session</span><span class="p">()</span>
@@ -3460,7 +3460,7 @@ instances are still returned for convenience.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SyncTransaction</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Create a transaction in the existing session&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a transaction in the existing session&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">SyncTransaction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
         </details>
@@ -3499,7 +3499,7 @@ instances are still returned for convenience.</p>
 <span class="normal">592</span>
 <span class="normal">593</span>
 <span class="normal">594</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">end</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Finish the logical session.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Finish the logical session.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Session is not started&quot;</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">end_session</span><span class="p">()</span>
@@ -3531,7 +3531,7 @@ instances are still returned for convenience.</p>
 <span class="normal">579</span>
 <span class="normal">580</span>
 <span class="normal">581</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_driver_session</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ClientSession</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Return the underlying PyMongo Session&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the underlying PyMongo Session&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;session not started&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span>
@@ -3562,7 +3562,7 @@ instances are still returned for convenience.</p>
 <span class="normal">585</span>
 <span class="normal">586</span>
 <span class="normal">587</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Start the logical session.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Start the logical session.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_started</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Session is already started&quot;</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">start_session</span><span class="p">()</span>
@@ -3591,7 +3591,7 @@ instances are still returned for convenience.</p>
         <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">608</span>
 <span class="normal">609</span>
 <span class="normal">610</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SyncTransaction</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Create a transaction in the existing session&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a transaction in the existing session&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">SyncTransaction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
       </details>
@@ -3753,7 +3753,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
 <span class="normal">709</span>
 <span class="normal">710</span>
 <span class="normal">711</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">SyncTransaction</span><span class="p">(</span><span class="n">SyncSessionBase</span><span class="p">,</span> <span class="n">ContextManager</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A transaction object to aggregate sequential operations.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A transaction object to aggregate sequential operations.</span>
 
 <span class="sd">    Transactions can be created from the engine using the</span>
 <span class="sd">    [SyncEngine.transaction][odmantic.engine.SyncEngine.transaction]</span>
@@ -3803,13 +3803,13 @@ replicaSet or a sharded cluster with replication enabled.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_context</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ContextManager</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">get_driver_session</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ClientSession</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Return the underlying PyMongo Session&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the underlying PyMongo Session&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_started</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;transaction not started&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get_driver_session</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Initiate the transaction.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initiate the transaction.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_started</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Transaction already started&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session_provided</span><span class="p">:</span>
@@ -3819,7 +3819,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_started</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">commit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Commit the changes and close the transaction.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Commit the changes and close the transaction.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_started</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Transaction not started&quot;</span><span class="p">)</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">session</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
@@ -3829,7 +3829,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
             <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">abort</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Discard the changes and drop the transaction.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Discard the changes and drop the transaction.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_started</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Transaction not started&quot;</span><span class="p">)</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">session</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
@@ -3891,7 +3891,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
 <span class="normal">695</span>
 <span class="normal">696</span>
 <span class="normal">697</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">abort</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Discard the changes and drop the transaction.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Discard the changes and drop the transaction.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_started</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Transaction not started&quot;</span><span class="p">)</span>
     <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">session</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
@@ -3930,7 +3930,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
 <span class="normal">685</span>
 <span class="normal">686</span>
 <span class="normal">687</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">commit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Commit the changes and close the transaction.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Commit the changes and close the transaction.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_started</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Transaction not started&quot;</span><span class="p">)</span>
     <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">session</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
@@ -3965,7 +3965,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
 <span class="normal">665</span>
 <span class="normal">666</span>
 <span class="normal">667</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_driver_session</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ClientSession</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Return the underlying PyMongo Session&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the underlying PyMongo Session&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_started</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;transaction not started&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get_driver_session</span><span class="p">()</span>
@@ -4000,7 +4000,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
 <span class="normal">675</span>
 <span class="normal">676</span>
 <span class="normal">677</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Initiate the transaction.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initiate the transaction.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_started</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Transaction already started&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session_provided</span><span class="p">:</span>
@@ -4219,7 +4219,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
         <span class="n">skip</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
         <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ODMEngine</span><span class="o">.</span><span class="n">SyncCursor</span><span class="p">[</span><span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Search for Model instances matching the query filter provided</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Search for Model instances matching the query filter provided</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            model: model to perform the operation on</span>
@@ -4249,7 +4249,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
         <span class="p">],</span>  <span class="c1"># bool: allow using binary operators w/o plugin</span>
         <span class="n">sort</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Search for a Model instance matching the query filter provided</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Search for a Model instance matching the query filter provided</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            model: model to perform the operation on</span>
@@ -4275,7 +4275,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
         <span class="n">model</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">],</span>
         <span class="o">*</span><span class="n">queries</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">QueryExpression</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="nb">bool</span><span class="p">],</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Get the count of documents matching a query</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the count of documents matching a query</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            model: model to perform the operation on</span>
@@ -4292,7 +4292,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">instance</span><span class="p">:</span> <span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Persist an instance to the database</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Persist an instance to the database</span>
 
 <span class="sd">        This method behaves as an &#39;upsert&#39; operation. If a document already exists</span>
 <span class="sd">        with the same primary key, it will be overwritten.</span>
@@ -4315,7 +4315,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">instances</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">],</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Persist instances to the database</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Persist instances to the database</span>
 
 <span class="sd">        This method behaves as multiple &#39;upsert&#39; operations. If one of the document</span>
 <span class="sd">        already exists with the same primary key, it will be overwritten.</span>
@@ -4339,7 +4339,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">instance</span><span class="p">:</span> <span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Delete an instance from the database</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete an instance from the database</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            instance: the instance to delete</span>
@@ -4360,7 +4360,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
         <span class="o">*</span><span class="n">queries</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">QueryExpression</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="nb">bool</span><span class="p">],</span>
         <span class="n">just_one</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Delete Model instances matching the query filter provided</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete Model instances matching the query filter provided</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            model: model to perform the operation on</span>
@@ -4478,7 +4478,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
     <span class="n">model</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">],</span>
     <span class="o">*</span><span class="n">queries</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">QueryExpression</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="nb">bool</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Get the count of documents matching a query</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the count of documents matching a query</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        model: model to perform the operation on</span>
@@ -4579,7 +4579,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">instance</span><span class="p">:</span> <span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Delete an instance from the database</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Delete an instance from the database</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        instance: the instance to delete</span>
@@ -4737,7 +4737,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
     <span class="n">skip</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
     <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ODMEngine</span><span class="o">.</span><span class="n">SyncCursor</span><span class="p">[</span><span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Search for Model instances matching the query filter provided</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Search for Model instances matching the query filter provided</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        model: model to perform the operation on</span>
@@ -4898,7 +4898,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
     <span class="p">],</span>  <span class="c1"># bool: allow using binary operators w/o plugin</span>
     <span class="n">sort</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Search for a Model instance matching the query filter provided</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Search for a Model instance matching the query filter provided</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        model: model to perform the operation on</span>
@@ -5027,7 +5027,7 @@ replicaSet or a sharded cluster with replication enabled.</p>
     <span class="o">*</span><span class="n">queries</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">QueryExpression</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="nb">bool</span><span class="p">],</span>
     <span class="n">just_one</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Delete Model instances matching the query filter provided</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Delete Model instances matching the query filter provided</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        model: model to perform the operation on</span>
@@ -5138,7 +5138,7 @@ the instance is still returned for convenience.</p>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">instance</span><span class="p">:</span> <span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Persist an instance to the database</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Persist an instance to the database</span>
 
 <span class="sd">    This method behaves as an &#39;upsert&#39; operation. If a document already exists</span>
 <span class="sd">    with the same primary key, it will be overwritten.</span>
@@ -5255,7 +5255,7 @@ instances are still returned for convenience.</p>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">instances</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ODMEngine</span><span class="o">.</span><span class="n">ModelType</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Persist instances to the database</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Persist instances to the database</span>
 
 <span class="sd">    This method behaves as multiple &#39;upsert&#39; operations. If one of the document</span>
 <span class="sd">    already exists with the same primary key, it will be overwritten.</span>

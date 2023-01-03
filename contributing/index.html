@@ -830,25 +830,25 @@ VSCode.</p>
 <div class="admonition tip">
 <p class="admonition-title">Installing python based development tools</p>
 <p>In order to install the devtools written in python, it's recommended to use <a href="https://pipxproject.github.io/pipx/" target="blank_">pipx</a>.</p>
-<div class="highlight"><pre><span></span><code>python3 -m pip install --user pipx
-python3 -m pipx ensurepath
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span>pipx
+python3<span class="w"> </span>-m<span class="w"> </span>pipx<span class="w"> </span>ensurepath
 </code></pre></div>
 </div>
 <ul>
 <li>
 <p><a href="https://flit.pypa.io/en/latest/" target="blank_">flit</a>: packaging system and dependency
   manager
-  <div class="highlight"><pre><span></span><code>pipx install flit
+  <div class="highlight"><pre><span></span><code>pipx<span class="w"> </span>install<span class="w"> </span>flit
 </code></pre></div></p>
 </li>
 <li>
 <p><a href="https://tox.readthedocs.io/en/latest/" target="blank_">tox</a>: multi-environment test runner
-  <div class="highlight"><pre><span></span><code>pipx install tox
+  <div class="highlight"><pre><span></span><code>pipx<span class="w"> </span>install<span class="w"> </span>tox
 </code></pre></div></p>
 </li>
 <li>
 <p><a href="https://pre-commit.com/" target="blank_">pre-commit</a>: pre commit hook manager
-  <div class="highlight"><pre><span></span><code>pipx install pre-commit
+  <div class="highlight"><pre><span></span><code>pipx<span class="w"> </span>install<span class="w"> </span>pre-commit
 </code></pre></div></p>
 </li>
 </ul>
@@ -859,15 +859,15 @@ install them manually.</p>
 <p>You can use <a href="https://github.com/pyenv/pyenv" target="blank_">pyenv</a> to
  install them easily.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Install the versions</span>
-pyenv install <span class="s2">&quot;3.7.9&quot;</span>
-pyenv install <span class="s2">&quot;3.8.9&quot;</span>
-pyenv install <span class="s2">&quot;3.9.0&quot;</span>
+pyenv<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;3.7.9&quot;</span>
+pyenv<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;3.8.9&quot;</span>
+pyenv<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;3.9.0&quot;</span>
 <span class="c1"># Make the versions available locally in the project</span>
-pyenv <span class="nb">local</span> <span class="m">3</span>.8.6 <span class="m">3</span>.7.9 <span class="m">3</span>.9.0
+pyenv<span class="w"> </span><span class="nb">local</span><span class="w"> </span><span class="m">3</span>.8.6<span class="w"> </span><span class="m">3</span>.7.9<span class="w"> </span><span class="m">3</span>.9.0
 </code></pre></div>
 </div>
 <h4 id="configuring-the-local-environment">Configuring the local environment<a class="headerlink" href="#configuring-the-local-environment" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>task setup
+<div class="highlight"><pre><span></span><code>task<span class="w"> </span>setup
 </code></pre></div>
 <h3 id="running-development-tasks">Running development tasks<a class="headerlink" href="#running-development-tasks" title="Permanent link">&para;</a></h3>
 <p>The following tasks are available for the project:</p>

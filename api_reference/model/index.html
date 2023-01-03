@@ -792,8 +792,7 @@
 
         <details class="quote">
           <summary>Source code in <code>odmantic/model.py</code></summary>
-          <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">503</span>
-<span class="normal">504</span>
+          <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">504</span>
 <span class="normal">505</span>
 <span class="normal">506</span>
 <span class="normal">507</span>
@@ -1178,8 +1177,9 @@
 <span class="normal">886</span>
 <span class="normal">887</span>
 <span class="normal">888</span>
-<span class="normal">889</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">_BaseODMModel</span><span class="p">(</span><span class="n">pydantic</span><span class="o">.</span><span class="n">BaseModel</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Base class for [Model][odmantic.model.Model] and</span>
+<span class="normal">889</span>
+<span class="normal">890</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">_BaseODMModel</span><span class="p">(</span><span class="n">pydantic</span><span class="o">.</span><span class="n">BaseModel</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for [Model][odmantic.model.Model] and</span>
 <span class="sd">    [EmbeddedModel][odmantic.model.EmbeddedModel].</span>
 
 <span class="sd">    !!! warning</span>
@@ -1228,7 +1228,7 @@
         <span class="n">update</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;DictStrAny&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">deep</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseT</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Duplicate a model, optionally choose which fields to include, exclude and</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Duplicate a model, optionally choose which fields to include, exclude and</span>
 <span class="sd">        change.</span>
 
 <span class="sd">        Danger:</span>
@@ -1257,7 +1257,7 @@
         <span class="k">return</span> <span class="n">copied</span>
 
     <span class="k">def</span> <span class="nf">_post_copy_update</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">BaseT</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Recursively update internal fields of the copied model after it has been</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Recursively update internal fields of the copied model after it has been</span>
 <span class="sd">        copied.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;__fields_modified__&quot;</span><span class="p">,</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__fields__</span><span class="p">))</span>
@@ -1276,7 +1276,7 @@
         <span class="n">exclude_defaults</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">exclude_none</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Update instance fields from a Pydantic model or a dictionary.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update instance fields from a Pydantic model or a dictionary.</span>
 
 <span class="sd">        If a pydantic model is provided, only the **fields set** will be</span>
 <span class="sd">        applied by default.</span>
@@ -1345,7 +1345,7 @@
         <span class="n">exclude_none</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">by_alias</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>  <span class="c1"># FIXME when aliases are supported</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;DictStrAny&quot;</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Generate a dictionary representation of the model, optionally specifying</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate a dictionary representation of the model, optionally specifying</span>
 <span class="sd">        which fields to include or exclude.</span>
 
 <span class="sd">        Args:</span>
@@ -1409,7 +1409,7 @@
         <span class="k">return</span> <span class="n">doc</span>
 
     <span class="k">def</span> <span class="nf">doc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">include</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;AbstractSetIntStr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Generate a document representation of the instance (as a dictionary).</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate a document representation of the instance (as a dictionary).</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            include: field that should be included; if None, every fields will be</span>
@@ -1424,7 +1424,7 @@
 
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">parse_doc</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">BaseT</span><span class="p">],</span> <span class="n">raw_doc</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseT</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Parse a BSON document into an instance of the Model</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parse a BSON document into an instance of the Model</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            raw_doc: document to parse (as Dict)</span>
@@ -1660,8 +1660,7 @@
 
       <details class="quote">
         <summary>Source code in <code>odmantic/model.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">747</span>
-<span class="normal">748</span>
+        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">748</span>
 <span class="normal">749</span>
 <span class="normal">750</span>
 <span class="normal">751</span>
@@ -1689,9 +1688,10 @@
 <span class="normal">773</span>
 <span class="normal">774</span>
 <span class="normal">775</span>
-<span class="normal">776</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="normal">776</span>
+<span class="normal">777</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
 <span class="k">def</span> <span class="nf">parse_doc</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">BaseT</span><span class="p">],</span> <span class="n">raw_doc</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseT</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Parse a BSON document into an instance of the Model</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse a BSON document into an instance of the Model</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        raw_doc: document to parse (as Dict)</span>
@@ -1784,8 +1784,7 @@ included</p></td>
 
       <details class="quote">
         <summary>Source code in <code>odmantic/model.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">733</span>
-<span class="normal">734</span>
+        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">734</span>
 <span class="normal">735</span>
 <span class="normal">736</span>
 <span class="normal">737</span>
@@ -1796,8 +1795,9 @@ included</p></td>
 <span class="normal">742</span>
 <span class="normal">743</span>
 <span class="normal">744</span>
-<span class="normal">745</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">doc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">include</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;AbstractSetIntStr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Generate a document representation of the instance (as a dictionary).</span>
+<span class="normal">745</span>
+<span class="normal">746</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">doc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">include</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;AbstractSetIntStr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a document representation of the instance (as a dictionary).</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        include: field that should be included; if None, every fields will be</span>
@@ -1933,8 +1933,7 @@ value in the patch object (only applies to Pydantic models)</p></td>
 
       <details class="quote">
         <summary>Source code in <code>odmantic/model.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">591</span>
-<span class="normal">592</span>
+        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">592</span>
 <span class="normal">593</span>
 <span class="normal">594</span>
 <span class="normal">595</span>
@@ -1996,7 +1995,8 @@ value in the patch object (only applies to Pydantic models)</p></td>
 <span class="normal">651</span>
 <span class="normal">652</span>
 <span class="normal">653</span>
-<span class="normal">654</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">update</span><span class="p">(</span>
+<span class="normal">654</span>
+<span class="normal">655</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">update</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">patch_object</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">BaseModel</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
     <span class="o">*</span><span class="p">,</span>
@@ -2006,7 +2006,7 @@ value in the patch object (only applies to Pydantic models)</p></td>
     <span class="n">exclude_defaults</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">exclude_none</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Update instance fields from a Pydantic model or a dictionary.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Update instance fields from a Pydantic model or a dictionary.</span>
 
 <span class="sd">    If a pydantic model is provided, only the **fields set** will be</span>
 <span class="sd">    applied by default.</span>
@@ -2166,8 +2166,7 @@ not filtering the update object.</p>
 
       <details class="quote">
         <summary>Source code in <code>odmantic/model.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">545</span>
-<span class="normal">546</span>
+        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">546</span>
 <span class="normal">547</span>
 <span class="normal">548</span>
 <span class="normal">549</span>
@@ -2200,7 +2199,8 @@ not filtering the update object.</p>
 <span class="normal">576</span>
 <span class="normal">577</span>
 <span class="normal">578</span>
-<span class="normal">579</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">copy</span><span class="p">(</span>
+<span class="normal">579</span>
+<span class="normal">580</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">copy</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">:</span> <span class="n">BaseT</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">include</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;AbstractSetIntStr&quot;</span><span class="p">,</span> <span class="s2">&quot;MappingIntStrAny&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -2208,7 +2208,7 @@ not filtering the update object.</p>
     <span class="n">update</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;DictStrAny&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">deep</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseT</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Duplicate a model, optionally choose which fields to include, exclude and</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Duplicate a model, optionally choose which fields to include, exclude and</span>
 <span class="sd">    change.</span>
 
 <span class="sd">    Danger:</span>
@@ -2351,8 +2351,7 @@ value</p></td>
 
       <details class="quote">
         <summary>Source code in <code>odmantic/model.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">660</span>
-<span class="normal">661</span>
+        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">661</span>
 <span class="normal">662</span>
 <span class="normal">663</span>
 <span class="normal">664</span>
@@ -2382,7 +2381,8 @@ value</p></td>
 <span class="normal">688</span>
 <span class="normal">689</span>
 <span class="normal">690</span>
-<span class="normal">691</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">dict</span><span class="p">(</span>  <span class="c1"># type: ignore # Missing deprecated/ unsupported parameters</span>
+<span class="normal">691</span>
+<span class="normal">692</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">dict</span><span class="p">(</span>  <span class="c1"># type: ignore # Missing deprecated/ unsupported parameters</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">include</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="s2">&quot;AbstractSetIntStr&quot;</span><span class="p">,</span> <span class="s2">&quot;MappingIntStrAny&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># type: ignore</span>
@@ -2392,7 +2392,7 @@ value</p></td>
     <span class="n">exclude_none</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">by_alias</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>  <span class="c1"># FIXME when aliases are supported</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;DictStrAny&quot;</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Generate a dictionary representation of the model, optionally specifying</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a dictionary representation of the model, optionally specifying</span>
 <span class="sd">    which fields to include or exclude.</span>
 
 <span class="sd">    Args:</span>
@@ -2451,8 +2451,7 @@ name by setting the <code>__collection__</code> class variable in the model clas
 
         <details class="quote">
           <summary>Source code in <code>odmantic/model.py</code></summary>
-          <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">892</span>
-<span class="normal">893</span>
+          <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">893</span>
 <span class="normal">894</span>
 <span class="normal">895</span>
 <span class="normal">896</span>
@@ -2524,8 +2523,9 @@ name by setting the <code>__collection__</code> class variable in the model clas
 <span class="normal">962</span>
 <span class="normal">963</span>
 <span class="normal">964</span>
-<span class="normal">965</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">_BaseODMModel</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ModelMetaclass</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Class that can be extended to create an ODMantic Model.</span>
+<span class="normal">965</span>
+<span class="normal">966</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">_BaseODMModel</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ModelMetaclass</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class that can be extended to create an ODMantic Model.</span>
 
 <span class="sd">    Each model will be bound to a MongoDB collection. You can customize the collection</span>
 <span class="sd">    name by setting the `__collection__` class variable in the model classes.</span>
@@ -2644,13 +2644,13 @@ integrated in a regular ODMantic Model.</p>
 
         <details class="quote">
           <summary>Source code in <code>odmantic/model.py</code></summary>
-          <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">968</span>
-<span class="normal">969</span>
+          <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">969</span>
 <span class="normal">970</span>
 <span class="normal">971</span>
 <span class="normal">972</span>
-<span class="normal">973</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">EmbeddedModel</span><span class="p">(</span><span class="n">_BaseODMModel</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">EmbeddedModelMetaclass</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Class that can be extended to create an ODMantic Embedded Model.</span>
+<span class="normal">973</span>
+<span class="normal">974</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">EmbeddedModel</span><span class="p">(</span><span class="n">_BaseODMModel</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">EmbeddedModelMetaclass</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class that can be extended to create an ODMantic Embedded Model.</span>
 
 <span class="sd">    An embedded document cannot be persisted directly to the database but should be</span>
 <span class="sd">    integrated in a regular ODMantic Model.</span>

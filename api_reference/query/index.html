@@ -961,7 +961,7 @@ to avoid python operator precedence issues.</p>
 <span class="normal">32</span>
 <span class="normal">33</span>
 <span class="normal">34</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">QueryExpression</span><span class="p">(</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
-    <span class="sd">&quot;&quot;&quot;Base object used to build queries.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base object used to build queries.</span>
 
 <span class="sd">    All comparison and logical operators returns `QueryExpression` objects.</span>
 
@@ -1027,7 +1027,7 @@ to avoid python operator precedence issues.</p>
         <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">40</span>
 <span class="normal">41</span>
 <span class="normal">42</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">and_</span><span class="p">(</span><span class="o">*</span><span class="n">elements</span><span class="p">:</span> <span class="n">QueryDictBool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QueryExpression</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Logical **AND** operation between multiple `QueryExpression` objects.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Logical **AND** operation between multiple `QueryExpression` objects.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">QueryExpression</span><span class="p">({</span><span class="s2">&quot;$and&quot;</span><span class="p">:</span> <span class="n">elements</span><span class="p">})</span>
 </code></pre></div></td></tr></table></div>
       </details>
@@ -1054,7 +1054,7 @@ to avoid python operator precedence issues.</p>
         <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">45</span>
 <span class="normal">46</span>
 <span class="normal">47</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">or_</span><span class="p">(</span><span class="o">*</span><span class="n">elements</span><span class="p">:</span> <span class="n">QueryDictBool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QueryExpression</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Logical **OR** operation between multiple `QueryExpression` objects.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Logical **OR** operation between multiple `QueryExpression` objects.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">QueryExpression</span><span class="p">({</span><span class="s2">&quot;$or&quot;</span><span class="p">:</span> <span class="n">elements</span><span class="p">})</span>
 </code></pre></div></td></tr></table></div>
       </details>
@@ -1081,7 +1081,7 @@ to avoid python operator precedence issues.</p>
         <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">50</span>
 <span class="normal">51</span>
 <span class="normal">52</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">nor_</span><span class="p">(</span><span class="o">*</span><span class="n">elements</span><span class="p">:</span> <span class="n">QueryDictBool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QueryExpression</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Logical **NOR** operation between multiple `QueryExpression` objects.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Logical **NOR** operation between multiple `QueryExpression` objects.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">QueryExpression</span><span class="p">({</span><span class="s2">&quot;$nor&quot;</span><span class="p">:</span> <span class="n">elements</span><span class="p">})</span>
 </code></pre></div></td></tr></table></div>
       </details>
@@ -1109,7 +1109,7 @@ to avoid python operator precedence issues.</p>
         <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">71</span>
 <span class="normal">72</span>
 <span class="normal">73</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">eq</span><span class="p">(</span><span class="n">field</span><span class="p">:</span> <span class="n">FieldProxyAny</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QueryExpression</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Equality comparison operator.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Equality comparison operator.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">_cmp_expression</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="s2">&quot;$eq&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
       </details>
@@ -1136,7 +1136,7 @@ to avoid python operator precedence issues.</p>
         <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">76</span>
 <span class="normal">77</span>
 <span class="normal">78</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">ne</span><span class="p">(</span><span class="n">field</span><span class="p">:</span> <span class="n">FieldProxyAny</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QueryExpression</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Inequality comparison operator (includes documents not containing the field).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Inequality comparison operator (includes documents not containing the field).&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">_cmp_expression</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="s2">&quot;$ne&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
       </details>
@@ -1163,7 +1163,7 @@ to avoid python operator precedence issues.</p>
         <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">81</span>
 <span class="normal">82</span>
 <span class="normal">83</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">gt</span><span class="p">(</span><span class="n">field</span><span class="p">:</span> <span class="n">FieldProxyAny</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QueryExpression</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Greater than (strict) comparison operator (i.e. &gt;).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Greater than (strict) comparison operator (i.e. &gt;).&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">_cmp_expression</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="s2">&quot;$gt&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
       </details>
@@ -1190,7 +1190,7 @@ to avoid python operator precedence issues.</p>
         <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">86</span>
 <span class="normal">87</span>
 <span class="normal">88</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">gte</span><span class="p">(</span><span class="n">field</span><span class="p">:</span> <span class="n">FieldProxyAny</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QueryExpression</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Greater than or equal comparison operator (i.e. &gt;=).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Greater than or equal comparison operator (i.e. &gt;=).&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">_cmp_expression</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="s2">&quot;$gte&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
       </details>
@@ -1217,7 +1217,7 @@ to avoid python operator precedence issues.</p>
         <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">91</span>
 <span class="normal">92</span>
 <span class="normal">93</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">lt</span><span class="p">(</span><span class="n">field</span><span class="p">:</span> <span class="n">FieldProxyAny</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QueryExpression</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Less than (strict) comparison operator (i.e. &lt;).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Less than (strict) comparison operator (i.e. &lt;).&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">_cmp_expression</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="s2">&quot;$lt&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
       </details>
@@ -1244,7 +1244,7 @@ to avoid python operator precedence issues.</p>
         <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">96</span>
 <span class="normal">97</span>
 <span class="normal">98</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">lte</span><span class="p">(</span><span class="n">field</span><span class="p">:</span> <span class="n">FieldProxyAny</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QueryExpression</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Less than or equal comparison operator (i.e. &lt;=).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Less than or equal comparison operator (i.e. &lt;=).&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">_cmp_expression</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="s2">&quot;$lte&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
       </details>
@@ -1271,7 +1271,7 @@ to avoid python operator precedence issues.</p>
         <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">101</span>
 <span class="normal">102</span>
 <span class="normal">103</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">in_</span><span class="p">(</span><span class="n">field</span><span class="p">:</span> <span class="n">FieldProxyAny</span><span class="p">,</span> <span class="n">sequence</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QueryExpression</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Select instances where `field` is contained in `sequence`.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Select instances where `field` is contained in `sequence`.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">_cmp_expression</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="s2">&quot;$in&quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">sequence</span><span class="p">))</span>
 </code></pre></div></td></tr></table></div>
       </details>
@@ -1298,7 +1298,7 @@ to avoid python operator precedence issues.</p>
         <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">106</span>
 <span class="normal">107</span>
 <span class="normal">108</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">not_in</span><span class="p">(</span><span class="n">field</span><span class="p">:</span> <span class="n">FieldProxyAny</span><span class="p">,</span> <span class="n">sequence</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QueryExpression</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Select instances where `field` is **not** contained in `sequence`.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Select instances where `field` is **not** contained in `sequence`.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">_cmp_expression</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="s2">&quot;$nin&quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">sequence</span><span class="p">))</span>
 </code></pre></div></td></tr></table></div>
       </details>
@@ -1331,7 +1331,7 @@ to avoid python operator precedence issues.</p>
 <span class="normal">117</span>
 <span class="normal">118</span>
 <span class="normal">119</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">match</span><span class="p">(</span><span class="n">field</span><span class="p">:</span> <span class="n">FieldProxyAny</span><span class="p">,</span> <span class="n">pattern</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Pattern</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">QueryExpression</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Select instances where `field` matches the `pattern` regular expression.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Select instances where `field` matches the `pattern` regular expression.&quot;&quot;&quot;</span>
     <span class="c1"># FIXME might create incompatibilities</span>
     <span class="c1"># https://docs.mongodb.com/manual/reference/operator/query/regex/#regex-and-not</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -1375,7 +1375,7 @@ to avoid python operator precedence issues.</p>
 <span class="normal">127</span>
 <span class="normal">128</span>
 <span class="normal">129</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">SortExpression</span><span class="p">(</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Literal</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]):</span>
-    <span class="sd">&quot;&quot;&quot;Base object used to build sort queries.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base object used to build sort queries.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="n">parent_repr</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span>
@@ -1424,7 +1424,7 @@ to avoid python operator precedence issues.</p>
         <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">138</span>
 <span class="normal">139</span>
 <span class="normal">140</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">asc</span><span class="p">(</span><span class="n">field</span><span class="p">:</span> <span class="n">FieldProxyAny</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SortExpression</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Sort by ascending `field`.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Sort by ascending `field`.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">_build_sort_expression</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
       </details>
@@ -1451,7 +1451,7 @@ to avoid python operator precedence issues.</p>
         <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">143</span>
 <span class="normal">144</span>
 <span class="normal">145</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="n">field</span><span class="p">:</span> <span class="n">FieldProxyAny</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SortExpression</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Sort by descending `field`.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Sort by descending `field`.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">_build_sort_expression</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
       </details>

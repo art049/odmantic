@@ -1078,7 +1078,7 @@ some errors with type checkers.</p>
 </span><span class="c1">#&gt; QueryExpression({&#39;name&#39;: {&#39;$eq&#39;: &#39;Spruce&#39;}})</span>
 </code></pre></div></td></tr></table></div>
 Equivalent raw MongoDB filter:
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Spruce&quot;</span><span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Spruce&quot;</span><span class="p">}</span>
 </code></pre></div></p>
 <div class="admonition tip">
 <p class="admonition-title">Using equality operators with Enum fields</p>
@@ -1131,7 +1131,7 @@ Equivalent raw MongoDB filter:
 </span><span class="c1">#&gt; QueryExpression({&#39;kind&#39;: {&#39;$eq&#39;: &#39;small&#39;}})</span>
 </code></pre></div></td></tr></table></div>
 Equivalent raw MongoDB filter:
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="err">&#39;ki</span><span class="kc">n</span><span class="err">d&#39;</span><span class="p">:</span><span class="w"> </span><span class="err">&#39;small&#39;</span><span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="err">&#39;ki</span><span class="kc">n</span><span class="err">d&#39;</span><span class="p">:</span><span class="w"> </span><span class="err">&#39;small&#39;</span><span class="p">}</span>
 </code></pre></div></p>
 </details>
 <p><a href="../fields/#enum-fields">More details</a> about Enum fields.</p>
@@ -1167,7 +1167,7 @@ Equivalent raw MongoDB filter:
 </span><span class="c1">#&gt; QueryExpression({&#39;name&#39;: {&#39;$ne&#39;: &#39;Spruce&#39;}})</span>
 </code></pre></div></td></tr></table></div>
 Equivalent raw MongoDB filter:
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;$ne&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Spruce&quot;</span><span class="p">}}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;$ne&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Spruce&quot;</span><span class="p">}}</span>
 </code></pre></div></p>
 <h4 id="less-than-or-equal-to">Less than (or equal to)<a class="headerlink" href="#less-than-or-equal-to" title="Permanent link">&para;</a></h4>
 <p>Filter the trees that have a size that is less than (or equal to) 2:
@@ -1214,10 +1214,10 @@ Equivalent raw MongoDB filter:
 </span><span class="c1">#&gt; QueryExpression({&#39;average_size&#39;: {&#39;$lte&#39;: 2}})</span>
 </code></pre></div></td></tr></table></div>
 Equivalent raw MongoDB filter (less than):
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;average_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;$lt&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">}}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;average_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;$lt&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">}}</span>
 </code></pre></div>
 Equivalent raw MongoDB filter (less than or equal to):
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;average_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;$lte&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">}}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;average_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;$lte&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">}}</span>
 </code></pre></div></p>
 <h4 id="greater-than-or-equal-to">Greater than (or equal to)<a class="headerlink" href="#greater-than-or-equal-to" title="Permanent link">&para;</a></h4>
 <p>Filter the trees having a size that is greater than (or equal to) 2:
@@ -1264,10 +1264,10 @@ Equivalent raw MongoDB filter (less than or equal to):
 </span><span class="c1">#&gt; QueryExpression({&#39;average_size&#39;: {&#39;$gte&#39;: 2}})</span>
 </code></pre></div></td></tr></table></div>
 Equivalent raw MongoDB filter (greater than):
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;average_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;$gt&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">}}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;average_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;$gt&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">}}</span>
 </code></pre></div>
 Equivalent raw MongoDB filter (greater than or equal to):
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;average_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;$gte&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">}}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;average_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;$gte&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">}}</span>
 </code></pre></div></p>
 <h4 id="included-in">Included in<a class="headerlink" href="#included-in" title="Permanent link">&para;</a></h4>
 <p>Filter the trees named either "Spruce" or "Pine":
@@ -1296,7 +1296,7 @@ Equivalent raw MongoDB filter (greater than or equal to):
 </span><span class="c1">#&gt; QueryExpression({&#39;name&#39;: {&#39;$in&#39;: [&#39;Spruce&#39;, &#39;Pine&#39;]}})</span>
 </code></pre></div></td></tr></table></div>
 Equivalent raw MongoDB filter:
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;$in&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Spruce&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Pine&quot;</span><span class="p">]}}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;$in&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Spruce&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Pine&quot;</span><span class="p">]}}</span>
 </code></pre></div></p>
 <h4 id="not-included-in">Not included in<a class="headerlink" href="#not-included-in" title="Permanent link">&para;</a></h4>
 <p>Filter the trees neither named "Spruce" nor "Pine":
@@ -1325,7 +1325,7 @@ Equivalent raw MongoDB filter:
 </span><span class="c1">#&gt; QueryExpression({&#39;name&#39;: {&#39;$nin&#39;: [&#39;Spruce&#39;, &#39;Pine&#39;]}})</span>
 </code></pre></div></td></tr></table></div></p>
 <p>Equivalent raw MongoDB filter:
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;$nin&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Spruce&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Pine&quot;</span><span class="p">]}}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;$nin&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Spruce&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Pine&quot;</span><span class="p">]}}</span>
 </code></pre></div></p>
 <h3 id="evaluation-operators">Evaluation operators<a class="headerlink" href="#evaluation-operators" title="Permanent link">&para;</a></h3>
 <h4 id="match-regex">Match (Regex)<a class="headerlink" href="#match-regex" title="Permanent link">&para;</a></h4>
@@ -1353,7 +1353,7 @@ Equivalent raw MongoDB filter:
 </span><span class="c1">#&gt; QueryExpression({&#39;name&#39;: re.compile(&#39;^Spruce&#39;)})</span>
 </code></pre></div></td></tr></table></div></p>
 <p>Equivalent raw MongoDB filter:
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;$regex&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;^Spruce&quot;</span><span class="p">}}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;$regex&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;^Spruce&quot;</span><span class="p">}}</span>
 </code></pre></div></p>
 <h3 id="logical-operators">Logical operators<a class="headerlink" href="#logical-operators" title="Permanent link">&para;</a></h3>
 <p>There are two ways of combining <a class="autorefs autorefs-internal" href="../api_reference/query/#odmantic.query.QueryExpression">QueryExpression</a>
@@ -1420,7 +1420,7 @@ to avoid python operator precedence issues.</p>
 </span><span class="c1">#&gt; ... same output ...</span>
 </code></pre></div></td></tr></table></div>
 Equivalent raw MongoDB filter:
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Spruce&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;$lte&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">}}}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Spruce&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;$lte&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">}}}</span>
 </code></pre></div></p>
 <div class="admonition tip">
 <p class="admonition-title">Implicit AND</p>
@@ -1470,12 +1470,12 @@ positional arguments and those will be implicitly combined with the <code>AND</c
 </span><span class="c1">#&gt; ... same output ...</span>
 </code></pre></div></td></tr></table></div>
 Equivalent raw MongoDB filter:
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;$or&quot;</span><span class="p">:[</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;Spruce&quot;</span><span class="p">},</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="nt">&quot;size&quot;</span><span class="p">:{</span><span class="nt">&quot;$gt&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">}}</span><span class="w"></span>
-<span class="w">  </span><span class="p">]</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;$or&quot;</span><span class="p">:[</span>
+<span class="w">    </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;Spruce&quot;</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="nt">&quot;size&quot;</span><span class="p">:{</span><span class="nt">&quot;$gt&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">}}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
 </code></pre></div></p>
 <h4 id="nor">Nor<a class="headerlink" href="#nor" title="Permanent link">&para;</a></h4>
 <p>Filter the trees neither named Spruce <strong>NOR</strong> bigger than 2 (size):
@@ -1514,12 +1514,12 @@ Equivalent raw MongoDB filter:
 <span class="c1"># &gt; )</span>
 </code></pre></div></td></tr></table></div>
 Equivalent raw MongoDB filter:
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;$nor&quot;</span><span class="p">:[</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;Spruce&quot;</span><span class="p">},</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="nt">&quot;size&quot;</span><span class="p">:{</span><span class="nt">&quot;$gt&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">}}</span><span class="w"></span>
-<span class="w">  </span><span class="p">]</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;$nor&quot;</span><span class="p">:[</span>
+<span class="w">    </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;Spruce&quot;</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="nt">&quot;size&quot;</span><span class="p">:{</span><span class="nt">&quot;$gt&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">}}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
 </code></pre></div></p>
 <div class="admonition tip">
 <p class="admonition-title">NOR Equivalence</p>
@@ -1575,9 +1575,9 @@ While it could've been possible to name the NOR operator query.nor, the extra un
 </span><span class="c1">#&gt; QueryExpression({&#39;capital_city.population&#39;: {&#39;$gt&#39;: 1000000}})</span>
 </code></pre></div></td></tr></table></div>
 Equivalent raw MongoDB filters:
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;capital_city.name&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;$eq&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Paris&quot;</span><span class="p">}}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;capital_city.name&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;$eq&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Paris&quot;</span><span class="p">}}</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;capital_city.population&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;$gt&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1000000</span><span class="p">}}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;capital_city.population&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;$gt&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1000000</span><span class="p">}}</span>
 </code></pre></div></p>
 <div class="admonition warning">
 <p class="admonition-title">Filtering across References</p>
