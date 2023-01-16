@@ -389,6 +389,27 @@ def test_model_copy_deep_embedded_mutability():
     assert instance.e.f.g != copied.e.f.g
 
 
+@pytest.mark.parametrize(
+    "hint, ctor",
+    [
+        pytest.param(List, list),
+        pytest.param(Tuple, tuple),
+    ],
+)
+def test_model_copy_deep_embedded_model_collection(hint, ctor):
+    class E(EmbeddedModel):
+        f: int
+
+    class M(Model):
+        e: hint[E]
+
+    instance = M(e=ctor([E(f=1)]))
+    copied = instance.copy(deep=True)
+    copied.e[0].f = 2
+
+    assert copied.e[0].f != instance.e[0].f
+
+
 def test_model_copy_not_deep_embedded():
     class E(EmbeddedModel):
         f: int
