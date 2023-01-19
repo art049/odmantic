@@ -27,6 +27,7 @@ from odmantic import ObjectId as ODMObjectId
 from odmantic.field import Field
 from odmantic.model import EmbeddedModel, Model
 from odmantic.reference import Reference
+from odmantic.typing import Literal
 
 
 class TheClassName(Model):
@@ -541,3 +542,25 @@ def test_model_definition_with_new_generics(get_type: Callable, value: Any):
         f: get_type()  # type: ignore # 3.9 + syntax
 
     assert M(f=value).f == value
+
+
+def test_model_definition_with_literal():
+    class M(Model):
+        f: Literal["a", "b", "c"]  # noqa: F821
+
+    assert M(f="a").f == "a"
+
+
+def test_model_definition_with_literal_fail():
+    class M(Model):
+        f: Literal["a", "b", "c"]  # noqa: F821
+
+    with pytest.raises(ValidationError):
+        M(f="w")
+
+
+def test_model_definition_with_generic_literals():
+    class M(Model):
+        f: List[Literal["a", "b", "c"]]  # noqa: F821
+
+    assert M(f=["a", "c"]).f == ["a", "c"]
