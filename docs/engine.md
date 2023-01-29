@@ -12,6 +12,8 @@ In the previous examples, we created the engine using default parameters:
 
 It's possible to provide a custom client ([AsyncIOMotorClient](https://motor.readthedocs.io/en/stable/api-asyncio/asyncio_motor_client.html){:target=blank_} or [PyMongoClient](https://pymongo.readthedocs.io/en/stable/api/pymongo/mongo_client.html){:target=blank_}) to the engine constructor. In the same way, the database name can be changed using the `database` keyword argument.
 
+It is also possible to define the database [`codec_options`](https://pymongo.readthedocs.io/en/stable/api/bson/codec_options.html#module-bson.codec_options) to adjust some conversions, such as parsing _datetime_ information with timezone awareness (`pymongo` works with naive UTC `datetime.datetime` by default). 
+
 {{ async_sync_snippet("engine", "engine_creation.py") }}
 
 For additional information about the MongoDB connection strings, see [this

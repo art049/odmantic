@@ -18,6 +18,7 @@ from typing import (
     cast,
 )
 
+from bson import CodecOptions
 import pymongo
 from pymongo import MongoClient
 from pymongo.client_session import ClientSession
@@ -164,6 +165,7 @@ class BaseEngine:
         self,
         client: Union["AsyncIOMotorClient", "MongoClient"],
         database: str = "test",
+        codec_options: Optional[CodecOptions] = None,
     ):
         # https://docs.mongodb.com/manual/reference/limits/#naming-restrictions
         forbidden_characters = _FORBIDDEN_DATABASE_CHARACTERS.intersection(
@@ -175,7 +177,7 @@ class BaseEngine:
             )
         self.client = client
         self.database_name = database
-        self.database = client[self.database_name]
+        self.database = client.get_database(self.database_name, codec_options)
 
     @staticmethod
     def _build_query(*queries: Union[QueryExpression, Dict, bool]) -> QueryExpression:
@@ -304,6 +306,7 @@ class AIOEngine(BaseEngine):
         self,
         client: Union["AsyncIOMotorClient", None] = None,
         database: str = "test",
+        codec_options: Optional[CodecOptions] = None,
     ):
         """Engine constructor.
 
@@ -323,7 +326,7 @@ class AIOEngine(BaseEngine):
             )
         if client is None:
             client = AsyncIOMotorClient()
-        super().__init__(client=client, database=database)
+        super().__init__(client=client, database=database, codec_options=codec_options)
 
     def get_collection(self, model: Type[ModelType]) -> "AsyncIOMotorCollection":
         """Get the motor collection associated to a Model.
@@ -724,6 +727,7 @@ class SyncEngine(BaseEngine):
         self,
         client: "Union[MongoClient, None]" = None,
         database: str = "test",
+        codec_options: Optional[CodecOptions] = None,
     ):
         """Engine constructor.
 
@@ -734,7 +738,7 @@ class SyncEngine(BaseEngine):
         """
         if client is None:
             client = MongoClient()
-        super().__init__(client=client, database=database)
+        super().__init__(client=client, database=database, codec_options=codec_options)
 
     def get_collection(self, model: Type[ModelType]) -> "Collection":
         """Get the pymongo collection associated to a Model.
