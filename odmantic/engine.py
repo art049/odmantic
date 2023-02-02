@@ -570,7 +570,7 @@ class AIOEngine(BaseEngine):
         -->
         """
         if not isinstance(instance, Model):
-            raise TypeError("Can only call find_one with a Model class")
+            raise TypeError("Can only call save with a Model class")
         if session:
             await self._save(instance, self._get_session(session))
         else:
@@ -976,7 +976,7 @@ class SyncEngine(BaseEngine):
         -->
         """
         if not isinstance(instance, Model):
-            raise TypeError("Can only call find_one with a Model class")
+            raise TypeError("Can only call save with a Model class")
 
         if session:
             self._save(instance, self._get_session(session))  # type: ignore
