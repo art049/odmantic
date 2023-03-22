@@ -36,6 +36,7 @@ from pydantic.fields import Undefined
 from pydantic.main import BaseModel
 from pydantic.tools import parse_obj_as
 from pydantic.typing import is_classvar, resolve_annotations
+from pydantic.utils import smart_deepcopy
 
 from odmantic.bson import (
     _BSON_SUBSTITUTED_FIELDS,
@@ -43,7 +44,7 @@ from odmantic.bson import (
     ObjectId,
     _decimalDecimal,
 )
-from odmantic.config import BaseODMConfig, validate_config
+from odmantic.config import BaseODMConfig, combine_configs, validate_config
 from odmantic.exceptions import (
     DocumentParsingError,
     ErrorList,
@@ -65,7 +66,6 @@ from odmantic.field import (
 from odmantic.index import Index, ODMBaseIndex, ODMSingleFieldIndex
 from odmantic.reference import ODMReferenceInfo
 from odmantic.typing import (
-    GenericAlias,
     Literal,
     dataclass_transform,
     get_args,
@@ -180,26 +180,42 @@ def validate_type(type_: Type) -> Type:
     if subst_type is not None:
         return subst_type
 
-    type_origin: Optional[Type] = get_origin(type_)
-    if type_origin is not None and type_origin is not Literal:
-        type_args: Tuple[Type, ...] = get_args(type_)
-        new_arg_types = tuple(validate_type(subtype) for subtype in type_args)
-        type_ = GenericAlias(type_origin, new_arg_types)
+    if get_origin(type_) not in (None, Literal):
+        type_ = type_.copy_with(tuple(map(validate_type, get_args(type_))))
     return type_
 
 
 class BaseModelMetaclass(pydantic.main.ModelMetaclass):
     @staticmethod
-    def __validate_cls_namespace__(name: str, namespace: Dict) -> None:  # noqa C901
+    def __validate_cls_namespace__(  # noqa C901
+        name: str, bases: Tuple[type, ...], namespace: Dict
+    ) -> None:
         """Validate the class name space in place"""
         annotations = resolve_annotations(
             namespace.get("__annotations__", {}), namespace.get("__module__")
         )
-        config = validate_config(namespace.get("Config", BaseODMConfig), name)
         odm_fields: Dict[str, ODMBaseField] = {}
         references: List[str] = []
         bson_serialized_fields: Set[str] = set()
         mutable_fields: Set[str] = set()
+        base_configs: List[type] = [BaseODMConfig]
+        for base in reversed(bases):
+            if issubclass(base, _BaseODMModel) and base not in (Model, EmbeddedModel):
+                odm_fields.update(smart_deepcopy(base.__odm_fields__))
+                references.extend(base.__references__)
+                bson_serialized_fields.update(base.__bson_serialized_fields__)
+                mutable_fields.update(base.__mutable_fields__)
+                base_configs.append(base.Config)
+
+        # Ensure the namespace config is valid and combine it with the base configs
+        config = namespace.get("Config")
+        if config:
+            validate_config(config, name)
+            base_configs.append(config)
+        base_configs.reverse()
+        config = combine_configs(
+            *base_configs, validate_all=True, validate_assignment=True
+        )
 
         # Make sure all fields are defined with type annotation
         for field_name, value in namespace.items():
@@ -347,6 +363,8 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
         if duplicate_key is not None:
             raise TypeError(f"Duplicated key_name: {duplicate_key} in {name}")
 
+        # Avoid getting the docstrings from the parent classes
+        namespace.setdefault("__doc__", "")
         namespace["__annotations__"] = annotations
         namespace["__odm_fields__"] = odm_fields
         namespace["__references__"] = tuple(references)
@@ -369,21 +387,6 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
             "Model",
             "EmbeddedModel",
         )
-
-        if is_custom_cls:
-            # Handle calls from pydantic.main.create_model (used internally by FastAPI)
-            patched_bases = []
-            for b in bases:
-                if hasattr(b, "__pydantic_model__"):
-                    patched_bases.append(b.__pydantic_model__)
-                else:
-                    patched_bases.append(b)
-            bases = tuple(patched_bases)
-            # Nullify unset docstring (to avoid getting the docstrings from the parent
-            # classes)
-            if namespace.get("__doc__", None) is None:
-                namespace["__doc__"] = ""
-
         cls = super().__new__(mcs, name, bases, namespace, **kwargs)
 
         if is_custom_cls:
@@ -424,7 +427,7 @@ class ModelMetaclass(BaseModelMetaclass):
         if namespace.get("__module__") != "odmantic.model" and namespace.get(
             "__qualname__"
         ) not in ("_BaseODMModel", "Model"):
-            mcs.__validate_cls_namespace__(name, namespace)
+            mcs.__validate_cls_namespace__(name, bases, namespace)
             config: BaseODMConfig = namespace["Config"]
             primary_field: Optional[str] = None
             odm_fields: Dict[str, ODMBaseField] = namespace["__odm_fields__"]
@@ -487,7 +490,7 @@ class EmbeddedModelMetaclass(BaseModelMetaclass):
         if namespace.get("__module__") != "odmantic.model" and namespace.get(
             "__qualname__"
         ) not in ("_BaseODMModel", "EmbeddedModel"):
-            mcs.__validate_cls_namespace__(name, namespace)
+            mcs.__validate_cls_namespace__(name, bases, namespace)
             odm_fields: Dict[str, ODMBaseField] = namespace["__odm_fields__"]
             for field in odm_fields.values():
                 if isinstance(field, ODMField) and field.primary_field:

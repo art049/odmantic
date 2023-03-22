@@ -1,7 +1,7 @@
 import decimal
 import re
 from datetime import datetime, timedelta
-from typing import Any, Dict, Pattern
+from typing import Any, Dict, Pattern, Type
 
 import bson
 import bson.binary
@@ -10,6 +10,7 @@ import bson.int64
 import bson.regex
 from pydantic.datetime_parse import parse_datetime
 from pydantic.main import BaseModel
+from pydantic.typing import AnyCallable
 from pydantic.validators import (
     bytes_validator,
     decimal_validator,
@@ -179,7 +180,7 @@ class _decimalDecimal(decimal.Decimal):
         return bson.decimal128.Decimal128(v)
 
 
-BSON_TYPES_ENCODERS = {
+BSON_TYPES_ENCODERS: Dict[Type[Any], AnyCallable] = {
     bson.ObjectId: str,
     bson.decimal128.Decimal128: lambda x: x.to_decimal(),  # Convert to regular decimal
     bson.regex.Regex: lambda x: x.pattern,  # TODO: document no serialization of flags
