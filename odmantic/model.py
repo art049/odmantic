@@ -694,56 +694,6 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
             exclude_none=exclude_none,
         )
 
-    def __doc(
-        self,
-        raw_doc: Dict[str, Any],
-        model: Type["_BaseODMModel"],
-        include: Optional["AbstractSetIntStr"] = None,
-    ) -> Dict[str, Any]:
-        doc: Dict[str, Any] = {}
-        for field_name, field in model.__odm_fields__.items():
-            if include is None or field_name in include:
-                doc[field.key_name] = self.__doc_value(
-                    raw_doc[field_name], field_name, field, model
-                )
-
-        if model.Config.extra == "allow":
-            extras = set(raw_doc.keys()) - set(model.__odm_fields__.keys())
-            for extra in extras:
-                value = raw_doc[extra]
-                subst_type = validate_type(type(value))
-                bson_serialization_method = getattr(subst_type, "__bson__", lambda x: x)
-                doc[extra] = bson_serialization_method(raw_doc[extra])
-        return doc
-
-    def __doc_value(
-        self,
-        raw_value: Any,
-        field_name: str,
-        field: ODMBaseField,
-        model: Type["_BaseODMModel"],
-    ) -> Any:
-        if isinstance(field, ODMReference):
-            return raw_value[field.model.__primary_field__]
-        if isinstance(field, ODMEmbedded):
-            return self.__doc(raw_value, field.model)
-        if isinstance(field, ODMEmbeddedGeneric):
-            if field.generic_origin is dict:
-                return {
-                    item_key: self.__doc(item_value, field.model)
-                    for item_key, item_value in raw_value.items()
-                }
-            if field.generic_origin in (list, tuple, set):
-                return [self.__doc(item, field.model) for item in raw_value]
-            if field.generic_origin is Union:  # actually Optional
-                if raw_value is not None:
-                    return self.__doc(raw_value, field.model)
-                else:
-                    return raw_value
-        if field_name in model.__bson_serialized_fields__:
-            return model.__fields__[field_name].type_.__bson__(raw_value)
-        return raw_value
-
     def doc(self, include: Optional["AbstractSetIntStr"] = None) -> Dict[str, Any]:
         """Generate a document representation of the instance (as a dictionary).
 
@@ -754,9 +704,36 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         Returns:
             the document associated to the instance
         """
-        raw_doc = self.dict()
-        doc = self.__doc(raw_doc, type(self), include)
+        doc: Dict[str, Any] = {}
+        fields = self.__fields__
+        bson_serialized_fields = self.__bson_serialized_fields__
+        for field_name, field in self.__odm_fields__.items():
+            if include is None or field_name in include:
+                value = getattr(self, field_name)
+                if field_name in bson_serialized_fields:
+                    doc_value = fields[field_name].type_.__bson__(value)
+                elif isinstance(field, ODMReference):
+                    doc_value = getattr(value, value.__primary_field__)
+                else:
+                    doc_value = self.__doc_value(value)
+                doc[field.key_name] = doc_value
+
+        if self.Config.extra == "allow":
+            odm_field_names = self.__odm_fields__.keys()
+            for field_name, value in self:
+                if field_name not in odm_field_names:
+                    to_bson = getattr(validate_type(type(value)), "__bson__", None)
+                    if to_bson is not None:
+                        value = to_bson(value)
+                    doc[field_name] = value
         return doc
+
+    def __doc_value(self, value: Any) -> Any:
+        if isinstance(value, dict):
+            return {k: self.__doc_value(v) for k, v in value.items()}
+        if isinstance(value, (list, tuple, set)):
+            return list(map(self.__doc_value, value))
+        return value.doc() if isinstance(value, _BaseODMModel) else value
 
     @classmethod
     def parse_doc(cls: Type[BaseT], raw_doc: Dict) -> BaseT:
