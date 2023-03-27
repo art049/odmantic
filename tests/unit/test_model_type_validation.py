@@ -24,6 +24,7 @@ from odmantic.bson import (
     Regex,
 )
 from odmantic.model import EmbeddedModel, Model, is_type_mutable, validate_type
+from odmantic.typing import Literal
 
 
 @pytest.mark.parametrize("base, replacement", _BSON_SUBSTITUTED_FIELDS.items())
@@ -83,6 +84,7 @@ class DummyModel(Model):
         Tuple[int, str, bool],
         Tuple[int, ...],
         FrozenSet[int],
+        Literal["a", "b", "c"],
         Union[FrozenSet[int], Tuple[int, str]],
         DummyModel,
     ),
