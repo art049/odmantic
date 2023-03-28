@@ -33,9 +33,6 @@ option in the `Config` class.
     Now, when `CapitalCity` instances will be persisted to the database, they will
     belong in the `city` collection instead of `capital_city`.
 
-!!! warning
-    Models and Embedded models inheritance is not supported yet.
-
 ### Indexes
 
 #### Index definition
