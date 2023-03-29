@@ -44,7 +44,7 @@ dependencies = [
 [project.optional-dependencies]
 fastapi = ["fastapi >=0.61.1"]
 test = [
-    "black ~= 22.3.0",
+    "black >= 22.3,< 23.4",
     "isort ~=5.8.0",
     "ruff ~= 0.0.137",
     "mypy ~= 0.961",
