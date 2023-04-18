@@ -82,7 +82,6 @@ from odmantic.utils import (
 )
 
 if TYPE_CHECKING:
-
     from pydantic.typing import (
         AbstractSetIntStr,
         DictStrAny,
@@ -643,7 +642,35 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
                 if k not in odm_fields:
                     continue
                 patch_dict[k] = v
-        patched_instance_dict = {**self.dict(), **patch_dict}
+
+        def merge_dicts(d1, d2, exclude_none):
+            result = {}
+            for k in {**d1, **d2}:
+                if (
+                    isinstance(d1.get(k, None), dict)
+                    and isinstance(d2.get(k, None), dict)
+                ):
+                    result[k] = merge_dicts(d1[k], d2[k], exclude_none)
+                elif (
+                    isinstance(d1.get(k, None), list)
+                    and isinstance(d2.get(k, None), list)
+                ):
+                    result[k] = [
+                        merge_dicts(item1, item2, exclude_none)
+                        for item1, item2 in zip(d1[k], d2[k])
+                    ]
+                else:
+                    result[k] = (
+                        d2[k]
+                        if k in d2 and (not exclude_none or d2[k] is not None)
+                        else d1[k]
+                    )
+            return result
+
+        if exclude_none:
+            patched_instance_dict = merge_dicts(self.dict(), patch_dict, True)
+        else:
+            patched_instance_dict = {**self.dict(), **patch_dict}
         # FIXME: improve performance by only running updated field validators and then
         # model validators
         patched_instance = self.validate(patched_instance_dict)
