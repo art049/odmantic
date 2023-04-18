@@ -278,20 +278,6 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
                     key_name = field_name
                     index = False
                     unique = False
-                model = get_first_type_argument_subclassing(field_type, EmbeddedModel)
-                assert model is not None
-                if len(model.__references__) > 0:
-                    raise TypeError(
-                        "Declaring a generic type of embedded models containing "
-                        f"references is not allowed: {field_name} in {name}"
-                    )
-                generic_origin = get_origin(field_type)
-                assert generic_origin is not None
-                odm_fields[field_name] = ODMEmbeddedGeneric(
-                    model=model,
-                    generic_origin=generic_origin,
-                    key_name=key_name,
-                    model_config=config,
                     index=index,
                     unique=unique,
                 )
@@ -644,6 +630,28 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
                     continue
                 patch_dict[k] = v
         patched_instance_dict = {**self.dict(), **patch_dict}
+        if exclude_none:
+            patched_instance_dict = {
+                k: (
+                    {
+                        inner_k: patch_dict[k][inner_k]
+                        if inner_k in patch_dict[k]
+                        and patch_dict[k][inner_k] is not None
+                        else self.dict()[k][inner_k]
+                        for inner_k in {**self.dict()[k], **patch_dict[k]}
+                    }
+                    if isinstance(self.dict().get(k, None), dict)
+                    and isinstance(patch_dict.get(k, None), dict)
+                    else (
+                        patch_dict[k]
+                        if k in patch_dict and patch_dict[k] is not None
+                        else self.dict()[k]
+                    )
+                )
+                for k in {**self.dict(), **patch_dict}
+            }
+        else:
+            patched_instance_dict = {**self.dict(), **patch_dict}
         # FIXME: improve performance by only running updated field validators and then
         # model validators
         patched_instance = self.validate(patched_instance_dict)
