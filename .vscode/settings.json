@@ -1,8 +1,6 @@
 {
-  "python.formatting.provider": "black",
   "editor.rulers": [88],
   "python.linting.enabled": true,
-  "python.linting.flake8Enabled": true,
   "python.linting.mypyEnabled": true,
   "python.linting.pydocstyleEnabled": true,
   "python.envFile": "${workspaceFolder}/.env",
@@ -22,5 +20,8 @@
     "--no-pretty"
   ],
   "python.languageServer": "Pylance",
-  "python.linting.pydocstyleArgs": ["--config=./.pydocstyle"]
+  "python.linting.pydocstyleArgs": ["--config=./.pydocstyle"],
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  }
 }
