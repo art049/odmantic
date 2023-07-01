@@ -102,9 +102,9 @@ def test_validate_invalid_bson_objectid():
     with pytest.raises(ValidationError) as exc_info:
         MyModel(id="not an objectid")
     errors = exc_info.value.errors()
-    assert len(errors) == 1
-    assert errors[0]["loc"] == ("id",)
-    assert "invalid ObjectId specified" in errors[0]["msg"]
+    assert len(errors) == 2
+    assert all(error["loc"][0] == "id" for error in errors)
+    assert any("Value error, Invalid ObjectId" in error["msg"] for error in errors)
 
 
 def test_validate_decimal_valid_string():
@@ -135,9 +135,9 @@ def test_validate_decimal_invalid_string():
     with pytest.raises(ValidationError) as exc_info:
         MyModel(field="3abcd.15")
     errors = exc_info.value.errors()
-    assert len(errors) == 1
-    assert errors[0]["loc"] == ("field",)
-    assert "value is not a valid decimal" in errors[0]["msg"]
+    assert len(errors) == 3
+    assert all(error["loc"][0] == "field" for error in errors)
+    assert "Value error, Invalid decimal string" in [error["msg"] for error in errors]
 
 
 def test_validate_bson_decimal_valid_string():
@@ -167,9 +167,9 @@ def test_validate_bson_decimal_invalid_string():
     with pytest.raises(ValidationError) as exc_info:
         MyModel(field="3abcd.15")
     errors = exc_info.value.errors()
-    assert len(errors) == 1
-    assert errors[0]["loc"] == ("field",)
-    assert "value is not a valid decimal" in errors[0]["msg"]
+    assert len(errors) == 2
+    assert all(error["loc"][0] == "field" for error in errors)
+    assert "Value error, Invalid Decimal128 value" in [error["msg"] for error in errors]
 
 
 def test_validate_regex_valid_regex():
@@ -199,9 +199,9 @@ def test_validate_regex_invalid_string():
     with pytest.raises(ValidationError) as exc_info:
         MyModel(field="^((")
     errors = exc_info.value.errors()
-    assert len(errors) == 1
-    assert errors[0]["loc"] == ("field",)
-    assert "Invalid regular expression" in errors[0]["msg"]
+    assert len(errors) == 3
+    assert all(error["loc"][0] == "field" for error in errors)
+    assert "Value error, Invalid Pattern value" in [error["msg"] for error in errors]
 
 
 def test_validate_pattern_valid_string():
@@ -233,6 +233,6 @@ def test_validate_pattern_invalid_string():
     with pytest.raises(ValidationError) as exc_info:
         MyModel(field="^((")
     errors = exc_info.value.errors()
-    assert len(errors) == 1
-    assert errors[0]["loc"] == ("field",)
-    assert "Invalid regular expression" in errors[0]["msg"]
+    assert len(errors) == 3
+    assert all(error["loc"][0] == "field" for error in errors)
+    assert "Value error, Invalid Pattern value" in [error["msg"] for error in errors]
