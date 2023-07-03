@@ -1,84 +1,92 @@
 from __future__ import annotations
 
-import json
-from typing import TYPE_CHECKING, Any, Callable, Dict, Iterable, Optional, Type, Union
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Callable,
+    Dict,
+    Iterable,
+    Tuple,
+    TypedDict,
+    Union,
+    cast,
+)
 
 import pymongo
-from pydantic import Extra
-from pydantic.main import BaseConfig
-from pydantic.typing import AnyCallable
+from pydantic import ConfigDict
+from pydantic.config import ExtraValues, JsonSchemaExtraCallable
 
-from odmantic.bson import BSON_TYPES_ENCODERS
 from odmantic.utils import is_dunder
 
 if TYPE_CHECKING:
     import odmantic.index as ODMIndex
 
-try:
-    from pydantic.config import SchemaExtraCallable
-except ModuleNotFoundError:  # pragma: no cover
-    # pydantic<1.9.0
-    # Cannot use type: ignore for all versions
-    # -> https://github.com/python/mypy/issues/8823
-    from pydantic.main import SchemaExtraCallable  # type: ignore # noqa: F401
+
+class _ODManticConfigDict(TypedDict, total=False):
+    """Configuration fields specific to odmantic"""
+
+    collection: str | None
+    parse_doc_with_default_factories: bool
+    indexes: Callable[[], Iterable[Union[ODMIndex.Index, pymongo.IndexModel]]] | None
 
 
-class BaseODMConfig:
-    """Base class of the Config defined in the Models
-    Defines as well the fields allowed to be passed.
-    """
+class _InheritedConfigDict(TypedDict, total=False):
+    """Allowed configuration inherited from pydantic"""
 
-    collection: Optional[str] = None
-    parse_doc_with_default_factories: bool = False
-
-    @staticmethod
-    def indexes() -> Iterable[Union[ODMIndex.Index, pymongo.IndexModel]]:
-        return []
-
-    # Inherited from pydantic
-    title: Optional[str] = None
-    json_encoders: Dict[Type[Any], AnyCallable] = {}
-    schema_extra: Union[Dict[str, Any], "SchemaExtraCallable"] = {}
-    anystr_strip_whitespace: bool = False
-    json_loads: Callable[[str], Any] = json.loads
-    json_dumps: Callable[..., str] = json.dumps
-    arbitrary_types_allowed: bool = False
-    extra: Extra = Extra.ignore
+    title: str | None
+    json_schema_extra: dict[str, object] | JsonSchemaExtraCallable | None
+    str_strip_whitespace: bool
+    arbitrary_types_allowed: bool
+    extra: ExtraValues | None
 
 
-ALLOWED_CONFIG_OPTIONS = {name for name in dir(BaseODMConfig) if not is_dunder(name)}
+ODM_ALLOWED_CONFIG_OPTIONS = {
+    name for name in dir(_ODManticConfigDict) if not is_dunder(name)
+}
+
+PYD_ALLOWED_CONFIG_OPTIONS = {
+    name for name in dir(_InheritedConfigDict) if not is_dunder(name)
+}
+
+PYD_FORBIDDEN_CONFIG_OPTIONS = {
+    name for name in dir(ConfigDict) if not is_dunder(name)
+} - PYD_ALLOWED_CONFIG_OPTIONS
 
 
-class EnforcedPydanticConfig:
-    """Configuration options enforced to work with Models"""
-
-    validate_all = True
-    validate_assignment = True
+class ODMConfigDict(_ODManticConfigDict, _InheritedConfigDict):
+    pass
 
 
-def validate_config(
-    cls_config: Type[BaseODMConfig], cls_name: str
-) -> Type[BaseODMConfig]:
-    """Validate and build the model configuration"""
-    for name in dir(cls_config):
-        if not is_dunder(name) and name not in ALLOWED_CONFIG_OPTIONS:
-            raise ValueError(f"'{cls_name}': 'Config.{name}' is not supported")
+EnforcedPydanticConfig = ConfigDict(validate_default=True, validate_assignment=True)
 
-    if cls_config is BaseODMConfig:
-        bases = (EnforcedPydanticConfig, BaseODMConfig, BaseConfig)
-    else:
-        bases = (
-            EnforcedPydanticConfig,
-            cls_config,
-            BaseODMConfig,
-            BaseConfig,
-        )  # type:ignore
 
-    # Merge json_encoders to preserve bson type encoders
-    namespace = {
-        "json_encoders": {
-            **BSON_TYPES_ENCODERS,
-            **getattr(cls_config, "json_encoders", {}),
-        }
+def validate_config(config: ODMConfigDict, cls_name: str) -> ODMConfigDict:
+    """Validate the model configuration"""
+    pydantic_config: Dict[str, Any] = {
+        "title": None,
+        "json_schema_extra": None,
+        "str_strip_whitespace": False,
+        "arbitrary_types_allowed": False,
+        "extra": None,
+        **EnforcedPydanticConfig,
     }
-    return type("Config", bases, namespace)
+    odmantic_config: Dict[str, Any] = {
+        "collection": None,
+        "parse_doc_with_default_factories": False,
+        "indexes": None,
+    }
+    for config_key, value in config.items():
+        if config_key in ODM_ALLOWED_CONFIG_OPTIONS:
+            odmantic_config[config_key] = value
+        elif config_key in PYD_ALLOWED_CONFIG_OPTIONS:
+            pydantic_config[config_key] = value
+        elif config_key in PYD_FORBIDDEN_CONFIG_OPTIONS:
+            raise ValueError(
+                f"'{cls_name}': configuration attribute '{config_key}'"
+                " from Pydantic is not supported"
+            )
+        else:
+            raise ValueError(
+                f"'{cls_name}': unknown configuration attribute '{config_key}'"
+            )
+    return cast(ODMConfigDict, {**pydantic_config, **odmantic_config})

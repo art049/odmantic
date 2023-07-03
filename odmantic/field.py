@@ -15,7 +15,7 @@ from typing import (
 from pydantic.fields import Field as PDField
 from pydantic.fields import FieldInfo, ModelField, Undefined
 
-from odmantic.config import BaseODMConfig
+from odmantic.config import ODMConfigDict
 from odmantic.query import (
     QueryExpression,
     SortExpression,
@@ -186,11 +186,10 @@ class ODMFieldInfo:
 
 
 class ODMBaseField(metaclass=abc.ABCMeta):
-
     __slots__ = ("key_name", "model_config", "pydantic_field")
     __allowed_operators__: Set[str]
 
-    def __init__(self, key_name: str, model_config: Type[BaseODMConfig]):
+    def __init__(self, key_name: str, model_config: ODMConfigDict):
         self.key_name = key_name
         self.model_config = model_config
 
@@ -198,7 +197,7 @@ class ODMBaseField(metaclass=abc.ABCMeta):
         self.pydantic_field = field
 
     def is_required_in_doc(self) -> bool:
-        if self.model_config.parse_doc_with_default_factories:
+        if self.model_config["parse_doc_with_default_factories"]:
             return self.pydantic_field.required  # type: ignore
         else:
             return (
@@ -208,13 +207,12 @@ class ODMBaseField(metaclass=abc.ABCMeta):
 
 
 class ODMBaseIndexableField(ODMBaseField, metaclass=abc.ABCMeta):
-
     __slots__ = ("index", "unique")
 
     def __init__(
         self,
         key_name: str,
-        model_config: Type[BaseODMConfig],
+        model_config: ODMConfigDict,
         index: bool,
         unique: bool,
     ):
@@ -235,7 +233,7 @@ class ODMField(ODMBaseIndexableField):
         self,
         *,
         key_name: str,
-        model_config: Type["BaseODMConfig"],
+        model_config: ODMConfigDict,
         primary_field: bool,
         index: bool = False,
         unique: bool = False,
@@ -247,7 +245,7 @@ class ODMField(ODMBaseIndexableField):
         # The default importing value doesn't consider the default_factory setting by
         # default as it could result in inconsistent behaviors for datetime.now
         # factories for example
-        if self.model_config.parse_doc_with_default_factories:
+        if self.model_config["parse_doc_with_default_factories"]:
             return self.pydantic_field.get_default()
 
         if self.pydantic_field.default is None:
@@ -265,14 +263,13 @@ class ODMReference(ODMBaseField):
     __allowed_operators__ = set(("eq", "ne", "in_", "not_in"))
 
     def __init__(
-        self, key_name: str, model_config: Type[BaseODMConfig], model: Type["Model"]
+        self, key_name: str, model_config: ODMConfigDict, model: Type["Model"]
     ):
         super().__init__(key_name, model_config)
         self.model = model
 
 
 class ODMEmbedded(ODMField):
-
     __slots__ = "model"
     __allowed_operators__ = set(("eq", "ne", "in_", "not_in"))
 
@@ -280,7 +277,7 @@ class ODMEmbedded(ODMField):
         self,
         primary_field: bool,
         key_name: str,
-        model_config: Type[BaseODMConfig],
+        model_config: ODMConfigDict,
         model: Type["EmbeddedModel"],
         index: bool = False,
         unique: bool = False,
@@ -303,7 +300,7 @@ class ODMEmbeddedGeneric(ODMField):
     def __init__(
         self,
         key_name: str,
-        model_config: Type[BaseODMConfig],
+        model_config: ODMConfigDict,
         model: Type["EmbeddedModel"],
         generic_origin: Any,
         index: bool = False,
