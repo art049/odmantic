@@ -1,11 +1,12 @@
 from abc import ABCMeta
-from typing import TYPE_CHECKING, Any, List, Sequence, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 import pymongo
-from pydantic.error_wrappers import ErrorWrapper, ValidationError
+from pydantic import ValidationError
+from pydantic_core import InitErrorDetails, PydanticCustomError
 
 if TYPE_CHECKING:
-    from odmantic.model import EmbeddedModel, Model, _BaseODMModel
+    from odmantic.model import Model
 
 ModelType = TypeVar("ModelType")
 
@@ -55,28 +56,61 @@ class DuplicateKeyError(BaseEngineException):
         )
 
 
-ErrorList = List[Union[Sequence[Any], ErrorWrapper]]
+ErrorList = List[InitErrorDetails]
 
 
-class KeyNotFoundInDocumentError(ValueError):
+def ODManticCustomError(
+    error_type: str,
+    message_template: str,
+    context: Union[Dict[str, Any], None] = None,
+) -> PydanticCustomError:
+    odm_error_type = f"odmantic::{error_type}"
+    return PydanticCustomError(odm_error_type, message_template, context)
+
+
+class _KeyNotFoundInDocumentError(ValueError):
     def __init__(self, key_name: str):
         super().__init__("key not found in document")
         self.key_name = f"'{key_name}'"
 
 
-class ReferencedDocumentNotFoundError(ValueError):
+def KeyNotFoundInDocumentError(key_name: str) -> PydanticCustomError:
+    return ODManticCustomError(
+        "key_not_found_in_document",
+        "Key '{key_name}' not found in document",
+        {"key_name": key_name},
+    )
+
+
+class _ReferencedDocumentNotFoundError(ValueError):
     def __init__(self, key_name: str):
         super().__init__("referenced document not found")
         self.foreign_key_name = f"'{key_name}'"
 
 
-class IncorrectGenericEmbeddedModelValue(ValueError):
+def ReferencedDocumentNotFoundError(foreign_key_name: str) -> PydanticCustomError:
+    return ODManticCustomError(
+        "referenced_document_not_found",
+        "Referenced document not found for foreign key '{foreign_key_name}'",
+        {"foreign_key_name": foreign_key_name},
+    )
+
+
+class _IncorrectGenericEmbeddedModelValue(ValueError):
     def __init__(self, value: Any):
         super().__init__("incorrect generic embedded model value")
         self.value = value
 
 
-class DocumentParsingError(ValidationError):
+def IncorrectGenericEmbeddedModelValue(value: Any) -> PydanticCustomError:
+    return ODManticCustomError(
+        "incorrect_generic_embedded_model_value",
+        "Incorrect generic embedded model value '{value}'",
+        {"value": value},
+    )
+
+
+def DocumentParsingError(errors: ErrorList) -> ValidationError:
     """Unable to parse the document into an instance.
 
     Inherits from the `ValidationError` defined by Pydantic.
@@ -85,24 +119,7 @@ class DocumentParsingError(ValidationError):
       model (Union[Type[Model],Type[EmbeddedModel]]): model which could not be
         instanciated
     """
-
-    def __init__(
-        self,
-        errors: Sequence[ErrorList],
-        model: Type["_BaseODMModel"],
-        primary_value: Any,
-    ):
-        super().__init__(errors, model)
-        self.model: Union[Type["Model"], Type["EmbeddedModel"]]
-        self.primary_value = primary_value
-
-    def __str__(self) -> str:
-        from odmantic import Model
-
-        if issubclass(self.model, Model):
-            return (
-                f"{super().__str__()}\n"
-                f"({self.model.__name__} instance details:"
-                f" {self.model.__primary_field__}={repr(self.primary_value)})"
-            )
-        return super().__str__()
+    return ValidationError.from_exception_data(
+        title="Document parsing error",
+        line_errors=errors,
+    )
