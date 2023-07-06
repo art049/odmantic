@@ -28,3 +28,7 @@ def raise_on_invalid_collection_name(collection_name: str, cls_name: str) -> Non
 def to_snake_case(s: str) -> str:
     tmp = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", s)
     return re.sub("([a-z0-9])([A-Z])", r"\1_\2", tmp).lower()
+
+
+class Undefined:
+    pass
