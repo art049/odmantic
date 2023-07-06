@@ -31,6 +31,8 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python",
+    "Framework :: Pydantic :: 2",
+    "Framework :: Pydantic",
 ]
 
 requires-python = ">=3.7"
