@@ -46,10 +46,10 @@ dependencies = [
 [project.optional-dependencies]
 fastapi = ["fastapi >=0.100.0-beta2"]
 test = [
-    "black ~= 22.3.0",
+    "black ~= 23.3.0",
     "isort ~=5.8.0",
-    "ruff ~= 0.0.137",
-    "mypy ~= 0.961",
+    "ruff ~= 0.0.277",
+    "mypy ~= 1.4.1",
     "pytest ~= 7.0",
     "pytest-xdist ~= 2.1.0",
     "pytest-asyncio ~= 0.16.0",
