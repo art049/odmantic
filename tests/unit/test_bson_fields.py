@@ -8,7 +8,7 @@ import pytz
 from bson.decimal128 import Decimal128
 from bson.objectid import ObjectId
 from bson.regex import Regex
-from pydantic.error_wrappers import ValidationError
+from pydantic.v1.error_wrappers import ValidationError
 
 from odmantic.field import Field
 from odmantic.model import Model

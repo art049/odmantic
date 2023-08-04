@@ -12,8 +12,8 @@ from typing import (
     cast,
 )
 
-from pydantic.fields import Field as PDField
-from pydantic.fields import FieldInfo, ModelField, Undefined
+from pydantic.v1.fields import Field as PDField
+from pydantic.v1.fields import FieldInfo, ModelField, Undefined
 
 from odmantic.config import BaseODMConfig
 from odmantic.query import (
@@ -186,7 +186,6 @@ class ODMFieldInfo:
 
 
 class ODMBaseField(metaclass=abc.ABCMeta):
-
     __slots__ = ("key_name", "model_config", "pydantic_field")
     __allowed_operators__: Set[str]
 
@@ -208,7 +207,6 @@ class ODMBaseField(metaclass=abc.ABCMeta):
 
 
 class ODMBaseIndexableField(ODMBaseField, metaclass=abc.ABCMeta):
-
     __slots__ = ("index", "unique")
 
     def __init__(
@@ -272,7 +270,6 @@ class ODMReference(ODMBaseField):
 
 
 class ODMEmbedded(ODMField):
-
     __slots__ = "model"
     __allowed_operators__ = set(("eq", "ne", "in_", "not_in"))
 

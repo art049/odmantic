@@ -1,6 +1,6 @@
 from typing import ClassVar
 
-from pydantic import ValidationError, validator
+from pydantic.v1 import ValidationError, validator
 
 from odmantic import Model
 
@@ -26,7 +26,7 @@ class SmallRectangle(Model):
 
 
 print(SmallRectangle(length=2, width=1))
-#> id=ObjectId('5f81e3c073103f509f97e374'), length=2.0, width=1.0
+# > id=ObjectId('5f81e3c073103f509f97e374'), length=2.0, width=1.0
 
 try:
     SmallRectangle(length=2)

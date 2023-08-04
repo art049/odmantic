@@ -2,7 +2,7 @@ from abc import ABCMeta
 from typing import TYPE_CHECKING, Any, List, Sequence, Type, TypeVar, Union
 
 import pymongo
-from pydantic.error_wrappers import ErrorWrapper, ValidationError
+from pydantic.v1.error_wrappers import ErrorWrapper, ValidationError
 
 if TYPE_CHECKING:
     from odmantic.model import EmbeddedModel, Model, _BaseODMModel

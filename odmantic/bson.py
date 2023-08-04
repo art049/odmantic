@@ -8,9 +8,9 @@ import bson.binary
 import bson.decimal128
 import bson.int64
 import bson.regex
-from pydantic.datetime_parse import parse_datetime
-from pydantic.main import BaseModel
-from pydantic.validators import (
+from pydantic.v1.datetime_parse import parse_datetime
+from pydantic.v1.main import BaseModel
+from pydantic.v1.validators import (
     bytes_validator,
     decimal_validator,
     int_validator,

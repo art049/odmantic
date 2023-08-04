@@ -1,4 +1,4 @@
-from pydantic import StrictBool, StrictFloat, StrictStr
+from pydantic.v1 import StrictBool, StrictFloat, StrictStr
 
 from odmantic import Model
 

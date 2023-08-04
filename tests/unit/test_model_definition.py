@@ -20,8 +20,8 @@ import pytest
 from bson import ObjectId
 from bson.decimal128 import Decimal128
 from bson.regex import Regex
-from pydantic import Field as PDField
-from pydantic.error_wrappers import ValidationError
+from pydantic.v1 import Field as PDField
+from pydantic.v1.error_wrappers import ValidationError
 
 from odmantic import ObjectId as ODMObjectId
 from odmantic.field import Field
@@ -44,7 +44,6 @@ class TheClassNameOverriden(Model):
 
 
 def test_auto_collection_name():
-
     assert TheClassName.__collection__ == "the_class_name"
 
     assert TheClassNameModel.__collection__ == "the_class_name"

@@ -685,7 +685,7 @@ We can then finish by saving and returning the updated tree.
 ??? tip "Optional, defaults, non-required and required pydantic fields (advanced)"
 
     ```python
-    from pydantic import BaseModel
+    from pydantic.v1 import BaseModel
 
     class M(BaseModel):
         a: Optional[int]

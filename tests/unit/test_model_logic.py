@@ -2,9 +2,9 @@ from typing import Dict, List, Optional, Tuple
 
 import pytest
 from bson.objectid import ObjectId
-from pydantic import root_validator
-from pydantic.error_wrappers import ValidationError
-from pydantic.main import BaseModel
+from pydantic.v1 import root_validator
+from pydantic.v1.error_wrappers import ValidationError
+from pydantic.v1.main import BaseModel
 
 from odmantic.exceptions import DocumentParsingError
 from odmantic.field import Field
@@ -394,7 +394,6 @@ def test_model_copy_not_deep_embedded():
         f: int
 
     class M(Model):
-
         e: E
 
     instance = M(e=E(f=1))

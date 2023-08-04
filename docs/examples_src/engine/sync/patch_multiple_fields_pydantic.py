@@ -1,6 +1,6 @@
-from pydantic import BaseModel
+from pydantic.v1 import BaseModel
 
-from odmantic import SyncEngine, Model
+from odmantic import Model, SyncEngine
 
 
 class Player(Model):
@@ -13,7 +13,8 @@ engine = SyncEngine()
 
 player_tlo = engine.find_one(Player, Player.name == "TLO")
 print(repr(player_tlo))
-#> Player(id=ObjectId(...), name='TLO', game='Starcraft')
+# > Player(id=ObjectId(...), name='TLO', game='Starcraft')
+
 
 # Create the structure of the patch object with pydantic
 class PatchPlayerSchema(BaseModel):
@@ -27,7 +28,7 @@ patch_object = PatchPlayerSchema(name="TheLittleOne", game="Starcraft II")
 player_tlo.update(patch_object)
 
 print(repr(player_tlo))
-#> Player(id=ObjectId(...), name='TheLittleOne', game='Starcraft II')
+# > Player(id=ObjectId(...), name='TheLittleOne', game='Starcraft II')
 
 # Finally persist again the new instance
 engine.save(player_tlo)

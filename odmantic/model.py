@@ -27,15 +27,15 @@ from typing import (
 )
 
 import bson
-import pydantic
+import pydantic.v1 as pydantic
 import pymongo
-from pydantic.error_wrappers import ErrorWrapper, ValidationError
-from pydantic.fields import Field as PDField
-from pydantic.fields import FieldInfo as PDFieldInfo
-from pydantic.fields import Undefined
-from pydantic.main import BaseModel
-from pydantic.tools import parse_obj_as
-from pydantic.typing import is_classvar, resolve_annotations
+from pydantic.v1.error_wrappers import ErrorWrapper, ValidationError
+from pydantic.v1.fields import Field as PDField
+from pydantic.v1.fields import FieldInfo as PDFieldInfo
+from pydantic.v1.fields import Undefined
+from pydantic.v1.main import BaseModel
+from pydantic.v1.tools import parse_obj_as
+from pydantic.v1.typing import is_classvar, resolve_annotations
 
 from odmantic.bson import (
     _BSON_SUBSTITUTED_FIELDS,
@@ -82,8 +82,7 @@ from odmantic.utils import (
 )
 
 if TYPE_CHECKING:
-
-    from pydantic.typing import (
+    from pydantic.v1.typing import (
         AbstractSetIntStr,
         DictStrAny,
         MappingIntStrAny,
@@ -213,7 +212,7 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
                 )
 
         # Validate fields types and substitute bson fields
-        for (field_name, field_type) in annotations.items():
+        for field_name, field_type in annotations.items():
             if not is_dunder(field_name) and should_touch_field(type_=field_type):
                 substituted_type = validate_type(field_type)
                 # Handle BSON serialized fields after substitution to allow some
@@ -224,7 +223,7 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
                 annotations[field_name] = substituted_type
 
         # Validate fields
-        for (field_name, field_type) in annotations.items():
+        for field_name, field_type in annotations.items():
             value = namespace.get(field_name, Undefined)
 
             if is_dunder(field_name) or not should_touch_field(value, field_type):
@@ -483,7 +482,6 @@ class EmbeddedModelMetaclass(BaseModelMetaclass):
         namespace: Dict[str, Any],
         **kwargs: Any,
     ):
-
         if namespace.get("__module__") != "odmantic.model" and namespace.get(
             "__qualname__"
         ) not in ("_BaseODMModel", "EmbeddedModel"):

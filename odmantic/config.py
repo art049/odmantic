@@ -4,9 +4,9 @@ import json
 from typing import TYPE_CHECKING, Any, Callable, Dict, Iterable, Optional, Type, Union
 
 import pymongo
-from pydantic import Extra
-from pydantic.main import BaseConfig
-from pydantic.typing import AnyCallable
+from pydantic.v1 import Extra
+from pydantic.v1.main import BaseConfig
+from pydantic.v1.typing import AnyCallable
 
 from odmantic.bson import BSON_TYPES_ENCODERS
 from odmantic.utils import is_dunder
@@ -15,7 +15,7 @@ if TYPE_CHECKING:
     import odmantic.index as ODMIndex
 
 try:
-    from pydantic.config import SchemaExtraCallable
+    from pydantic.v1.config import SchemaExtraCallable
 except ModuleNotFoundError:  # pragma: no cover
     # pydantic<1.9.0
     # Cannot use type: ignore for all versions
