@@ -99,10 +99,18 @@ tasks:
       - test -f .git/hooks/pre-commit
 
   setup:deps-setup:
+    deps:
+      - task: setup:flit
     cmds:
       - flit install --deps=all --python python
     sources:
       - pyproject.toml
+
+  setup:flit:
+    cmds:
+      - pip install flit
+    status:
+      - which flit
 
   clean:
     cmds:
