@@ -53,8 +53,8 @@ def test_object_id_fastapi_pydantic_response_model(fastapi_app, test_client):
     class PydanticModel(BaseBSONModel):
         id: ObjectId
 
-        class Config:
-            """Defining a config object WITHOUT json_encoders arguments"""
+        # Defining a config object WITHOUT json_encoders arguments
+        model_config = {}
 
     @fastapi_app.get("/", response_model=PydanticModel)
     def get():
@@ -147,8 +147,7 @@ def test_pydantic_model_title(base: Type):
 @pytest.mark.parametrize("base", (Model, EmbeddedModel))
 def test_pydantic_model_custom_title(base: Type):
     class M(base):  # type: ignore
-        class Config:
-            title = "CustomTitle"
+        model_config = {"title": "CustomTitle"}
 
     assert M.__pydantic_model__.schema()["title"] == "CustomTitle"
 

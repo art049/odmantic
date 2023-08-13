@@ -7,9 +7,10 @@ class Post(Model):
     title: str
     content: str
 
-    class Config:
-        @staticmethod
-        def indexes():
-            yield pymongo.IndexModel(
+    model_config = {
+        "indexes": lambda: [
+            pymongo.IndexModel(
                 [(+Post.title, pymongo.TEXT), (+Post.content, pymongo.TEXT)]
             )
+        ]
+    }

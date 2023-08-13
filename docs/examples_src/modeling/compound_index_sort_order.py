@@ -8,7 +8,4 @@ class Event(Model):
     username: str
     date: datetime
 
-    class Config:
-        @staticmethod
-        def indexes():
-            yield Index(asc(Event.username), desc(Event.date))
+    model_config = {"indexes": lambda: [Index(asc(Event.username), desc(Event.date))]}

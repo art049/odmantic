@@ -54,10 +54,9 @@ def test_single_index_definition_from_generator():
     class M(Model):
         f: int
 
-        class Config:
-            @staticmethod
-            def indexes():
-                yield Index(M.f, unique=True)
+        model_config = {
+            "indexes": lambda: [Index(M.f, unique=True)],
+        }
 
     indexes = M.__indexes__()
     assert len(indexes) == 1
@@ -71,10 +70,9 @@ def test_compound_index_definition():
         f: int
         g: str
 
-        class Config:
-            @staticmethod
-            def indexes():
-                yield Index(M.f, desc(M.g), unique=True)
+        model_config = {
+            "indexes": lambda: [Index(M.f, desc(M.g), unique=True)],
+        }
 
     indexes = M.__indexes__()
     assert len(indexes) == 1
@@ -90,11 +88,12 @@ def test_multiple_indexes_definition():
         g: str
         h: float = Field(index=True)
 
-        class Config:
-            @staticmethod
-            def indexes():
-                yield Index(M.f, desc(M.g), unique=True, name="asc_desc")
-                yield Index(M.g)
+        model_config = {
+            "indexes": lambda: [
+                Index(M.f, desc(M.g), unique=True, name="asc_desc"),
+                Index(M.g),
+            ],
+        }
 
     indexes = M.__indexes__()
     assert len(indexes) == 3
@@ -134,10 +133,9 @@ def test_embedded_index_definition_generator():
     class M(Model):
         e: E
 
-        class Config:
-            @staticmethod
-            def indexes():
-                yield Index(M.e)
+        model_config = {
+            "indexes": lambda: [Index(M.e)],
+        }
 
     indexes = M.__indexes__()
     assert len(indexes) == 1
@@ -154,10 +152,9 @@ def test_embedded_field_index_definition():
     class M(Model):
         e: E
 
-        class Config:
-            @staticmethod
-            def indexes():
-                yield Index(M.e.f)
+        model_config = {
+            "indexes": lambda: [Index(M.e.f)],
+        }
 
     indexes = M.__indexes__()
     assert len(indexes) == 1

@@ -29,13 +29,11 @@ from typing import (
 import bson
 import pydantic
 import pymongo
-from pydantic.error_wrappers import ErrorWrapper, ValidationError
+from pydantic import TypeAdapter, ValidationError
 from pydantic.fields import Field as PDField
 from pydantic.fields import FieldInfo as PDFieldInfo
-from pydantic.fields import Undefined
 from pydantic.main import BaseModel
-from pydantic.tools import parse_obj_as
-from pydantic.typing import is_classvar, resolve_annotations
+from pydantic_core import InitErrorDetails
 
 from odmantic.bson import (
     _BSON_SUBSTITUTED_FIELDS,
@@ -43,7 +41,7 @@ from odmantic.bson import (
     ObjectId,
     _decimalDecimal,
 )
-from odmantic.config import BaseODMConfig, validate_config
+from odmantic.config import ODMConfigDict, validate_config
 from odmantic.exceptions import (
     DocumentParsingError,
     ErrorList,
@@ -71,10 +69,13 @@ from odmantic.typing import (
     get_args,
     get_first_type_argument_subclassing,
     get_origin,
+    is_classvar,
     is_type_argument_subclass,
     lenient_issubclass,
+    resolve_annotations,
 )
 from odmantic.utils import (
+    Undefined,
     is_dunder,
     raise_on_invalid_collection_name,
     raise_on_invalid_key_name,
@@ -82,13 +83,7 @@ from odmantic.utils import (
 )
 
 if TYPE_CHECKING:
-
-    from pydantic.typing import (
-        AbstractSetIntStr,
-        DictStrAny,
-        MappingIntStrAny,
-        ReprArgs,
-    )
+    from odmantic.typing import AbstractSetIntStr, DictStrAny, IncEx, ReprArgs
 
 
 UNTOUCHED_TYPES = FunctionType, property, classmethod, staticmethod, type
@@ -188,14 +183,14 @@ def validate_type(type_: Type) -> Type:
     return type_
 
 
-class BaseModelMetaclass(pydantic.main.ModelMetaclass):
+class BaseModelMetaclass(pydantic._internal._model_construction.ModelMetaclass):
     @staticmethod
     def __validate_cls_namespace__(name: str, namespace: Dict) -> None:  # noqa C901
         """Validate the class name space in place"""
         annotations = resolve_annotations(
             namespace.get("__annotations__", {}), namespace.get("__module__")
         )
-        config = validate_config(namespace.get("Config", BaseODMConfig), name)
+        config = validate_config(namespace.get("model_config", ODMConfigDict()), name)
         odm_fields: Dict[str, ODMBaseField] = {}
         references: List[str] = []
         bson_serialized_fields: Set[str] = set()
@@ -213,7 +208,7 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
                 )
 
         # Validate fields types and substitute bson fields
-        for (field_name, field_type) in annotations.items():
+        for field_name, field_type in annotations.items():
             if not is_dunder(field_name) and should_touch_field(type_=field_type):
                 substituted_type = validate_type(field_type)
                 # Handle BSON serialized fields after substitution to allow some
@@ -224,7 +219,7 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
                 annotations[field_name] = substituted_type
 
         # Validate fields
-        for (field_name, field_type) in annotations.items():
+        for field_name, field_type in annotations.items():
             value = namespace.get(field_name, Undefined)
 
             if is_dunder(field_name) or not should_touch_field(value, field_type):
@@ -331,7 +326,7 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
 
                 else:
                     try:
-                        parse_obj_as(field_type, value)
+                        TypeAdapter(field_type).validate_python(value)
                     except ValidationError:
                         raise TypeError(
                             f"Unhandled field definition {name}: {repr(field_type)}"
@@ -352,7 +347,7 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
         namespace["__references__"] = tuple(references)
         namespace["__bson_serialized_fields__"] = frozenset(bson_serialized_fields)
         namespace["__mutable_fields__"] = frozenset(mutable_fields)
-        namespace["Config"] = config
+        namespace["model_config"] = config
 
     @no_type_check
     def __new__(
@@ -387,7 +382,7 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
         cls = super().__new__(mcs, name, bases, namespace, **kwargs)
 
         if is_custom_cls:
-            config: BaseODMConfig = namespace["Config"]
+            config: ODMConfigDict = namespace["model_config"]
             # Patch Model related fields to build a "pure" pydantic model
             odm_fields: Dict[str, ODMBaseField] = namespace["__odm_fields__"]
             for field_name, field in odm_fields.items():
@@ -396,12 +391,18 @@ class BaseModelMetaclass(pydantic.main.ModelMetaclass):
                         field_name
                     ] = field.model.__pydantic_model__
             # Build the pydantic model
-            pydantic_cls = pydantic.main.ModelMetaclass.__new__(
-                mcs, f"{name}.__pydantic_model__", (BaseBSONModel,), namespace, **kwargs
+            pydantic_cls = (
+                pydantic._internal._model_construction.ModelMetaclass.__new__(
+                    mcs,
+                    f"{name}.__pydantic_model__",
+                    (BaseBSONModel,),
+                    namespace,
+                    **kwargs,
+                )
             )
             # Change the title to generate clean JSON schemas from this "pure" model
-            if config.title is None:
-                pydantic_cls.__config__.title = name
+            if config["title"] is None:
+                pydantic_cls.model_config["title"] = name
             cls.__pydantic_model__ = pydantic_cls
 
             for name, field in cls.__odm_fields__.items():
@@ -425,7 +426,7 @@ class ModelMetaclass(BaseModelMetaclass):
             "__qualname__"
         ) not in ("_BaseODMModel", "Model"):
             mcs.__validate_cls_namespace__(name, namespace)
-            config: BaseODMConfig = namespace["Config"]
+            config: ODMConfigDict = namespace["model_config"]
             primary_field: Optional[str] = None
             odm_fields: Dict[str, ODMBaseField] = namespace["__odm_fields__"]
 
@@ -449,7 +450,7 @@ class ModelMetaclass(BaseModelMetaclass):
 
             namespace["__primary_field__"] = primary_field
 
-            if config.collection is not None:
+            if config["collection"] is not None:
                 collection_name = config.collection
             elif "__collection__" in namespace:
                 collection_name = namespace["__collection__"]
@@ -483,7 +484,6 @@ class EmbeddedModelMetaclass(BaseModelMetaclass):
         namespace: Dict[str, Any],
         **kwargs: Any,
     ):
-
         if namespace.get("__module__") != "odmantic.model" and namespace.get(
             "__qualname__"
         ) not in ("_BaseODMModel", "EmbeddedModel"):
@@ -519,6 +519,8 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         # the dataclass transform generated constructor
         __fields_modified__: ClassVar[Set[str]] = set()
 
+    model_config: ClassVar[ODMConfigDict]
+
     __slots__ = ("__fields_modified__",)
 
     def __init__(self, **data: Any):
@@ -526,12 +528,13 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         object.__setattr__(self, "__fields_modified__", set(self.__odm_fields__.keys()))
 
     @classmethod
+    # TODO: rename to model_validate
     def validate(cls: Type[BaseT], value: Any) -> BaseT:
         if isinstance(value, cls):
             # Do not copy the object as done in pydantic
             # This enable to keep the same python object
             return value
-        return super().validate(value)
+        return super().model_validate(value)
 
     def __repr_args__(self) -> "ReprArgs":
         # Place the id field first in the repr string
@@ -543,11 +546,12 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         args = [id_arg] + args
         return args
 
+    # TODO: rename to model_copy, remove include/exclude
     def copy(
         self: BaseT,
         *,
-        include: Union[None, "AbstractSetIntStr", "MappingIntStrAny"] = None,
-        exclude: Union[None, "AbstractSetIntStr", "MappingIntStrAny"] = None,
+        include: "IncEx" = None,
+        exclude: "IncEx" = None,
         update: Optional["DictStrAny"] = None,
         deep: bool = False,
     ) -> BaseT:
@@ -573,7 +577,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
             new model instance
 
         """
-        copied = super().copy(
+        copied = super().model_copy(
             include=include, exclude=exclude, update=update, deep=deep  # type: ignore
         )
         copied._post_copy_update()
@@ -593,8 +597,8 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         self,
         patch_object: Union[BaseModel, Dict[str, Any]],
         *,
-        include: Union[None, "AbstractSetIntStr", "MappingIntStrAny"] = None,
-        exclude: Union[None, "AbstractSetIntStr", "MappingIntStrAny"] = None,
+        include: "IncEx" = None,
+        exclude: "IncEx" = None,
         exclude_unset: bool = True,
         exclude_defaults: bool = False,
         exclude_none: bool = False,
@@ -625,9 +629,9 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         -->
         """
         if isinstance(patch_object, BaseModel):
-            patch_dict = patch_object.dict(
-                include=include,  # type: ignore
-                exclude=exclude,  # type: ignore
+            patch_dict = patch_object.model_dump(
+                include=include,
+                exclude=exclude,
                 exclude_unset=exclude_unset,
                 exclude_defaults=exclude_defaults,
                 exclude_none=exclude_none,
@@ -658,11 +662,12 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         super().__setattr__(name, value)
         self.__fields_modified__.add(name)
 
-    def dict(  # type: ignore # Missing deprecated/ unsupported parameters
+    # TODO: rename to model_dump
+    def dict(  # Missing deprecated/ unsupported parameters
         self,
         *,
-        include: Union["AbstractSetIntStr", "MappingIntStrAny"] = None,  # type: ignore
-        exclude: Union["AbstractSetIntStr", "MappingIntStrAny"] = None,  # type: ignore
+        include: "IncEx" = None,
+        exclude: "IncEx" = None,
         exclude_unset: bool = False,
         exclude_defaults: bool = False,
         exclude_none: bool = False,
@@ -683,7 +688,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         Returns:
             the dictionary representation of the instance
         """
-        return super().dict(
+        return super().model_dump(
             include=include,
             exclude=exclude,
             exclude_unset=exclude_unset,
@@ -722,7 +727,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
             else:
                 doc[field.key_name] = raw_doc[field_name]
 
-        if model.Config.extra == "allow":
+        if model.model_config["extra"] == "allow":
             extras = set(raw_doc.keys()) - set(model.__odm_fields__.keys())
             for extra in extras:
                 value = raw_doc[extra]
@@ -761,17 +766,13 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         errors, obj = cls._parse_doc_to_obj(raw_doc)
         if len(errors) > 0:
             raise DocumentParsingError(
-                errors=[errors],
-                model=cls,
-                primary_value=raw_doc.get("_id", "<unknown>"),
+                errors=errors,
             )
         try:
-            instance = cls.parse_obj(obj)
+            instance = cls.model_validate(obj)
         except ValidationError as e:
             raise DocumentParsingError(
                 errors=e.raw_errors,  # type: ignore
-                model=cls,
-                primary_value=raw_doc.get("_id", "<unknown>"),
             )
 
         return instance
@@ -787,11 +788,13 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
                 sub_doc = raw_doc.get(field.key_name)
                 if sub_doc is None:
                     errors.append(
-                        ErrorWrapper(
-                            exc=ReferencedDocumentNotFoundError(field.key_name),
+                        InitErrorDetails(
+                            type=ReferencedDocumentNotFoundError(field.key_name),
                             loc=base_loc + (field_name,),
+                            input=raw_doc,
                         )
                     )
+
                 else:
                     sub_errors, sub_obj = field.model._parse_doc_to_obj(
                         sub_doc, base_loc=base_loc + (field_name,)
@@ -810,11 +813,13 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
                         value = field.get_default_importing_value()
                     if value is Undefined:
                         errors.append(
-                            ErrorWrapper(
-                                exc=KeyNotFoundInDocumentError(field.key_name),
+                            InitErrorDetails(
+                                type=KeyNotFoundInDocumentError(field.key_name),
                                 loc=base_loc + (field_name,),
+                                input=raw_doc,
                             )
                         )
+
                 obj[field_name] = value
             elif isinstance(field, ODMEmbeddedGeneric):
                 value = Undefined
@@ -849,19 +854,22 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
                         obj[field_name] = value
                     else:
                         errors.append(
-                            ErrorWrapper(
-                                exc=IncorrectGenericEmbeddedModelValue(raw_value),
+                            InitErrorDetails(
+                                type=IncorrectGenericEmbeddedModelValue(raw_value),
                                 loc=base_loc + (field_name,),
+                                input=raw_doc,
                             )
                         )
+
                 else:
                     if not field.is_required_in_doc():
                         value = field.get_default_importing_value()
                     if value is Undefined:
                         errors.append(
-                            ErrorWrapper(
-                                exc=KeyNotFoundInDocumentError(field.key_name),
+                            InitErrorDetails(
+                                type=KeyNotFoundInDocumentError(field.key_name),
                                 loc=base_loc + (field_name,),
+                                input=raw_doc,
                             )
                         )
                     else:
@@ -874,15 +882,16 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
 
                 if value is Undefined:
                     errors.append(
-                        ErrorWrapper(
-                            exc=KeyNotFoundInDocumentError(field.key_name),
+                        InitErrorDetails(
+                            type=KeyNotFoundInDocumentError(field.key_name),
                             loc=base_loc + (field_name,),
+                            input=raw_doc,
                         )
                     )
                 else:
                     obj[field_name] = value
 
-        if cls.Config.extra == "allow":
+        if cls.model_config["extra"] == "allow":
             extras = set(raw_doc.keys()) - set(obj.keys())
             for extra in extras:
                 obj[extra] = raw_doc[extra]
@@ -924,17 +933,20 @@ class Model(_BaseODMModel, metaclass=ModelMetaclass):
                         unique=field.unique,
                     )
                 )
-
-        for index in cast(BaseODMConfig, cls.Config).indexes():
-            indexes.append(index.to_odm_index() if isinstance(index, Index) else index)
+        get_indexes_from_config = cls.model_config["indexes"]
+        if get_indexes_from_config is not None:
+            for index in get_indexes_from_config():
+                indexes.append(
+                    index.to_odm_index() if isinstance(index, Index) else index
+                )
         return tuple(indexes)
 
     def update(
         self,
         patch_object: Union[BaseModel, Dict[str, Any]],
         *,
-        include: Union[None, "AbstractSetIntStr", "MappingIntStrAny"] = None,
-        exclude: Union[None, "AbstractSetIntStr", "MappingIntStrAny"] = None,
+        include: "IncEx" = None,
+        exclude: "IncEx" = None,
         exclude_unset: bool = True,
         exclude_defaults: bool = False,
         exclude_none: bool = False,

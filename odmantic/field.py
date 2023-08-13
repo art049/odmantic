@@ -13,7 +13,7 @@ from typing import (
 )
 
 from pydantic.fields import Field as PDField
-from pydantic.fields import FieldInfo, ModelField, Undefined
+from pydantic.fields import FieldInfo, PydanticUndefined
 
 from odmantic.config import ODMConfigDict
 from odmantic.query import (
@@ -32,20 +32,20 @@ from odmantic.query import (
     not_in,
 )
 
-from .typing import NoArgAnyCallable
-
 if TYPE_CHECKING:
     from odmantic.model import EmbeddedModel, Model  # noqa: F401
 
+    from .typing import NoArgAnyCallable
+
 
 def Field(
-    default: Any = Undefined,
+    default: Any = PydanticUndefined,
     *,
     key_name: Optional[str] = None,
     primary_field: bool = False,
     index: bool = False,
     unique: bool = False,
-    default_factory: Optional[NoArgAnyCallable] = None,
+    default_factory: Optional["NoArgAnyCallable"] = None,
     # alias: str = None, # FIXME not supported yet
     title: Optional[str] = None,
     description: Optional[str] = None,
@@ -193,7 +193,7 @@ class ODMBaseField(metaclass=abc.ABCMeta):
         self.key_name = key_name
         self.model_config = model_config
 
-    def bind_pydantic_field(self, field: ModelField) -> None:
+    def bind_pydantic_field(self, field: FieldInfo) -> None:
         self.pydantic_field = field
 
     def is_required_in_doc(self) -> bool:

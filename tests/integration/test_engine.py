@@ -126,7 +126,6 @@ async def person_persisted(aio_engine: AIOEngine):
 async def test_save_multiple_simple_find_find_one(
     aio_engine: AIOEngine, person_persisted: List[PersonModel]
 ):
-
     found_instances = await aio_engine.find(
         PersonModel, PersonModel.first_name == "Michel"
     )
@@ -151,7 +150,6 @@ async def test_save_multiple_simple_find_find_one(
 def test_sync_save_multiple_simple_find_find_one(
     sync_engine: SyncEngine, person_persisted: List[PersonModel]
 ):
-
     found_instances = list(
         sync_engine.find(PersonModel, PersonModel.first_name == "Michel")
     )
@@ -1238,8 +1236,7 @@ async def test_find_document_field_not_set_with_default_factory_enabled(
     class M(Model):
         field: str = Field(default_factory=lambda: "hello")
 
-        class Config:
-            parse_doc_with_default_factories = True
+        model_config = {"parse_doc_with_default_factories": True}
 
     await aio_engine.get_collection(M).insert_one({"_id": ObjectId()})
     instance = await aio_engine.find_one(M)
@@ -1253,8 +1250,9 @@ def test_sync_find_document_field_not_set_with_default_factory_enabled(
     class M(Model):
         field: str = Field(default_factory=lambda: "hello")
 
-        class Config:
-            parse_doc_with_default_factories = True
+        model_config = {
+            "parse_doc_with_default_factories": True,
+        }
 
     sync_engine.get_collection(M).insert_one({"_id": ObjectId()})
     instance = sync_engine.find_one(M)

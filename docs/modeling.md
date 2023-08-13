@@ -17,7 +17,7 @@ name. For example, a model class named `PersonModel` will belong in the `person`
 collection.
 
 It's possible to customize the collection name of a model by specifying the `collection`
-option in the `Config` class.
+option in the `model_config` class attribute.
 
 !!! example "Custom collection name example"
     ```python hl_lines="7-8"
@@ -27,8 +27,9 @@ option in the `Config` class.
         name: str
         population: int
 
-        class Config:
-            collection = "city"
+        model_config = {
+            "collection": "city"
+        }
     ```
     Now, when `CapitalCity` instances will be persisted to the database, they will
     belong in the `city` collection instead of `capital_city`.
@@ -45,9 +46,9 @@ Field descriptors as explained in [Indexed fields](fields.md#indexed-fields) or
 [Unique fields](fields.md#unique-fields). However, this way doesn't allow a great
 flexibility on index definition.
 
-That's why you can also use the `Config.indexes` generator to specify advanced indexes
-(compound indexes, custom names). This static function defined in the `Config` class
-should yield [odmantic.Index][odmantic.index.Index].
+That's why you can also use the `model_config.indexes` generator to specify advanced indexes
+(compound indexes, custom names). This static function defined in the `model_config` class
+attribute should yield [odmantic.Index][odmantic.index.Index].
 
 
 For example:
@@ -190,10 +191,11 @@ in the model body.
         class Event(Model):
             date: datetime
 
-            class Config:
-                json_encoders = {
+            model_config = {
+                "json_encoders": {
                     datetime: lambda v: v.timestamp()
                 }
+            }
         ```
 
 `#!python extra: pydantic.Extra` *(inherited from Pydantic)*

@@ -124,8 +124,7 @@ def test_custom_json_encoders():
     class M(Model):
         a: datetime = datetime.now()
 
-        class Config:
-            json_encoders = {datetime: lambda _: "encoded"}
+        model_config = {"json_encoders": {datetime: lambda _: "encoded"}}
 
     instance = M()
     parsed = json.loads(instance.json())
@@ -134,10 +133,7 @@ def test_custom_json_encoders():
 
 def test_custom_json_encoders_override_builtin_bson():
     class M(Model):
-        ...
-
-        class Config:
-            json_encoders = {ObjectId: lambda _: "encoded"}
+        model_config = {"json_encoders": {ObjectId: lambda _: "encoded"}}
 
     instance = M()
     parsed = json.loads(instance.json())

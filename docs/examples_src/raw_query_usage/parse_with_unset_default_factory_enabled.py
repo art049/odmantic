@@ -11,8 +11,7 @@ class User(Model):
     name: str
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
-    class Config:
-        parse_doc_with_default_factories = True
+    model_config = {"parse_doc_with_default_factories": True}
 
 
 document = {"name": "Leeroy", "_id": ObjectId("5f8352a87a733b8b18b0cb27")}

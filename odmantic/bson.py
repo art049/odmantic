@@ -431,8 +431,7 @@ class BaseBSONModel(BaseModel):
     [BSON_TYPES_ENCODERS][odmantic.bson.BSON_TYPES_ENCODERS] directly.
     """
 
-    class Config:
-        json_encoders = BSON_TYPES_ENCODERS
+    model_config = {"json_encoders": BSON_TYPES_ENCODERS}
 
 
 _BSON_SUBSTITUTED_FIELDS = {
