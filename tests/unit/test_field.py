@@ -93,7 +93,8 @@ def test_field_required_in_doc_default_factory_enabled():
     class M(Model):
         field: str = Field(default_factory=lambda: "hi")  # pragma: no cover
 
-        class Config:
-            parse_doc_with_default_factories = True
+        model_config = {
+            "parse_doc_with_default_factories": True,
+        }
 
     assert not M.__odm_fields__["field"].is_required_in_doc()

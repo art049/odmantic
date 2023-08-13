@@ -39,12 +39,10 @@ class TheClassNameModel(Model):
 
 
 class TheClassNameOverriden(Model):
-    class Config:
-        collection = "collection_name"
+    model_config = {"collection": "collection_name"}
 
 
 def test_auto_collection_name():
-
     assert TheClassName.__collection__ == "the_class_name"
 
     assert TheClassNameModel.__collection__ == "the_class_name"
@@ -59,8 +57,7 @@ def test_auto_collection_name_nested():
     assert theNestedClassName.__collection__ == "the_nested_class_name"
 
     class TheNestedClassNameOverriden(Model):
-        class Config:
-            collection = "collection_name"
+        model_config = {"collection": "collection_name"}
 
     assert TheNestedClassNameOverriden.__collection__ == "collection_name"
 
@@ -324,24 +321,21 @@ def test_invalid_collection_name_dollar():
     with pytest.raises(TypeError, match=r"cannot contain '\$'"):
 
         class A(Model):
-            class Config:
-                collection = "hello$world"
+            model_config = {"collection": "hello$world"}
 
 
 def test_invalid_collection_name_empty():
     with pytest.raises(TypeError, match="cannot be empty"):
 
         class A(Model):
-            class Config:
-                collection = ""
+            model_config = {"collection": ""}
 
 
 def test_invalid_collection_name_contain_system_dot():
     with pytest.raises(TypeError, match="cannot start with 'system.'"):
 
         class A(Model):
-            class Config:
-                collection = "system.hi"
+            model_config = {"collection": "system.hi"}
 
 
 def test_legacy_custom_collection_name():
@@ -383,8 +377,7 @@ def test_untouched_types_function():
         return str(self.id)
 
     class M(Model):
-        class Config:
-            arbitrary_types_allowed = True
+        model_config = {"arbitrary_types_allowed": True}
 
         id_: FunctionType = id_str  # type: ignore
 
@@ -431,27 +424,26 @@ def test_model_with_class_var():
 
 
 def test_forbidden_config_parameter_validate_all():
-    with pytest.raises(ValueError, match="'Config.validate_all' is not supported"):
+    with pytest.raises(
+        ValueError, match="'model_config.validate_all' is not supported"
+    ):
 
         class M(Model):
-            class Config:
-                validate_all = False
+            model_config = {"validate_all": False}
 
 
 def test_forbidden_config_parameter_validate_assignment():
     with pytest.raises(
-        ValueError, match="'Config.validate_assignment' is not supported"
+        ValueError, match="'model_config.validate_assignment' is not supported"
     ):
 
         class M(Model):
-            class Config:
-                validate_assignment = False
+            model_config = {"validate_assignment": False}
 
 
 def test_model_definition_extra_allow():
     class M(Model):
-        class Config:
-            extra = "allow"
+        model_config = {"extra": "allow"}
 
         f: int
 
@@ -461,8 +453,7 @@ def test_model_definition_extra_allow():
 
 def test_model_definition_extra_ignore():
     class M(Model):
-        class Config:
-            extra = "ignore"
+        model_config = {"extra": "ignore"}
 
         f: int
 
@@ -472,8 +463,7 @@ def test_model_definition_extra_ignore():
 
 def test_model_definition_extra_forbid():
     class M(Model):
-        class Config:
-            extra = "forbid"
+        model_config = {"extra": "forbid"}
 
         f: int
 
@@ -483,8 +473,7 @@ def test_model_definition_extra_forbid():
 
 def test_extra_field_type_subst():
     class M(Model):
-        class Config:
-            extra = "allow"
+        model_config = {"extra": "allow"}
 
         f: int
 
@@ -495,8 +484,7 @@ def test_extra_field_type_subst():
 
 def test_extra_field_document_parsing():
     class M(Model):
-        class Config:
-            extra = "allow"
+        model_config = {"extra": "allow"}
 
         f: int
 
