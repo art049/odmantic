@@ -9,7 +9,7 @@ This module provides helpers to build Pydantic Models containing BSON objects.
 
 ::: odmantic.bson.BSON_TYPES_ENCODERS
 
-Encoders required to encode BSON fields (can be used in the Pydantic Model's `Config.json_encoders` parameter). See [pydantic: JSON Encoders](https://pydantic-docs.helpmanual.io/usage/exporting_models/#json_encoders){:target=blank_} for more details.
+Encoders required to encode BSON fields (can be used in the Pydantic Model's `Config.json_encoders` parameter). See [pydantic: JSON Encoders](https://docs.pydantic.dev/latest/api/config/#pydantic.config.ConfigDict.json_encoders){:target=blank_} for more details.
 
 ## Pydantic type helpers
 

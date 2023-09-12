@@ -24,7 +24,7 @@
 
 Sync and Async ODM (Object Document Mapper) for <a href="https://www.mongodb.com/"
 target="_blank">MongoDB</a> based on standard python type hints. Built on top of <a
-href="https://pydantic-docs.helpmanual.io/" target="_blank">pydantic</a> for model
+href="https://docs.pydantic.dev/" target="_blank">pydantic</a> for model
 definition and validation.
 
 Core features:
@@ -294,7 +294,7 @@ lulu.founded = 1000
 
 This will raise an exception as it's not matching the model definition. The raised
 exception is actually a `ValidationError` created by from <a
-href="https://pydantic-docs.helpmanual.io/usage/models/#error-handling"
+href="https://docs.pydantic.dev/latest/usage/models/#error-handling"
 target="_blank">pydantic</a>.
 
 ### Next steps
