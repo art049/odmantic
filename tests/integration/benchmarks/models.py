@@ -3,7 +3,9 @@
 from datetime import datetime
 from decimal import Decimal
 from random import choice
-from typing import Iterator, Literal, Optional, get_args
+from typing import Iterator, Optional
+
+from typing_extensions import Literal, get_args
 
 from odmantic import Field, Model
 
