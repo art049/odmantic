@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- feat: benchmark operations ([#362](https://github.com/art049/odmantic/pull/362) by [@art049](https://github.com/art049))
+
 ## [0.9.2] - 2023-01-03
 
 ### Fixed

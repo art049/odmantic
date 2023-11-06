@@ -168,3 +168,13 @@ jobs:
         run: ./realworld/api/run-api-tests.sh
         env:
           APIURL: http://localhost:8000
+
+  all-ci-checks:
+    needs:
+      - static-analysis
+      - compatibility-tests
+      - tests
+      - integrated-realworld-test
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "All CI checks passed."
