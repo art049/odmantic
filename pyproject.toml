@@ -64,6 +64,8 @@ test = [
     "typer ~= 0.4.1",
     "semver ~= 2.13.0",
     "types-pytz ~= 2022.1.1",
+    "pytest-benchmark ~= 4.0.0",
+    "pytest-codspeed ~= 2.1.0",
 ]
 doc = [
     "pydocstyle[toml] ~= 6.1.1",
@@ -132,6 +134,7 @@ filterwarnings = [
     "ignore:the AIOEngineDependency object is deprecated.*:DeprecationWarning:odmantic.*",
 ]
 pythonpath = "src tests"
+addopts = "--benchmark-disable"
 [tool.coverage.run]
 branch = true
 [tool.coverage.report]
