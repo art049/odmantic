@@ -27,6 +27,14 @@ tasks:
     cmds:
       - pytest -rs -n auto
 
+  bench:
+    desc: |
+      Run the benches with the current version.
+    deps:
+      - task: "mongodb:check"
+    cmds:
+      - pytest --benchmark-enable --benchmark-only
+
   default:
     desc: |
       Run the tests related to changes with the current version.
@@ -92,7 +100,7 @@ tasks:
 
   setup:deps-setup:
     cmds:
-      - flit install --deps=all
+      - flit install --deps=all --python python
     sources:
       - pyproject.toml
 

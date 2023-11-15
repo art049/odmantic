@@ -13,6 +13,9 @@
 <a href="https://gitter.im/odmantic/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge" target="_blank">
     <img src="https://badges.gitter.im/odmantic/community.svg" alt="Gitter">
 </a>
+<a href="https://codspeed.io/art049/odmantic" target="_blank">
+    <img src="https://img.shields.io/endpoint?url=https://codspeed.io/badge.json" alt="CodSpeed">
+</a>
 
 </div>
 

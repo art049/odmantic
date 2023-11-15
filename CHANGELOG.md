@@ -5,6 +5,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- feat: benchmark operations ([#362](https://github.com/art049/odmantic/pull/362) by [@art049](https://github.com/art049))
+
+## [0.9.2] - 2023-01-03
+
+### Fixed
+
+- Properly handle literals among generic types ([#313](https://github.com/art049/odmantic/pull/313) by [@art049](https://github.com/art049))
+
+### Internals
+
+- Pin tox to fix CI ([#308](https://github.com/art049/odmantic/pull/308) by [@tiangolo](https://github.com/tiangolo))
+
 ## [0.9.1] - 2022-11-24
 
 ### Fixed
@@ -328,4 +340,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.8.0]: https://github.com/art049/odmantic/compare/v0.7.1...v0.8.0
 [0.9.0]: https://github.com/art049/odmantic/compare/v0.8.0...v0.9.0
 [0.9.1]: https://github.com/art049/odmantic/compare/v0.9.0...v0.9.1
-[unreleased]: https://github.com/art049/odmantic/compare/v0.9.1...HEAD
+[0.9.2]: https://github.com/art049/odmantic/compare/v0.9.1...v0.9.2
+[unreleased]: https://github.com/art049/odmantic/compare/v0.9.2...HEAD
