@@ -38,6 +38,19 @@ else:
     # FIXME: add this back to coverage once 3.11 is released
     from typing import dataclass_transform  # noqa: F401 # pragma: no cover
 
+
+# HAS_GENERIC_ALIAS_BUILTIN = sys.version_info[:3] >= (3, 9, 0)  # PEP 560
+# if HAS_GENERIC_ALIAS_BUILTIN:
+#     from types import GenericAlias as TypesGenericAlias
+#     from typing import GenericAlias as TypingGenericAlias  # type: ignore
+#     from typing import _SpecialGenericAlias as TypingSpecialGenericAlias  # type: ignore
+
+#     GenericAlias = (TypesGenericAlias, TypingGenericAlias, TypingSpecialGenericAlias)
+# else:
+#     from typing import _GenericAlias  # type: ignore # noqa: F401
+
+#     GenericAlias = (_GenericAlias,)  # type: ignore # noqa: F401
+
 HAS_GENERIC_ALIAS_BUILTIN = sys.version_info[:3] >= (3, 9, 0)  # PEP 560
 if HAS_GENERIC_ALIAS_BUILTIN:
     from typing import GenericAlias  # type: ignore
@@ -53,7 +66,7 @@ def lenient_issubclass(
     try:
         return isinstance(cls, type) and issubclass(cls, class_or_tuple)
     except TypeError:
-        if isinstance(cls, GenericAlias):
+        if get_origin(cls) is not None or isinstance(cls, GenericAlias):
             return False
         raise  # pragma: no cover
 

@@ -198,11 +198,11 @@ class ODMBaseField(metaclass=abc.ABCMeta):
 
     def is_required_in_doc(self) -> bool:
         if self.model_config["parse_doc_with_default_factories"]:
-            return self.pydantic_field.required  # type: ignore
+            return self.pydantic_field.is_required()  # type: ignore
         else:
             return (
                 self.pydantic_field.default_factory is not None
-                or self.pydantic_field.required  # type: ignore
+                or self.pydantic_field.is_required()  # type: ignore
             )
 
 

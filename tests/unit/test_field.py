@@ -75,11 +75,12 @@ def test_field_required_in_doc_with_default():
     assert not M.__odm_fields__["field"].is_required_in_doc()
 
 
-def test_field_required_in_doc_implicit_optional_default():
-    class M(Model):
-        field: Optional[str]
+# TODO: document not supported anymore
+# def test_field_required_in_doc_implicit_optional_default():
+#     class M(Model):
+#         field: Optional[str]
 
-    assert not M.__odm_fields__["field"].is_required_in_doc()
+#     assert not M.__odm_fields__["field"].is_required_in_doc()
 
 
 def test_field_required_in_doc_default_factory_disabled():

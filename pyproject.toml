@@ -44,12 +44,12 @@ dependencies = [
     "pymongo >=3.11.0,<5.0.0",
 ]
 [project.optional-dependencies]
-fastapi = ["fastapi >=0.100.0-beta2"]
+fastapi = ["fastapi >=0.100.0"]
 test = [
     "black ~= 23.3.0",
     "isort ~=5.8.0",
     "ruff ~= 0.0.277",
-    "mypy ~= 1.4.1",
+    "mypy ~= 1.5.0",
     "pytest ~= 7.0",
     "pytest-xdist ~= 2.1.0",
     "pytest-asyncio ~= 0.16.0",
@@ -62,13 +62,13 @@ test = [
     "types-pytz ~= 2023.3.0.0",
     "darglint ~= 1.8.1",
     "uvicorn ~= 0.17.0",
-    "fastapi >=0.100.0-beta2",
+    "fastapi >=0.100.0",
     "requests ~= 2.24.0",
     "typer ~= 0.4.1",
     "semver ~= 2.13.0",
-    "types-pytz ~= 2022.1.1",
     "pytest-benchmark ~= 4.0.0",
     "pytest-codspeed ~= 2.1.0",
+    "httpx ~= 0.24.1",
 ]
 doc = [
     "pydocstyle[toml] ~= 6.1.1",

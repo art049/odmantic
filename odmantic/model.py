@@ -86,7 +86,12 @@ if TYPE_CHECKING:
     from odmantic.typing import AbstractSetIntStr, DictStrAny, IncEx, ReprArgs
 
 
-UNTOUCHED_TYPES = FunctionType, property, classmethod, staticmethod, type
+UNTOUCHED_TYPES = (
+    FunctionType,
+    property,
+    classmethod,
+    staticmethod,
+)  # , type FIXME: seems weird
 
 
 def should_touch_field(value: Any = None, type_: Optional[Type] = None) -> bool:
@@ -147,13 +152,11 @@ def is_type_mutable(type_: Type) -> bool:
             return False
         return not lenient_issubclass(type_origin, _IMMUTABLE_TYPES)
     else:
-        return not (
-            type_ is None
-            or (
-                lenient_issubclass(type_, _IMMUTABLE_TYPES)
-                and not lenient_issubclass(type_, EmbeddedModel)
-            )
+        is_immutable = type_ is None or (
+            lenient_issubclass(type_, _IMMUTABLE_TYPES)
+            and not lenient_issubclass(type_, EmbeddedModel)
         )
+        return not is_immutable
 
 
 def is_type_forbidden(t: Type) -> bool:
@@ -202,6 +205,7 @@ class BaseModelMetaclass(pydantic._internal._model_construction.ModelMetaclass):
                 should_touch_field(value=value)
                 and not is_dunder(field_name)
                 and field_name not in annotations
+                and field_name != "model_config"
             ):
                 raise TypeError(
                     f"field {field_name} is defined without type annotation"
@@ -229,7 +233,9 @@ class BaseModelMetaclass(pydantic._internal._model_construction.ModelMetaclass):
             if isinstance(value, PDFieldInfo):
                 raise TypeError("please use odmantic.Field instead of pydantic.Field")
 
-            if is_type_mutable(field_type):
+            if (
+                is_type_mutable(field_type) or True
+            ):  # FIXME: remove when is type mutable is fixed
                 mutable_fields.add(field_name)
 
             if lenient_issubclass(field_type, EmbeddedModel):
