@@ -35,12 +35,7 @@ from pydantic.fields import FieldInfo as PDFieldInfo
 from pydantic.main import BaseModel
 from pydantic_core import InitErrorDetails
 
-from odmantic.bson import (
-    _BSON_SUBSTITUTED_FIELDS,
-    BaseBSONModel,
-    ObjectId,
-    _decimalDecimal,
-)
+from odmantic.bson import _BSON_SUBSTITUTED_FIELDS, BaseBSONModel, ObjectId
 from odmantic.config import ODMConfigDict, validate_config
 from odmantic.exceptions import (
     DocumentParsingError,
@@ -131,7 +126,7 @@ _IMMUTABLE_TYPES = (
     pydantic.BaseModel,
     bson.ObjectId,
     bson.Decimal128,
-    _decimalDecimal,
+    decimal.Decimal,
 )
 
 
