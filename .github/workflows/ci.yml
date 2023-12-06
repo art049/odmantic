@@ -32,10 +32,7 @@ jobs:
           - "3.10"
           #- "3.11" # TODO: Enable once 3.11 is released
         pydantic-version:
-          - "1.7"
-          - "1.8"
-          - "1.9"
-          - "1.10"
+          - "1.10.8"
         motor-version:
           - "2.1"
           - "2.2"
@@ -93,7 +90,7 @@ jobs:
         if: matrix.pymongo-version != ''
         run: |
           pip install "pymongo==${{ matrix.pymongo-version }}"
-        
+
       - name: Run compatibility checks.
         # run: |
         #   export VERSION_STR=$(echo ${{ matrix.python-version }} | sed -e "s/\.//g")
