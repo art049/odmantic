@@ -33,6 +33,7 @@ jobs:
           #- "3.11" # TODO: Enable once 3.11 is released
         pydantic-version:
           - "1.10.8"
+          - "1.10.13"
         motor-version:
           - "2.1"
           - "2.2"
