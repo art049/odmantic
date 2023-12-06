@@ -56,10 +56,12 @@ jobs:
           python-version: "${{ matrix.python-version }}"
       - name: Cache environment
         uses: actions/cache@v2
+        id: cache
         with:
           path: ${{ env.pythonLocation }}
           key: env-compatibility-${{ runner.os }}-${{ matrix.python-version }}-${{ matrix.pydantic-version }}-${{ matrix.motor-version }}-${{ hashFiles('pyproject.toml') }}
       - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: |
           pip install ".[test]"
           pip install "pydantic==${{ matrix.pydantic-version }}" "motor==${{ matrix.motor-version }}"
