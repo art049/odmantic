@@ -41,28 +41,6 @@ jobs:
           - "2.4"
           - "2.5"
           - "3.0"
-        pymongo-version:
-          # Empty so that the includes don't override it but extend the matrix
-          - ""
-        include:
-          - motor-version: "2.4"
-            python-version: "3.7"
-            pymongo-version: "3.11"
-          - motor-version: "2.4"
-            python-version: "3.8"
-            pymongo-version: "3.11"
-          - motor-version: "2.4"
-            python-version: "3.9"
-            pymongo-version: "3.11"
-          - motor-version: "2.4"
-            python-version: "3.7"
-            pymongo-version: "3.12"
-          - motor-version: "2.4"
-            python-version: "3.8"
-            pymongo-version: "3.12"
-          - motor-version: "2.4"
-            python-version: "3.9"
-            pymongo-version: "3.12"
 
     steps:
       - uses: actions/checkout@v2
@@ -79,27 +57,14 @@ jobs:
       - name: Cache environment
         uses: actions/cache@v2
         with:
-          # path: |
-          #   .venv
-          #   .tox
           path: ${{ env.pythonLocation }}
-          key: env-compatibility-${{ runner.os }}-${{ matrix.python-version }}-${{ matrix.pydantic-version }}-${{ matrix.motor-version }}-${{ matrix.pymongo-version }}-${{ hashFiles('pyproject.toml') }}
-      # - name: Install tox
-      #   run: pip install "tox~=3.27.1" flit
+          key: env-compatibility-${{ runner.os }}-${{ matrix.python-version }}-${{ matrix.pydantic-version }}-${{ matrix.motor-version }}-${{ hashFiles('pyproject.toml') }}
       - name: Install dependencies
         run: |
           pip install ".[test]"
           pip install "pydantic==${{ matrix.pydantic-version }}" "motor==${{ matrix.motor-version }}"
-      - name: Explicitly install pymongo when defined
-        if: matrix.pymongo-version != ''
-        run: |
-          pip install "pymongo==${{ matrix.pymongo-version }}"
 
       - name: Run compatibility checks.
-        # run: |
-        #   export VERSION_STR=$(echo ${{ matrix.python-version }} | sed -e "s/\.//g")
-        #   export TOX_SKIP_ENV=$(printf '^(?!py%s-)' $VERSION_STR)
-        #   tox --parallel auto
         run: |
           python -c "import motor; print(motor.version)" 1>&2
           python -c "import pydantic; print(pydantic.VERSION)" 1>&2
