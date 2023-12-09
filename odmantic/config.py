@@ -5,7 +5,6 @@ from typing import TYPE_CHECKING, Any, Callable, Dict, Iterable, Optional, Type,
 
 import pymongo
 from pydantic import Extra
-from pydantic.main import BaseConfig
 from pydantic.typing import AnyCallable
 
 from odmantic.bson import BSON_TYPES_ENCODERS
@@ -37,7 +36,7 @@ class BaseODMConfig:
 
     # Inherited from pydantic
     title: Optional[str] = None
-    json_encoders: Dict[Type[Any], AnyCallable] = {}
+    json_encoders: Dict[Type[Any], AnyCallable] = BSON_TYPES_ENCODERS
     schema_extra: Union[Dict[str, Any], "SchemaExtraCallable"] = {}
     anystr_strip_whitespace: bool = False
     json_loads: Callable[[str], Any] = json.loads
@@ -49,36 +48,23 @@ class BaseODMConfig:
 ALLOWED_CONFIG_OPTIONS = {name for name in dir(BaseODMConfig) if not is_dunder(name)}
 
 
-class EnforcedPydanticConfig:
-    """Configuration options enforced to work with Models"""
+def combine_configs(*configs: Type[Any], **namespace: Any) -> Type[Any]:
+    # remove redundant bases
+    bases = list(configs)
+    while len(bases) > 1 and issubclass(bases[-2], bases[-1]):
+        del bases[-1]
 
-    validate_all = True
-    validate_assignment = True
+    json_encoders: Dict[Type[Any], AnyCallable] = {}
+    for config in reversed(bases):
+        json_encoders.update(getattr(config, "json_encoders", {}))
+    json_encoders.update(namespace.get("json_encoders", {}))
+    namespace["json_encoders"] = json_encoders
+
+    return type("Config", tuple(bases), namespace)
 
 
-def validate_config(
-    cls_config: Type[BaseODMConfig], cls_name: str
-) -> Type[BaseODMConfig]:
+def validate_config(config: Type[BaseODMConfig], cls_name: str) -> None:
     """Validate and build the model configuration"""
-    for name in dir(cls_config):
+    for name in dir(config):
         if not is_dunder(name) and name not in ALLOWED_CONFIG_OPTIONS:
             raise ValueError(f"'{cls_name}': 'Config.{name}' is not supported")
-
-    if cls_config is BaseODMConfig:
-        bases = (EnforcedPydanticConfig, BaseODMConfig, BaseConfig)
-    else:
-        bases = (
-            EnforcedPydanticConfig,
-            cls_config,
-            BaseODMConfig,
-            BaseConfig,
-        )  # type:ignore
-
-    # Merge json_encoders to preserve bson type encoders
-    namespace = {
-        "json_encoders": {
-            **BSON_TYPES_ENCODERS,
-            **getattr(cls_config, "json_encoders", {}),
-        }
-    }
-    return type("Config", bases, namespace)
