@@ -7,9 +7,9 @@ NoArgAnyCallable = TypingCallable[[], Any]
 
 # Handles globally the typing imports from typing or the typing_extensions backport
 if sys.version_info < (3, 8):
-    from typing_extensions import Literal, get_args, get_origin
+    from typing_extensions import Annotated, Literal, get_args, get_origin
 else:
-    from typing import Literal, get_args, get_origin  # noqa: F401
+    from typing import Annotated, Literal, get_args, get_origin  # noqa: F401
 
 if sys.version_info < (3, 11):
     from typing_extensions import dataclass_transform

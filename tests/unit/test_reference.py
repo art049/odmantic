@@ -2,7 +2,7 @@ import pytest
 
 from odmantic.field import Field
 from odmantic.model import Model
-from odmantic.reference import Reference
+from odmantic.reference import EagerReference, LazyReference, Reference
 
 
 def test_build_query_filter_across_reference():
@@ -39,3 +39,14 @@ def test_reference_with_custom_primary_field():
     r = Referenced(key=1)
     m = M(ref=r)
     assert m.doc()["ref"] == 1
+
+
+def test_eager_ref():
+    class Referenced(Model):
+        f: int
+
+    class M(Model):
+        ref: EagerReference[Referenced]
+        ref2: LazyReference[Referenced]
+
+    M.ref2.f
