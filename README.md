@@ -1,21 +1,12 @@
 <div align="center">
 <h1>ODMantic</h1>
-<a href="https://github.com/art049/odmantic/actions?query=workflow%3A%22build%22+branch%3Amaster" target="_blank">
-    <img src="https://github.com/art049/odmantic/workflows/build/badge.svg" alt="build">
-</a>
-<a href="https://codecov.io/gh/art049/odmantic" target="_blank">
-    <img src="https://codecov.io/gh/art049/odmantic/branch/master/graph/badge.svg?token=3NYZK14STZ" alt="coverage">
-</a>
-<img src="https://img.shields.io/badge/python-3.7%20|%203.8%20|%203.9%20|%203.10-informational.svg" alt="python-3.7-3.8-3.9-3.10">
-<a href="https://pypi.org/project/odmantic" target="_blank">
-    <img src="https://img.shields.io/pypi/v/odmantic?color=%2334D058&label=pypi" alt="Package version">
-</a>
-<a href="https://gitter.im/odmantic/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge" target="_blank">
-    <img src="https://badges.gitter.im/odmantic/community.svg" alt="Gitter">
-</a>
-<a href="https://codspeed.io/art049/odmantic" target="_blank">
-    <img src="https://img.shields.io/endpoint?url=https://codspeed.io/badge.json" alt="CodSpeed">
-</a>
+
+[![build](https://github.com/art049/odmantic/workflows/build/badge.svg)](https://github.com/art049/odmantic/actions?query=workflow%3A%22build%22+branch%3Amaster)
+[![coverage](https://codecov.io/gh/art049/odmantic/branch/master/graph/badge.svg?token=3NYZK14STZ)](https://codecov.io/gh/art049/odmantic)
+![python-3.7-3.8-3.9-3.10](https://img.shields.io/badge/python-3.7%20|%203.8%20|%203.9%20|%203.10-informational.svg)
+[![Package version](https://img.shields.io/pypi/v/odmantic?color=%2334D058&label=pypi)](https://pypi.org/project/odmantic)
+[![CodSpeed](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/art049/odmantic)
+
 
 </div>
 
@@ -32,8 +23,8 @@ definition and validation.
 
 Core features:
 
-- **Simple**: define your model by typing your fields using python types, build queries
-  using python comparison operators
+- **Simple**: define your model by typing your fields using Python types, build queries
+  using Python comparison operators
 
 - **Developer experience**: field/method autocompletion, type hints, data validation,
   perform database operations with a functional API
@@ -46,7 +37,7 @@ Core features:
   target="_blank">sanic</a>, <a href="https://www.starlette.io/"
   target="_blank">Starlette</a>, ...) but works also perfectly in synchronous environments
 
-- **Serialization**: built in JSON serialization and JSON schema generation
+- **Serialization**: built-in JSON serialization and JSON schema generation
 
 ## Requirements
 
@@ -69,7 +60,7 @@ pip install odmantic
 > python3.8 -m asyncio
 > ```
 >
-> If you are using an earlier version of Python you can use <a
+> If you are using an earlier version of Python, you can use <a
 > href="https://ipython.readthedocs.io/en/stable/install/index.html"
 > target="_blank">IPython</a> which provide an Autoawait feature (starting from Python
 > 3.6).
@@ -94,7 +85,7 @@ example, the model will represent book publishers.
 This model contains three fields:
 
 - `name`: This is the name of the Publisher. This is a simple string field without any
-  specific validation but it will be required to build a new Publisher.
+  specific validation, but it will be required to build a new Publisher.
 
 - `founded`: This is the year of foundation of the Publisher. Since the printing press
   has been invented in 1440, it would be handy to allow only values above 1440. The
