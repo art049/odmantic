@@ -31,6 +31,16 @@ jobs:
           - "3.9"
           - "3.10"
           #- "3.11" # TODO: Enable once 3.11 is released
+        pydantic-version:
+          - "1.10.8"
+          - "1.10.13"
+        motor-version:
+          - "2.1"
+          - "2.2"
+          - "2.3"
+          - "2.4"
+          - "2.5"
+          - "3.0"
 
     steps:
       - uses: actions/checkout@v2
@@ -46,18 +56,21 @@ jobs:
           python-version: "${{ matrix.python-version }}"
       - name: Cache environment
         uses: actions/cache@v2
+        id: cache
         with:
-          path: |
-            .venv
-            .tox
-          key: env-compatibility-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml') }}
-      - name: Install tox
-        run: pip install "tox~=3.27.1" flit
+          path: ${{ env.pythonLocation }}
+          key: env-compatibility-${{ runner.os }}-${{ matrix.python-version }}-${{ matrix.pydantic-version }}-${{ matrix.motor-version }}-${{ hashFiles('pyproject.toml') }}
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          pip install ".[test]"
+          pip install "pydantic==${{ matrix.pydantic-version }}" "motor==${{ matrix.motor-version }}"
+
       - name: Run compatibility checks.
         run: |
-          export VERSION_STR=$(echo ${{ matrix.python-version }} | sed -e "s/\.//g")
-          export TOX_SKIP_ENV=$(printf '^(?!py%s-)' $VERSION_STR)
-          tox --parallel auto
+          python -c "import motor; print(motor.version)" 1>&2
+          python -c "import pydantic; print(pydantic.VERSION)" 1>&2
+          python -m pytest -q -rs
 
   tests:
     runs-on: ubuntu-latest
