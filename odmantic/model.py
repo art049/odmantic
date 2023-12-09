@@ -1,6 +1,7 @@
 import datetime
 import decimal
 import enum
+import functools
 import pathlib
 import uuid
 import warnings
@@ -16,6 +17,7 @@ from typing import (
     FrozenSet,
     Iterable,
     List,
+    NamedTuple,
     Optional,
     Set,
     Tuple,
@@ -499,6 +501,29 @@ class EmbeddedModelMetaclass(BaseModelMetaclass):
 
 
 BaseT = TypeVar("BaseT", bound="_BaseODMModel")
+TraversalState = NamedTuple(
+    "TraversalState", [("output", List[Any]), ("staging", List[Any])]
+)
+
+
+def flat_tree(o: BaseT) -> List[BaseT]:
+    state = TraversalState(output=[], staging=[o])
+
+    def obj_fields(obj):
+        return [getattr(obj, name) for name in set(obj.__odm_fields__)]
+
+    def unpack(acc: TraversalState, obj: Any) -> TraversalState:
+        output, (_, *staging_tail) = acc
+        if isinstance(obj, _BaseODMModel):
+            return TraversalState(output + [obj], staging_tail + obj_fields(obj))
+        elif isinstance(obj, Iterable) and not isinstance(obj, (str, dict)):
+            return TraversalState(output, staging_tail + [*obj])
+        else:
+            return TraversalState(output, staging_tail)
+
+    while state.staging:
+        state = functools.reduce(unpack, state.staging, state)
+    return state.output
 
 
 class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
@@ -583,11 +608,8 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         """Recursively update internal fields of the copied model after it has been
         copied.
         """
-        object.__setattr__(self, "__fields_modified__", set(self.__fields__))
-        for field_name, field in self.__odm_fields__.items():
-            if isinstance(field, ODMEmbedded):
-                value = getattr(self, field_name)
-                value._post_copy_update()
+        for model in flat_tree(self):
+            object.__setattr__(model, "__fields_modified__", set(model.__fields__))
 
     def update(
         self,
