@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from typing import (
     Any,
     AsyncGenerator,
@@ -19,7 +20,8 @@ from typing import (
 )
 
 import pymongo
-from pymongo import MongoClient
+import pymongo.errors
+from pymongo import MongoClient, UpdateOne
 from pymongo.client_session import ClientSession
 from pymongo.collection import Collection
 from pymongo.command_cursor import CommandCursor
@@ -59,6 +61,15 @@ SortExpressionType = Optional[Union[FieldProxy, Tuple[FieldProxy]]]
 
 AIOSessionType = Union[AsyncIOMotorClientSession, AIOSession, AIOTransaction, None]
 SyncSessionType = Union[ClientSession, SyncSession, SyncTransaction, None]
+
+
+@dataclass()
+class ModelUpdateOne:
+    instance: Model
+    update_one: UpdateOne
+
+
+CollectionUpdatesType = Dict[str, List[ModelUpdateOne]]
 
 
 class BaseCursor(Generic[ModelType]):
@@ -291,6 +302,39 @@ class BaseEngine:
         pipeline.extend(BaseEngine._cascade_find_pipeline(model))
         return pipeline
 
+    def _prepare_document_updates(
+        self,
+        instance: ModelType,
+        *,
+        collection_updates: Union[CollectionUpdatesType, None] = None,
+    ) -> CollectionUpdatesType:
+        """Generate update operations"""
+        if collection_updates is None:
+            current_collection_updates = {}
+        else:
+            current_collection_updates = collection_updates
+        for ref_field_name in instance.__references__:
+            sub_instance = cast(Model, getattr(instance, ref_field_name))
+            self._prepare_document_updates(
+                sub_instance, collection_updates=current_collection_updates
+            )
+
+        fields_to_update = instance.__fields_modified__ | instance.__mutable_fields__
+        if len(fields_to_update) > 0:
+            doc = instance.doc(include=fields_to_update)
+            collection_name = type(instance).__collection__
+            current_collection_updates.setdefault(collection_name, []).append(
+                ModelUpdateOne(
+                    instance=instance,
+                    update_one=UpdateOne(
+                        filter=instance.doc(include={instance.__primary_field__}),
+                        update={"$set": doc},
+                        upsert=True,
+                    ),
+                )
+            )
+        return current_collection_updates
+
 
 class AIOEngine(BaseEngine):
     """The AIOEngine object is responsible for handling database operations with MongoDB
@@ -325,6 +369,11 @@ class AIOEngine(BaseEngine):
             client = AsyncIOMotorClient()
         super().__init__(client=client, database=database)
 
+    def _get_collection_from_name(
+        self, collection_name: str
+    ) -> "AsyncIOMotorCollection":
+        return self.database[collection_name]
+
     def get_collection(self, model: Type[ModelType]) -> "AsyncIOMotorCollection":
         """Get the motor collection associated to a Model.
 
@@ -334,7 +383,7 @@ class AIOEngine(BaseEngine):
         Returns:
             the AsyncIO motor collection object
         """
-        return self.database[model.__collection__]
+        return self._get_collection_from_name(model.__collection__)
 
     @staticmethod
     def _get_session(
@@ -511,28 +560,40 @@ class AIOEngine(BaseEngine):
             return None
         return results[0]
 
+    async def _save_collection_updates(
+        self,
+        collection_updates: CollectionUpdatesType,
+        session: "AsyncIOMotorClientSession",
+    ) -> None:
+        # reverse so that the last collections added, the ones for sub-documents, are
+        # saved first
+        for collection_name, updates in reversed(list(collection_updates.items())):
+            collection = self._get_collection_from_name(collection_name)
+            update_operations = [update.update_one for update in updates]
+            update_instances = [update.instance for update in updates]
+            await collection.bulk_write(
+                update_operations,
+                session=session,
+            )
+            for inst in update_instances:
+                object.__setattr__(inst, "__fields_modified__", set())
+
     async def _save(
         self, instance: ModelType, session: "AsyncIOMotorClientSession"
     ) -> ModelType:
         """Perform an atomic save operation in the specified session"""
-        for ref_field_name in instance.__references__:
-            sub_instance = cast(Model, getattr(instance, ref_field_name))
-            await self._save(sub_instance, session)
-
-        fields_to_update = instance.__fields_modified__ | instance.__mutable_fields__
-        if len(fields_to_update) > 0:
-            doc = instance.doc(include=fields_to_update)
-            collection = self.get_collection(type(instance))
-            try:
-                await collection.update_one(
-                    instance.doc(include={instance.__primary_field__}),
-                    {"$set": doc},
-                    upsert=True,
-                    session=session,
-                )
-            except pymongo.errors.DuplicateKeyError as e:
+        collection_updates = self._prepare_document_updates(instance)
+        try:
+            await self._save_collection_updates(
+                collection_updates=collection_updates, session=session
+            )
+        # Ref:
+        # https://github.com/mongodb/mongo/blob/master/src/mongo/base/error_codes.yml
+        # DuplicateKey Error
+        except pymongo.errors.BulkWriteError as e:
+            if e.details["writeErrors"][0]["code"] == 11000:
                 raise DuplicateKeyError(instance, e)
-            object.__setattr__(instance, "__fields_modified__", set())
+            raise  # pragma: no cover
         return instance
 
     async def save(
@@ -611,17 +672,22 @@ class AIOEngine(BaseEngine):
         #noqa: DAR402 DuplicateKeyError
         -->
         """
+        collections_updates: CollectionUpdatesType = {}
+        for instance in instances:
+            self._prepare_document_updates(
+                instance, collection_updates=collections_updates
+            )
         if session:
-            added_instances = [
-                await self._save(instance, self._get_session(session))
-                for instance in instances
-            ]
+            await self._save_collection_updates(
+                collection_updates=collections_updates,
+                session=self._get_session(session),
+            )
         else:
             async with await self.client.start_session() as local_session:
-                added_instances = [
-                    await self._save(instance, local_session) for instance in instances
-                ]
-        return added_instances
+                await self._save_collection_updates(
+                    collection_updates=collections_updates, session=local_session
+                )
+        return list(instances)
 
     async def delete(
         self,
@@ -736,6 +802,9 @@ class SyncEngine(BaseEngine):
             client = MongoClient()
         super().__init__(client=client, database=database)
 
+    def _get_collection_from_name(self, collection_name: str) -> "Collection":
+        return self.database[collection_name]
+
     def get_collection(self, model: Type[ModelType]) -> "Collection":
         """Get the pymongo collection associated to a Model.
 
@@ -745,8 +814,7 @@ class SyncEngine(BaseEngine):
         Returns:
             the pymongo collection object
         """
-        collection = self.database[model.__collection__]
-        return collection
+        return self._get_collection_from_name(model.__collection__)
 
     @staticmethod
     def _get_session(
@@ -919,26 +987,36 @@ class SyncEngine(BaseEngine):
             return None
         return results[0]
 
+    def _save_collection_updates(
+        self,
+        collection_updates: CollectionUpdatesType,
+        session: ClientSession,
+    ) -> None:
+        # reverse so that the last collections added, the ones for sub-documents, are
+        # saved first
+        for collection_name, updates in reversed(list(collection_updates.items())):
+            update_operations = [update.update_one for update in updates]
+            update_instances = [update.instance for update in updates]
+            collection = self._get_collection_from_name(collection_name)
+            collection.bulk_write(
+                update_operations,
+                session=session,
+            )
+            for inst in update_instances:
+                object.__setattr__(inst, "__fields_modified__", set())
+
     def _save(self, instance: ModelType, session: "ClientSession") -> ModelType:
         """Perform an atomic save operation in the specified session"""
-        for ref_field_name in instance.__references__:
-            sub_instance = cast(Model, getattr(instance, ref_field_name))
-            self._save(sub_instance, session)
+        collection_updates = self._prepare_document_updates(instance)
 
-        fields_to_update = instance.__fields_modified__ | instance.__mutable_fields__
-        if len(fields_to_update) > 0:
-            doc = instance.doc(include=fields_to_update)
-            collection = self.get_collection(type(instance))
-            try:
-                collection.update_one(
-                    instance.doc(include={instance.__primary_field__}),
-                    {"$set": doc},
-                    upsert=True,
-                    session=session,
-                )
-            except pymongo.errors.DuplicateKeyError as e:
+        try:
+            self._save_collection_updates(
+                collection_updates=collection_updates, session=session
+            )
+        except pymongo.errors.BulkWriteError as e:
+            if e.details["writeErrors"][0]["code"] == 11000:
                 raise DuplicateKeyError(instance, e)
-            object.__setattr__(instance, "__fields_modified__", set())
+            raise  # pragma: no cover
         return instance
 
     def save(
@@ -1017,17 +1095,24 @@ class SyncEngine(BaseEngine):
         #noqa: DAR402 DuplicateKeyError
         -->
         """
+        collections_updates: CollectionUpdatesType = {}
+        for instance in instances:
+            self._prepare_document_updates(
+                instance, collection_updates=collections_updates
+            )
         if session:
-            added_instances = [
-                self._save(instance, self._get_session(session))  # type: ignore
-                for instance in instances
-            ]
+            mongo_session = self._get_session(session)
+            assert mongo_session
+            self._save_collection_updates(
+                collection_updates=collections_updates,
+                session=mongo_session,
+            )
         else:
             with self.client.start_session() as local_session:
-                added_instances = [
-                    self._save(instance, local_session) for instance in instances
-                ]
-        return added_instances
+                self._save_collection_updates(
+                    collection_updates=collections_updates, session=local_session
+                )
+        return list(instances)
 
     def delete(
         self,
