@@ -39,7 +39,6 @@ from odmantic.bson import (
     _BSON_SUBSTITUTED_FIELDS,
     BaseBSONModel,
     ObjectId,
-    _decimalDecimal,
     _get_bson_serializer,
 )
 from odmantic.config import ODMConfigDict, validate_config
@@ -127,7 +126,7 @@ _IMMUTABLE_TYPES = (
     pydantic.BaseModel,
     bson.ObjectId,
     bson.Decimal128,
-    _decimalDecimal,
+    decimal.Decimal,
 )
 
 
