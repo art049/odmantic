@@ -34,6 +34,7 @@ from pydantic.fields import Field as PDField
 from pydantic.fields import FieldInfo as PDFieldInfo
 from pydantic.main import BaseModel
 from pydantic_core import InitErrorDetails
+from typing_extensions import deprecated
 
 from odmantic.bson import (
     _BSON_SUBSTITUTED_FIELDS,
@@ -83,7 +84,13 @@ from odmantic.utils import (
 )
 
 if TYPE_CHECKING:
-    from odmantic.typing import AbstractSetIntStr, DictStrAny, IncEx, ReprArgs
+    from odmantic.typing import (
+        AbstractSetIntStr,
+        DictStrAny,
+        IncEx,
+        MappingIntStrAny,
+        ReprArgs,
+    )
 
 
 UNTOUCHED_TYPES = FunctionType, property, classmethod, staticmethod, type
@@ -546,48 +553,55 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         args = [id_arg] + args
         return args
 
-    # TODO: rename to model_copy, remove include/exclude
+    @deprecated(
+        "copy is deprecated, please use model_copy instead",
+    )
     def copy(
         self: BaseT,
         *,
-        include: "IncEx" = None,
-        exclude: "IncEx" = None,
+        include: Union["AbstractSetIntStr", "MappingIntStrAny", None] = None,
+        exclude: Union["AbstractSetIntStr", "MappingIntStrAny", None] = None,
+        update: Dict[str, Any] | None = None,
+        deep: bool = False,
+    ) -> BaseT:
+        if include is not None or exclude is not None:
+            raise NotImplementedError(
+                "copy with include or exclude is not supported anymore, "
+                "please use `model_copy` instead"
+            )
+        return self.model_copy(update=update, deep=deep)
+
+    def model_copy(
+        self: BaseT,
+        *,
         update: Optional["DictStrAny"] = None,
         deep: bool = False,
     ) -> BaseT:
-        """Duplicate a model, optionally choose which fields to include, exclude and
-        change.
+        """Duplicate a model, optionally choose which fields to change.
 
         Danger:
             The data is not validated before creating the new model: **you should trust
             this data**.
 
         Arguments:
-            include: fields to include in new model
-            exclude: fields to exclude from new model, as with values this takes
-                precedence over include
             update: values to change/add in the new model.
             deep: set to `True` to make a deep copy of the model
-
-        Note:
-            The `include` and `exclude` kwargs are only affecting the copied data,
-            not filtering the update object.
 
         Returns:
             new model instance
 
         """
-        copied = super().model_copy(
-            include=include, exclude=exclude, update=update, deep=deep  # type: ignore
-        )
+        copied = super().model_copy(update=update, deep=deep)  # type: ignore
         copied._post_copy_update()
         return copied
 
     def _post_copy_update(self: BaseT) -> None:
         """Recursively update internal fields of the copied model after it has been
         copied.
+
+        Set them as if they were modified to make sure they are saved in the database.
         """
-        object.__setattr__(self, "__fields_modified__", set(self.__fields__))
+        object.__setattr__(self, "__fields_modified__", set(self.model_fields))
         for field_name, field in self.__odm_fields__.items():
             if isinstance(field, ODMEmbedded):
                 value = getattr(self, field_name)

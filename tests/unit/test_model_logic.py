@@ -362,13 +362,13 @@ def test_change_primary_key_value():
 
 def test_model_copy_without_update():
     instance = PersonModel(first_name="Jean", last_name="Valjean")
-    copied = instance.copy()
+    copied = instance.model_copy()
     assert instance == copied
 
 
 def test_model_copy_with_update():
     instance = PersonModel(first_name="Jean", last_name="Valjean")
-    copied = instance.copy(update={"last_name": "Pierre"})
+    copied = instance.model_copy(update={"last_name": "Pierre"})
     assert instance.id == copied.id
     assert instance.first_name == copied.first_name
     assert copied.last_name == "Pierre"
@@ -376,10 +376,21 @@ def test_model_copy_with_update():
 
 def test_model_copy_with_update_primary_key():
     instance = PersonModel(first_name="Jean", last_name="Valjean")
-    copied = instance.copy(update={"id": ObjectId()})
+    copied = instance.model_copy(update={"id": ObjectId()})
     assert instance.first_name == copied.first_name
     assert copied.last_name == copied.last_name
     assert instance.id != copied.id
+
+
+def test_deprecated_model_copy_call():
+    class M(Model):
+        ...
+
+    with pytest.raises(NotImplementedError):
+        M().copy(include={"id"})
+
+    with pytest.raises(NotImplementedError):
+        M().copy(exclude={"id"})
 
 
 def test_model_copy_deep_embedded():
@@ -390,7 +401,7 @@ def test_model_copy_deep_embedded():
         e: E
 
     instance = M(e=E(f=1))
-    copied = instance.copy(deep=True)
+    copied = instance.model_copy(deep=True)
     assert instance.e is not copied.e
 
 
@@ -405,7 +416,7 @@ def test_model_copy_deep_embedded_mutability():
         e: E
 
     instance = M(e=E(f=F(g=1)))
-    copied = instance.copy(deep=True)
+    copied = instance.model_copy(deep=True)
     copied.e.f.g = 42
     assert instance.e.f.g != copied.e.f.g
 
@@ -415,11 +426,10 @@ def test_model_copy_not_deep_embedded():
         f: int
 
     class M(Model):
-
         e: E
 
     instance = M(e=E(f=1))
-    copied = instance.copy(deep=False)
+    copied = instance.model_copy(deep=False)
     assert instance.e is copied.e
 
 
@@ -433,7 +443,7 @@ def test_model_copy_with_reference(deep: bool):
 
     ref_instance = R(f=12)
     instance = M(r=ref_instance)
-    copied = instance.copy(deep=deep)
+    copied = instance.model_copy(deep=deep)
     assert instance.doc() == copied.doc()
     assert instance.r == copied.r
 
@@ -445,7 +455,7 @@ def test_model_copy_field_modified(deep: bool):
 
     instance = M(f=5)
     object.__setattr__(instance, "__fields_modified__", set())
-    copied = instance.copy(update={"f": 12}, deep=deep)
+    copied = instance.model_copy(update={"f": 12}, deep=deep)
     assert "f" in copied.__fields_modified__
 
 
@@ -458,7 +468,7 @@ def test_model_copy_field_modified_on_primary_field_change(deep: bool):
 
     instance = M(f0=12, f1=5, f2=6)
     object.__setattr__(instance, "__fields_modified__", set())
-    copied = instance.copy(deep=deep)
+    copied = instance.model_copy(deep=deep)
     assert {"id", "f0", "f1", "f2"} == copied.__fields_modified__
 
 
@@ -514,7 +524,7 @@ def test_update_exclude_none(instance_to_update):
 
 
 def test_update_exclude_defaults(instance_to_update):
-    initial_instance = instance_to_update.copy()
+    initial_instance = instance_to_update.model_copy()
 
     class Update(BaseModel):
         first_name: Optional[str] = None
