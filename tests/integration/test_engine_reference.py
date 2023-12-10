@@ -1,4 +1,5 @@
 import pytest
+from inline_snapshot import snapshot
 
 from odmantic.bson import ObjectId
 from odmantic.engine import AIOEngine, SyncEngine
@@ -6,6 +7,7 @@ from odmantic.exceptions import DocumentParsingError
 from odmantic.model import Model
 from odmantic.reference import Reference
 from tests.integration.conftest import only_on_replica
+from tests.integration.utils import redact_objectid
 from tests.zoo.deeply_nested import NestedLevel1, NestedLevel2, NestedLevel3
 
 from ..zoo.book_reference import Book, Publisher
@@ -263,15 +265,17 @@ async def test_reference_not_set_in_database(aio_engine: AIOEngine):
     class M(Model):
         r: R = Reference()
 
-    await aio_engine.get_collection(M).insert_one({"_id": ObjectId()})
+    oid = ObjectId()
+    await aio_engine.get_collection(M).insert_one({"_id": oid})
     with pytest.raises(DocumentParsingError) as exc_info:
         await aio_engine.find_one(M)
-    assert (
-        "1 validation error for M\n"
-        "r\n"
-        "  referenced document not found "
-        "(type=value_error.referenceddocumentnotfound; foreign_key_name='r')"
-    ) in str(exc_info.value)
+    assert redact_objectid(str(exc_info.value), oid) == snapshot(
+        """\
+1 validation error for M
+r
+  Referenced document not found for foreign key 'r' [type=odmantic::referenced_document_not_found, input_value={'_id': ObjectId('<ObjectId>')}, input_type=dict]\
+"""
+    )
 
 
 def test_sync_reference_not_set_in_database(sync_engine: SyncEngine):
@@ -281,15 +285,17 @@ def test_sync_reference_not_set_in_database(sync_engine: SyncEngine):
     class M(Model):
         r: R = Reference()
 
-    sync_engine.get_collection(M).insert_one({"_id": ObjectId()})
+    oid = ObjectId()
+    sync_engine.get_collection(M).insert_one({"_id": oid})
     with pytest.raises(DocumentParsingError) as exc_info:
         sync_engine.find_one(M)
-    assert (
-        "1 validation error for M\n"
-        "r\n"
-        "  referenced document not found "
-        "(type=value_error.referenceddocumentnotfound; foreign_key_name='r')"
-    ) in str(exc_info.value)
+    assert redact_objectid(str(exc_info.value), oid) == snapshot(
+        """\
+1 validation error for M
+r
+  Referenced document not found for foreign key 'r' [type=odmantic::referenced_document_not_found, input_value={'_id': ObjectId('<ObjectId>')}, input_type=dict]\
+"""
+    )
 
 
 async def test_reference_incorect_reference_structure(aio_engine: AIOEngine):
@@ -308,12 +314,13 @@ async def test_reference_incorect_reference_structure(aio_engine: AIOEngine):
 
     with pytest.raises(DocumentParsingError) as exc_info:
         await aio_engine.find_one(M)
-    assert (
-        "1 validation error for M\n"
-        "r -> field\n"
-        "  key not found in document "
-        "(type=value_error.keynotfoundindocument; key_name='field')"
-    ) in str(exc_info.value)
+    assert redact_objectid(str(exc_info.value), r.id) == snapshot(
+        """\
+1 validation error for M
+r.field
+  Key 'field' not found in document [type=odmantic::key_not_found_in_document, input_value={'_id': ObjectId('<ObjectId>')}, input_type=dict]\
+"""
+    )
 
 
 def test_sync_reference_incorect_reference_structure(sync_engine: SyncEngine):
@@ -332,9 +339,10 @@ def test_sync_reference_incorect_reference_structure(sync_engine: SyncEngine):
 
     with pytest.raises(DocumentParsingError) as exc_info:
         sync_engine.find_one(M)
-    assert (
-        "1 validation error for M\n"
-        "r -> field\n"
-        "  key not found in document "
-        "(type=value_error.keynotfoundindocument; key_name='field')"
-    ) in str(exc_info.value)
+    assert redact_objectid(str(exc_info.value), r.id) == snapshot(
+        """\
+1 validation error for M
+r.field
+  Key 'field' not found in document [type=odmantic::key_not_found_in_document, input_value={'_id': ObjectId('<ObjectId>')}, input_type=dict]\
+"""
+    )

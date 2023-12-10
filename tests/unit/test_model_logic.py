@@ -10,6 +10,7 @@ from odmantic.exceptions import DocumentParsingError
 from odmantic.field import Field
 from odmantic.model import EmbeddedModel, Model
 from odmantic.reference import Reference
+from tests.integration.utils import redact_objectid
 from tests.zoo.person import PersonModel
 
 
@@ -112,11 +113,11 @@ def test_document_parsing_error_keyname():
     id = ObjectId()
     with pytest.raises(DocumentParsingError) as exc_info:
         M.parse_doc({"_id": id})
-    assert str(exc_info.value).replace(str(id), "<oid>") == snapshot(
+    assert redact_objectid(str(exc_info.value), id) == snapshot(
         """\
 1 validation error for M
 field
-  Key 'custom' not found in document [type=odmantic::key_not_found_in_document, input_value={'_id': ObjectId('<oid>')}, input_type=dict]\
+  Key 'custom' not found in document [type=odmantic::key_not_found_in_document, input_value={'_id': ObjectId('<ObjectId>')}, input_type=dict]\
 """
     )
 

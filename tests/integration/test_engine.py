@@ -1,6 +1,8 @@
 from typing import Dict, List, Optional, Tuple
 
 import pytest
+from bson import ObjectId as BsonObjectId
+from inline_snapshot import snapshot
 from motor.motor_asyncio import AsyncIOMotorClient
 from pymongo import MongoClient
 
@@ -11,6 +13,7 @@ from odmantic.field import Field
 from odmantic.model import EmbeddedModel, Model
 from odmantic.query import asc, desc
 from tests.integration.conftest import only_on_replica
+from tests.integration.utils import redact_objectid
 from tests.zoo.book_reference import Book, Publisher
 
 from ..zoo.person import PersonModel
@@ -61,14 +64,14 @@ async def test_save(aio_engine: AIOEngine):
     instance = await aio_engine.save(
         PersonModel(first_name="Jean-Pierre", last_name="Pernaud")
     )
-    assert isinstance(instance.id, ObjectId)
+    assert isinstance(instance.id, BsonObjectId)
 
 
 def test_sync_save(sync_engine: SyncEngine):
     instance = sync_engine.save(
         PersonModel(first_name="Jean-Pierre", last_name="Pernaud")
     )
-    assert isinstance(instance.id, ObjectId)
+    assert isinstance(instance.id, BsonObjectId)
 
 
 async def test_save_find_find_one(aio_engine: AIOEngine):
@@ -1178,34 +1181,35 @@ async def test_find_document_field_not_set_with_no_default(aio_engine: AIOEngine
     class M(Model):
         field: str
 
-    await aio_engine.get_collection(M).insert_one({"_id": ObjectId()})
-    with pytest.raises(
-        DocumentParsingError, match="key not found in document"
-    ) as exc_info:
+    oid = ObjectId()
+    await aio_engine.get_collection(M).insert_one({"_id": oid})
+    with pytest.raises(DocumentParsingError) as exc_info:
         await aio_engine.find_one(M)
-    assert (
-        "1 validation error for M\n"
-        "field\n"
-        "  key not found in document "
-        "(type=value_error.keynotfoundindocument; key_name='field')"
-    ) in str(exc_info.value)
+    assert redact_objectid(str(exc_info.value), oid) == snapshot(
+        """\
+1 validation error for M
+field
+  Key 'field' not found in document [type=odmantic::key_not_found_in_document, input_value={'_id': ObjectId('<ObjectId>')}, input_type=dict]\
+"""
+    )
 
 
 def test_sync_find_document_field_not_set_with_no_default(sync_engine: SyncEngine):
     class M(Model):
         field: str
 
-    sync_engine.get_collection(M).insert_one({"_id": ObjectId()})
-    with pytest.raises(
-        DocumentParsingError, match="key not found in document"
-    ) as exc_info:
+    oid = ObjectId()
+    sync_engine.get_collection(M).insert_one({"_id": oid})
+    with pytest.raises(DocumentParsingError) as exc_info:
         sync_engine.find_one(M)
-    assert (
-        "1 validation error for M\n"
-        "field\n"
-        "  key not found in document "
-        "(type=value_error.keynotfoundindocument; key_name='field')"
-    ) in str(exc_info.value)
+
+    assert redact_objectid(str(exc_info.value), oid) == snapshot(
+        """\
+1 validation error for M
+field
+  Key 'field' not found in document [type=odmantic::key_not_found_in_document, input_value={'_id': ObjectId('<ObjectId>')}, input_type=dict]\
+"""
+    )
 
 
 async def test_find_document_field_not_set_with_default_factory_disabled(
@@ -1215,7 +1219,7 @@ async def test_find_document_field_not_set_with_default_factory_disabled(
         field: str = Field(default_factory=lambda: "hello")  # pragma: no cover
 
     await aio_engine.get_collection(M).insert_one({"_id": ObjectId()})
-    with pytest.raises(DocumentParsingError, match="key not found in document"):
+    with pytest.raises(DocumentParsingError, match="Key 'field' not found in document"):
         await aio_engine.find_one(M)
 
 
@@ -1226,7 +1230,7 @@ def test_sync_find_document_field_not_set_with_default_factory_disabled(
         field: str = Field(default_factory=lambda: "hello")  # pragma: no cover
 
     sync_engine.get_collection(M).insert_one({"_id": ObjectId()})
-    with pytest.raises(DocumentParsingError, match="key not found in document"):
+    with pytest.raises(DocumentParsingError, match="Key 'field' not found in document"):
         sync_engine.find_one(M)
 
 
