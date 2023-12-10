@@ -2,7 +2,7 @@ from typing import Dict, List, Optional, Tuple
 
 import pytest
 from bson.objectid import ObjectId
-from pydantic import root_validator
+from inline_snapshot import snapshot
 from pydantic.error_wrappers import ValidationError
 from pydantic.main import BaseModel
 
@@ -112,12 +112,12 @@ def test_document_parsing_error_keyname():
     id = ObjectId()
     with pytest.raises(DocumentParsingError) as exc_info:
         M.parse_doc({"_id": id})
-    assert str(exc_info.value) == (
-        "1 validation error for M\n"
-        "field\n"
-        "  key not found in document "
-        "(type=value_error.keynotfoundindocument; key_name='custom')\n"
-        f"(M instance details: id={repr(id)})"
+    assert str(exc_info.value).replace(str(id), "<oid>") == snapshot(
+        """\
+1 validation error for M
+field
+  Key 'custom' not found in document [type=odmantic::key_not_found_in_document, input_value={'_id': ObjectId('<oid>')}, input_type=dict]\
+"""
     )
 
 
@@ -133,9 +133,13 @@ def test_document_parsing_error_embedded_keyname():
 
     with pytest.raises(DocumentParsingError) as exc_info:
         M.parse_doc({"_id": ObjectId(), "e": {"f": {}}})
-    assert (
-        "1 validation error for M\n" "e -> f -> a\n" "  key not found in document"
-    ) in str(exc_info.value)
+    assert str(exc_info.value) == snapshot(
+        """\
+1 validation error for M
+e.f.a
+  Key 'a' not found in document [type=odmantic::key_not_found_in_document, input_value={}, input_type=dict]\
+"""
+    )
 
 
 def test_embedded_document_parsing_error():
@@ -144,11 +148,12 @@ def test_embedded_document_parsing_error():
 
     with pytest.raises(DocumentParsingError) as exc_info:
         E.parse_doc({})
-    assert str(exc_info.value) == (
-        "1 validation error for E\n"
-        "f\n"
-        "  key not found in document "
-        "(type=value_error.keynotfoundindocument; key_name='f')"
+    assert str(exc_info.value) == snapshot(
+        """\
+1 validation error for E
+f
+  Key 'f' not found in document [type=odmantic::key_not_found_in_document, input_value={}, input_type=dict]\
+"""
     )
 
 
@@ -158,10 +163,12 @@ def test_embedded_document_parsing_validation_error():
 
     with pytest.raises(DocumentParsingError) as exc_info:
         E.parse_doc({"f": "aa"})
-    assert str(exc_info.value) == (
-        "1 validation error for E\n"
-        "f\n"
-        "  value is not a valid integer (type=type_error.integer)"
+    assert str(exc_info.value).splitlines()[:-1] == snapshot(
+        [
+            "1 validation error for E",
+            "f",
+            "  Input should be a valid integer, unable to parse string as an integer [type=int_parsing, input_value='aa', input_type=str]",
+        ]
     )
 
 
@@ -240,10 +247,16 @@ def test_embedded_model_list_parsing_invalid_type():
     class M(Model):
         f: List[Em]
 
-    with pytest.raises(
-        DocumentParsingError, match="incorrect generic embedded model value"
-    ):
+    with pytest.raises(DocumentParsingError) as exc_info:
         M.parse_doc({"_id": 1, "f": {1: {"name": "Jack"}}})
+
+    assert str(exc_info.value) == snapshot(
+        """\
+1 validation error for M
+f
+  Incorrect generic embedded model value '{1: {'name': 'Jack'}}' [type=odmantic::incorrect_generic_embedded_model_value, input_value={'_id': 1, 'f': {1: {'name': 'Jack'}}}, input_type=dict]\
+"""
+    )
 
 
 def test_embedded_model_list_parsing_missing_value():
@@ -255,13 +268,14 @@ def test_embedded_model_list_parsing_missing_value():
 
     with pytest.raises(
         DocumentParsingError,
-        match="key not found in document",
     ) as exc_info:
         M.parse_doc({"_id": 1})
-    assert (
-        "1 validation error for M\n"
-        "f\n"
-        "  key not found in document" in str(exc_info.value)
+    assert str(exc_info.value) == snapshot(
+        """\
+1 validation error for M
+f
+  Key 'f' not found in document [type=odmantic::key_not_found_in_document, input_value={'_id': 1}, input_type=dict]\
+"""
     )
 
 
@@ -283,10 +297,15 @@ def test_embedded_model_dict_parsing_invalid_value():
     class M(Model):
         f: Dict[str, Em]
 
-    with pytest.raises(
-        DocumentParsingError, match="incorrect generic embedded model value"
-    ):
+    with pytest.raises(DocumentParsingError) as exc_info:
         M.parse_doc({"_id": 1, "f": []})
+    assert str(exc_info.value) == snapshot(
+        """\
+1 validation error for M
+f
+  Incorrect generic embedded model value '[]' [type=odmantic::incorrect_generic_embedded_model_value, input_value={'_id': 1, 'f': []}, input_type=dict]\
+"""
+    )
 
 
 def test_embedded_model_dict_parsing_invalid_sub_value():
@@ -296,14 +315,15 @@ def test_embedded_model_dict_parsing_invalid_sub_value():
     class M(Model):
         f: Dict[str, Em]
 
-    with pytest.raises(ValidationError, match="key not found in document") as exc_info:
+    with pytest.raises(DocumentParsingError) as exc_info:
         M.parse_doc({"_id": ObjectId(), "f": {"key": {"not_there": "a"}}})
-    assert (
-        "1 validation error for M\n"
-        'f -> ["key"] -> e\n'
-        "  key not found in document "
-        "(type=value_error.keynotfoundindocument; key_name='e')"
-    ) in str(exc_info.value)
+    assert str(exc_info.value) == snapshot(
+        """\
+1 validation error for M
+f.["key"].e
+  Key 'e' not found in document [type=odmantic::key_not_found_in_document, input_value={'not_there': 'a'}, input_type=dict]\
+"""
+    )
 
 
 def test_embedded_model_list_parsing_invalid_sub_value():
@@ -313,14 +333,15 @@ def test_embedded_model_list_parsing_invalid_sub_value():
     class M(Model):
         f: List[Em]
 
-    with pytest.raises(ValidationError, match="key not found in document") as exc_info:
+    with pytest.raises(DocumentParsingError) as exc_info:
         M.parse_doc({"_id": ObjectId(), "f": [{"not_there": "a"}]})
-    assert (
-        "1 validation error for M\n"
-        "f -> [0] -> e\n"
-        "  key not found in document "
-        "(type=value_error.keynotfoundindocument; key_name='e')"
-    ) in str(exc_info.value)
+    assert str(exc_info.value) == snapshot(
+        """\
+1 validation error for M
+f.[0].e
+  Key 'e' not found in document [type=odmantic::key_not_found_in_document, input_value={'not_there': 'a'}, input_type=dict]\
+"""
+    )
 
 
 def test_fields_modified_on_object_parsing():

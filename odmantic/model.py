@@ -768,12 +768,14 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         if len(errors) > 0:
             raise DocumentParsingError(
                 errors=errors,
+                model=cls,
             )
         try:
             instance = cls.model_validate(obj)
         except ValidationError as e:
             raise DocumentParsingError(
-                errors=e.raw_errors,  # type: ignore
+                errors=e.errors(),
+                model=cls,
             )
 
         return instance

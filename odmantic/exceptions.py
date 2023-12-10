@@ -6,7 +6,7 @@ from pydantic import ValidationError
 from pydantic_core import InitErrorDetails, PydanticCustomError
 
 if TYPE_CHECKING:
-    from odmantic.model import Model
+    from odmantic.model import Model, _BaseODMModel
 
 ModelType = TypeVar("ModelType")
 
@@ -110,7 +110,7 @@ def IncorrectGenericEmbeddedModelValue(value: Any) -> PydanticCustomError:
     )
 
 
-def DocumentParsingError(errors: ErrorList) -> ValidationError:
+class DocumentParsingError(ValueError):
     """Unable to parse the document into an instance.
 
     Inherits from the `ValidationError` defined by Pydantic.
@@ -119,7 +119,20 @@ def DocumentParsingError(errors: ErrorList) -> ValidationError:
       model (Union[Type[Model],Type[EmbeddedModel]]): model which could not be
         instanciated
     """
-    return ValidationError.from_exception_data(
-        title="Document parsing error",
-        line_errors=errors,
-    )
+
+    def __init__(
+        self,
+        errors: ErrorList,
+        model: Type["_BaseODMModel"],
+    ):
+        self.model = model
+        self.inner = ValidationError.from_exception_data(
+            title=self.model.__name__,
+            line_errors=errors,
+        )
+
+    def __str__(self) -> str:
+        return str(self.inner)
+
+    def __repr__(self) -> str:
+        return repr(self.inner)

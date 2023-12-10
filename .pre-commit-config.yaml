@@ -34,7 +34,7 @@ repos:
       - id: mypy
         exclude: "^docs/.*"
         additional_dependencies:
-          - pydantic~=1.9.1
+          - pydantic>=2.0.0
           - motor~=3.0.0
           - types-pytz~=2022.1.1
         args: [--no-pretty, --show-error-codes]
