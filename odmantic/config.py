@@ -22,6 +22,7 @@ PYDANTIC_ALLOWED_CONFIG_OPTIONS = {
     "str_strip_whitespace",
     "arbitrary_types_allowed",
     "extra",
+    "json_encoders",
 }
 PYDANTIC_FORBIDDEN_CONFIG_OPTIONS = (
     PYDANTIC_CONFIG_OPTIONS - PYDANTIC_ALLOWED_CONFIG_OPTIONS
@@ -30,7 +31,7 @@ ODM_CONFIG_OPTIONS = set(ODMConfigDict.__annotations__.keys()) - PYDANTIC_CONFIG
 ODM_CONFIG_ALLOWED_CONFIG_OPTIONS = ODM_CONFIG_OPTIONS | PYDANTIC_ALLOWED_CONFIG_OPTIONS
 
 
-EnforcedPydanticConfig = ConfigDict(validate_default=True, validate_assignment=True)
+ENFORCED_PYDANTIC_CONFIG = ConfigDict(validate_default=True, validate_assignment=True)
 
 
 def validate_config(config: ODMConfigDict, cls_name: str) -> ODMConfigDict:
@@ -43,20 +44,26 @@ def validate_config(config: ODMConfigDict, cls_name: str) -> ODMConfigDict:
         "str_strip_whitespace": False,
         "arbitrary_types_allowed": False,
         "extra": None,
-        **EnforcedPydanticConfig,
+        **ENFORCED_PYDANTIC_CONFIG,
         "collection": None,
         "parse_doc_with_default_factories": False,
         "indexes": None,
     }
 
     for config_key, value in config.items():
-        if config_key in ODM_CONFIG_ALLOWED_CONFIG_OPTIONS:
-            out_config[config_key] = value
+        if config_key in ENFORCED_PYDANTIC_CONFIG:
+            raise ValueError(
+                f"'{cls_name}': configuration attribute '{config_key}' is "
+                f"enforced to {ENFORCED_PYDANTIC_CONFIG[config_key]} by ODMantic "
+                "and cannot be changed"
+            )
         elif config_key in PYDANTIC_FORBIDDEN_CONFIG_OPTIONS:
             raise ValueError(
                 f"'{cls_name}': configuration attribute '{config_key}'"
                 " from Pydantic is not supported"
             )
+        elif config_key in ODM_CONFIG_ALLOWED_CONFIG_OPTIONS:
+            out_config[config_key] = value
         else:
             raise ValueError(
                 f"'{cls_name}': unknown configuration attribute '{config_key}'"

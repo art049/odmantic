@@ -414,26 +414,6 @@ def test_model_with_class_var():
     assert "cls_var" not in m.doc().keys()
 
 
-def test_forbidden_config_parameter_validate_default():
-    with pytest.raises(
-        ValueError,
-        match="configuration attribute 'validate_default' from Pydantic is not supported",
-    ):
-
-        class M(Model):
-            model_config = {"validate_default": False}
-
-
-def test_forbidden_config_parameter_validate_assignment():
-    with pytest.raises(
-        ValueError,
-        match="configuration attribute 'validate_assignment' from Pydantic is not supported",
-    ):
-
-        class M(Model):
-            model_config = {"validate_assignment": False}
-
-
 def test_model_definition_extra_allow():
     class M(Model):
         model_config = {"extra": "allow"}

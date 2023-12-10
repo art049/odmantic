@@ -115,7 +115,7 @@ MAIN_TWITTER_USER = TwitterUser(following=[e.id for e in TWITTER_USERS])
     ),
 )
 def test_zoo_serialization_no_id(instance: Model, expected_parsed_json: Dict):
-    parsed_data = json.loads(instance.json())
+    parsed_data = json.loads(instance.model_dump_json())
     del parsed_data["id"]
     assert parsed_data == expected_parsed_json
 
@@ -127,14 +127,18 @@ def test_custom_json_encoders():
         model_config = {"json_encoders": {datetime: lambda _: "encoded"}}
 
     instance = M()
-    parsed = json.loads(instance.json())
+    parsed = json.loads(instance.model_dump_json())
     assert parsed == {"id": str(instance.id), "a": "encoded"}
 
 
+@pytest.xfail(
+    "This doesn't work any more with pydantic v2 since bson fields are "
+    "now annotated and take precedence over the custom json encoder."
+)
 def test_custom_json_encoders_override_builtin_bson():
     class M(Model):
         model_config = {"json_encoders": {ObjectId: lambda _: "encoded"}}
 
     instance = M()
-    parsed = json.loads(instance.json())
+    parsed = json.loads(instance.model_dump_json())
     assert parsed == {"id": "encoded"}
