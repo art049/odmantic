@@ -3,6 +3,7 @@ from typing import Dict, List, Optional, Tuple
 import pytest
 from bson.objectid import ObjectId
 from inline_snapshot import snapshot
+from pydantic import model_validator, root_validator
 from pydantic.error_wrappers import ValidationError
 from pydantic.main import BaseModel
 
@@ -635,7 +636,26 @@ def test_update_side_effect_field_modified():
         height: float
         area: float = 0
 
-        @root_validator()
+        @model_validator(mode="before")
+        def set_area(cls, v):
+            v["area"] = v["width"] * v["height"]
+            return v
+
+    r = Rectangle(width=1, height=1)
+    assert r.area == 1
+    r.__fields_modified__.clear()
+    r.update({"width": 5})
+    assert r.area == 5
+    assert "area" in r.__fields_modified__
+
+
+def test_update_side_effect_field_modified_with_root_validator():
+    class Rectangle(Model):
+        width: float
+        height: float
+        area: float = 0
+
+        @root_validator(skip_on_failure=True)
         def set_area(cls, v):
             v["area"] = v["width"] * v["height"]
             return v

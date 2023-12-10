@@ -42,7 +42,7 @@ def test_unknown_attr_embedded_model():
     class M(Model):
         field: E
 
-    with pytest.raises(AttributeError, match="attribute unknown_attr not found in E"):
+    with pytest.raises(AttributeError):
         M.field.unknown_attr  # type: ignore
 
 

@@ -53,7 +53,7 @@ def lenient_issubclass(
     try:
         return isinstance(cls, type) and issubclass(cls, class_or_tuple)
     except TypeError:
-        if isinstance(cls, GenericAlias):
+        if get_origin(cls) is not None or isinstance(cls, GenericAlias):
             return False
         raise  # pragma: no cover
 

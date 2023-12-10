@@ -30,6 +30,7 @@ import bson
 import pydantic
 import pymongo
 from pydantic import TypeAdapter, ValidationError
+from pydantic._internal._decorators import PydanticDescriptorProxy
 from pydantic.fields import Field as PDField
 from pydantic.fields import FieldInfo as PDFieldInfo
 from pydantic.main import BaseModel
@@ -93,7 +94,13 @@ if TYPE_CHECKING:
     )
 
 
-UNTOUCHED_TYPES = FunctionType, property, classmethod, staticmethod, type
+UNTOUCHED_TYPES = (
+    FunctionType,
+    property,
+    classmethod,
+    staticmethod,
+    PydanticDescriptorProxy,
+)
 
 
 def should_touch_field(value: Any = None, type_: Optional[Type] = None) -> bool:
@@ -154,13 +161,11 @@ def is_type_mutable(type_: Type) -> bool:
             return False
         return not lenient_issubclass(type_origin, _IMMUTABLE_TYPES)
     else:
-        return not (
-            type_ is None
-            or (
-                lenient_issubclass(type_, _IMMUTABLE_TYPES)
-                and not lenient_issubclass(type_, EmbeddedModel)
-            )
+        is_immutable = type_ is None or (
+            lenient_issubclass(type_, _IMMUTABLE_TYPES)
+            and not lenient_issubclass(type_, EmbeddedModel)
         )
+        return not is_immutable
 
 
 def is_type_forbidden(t: Type) -> bool:
@@ -192,7 +197,9 @@ def validate_type(type_: Type) -> Type:
 
 class BaseModelMetaclass(pydantic._internal._model_construction.ModelMetaclass):
     @staticmethod
-    def __validate_cls_namespace__(name: str, namespace: Dict) -> None:  # noqa C901
+    def __validate_cls_namespace__(  # noqa C901
+        name: str, namespace: Dict[str, Any]
+    ) -> None:
         """Validate the class name space in place"""
         annotations = resolve_annotations(
             namespace.get("__annotations__", {}), namespace.get("__module__")
@@ -209,6 +216,7 @@ class BaseModelMetaclass(pydantic._internal._model_construction.ModelMetaclass):
                 should_touch_field(value=value)
                 and not is_dunder(field_name)
                 and field_name not in annotations
+                and not field_name.startswith("model_")
             ):
                 raise TypeError(
                     f"field {field_name} is defined without type annotation"
@@ -413,7 +421,7 @@ class BaseModelMetaclass(pydantic._internal._model_construction.ModelMetaclass):
             cls.__pydantic_model__ = pydantic_cls
 
             for name, field in cls.__odm_fields__.items():
-                field.bind_pydantic_field(cls.__fields__[name])
+                field.bind_pydantic_field(cls.model_fields[name])
                 setattr(cls, name, FieldProxy(parent=None, field=field))
 
         return cls
@@ -458,7 +466,7 @@ class ModelMetaclass(BaseModelMetaclass):
             namespace["__primary_field__"] = primary_field
 
             if config["collection"] is not None:
-                collection_name = config.collection
+                collection_name = config["collection"]
             elif "__collection__" in namespace:
                 collection_name = namespace["__collection__"]
                 warnings.warn(
@@ -970,7 +978,7 @@ class Model(_BaseODMModel, metaclass=ModelMetaclass):
     ) -> None:
         is_primary_field_in_patch = (
             isinstance(patch_object, BaseModel)
-            and self.__primary_field__ in patch_object.__fields__
+            and self.__primary_field__ in patch_object.model_fields
         ) or (isinstance(patch_object, dict) and self.__primary_field__ in patch_object)
         if is_primary_field_in_patch:
             if (
