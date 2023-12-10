@@ -2,7 +2,7 @@ import decimal
 import re
 from dataclasses import dataclass
 from datetime import datetime, timedelta
-from typing import Annotated, Any, Callable, Pattern, Sequence, Tuple, Union
+from typing import Annotated, Any, Callable, Pattern, Sequence, Tuple, Type, Union
 
 import bson
 import bson.binary
@@ -15,12 +15,24 @@ from pydantic.json_schema import JsonSchemaValue
 from pydantic.main import BaseModel
 from pydantic_core import core_schema
 
+from odmantic.typing import get_args, get_origin, lenient_issubclass
+
 
 @dataclass(frozen=True)
 class WithBsonSerializer:
-    """Adds a BSON serializer to use on a field when it will be saved to the database."""
+    """Adds a BSON serializer to use on a field when it will be saved to the database"""
 
     bson_serializer: Callable[[Any], Any]
+
+
+def _get_bson_serializer(type_: Type[Any]) -> Callable[[Any], Any] | None:
+    origin = get_origin(type_)
+    if origin is not None and origin == Annotated:
+        args = get_args(type_)
+        for arg in args:
+            if isinstance(arg, WithBsonSerializer):
+                return arg.bson_serializer
+    return None
 
 
 class _ObjectIdPydanticAnnotation:
@@ -49,24 +61,18 @@ class _ObjectIdPydanticAnnotation:
                 ),
             ]
         )
-        from_string_schema = core_schema.chain_schema(
-            [
-                core_schema.str_schema(),
-                core_schema.no_info_plain_validator_function(
-                    validate_from_string_or_bytes
-                ),
-            ]
-        )
 
         return core_schema.json_or_python_schema(
-            json_schema=from_string_schema,
+            json_schema=from_string_or_bytes_schema,
             python_schema=core_schema.union_schema(
                 [
                     core_schema.is_instance_schema(bson.ObjectId),
                     from_string_or_bytes_schema,
                 ],
             ),
-            serialization=core_schema.plain_serializer_function_ser_schema(str),
+            serialization=core_schema.plain_serializer_function_ser_schema(
+                str, when_used="json"
+            ),
         )
 
     @classmethod
@@ -150,7 +156,7 @@ class _Decimal128PydanticAnnotation:
                 ]
             ),
             serialization=core_schema.plain_serializer_function_ser_schema(
-                lambda v: v.to_decimal()
+                lambda v: v.to_decimal(), when_used="json"
             ),
         )
 
@@ -263,7 +269,7 @@ class _RegexPydanticAnnotation:
                 ]
             ),
             serialization=core_schema.plain_serializer_function_ser_schema(
-                lambda v: v.pattern
+                lambda v: v.pattern, when_used="json"
             ),
         )
 
@@ -344,7 +350,8 @@ class _datetimePydanticAnnotation:
             ]
         )
         return core_schema.json_or_python_schema(
-            json_schema=mongo_datetime_schema, python_schema=mongo_datetime_schema
+            json_schema=mongo_datetime_schema,
+            python_schema=mongo_datetime_schema,
         )
 
     @classmethod

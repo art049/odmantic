@@ -40,6 +40,7 @@ from odmantic.bson import (
     BaseBSONModel,
     ObjectId,
     _decimalDecimal,
+    _get_bson_serializer,
 )
 from odmantic.config import ODMConfigDict, validate_config
 from odmantic.exceptions import (
@@ -193,7 +194,7 @@ class BaseModelMetaclass(pydantic._internal._model_construction.ModelMetaclass):
         config = validate_config(namespace.get("model_config", ODMConfigDict()), name)
         odm_fields: Dict[str, ODMBaseField] = {}
         references: List[str] = []
-        bson_serialized_fields: Set[str] = set()
+        bson_serializers = dict[str, Callable[[Any], Any]]()
         mutable_fields: Set[str] = set()
 
         # Make sure all fields are defined with type annotation
@@ -211,12 +212,12 @@ class BaseModelMetaclass(pydantic._internal._model_construction.ModelMetaclass):
         for field_name, field_type in annotations.items():
             if not is_dunder(field_name) and should_touch_field(type_=field_type):
                 substituted_type = validate_type(field_type)
-                # Handle BSON serialized fields after substitution to allow some
-                # builtin substitution
-                bson_serialization_method = getattr(substituted_type, "__bson__", None)
-                if bson_serialization_method is not None:
-                    bson_serialized_fields.add(field_name)
                 annotations[field_name] = substituted_type
+                # Handle BSON serialized fields after substitution to allow some
+                # builtin substitutions
+                bson_serializer = _get_bson_serializer(substituted_type)
+                if bson_serializer is not None:
+                    bson_serializers[field_name] = bson_serializer
 
         # Validate fields
         for field_name, field_type in annotations.items():
@@ -345,7 +346,7 @@ class BaseModelMetaclass(pydantic._internal._model_construction.ModelMetaclass):
         namespace["__annotations__"] = annotations
         namespace["__odm_fields__"] = odm_fields
         namespace["__references__"] = tuple(references)
-        namespace["__bson_serialized_fields__"] = frozenset(bson_serialized_fields)
+        namespace["__bson_serializers__"] = bson_serializers
         namespace["__mutable_fields__"] = frozenset(mutable_fields)
         namespace["model_config"] = config
 
@@ -511,7 +512,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
 
     if TYPE_CHECKING:
         __odm_fields__: ClassVar[Dict[str, ODMBaseField]] = {}
-        __bson_serialized_fields__: ClassVar[FrozenSet[str]] = frozenset()
+        __bson_serializers__: ClassVar[Dict[str, Callable[[Any], Any]]] = {}
         __mutable_fields__: ClassVar[FrozenSet[str]] = frozenset()
         __references__: ClassVar[Tuple[str, ...]] = ()
         __pydantic_model__: ClassVar[Type[BaseBSONModel]]
@@ -689,6 +690,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
             the dictionary representation of the instance
         """
         return super().model_dump(
+            mode="python",  # make sure bson fields are not serialized to JSON
             include=include,
             exclude=exclude,
             exclude_unset=exclude_unset,
@@ -720,8 +722,8 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
                     doc[field.key_name] = [
                         self.__doc(item, field.model) for item in raw_doc[field_name]
                     ]
-            elif field_name in model.__bson_serialized_fields__:
-                doc[field.key_name] = model.__fields__[field_name].type_.__bson__(
+            elif field_name in model.__bson_serializers__:
+                doc[field.key_name] = model.__bson_serializers__[field_name](
                     raw_doc[field_name]
                 )
             else:

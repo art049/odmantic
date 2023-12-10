@@ -104,6 +104,12 @@ def test_mutable_types_immutables(t: Type):
         Tuple[DummyEmbedded, ...],
         Dict[str, DummyEmbedded],
         FrozenSet[DummyEmbedded],
+        list,
+        set,
+        list[int],
+        tuple[list[int]],
+        frozenset[set[int]],
+        dict[tuple[int, ...], str],
     ),
 )
 def test_mutable_types_mutables(t: Type):
