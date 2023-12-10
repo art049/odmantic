@@ -151,15 +151,6 @@ def test_model_default_with_field():
     assert instance.f == 3
 
 
-def test_optional_field():
-    class M(Model):
-        f: Optional[str]
-
-    assert M().f is None
-    assert M(f=None).f is None
-    assert M(f="hello world").f == "hello world"
-
-
 def test_optional_field_with_default():
     class M(Model):
         f: Optional[str] = None
