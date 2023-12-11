@@ -26,14 +26,14 @@ jobs:
     strategy:
       matrix:
         python-version:
-          - "3.7"
           - "3.8"
           - "3.9"
           - "3.10"
-          #- "3.11" # TODO: Enable once 3.11 is released
+          - "3.11"
+          - "3.12"
         pydantic-version:
-          - "1.10.8"
-          - "1.10.13"
+          - "2.4.2"
+          - "2.5.2"
         motor-version:
           - "2.1"
           - "2.2"
@@ -78,11 +78,11 @@ jobs:
     strategy:
       matrix:
         python-version:
-          - "3.7"
           - "3.8"
           - "3.9"
           - "3.10"
-          #- "3.11" # TODO: Enable once 3.11 is released
+          - "3.11"
+          - "3.12"
         mongo-version:
           - "4.4"
           - "5"
@@ -90,10 +90,10 @@ jobs:
         mongo-mode:
           - standalone
         include:
-          - python-version: 3.8
+          - python-version: 3.11
             mongo-version: 4.0
             mongo-mode: replicaSet
-          - python-version: 3.8
+          - python-version: 3.11
             mongo-version: 4.2
             mongo-mode: sharded
 

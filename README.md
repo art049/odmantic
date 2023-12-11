@@ -7,7 +7,6 @@
 [![Package version](https://img.shields.io/pypi/v/odmantic?color=%2334D058&label=pypi)](https://pypi.org/project/odmantic)
 [![CodSpeed](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/art049/odmantic)
 
-
 </div>
 
 ---
@@ -41,7 +40,7 @@ Core features:
 
 ## Requirements
 
-**Python**: 3.7 and later (tested against 3.7, 3.8, 3.9 and 3.10)
+**Python**: 3.8 and later (tested against 3.8, 3.9, 3.10, 3.11 and 3.12)
 
 **MongoDB**: 4.0 and later
 
