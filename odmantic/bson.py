@@ -35,7 +35,7 @@ def _get_bson_serializer(type_: Type[Any]) -> Callable[[Any], Any] | None:
     return None
 
 
-class _ObjectIdPydanticAnnotation:
+class ObjectId(bson.ObjectId):
     @classmethod
     def __get_pydantic_core_schema__(
         cls,
@@ -87,10 +87,7 @@ class _ObjectIdPydanticAnnotation:
         return json_schema
 
 
-ObjectId = Annotated[bson.ObjectId, _ObjectIdPydanticAnnotation]
-
-
-class _Int64PydanticAnnotation:
+class Int64(bson.Int64):
     @classmethod
     def __get_pydantic_core_schema__(
         cls,
@@ -125,11 +122,10 @@ class _Int64PydanticAnnotation:
         return handler(core_schema.int_schema())
 
 
-Int64 = Annotated[bson.int64.Int64, _Int64PydanticAnnotation]
 Long = Int64
 
 
-class _Decimal128PydanticAnnotation:
+class Decimal128(bson.decimal128.Decimal128):
     @classmethod
     def __get_pydantic_core_schema__(
         cls,
@@ -167,10 +163,7 @@ class _Decimal128PydanticAnnotation:
         return handler(core_schema.float_schema())
 
 
-Decimal128 = Annotated[bson.decimal128.Decimal128, _Decimal128PydanticAnnotation]
-
-
-class _BinaryPydanticAnnotation:
+class Binary(bson.binary.Binary):
     @classmethod
     def __get_pydantic_core_schema__(
         cls,
@@ -205,9 +198,6 @@ class _BinaryPydanticAnnotation:
         return handler(core_schema.bytes_schema())
 
 
-Binary = Annotated[bson.binary.Binary, _BinaryPydanticAnnotation]
-
-
 def validate_pattern_from_str(
     value: str,
 ) -> Pattern:
@@ -235,7 +225,7 @@ def validate_pattern_from_regex(
         raise ValueError("Invalid Pattern value")
 
 
-class _RegexPydanticAnnotation:
+class Regex(bson.regex.Regex):
     @classmethod
     def __get_pydantic_core_schema__(
         cls,
@@ -284,10 +274,7 @@ class _RegexPydanticAnnotation:
         return schema
 
 
-Regex = Annotated[bson.regex.Regex, _RegexPydanticAnnotation]
-
-
-class __PatternPydanticAnnotation:
+class __PatternPydanticAnnotation:  # cannot subclass Pattern since it's final
     @classmethod
     def __get_pydantic_core_schema__(
         cls,
@@ -325,7 +312,7 @@ class __PatternPydanticAnnotation:
 _Pattern = Annotated[Pattern, __PatternPydanticAnnotation]
 
 
-class _datetimePydanticAnnotation:
+class _datetime(datetime):
     @classmethod
     def __get_pydantic_core_schema__(
         cls,
@@ -361,9 +348,6 @@ class _datetimePydanticAnnotation:
         schema = handler(core_schema.datetime_schema())
         schema.update(example=datetime.utcnow().isoformat())
         return schema
-
-
-_datetime = Annotated[datetime, _datetimePydanticAnnotation]
 
 
 class _decimalDecimalPydanticAnnotation:
@@ -432,7 +416,7 @@ BSON_TYPES_ENCODERS = {
 
 
 class BaseBSONModel(BaseModel):
-    """Equivalent of `pydantic.BaseModel` supporting BSON types encoding.
+    """Equivalent of `pydantic.BaseModel` supporting BSON types serialization.
 
     If you want to apply other custom JSON encoders, you'll need to use
     [BSON_TYPES_ENCODERS][odmantic.bson.BSON_TYPES_ENCODERS] directly.

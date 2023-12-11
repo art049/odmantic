@@ -32,7 +32,11 @@ def test_object_id_fastapi_get_query_invalid_id(fastapi_app, test_client):
     invalid_oid_str = "a"
     response = test_client.get(f"/{invalid_oid_str}")
     assert response.status_code == 422
-    assert response.json()["detail"][0]["loc"] == ["path", "id"]
+    assert response.json()["detail"][0]["loc"] == [
+        "path",
+        "id",
+        "is-instance[ObjectId]",
+    ]
 
 
 @pytest.mark.skip("Need to specify custom json_encoder or to use a root_type")
@@ -116,7 +120,7 @@ def test_docstring_not_nullified(base: Type):
 
     doc = getdoc(M)
     assert doc is None or doc == "My docstring"
-    description = M.schema()["description"]
+    description = M.model_json_schema()["description"]
     assert description == "My docstring"
 
 
@@ -127,7 +131,7 @@ def test_docstring_nullified(base: Type):
 
     doc = getdoc(M)
     assert doc == ""
-    assert "description" not in M.schema()
+    assert "description" not in M.model_json_schema()
 
 
 @pytest.mark.parametrize("base", (Model, EmbeddedModel, BaseBSONModel))
@@ -141,7 +145,7 @@ def test_pydantic_model_title(base: Type):
     class M(base):  # type: ignore
         ...
 
-    assert M.__pydantic_model__.schema()["title"] == "M"
+    assert M.__pydantic_model__.model_json_schema()["title"] == "M"
 
 
 @pytest.mark.parametrize("base", (Model, EmbeddedModel))
@@ -149,7 +153,7 @@ def test_pydantic_model_custom_title(base: Type):
     class M(base):  # type: ignore
         model_config = {"title": "CustomTitle"}
 
-    assert M.__pydantic_model__.schema()["title"] == "CustomTitle"
+    assert M.__pydantic_model__.model_json_schema()["title"] == "CustomTitle"
 
 
 def test_pydantic_model_references():
@@ -166,7 +170,7 @@ def test_pydantic_model_references():
         Base.__pydantic_model__, Model
     ), "the pydantic_model should inherit from Model"
 
-    b_pure = Base.__pydantic_model__(field=Referenced())
+    b_pure = Base.__pydantic_model__(field=Referenced().__pydantic_model__())
     assert not issubclass(
         type(b_pure.field), Model  # type: ignore
     ), "the pure field should not inherit from Model"

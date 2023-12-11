@@ -1,7 +1,7 @@
 import re
 from datetime import datetime
 from decimal import Decimal
-from typing import Pattern
+from typing import Annotated, Pattern
 
 import pytest
 import pytz
@@ -10,6 +10,7 @@ from bson.objectid import ObjectId
 from bson.regex import Regex
 from pydantic import ValidationError
 
+from odmantic.bson import WithBsonSerializer
 from odmantic.field import Field
 from odmantic.model import Model
 
@@ -236,3 +237,14 @@ def test_validate_pattern_invalid_string():
     assert len(errors) == 3
     assert all(error["loc"][0] == "field" for error in errors)
     assert "Value error, Invalid Pattern value" in [error["msg"] for error in errors]
+
+
+def test_with_bson_serializer_override_builtin_bson():
+    MyObjectId = Annotated[ObjectId, WithBsonSerializer(lambda _: "encoded")]
+
+    class M(Model):
+        id: MyObjectId = Field(..., default_factory=ObjectId, primary_field=True)
+
+    instance = M()
+    parsed = instance.doc()
+    assert parsed == {"_id": "encoded"}
