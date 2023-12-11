@@ -48,7 +48,6 @@ from odmantic.bson import (
 from odmantic.config import ODMConfigDict, validate_config
 from odmantic.exceptions import (
     DocumentParsingError,
-    ErrorList,
     IncorrectGenericEmbeddedModelValue,
     KeyNotFoundInDocumentError,
     ReferencedDocumentNotFoundError,
@@ -201,9 +200,9 @@ def validate_type(type_: Type) -> Type:
                 int, str
             ]  # We don't care about int,str since they will be replaced
             setattr(new_root, "__args__", new_arg_types)
-            type_ = new_root
+            type_ = new_root  # type: ignore
         else:
-            type_ = GenericAlias(type_origin, new_arg_types)
+            type_ = GenericAlias(type_origin, new_arg_types)  # type: ignore
     return type_
 
 
@@ -611,7 +610,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
             new model instance
 
         """
-        copied = super().model_copy(update=update, deep=deep)  # type: ignore
+        copied = super().model_copy(update=update, deep=deep)
         copied._post_copy_update()
         return copied
 
@@ -808,7 +807,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
             instance = cls.model_validate(obj)
         except ValidationError as e:
             raise DocumentParsingError(
-                errors=e.errors(),
+                errors=e.errors(),  # type: ignore
                 model=cls,
             )
 
@@ -817,8 +816,8 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
     @classmethod
     def _parse_doc_to_obj(  # noqa C901 # TODO: refactor document parsing
         cls: Type[BaseT], raw_doc: Dict, base_loc: Tuple[str, ...] = ()
-    ) -> Tuple[ErrorList, Dict[str, Any]]:
-        errors: ErrorList = []
+    ) -> Tuple[List[InitErrorDetails], Dict[str, Any]]:
+        errors: List[InitErrorDetails] = []
         obj: Dict[str, Any] = {}
         for field_name, field in cls.__odm_fields__.items():
             if isinstance(field, ODMReference):
@@ -947,7 +946,7 @@ class Model(_BaseODMModel, metaclass=ModelMetaclass):
         __collection__: ClassVar[str] = ""
         __primary_field__: ClassVar[str] = ""
 
-        id: Union[ObjectId, Any] = Field(init=False)  # TODO fix basic id field typing
+        id: Union[ObjectId, Any] = Field()  # TODO fix basic id field typing
 
     def __setattr__(self, name: str, value: Any) -> None:
         if name == self.__primary_field__:

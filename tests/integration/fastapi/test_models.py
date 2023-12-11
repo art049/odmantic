@@ -115,7 +115,7 @@ def test_openapi_json_with_bson_fields(fastapi_app, test_client):
 
 @pytest.mark.parametrize("base", (Model, EmbeddedModel))
 def test_docstring_not_nullified(base: Type):
-    class M(base):  # type: ignore
+    class M(base):
         """My docstring"""
 
     doc = getdoc(M)
@@ -126,7 +126,7 @@ def test_docstring_not_nullified(base: Type):
 
 @pytest.mark.parametrize("base", (Model, EmbeddedModel))
 def test_docstring_nullified(base: Type):
-    class M(base):  # type: ignore
+    class M(base):
         ...
 
     doc = getdoc(M)
@@ -142,7 +142,7 @@ def test_base_classes_docstring_not_nullified(base: Type):
 
 @pytest.mark.parametrize("base", (Model, EmbeddedModel))
 def test_pydantic_model_title(base: Type):
-    class M(base):  # type: ignore
+    class M(base):
         ...
 
     assert M.__pydantic_model__.model_json_schema()["title"] == "M"
@@ -150,7 +150,7 @@ def test_pydantic_model_title(base: Type):
 
 @pytest.mark.parametrize("base", (Model, EmbeddedModel))
 def test_pydantic_model_custom_title(base: Type):
-    class M(base):  # type: ignore
+    class M(base):
         model_config = {"title": "CustomTitle"}
 
     assert M.__pydantic_model__.model_json_schema()["title"] == "CustomTitle"

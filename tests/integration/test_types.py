@@ -135,7 +135,7 @@ async def test_custom_bson_serializable(
     document = await motor_database[ModelWithCustomField.__collection__].find_one(
         {
             +ModelWithCustomField.id: instance.id,  # type: ignore
-            +ModelWithCustomField.field: {"$type": "string"},  # type: ignore
+            +ModelWithCustomField.field: {"$type": "string"},
         }
     )
     assert document is not None, "Couldn't retrieve the document with it's string value"
@@ -155,7 +155,7 @@ def test_sync_custom_bson_serializable(
     document = pymongo_database[ModelWithCustomField.__collection__].find_one(
         {
             +ModelWithCustomField.id: instance.id,  # type: ignore
-            +ModelWithCustomField.field: {"$type": "string"},  # type: ignore
+            +ModelWithCustomField.field: {"$type": "string"},
         }
     )
     assert document is not None, "Couldn't retrieve the document with it's string value"

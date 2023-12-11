@@ -4,7 +4,7 @@ import decimal
 import re
 from dataclasses import dataclass
 from datetime import datetime, timedelta
-from typing import Any, Callable, Pattern, Sequence, Tuple, Type, Union
+from typing import Any, Callable, Dict, Pattern, Sequence, Tuple, Type, Union
 
 import bson
 import bson.binary
@@ -410,7 +410,7 @@ _decimalDecimal = Annotated[
 ]
 
 
-BSON_TYPES_ENCODERS = {
+BSON_TYPES_ENCODERS: Dict[Type, Callable] = {
     bson.ObjectId: str,
     bson.decimal128.Decimal128: lambda x: x.to_decimal(),  # Convert to regular decimal
     bson.regex.Regex: lambda x: x.pattern,  # TODO: document no serialization of flags

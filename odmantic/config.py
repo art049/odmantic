@@ -54,8 +54,8 @@ def validate_config(config: ODMConfigDict, cls_name: str) -> ODMConfigDict:
         if config_key in ENFORCED_PYDANTIC_CONFIG:
             raise ValueError(
                 f"'{cls_name}': configuration attribute '{config_key}' is "
-                f"enforced to {ENFORCED_PYDANTIC_CONFIG[config_key]} by ODMantic "
-                "and cannot be changed"
+                f"enforced to {ENFORCED_PYDANTIC_CONFIG.get(config_key,'unknown')} "
+                "by ODMantic and cannot be changed"
             )
         elif config_key in PYDANTIC_FORBIDDEN_CONFIG_OPTIONS:
             raise ValueError(

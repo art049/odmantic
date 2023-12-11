@@ -1,4 +1,5 @@
 import sys
+from typing import _eval_type  # type: ignore
 from typing import TYPE_CHECKING, AbstractSet, Any  # noqa: F401
 from typing import Callable as TypingCallable
 from typing import (  # noqa: F401
@@ -13,7 +14,6 @@ from typing import (  # noqa: F401
     Type,
     TypeVar,
     Union,
-    _eval_type,
 )
 
 if sys.version_info < (3, 11):
@@ -27,7 +27,7 @@ else:
     from typing import TypeAlias
 
 if sys.version_info < (3, 9):
-    from typing import _GenericAlias as GenericAlias  # type: ignore # noqa: F401
+    from typing import _GenericAlias as GenericAlias  # noqa: F401
 
     # Even if get_args and get_origin are available in typing, it's important to
     # import them from typing_extensions to have proper origins with Annotated fields
