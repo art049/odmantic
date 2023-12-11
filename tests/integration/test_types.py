@@ -2,18 +2,7 @@ import dataclasses
 import re
 from datetime import datetime
 from decimal import Decimal
-from typing import (
-    Annotated,
-    Any,
-    Dict,
-    Generic,
-    List,
-    Pattern,
-    Tuple,
-    Type,
-    TypeVar,
-    Union,
-)
+from typing import Any, Dict, Generic, List, Pattern, Tuple, Type, TypeVar, Union
 
 import pytest
 from bson import Binary, Decimal128, Int64, ObjectId, Regex
@@ -23,6 +12,7 @@ from pymongo.database import Database
 from odmantic.bson import WithBsonSerializer
 from odmantic.engine import AIOEngine, SyncEngine
 from odmantic.model import Model
+from odmantic.typing import Annotated
 
 pytestmark = pytest.mark.asyncio
 

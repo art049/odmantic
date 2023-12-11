@@ -2,7 +2,7 @@ import decimal
 import re
 from dataclasses import dataclass
 from datetime import datetime, timedelta
-from typing import Annotated, Any, Callable, Pattern, Sequence, Tuple, Type, Union
+from typing import Any, Callable, Pattern, Sequence, Tuple, Type, Union
 
 import bson
 import bson.binary
@@ -15,7 +15,7 @@ from pydantic.json_schema import JsonSchemaValue
 from pydantic.main import BaseModel
 from pydantic_core import core_schema
 
-from odmantic.typing import get_args, get_origin, lenient_issubclass
+from odmantic.typing import Annotated, get_args, get_origin
 
 
 @dataclass(frozen=True)

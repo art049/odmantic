@@ -1,7 +1,7 @@
 import re
 from datetime import datetime
 from decimal import Decimal
-from typing import Annotated, Pattern
+from typing import Pattern
 
 import pytest
 import pytz
@@ -13,6 +13,7 @@ from pydantic import ValidationError
 from odmantic.bson import WithBsonSerializer
 from odmantic.field import Field
 from odmantic.model import Model
+from odmantic.typing import Annotated
 
 pytestmark = pytest.mark.asyncio
 

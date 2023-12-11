@@ -15,7 +15,7 @@ from typing import (
     _eval_type,
 )
 
-from typing_extensions import TypeAlias
+from typing_extensions import Annotated, TypeAlias
 
 if TYPE_CHECKING:
     NoArgAnyCallable: TypeAlias = TypingCallable[[], Any]
