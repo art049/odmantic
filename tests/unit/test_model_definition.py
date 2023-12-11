@@ -21,7 +21,7 @@ from bson import ObjectId
 from bson.decimal128 import Decimal128
 from bson.regex import Regex
 from pydantic import Field as PDField
-from pydantic.error_wrappers import ValidationError
+from pydantic import ValidationError
 
 from odmantic import ObjectId as ODMObjectId
 from odmantic.field import Field

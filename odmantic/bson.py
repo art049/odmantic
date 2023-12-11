@@ -87,7 +87,7 @@ class _ObjectIdPydanticAnnotation:
         return json_schema
 
 
-ObjectId = Annotated[bson.ObjectId, _ObjectIdPydanticAnnotation()]
+ObjectId = Annotated[bson.ObjectId, _ObjectIdPydanticAnnotation]
 
 
 class _Int64PydanticAnnotation:

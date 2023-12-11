@@ -677,7 +677,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
             if self.__dict__[name] != new_value:
                 # Manually change the field to avoid running the validators again
                 self.__dict__[name] = new_value
-                self.__fields_set__.add(name)
+                self.model_fields_set.add(name)
                 self.__fields_modified__.add(name)
 
     def __setattr__(self, name: str, value: Any) -> None:

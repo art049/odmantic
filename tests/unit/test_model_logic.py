@@ -3,8 +3,7 @@ from typing import Dict, List, Optional, Tuple
 import pytest
 from bson.objectid import ObjectId
 from inline_snapshot import snapshot
-from pydantic import model_validator, root_validator
-from pydantic.error_wrappers import ValidationError
+from pydantic import ValidationError, model_validator, root_validator
 from pydantic.main import BaseModel
 
 from odmantic.exceptions import DocumentParsingError
@@ -347,7 +346,7 @@ f.[0].e
 
 
 def test_fields_modified_on_object_parsing():
-    instance = PersonModel.parse_obj(
+    instance = PersonModel.model_validate(
         {"_id": ObjectId(), "first_name": "Jackie", "last_name": "Chan"}
     )
     assert instance.__fields_modified__ == set(["first_name", "last_name", "id"])
@@ -384,6 +383,7 @@ def test_model_copy_with_update_primary_key():
     assert instance.id != copied.id
 
 
+@pytest.mark.filterwarnings("ignore:copy is deprecated")
 def test_deprecated_model_copy_call():
     class M(Model):
         ...
@@ -649,6 +649,9 @@ def test_update_side_effect_field_modified():
     assert "area" in r.__fields_modified__
 
 
+@pytest.mark.filterwarnings(
+    "ignore: Pydantic V1 style `@root_validator` validators are deprecated"
+)
 def test_update_side_effect_field_modified_with_root_validator():
     class Rectangle(Model):
         width: float

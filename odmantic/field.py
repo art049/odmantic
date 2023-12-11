@@ -3,6 +3,7 @@ from copy import deepcopy
 from typing import (
     TYPE_CHECKING,
     Any,
+    Callable,
     Iterable,
     Optional,
     Pattern,
@@ -12,6 +13,7 @@ from typing import (
     cast,
 )
 
+from pydantic.config import JsonDict
 from pydantic.fields import Field as PDField
 from pydantic.fields import FieldInfo, PydanticUndefined
 
@@ -49,6 +51,7 @@ def Field(
     # alias: str = None, # FIXME not supported yet
     title: Optional[str] = None,
     description: Optional[str] = None,
+    json_schema_extra: JsonDict | Callable[[JsonDict], None] | None = None,
     const: Optional[bool] = None,
     gt: Optional[float] = None,
     ge: Optional[float] = None,
@@ -60,7 +63,6 @@ def Field(
     min_length: Optional[int] = None,
     max_length: Optional[int] = None,
     regex: Optional[str] = None,
-    **extra: Any,
 ) -> Any:
     """Used to provide extra information about a field, either for the model schema or
     complex validation. Some arguments apply only to number fields (``int``, ``float``,
@@ -90,6 +92,7 @@ def Field(
             for this field.
         title: can be any string, used in the schema
         description: can be any string, used in the schema
+        json_schema_extra: Any additional JSON schema data for the schema property.
         const: this field is required and *must* take it's default value
         gt: only applies to numbers, requires the field to be "greater than". The
             schema will have an ``exclusiveMinimum`` validation keyword
@@ -112,7 +115,6 @@ def Field(
         regex: only applies to strings, requires the field match agains a regular
             expression pattern string. The schema will have a ``pattern`` validation
             keyword
-        **extra: any additional keyword arguments will be added as is to the schema
 
     <!---
     # noqa: DAR201
@@ -123,12 +125,14 @@ def Field(
     """
     # Perform casts on optional fields to avoid incompatibility due to the strict
     # optional mypy setting
+    # TODO: add remaining validation fields from pydantic
     pydantic_field = PDField(
         default,
         default_factory=default_factory,
         # alias=alias,  # FIXME check aliases compatibility
         title=cast(str, title),
         description=cast(str, description),
+        json_schema_extra=json_schema_extra,
         const=cast(bool, const),
         gt=cast(float, gt),
         ge=cast(float, ge),
@@ -140,7 +144,6 @@ def Field(
         min_length=cast(int, min_length),
         max_length=cast(int, max_length),
         regex=cast(str, regex),
-        **extra,
     )
     if primary_field:
         if key_name is not None and key_name != "_id":
