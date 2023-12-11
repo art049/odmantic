@@ -1,3 +1,4 @@
+import sys
 from typing import (
     Callable,
     Dict,
@@ -91,26 +92,34 @@ def test_mutable_types_immutables(t: Type):
     assert not is_type_mutable(t)
 
 
-@pytest.mark.parametrize(
-    "t",
-    (
-        List,
-        Set,
-        List[int],
-        Tuple[List[int]],
-        FrozenSet[Set[int]],
-        Dict[Tuple[int, ...], str],
-        DummyEmbedded,
-        Tuple[DummyEmbedded, ...],
-        Dict[str, DummyEmbedded],
-        FrozenSet[DummyEmbedded],
+TEST_TYPES = [
+    List,
+    Set,
+    List[int],
+    Tuple[List[int]],
+    FrozenSet[Set[int]],
+    Dict[Tuple[int, ...], str],
+    DummyEmbedded,
+    Tuple[DummyEmbedded, ...],
+    Dict[str, DummyEmbedded],
+    FrozenSet[DummyEmbedded],
+]
+
+# if generic with builtin types are supported add them to the list
+if sys.version_info >= (3, 9):
+    TEST_TYPES += [
         list,
         set,
         list[int],
         tuple[list[int]],
         frozenset[set[int]],
         dict[tuple[int, ...], str],
-    ),
+    ]
+
+
+@pytest.mark.parametrize(
+    "t",
+    TEST_TYPES,
 )
 def test_mutable_types_mutables(t: Type):
     assert is_type_mutable(t)

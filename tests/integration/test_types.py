@@ -74,7 +74,7 @@ type_test_data = [
 
 
 def id_from_test_case(case: TypeTestCase):
-    return f"{case.python_type.__name__}|{case.bson_type}"
+    return f"{case.bson_type}"
 
 
 @pytest.mark.parametrize("case", type_test_data, ids=id_from_test_case)

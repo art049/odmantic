@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import datetime
 import decimal
 import enum
@@ -217,7 +219,7 @@ class BaseModelMetaclass(pydantic._internal._model_construction.ModelMetaclass):
         config = validate_config(namespace.get("model_config", ODMConfigDict()), name)
         odm_fields: Dict[str, ODMBaseField] = {}
         references: List[str] = []
-        bson_serializers = dict[str, Callable[[Any], Any]]()
+        bson_serializers: Dict[str, Callable[[Any], Any]] = {}
         mutable_fields: Set[str] = set()
 
         # Make sure all fields are defined with type annotation

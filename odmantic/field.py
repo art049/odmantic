@@ -1,5 +1,6 @@
+from __future__ import annotations
+
 import abc
-from copy import deepcopy
 from typing import (
     TYPE_CHECKING,
     Any,

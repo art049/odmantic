@@ -14,8 +14,6 @@ from typing import (  # noqa: F401
     TypeVar,
     Union,
     _eval_type,
-    get_args,
-    get_origin,
 )
 
 if sys.version_info < (3, 11):
@@ -31,10 +29,12 @@ else:
 if sys.version_info < (3, 9):
     from typing import _GenericAlias as GenericAlias  # type: ignore # noqa: F401
 
-    from typing_extensions import Annotated
+    # Even if get_args and get_origin are available in typing, it's important to
+    # import them from typing_extensions to have proper origins with Annotated fields
+    from typing_extensions import Annotated, get_args, get_origin
 else:
-    from typing import Annotated  # noqa: F401
     from typing import GenericAlias  # type: ignore
+    from typing import Annotated, get_args, get_origin  # noqa: F401
 
 
 if TYPE_CHECKING:
