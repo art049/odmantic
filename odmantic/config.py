@@ -35,9 +35,7 @@ ENFORCED_PYDANTIC_CONFIG = ConfigDict(validate_default=True, validate_assignment
 
 
 def validate_config(config: ODMConfigDict, cls_name: str) -> ODMConfigDict:
-    """Validate the model configuration, enforcing some Pydantic options and making sure
-    only compatible options are used.
-    """
+    """Validate the model configuration, enforcing some Pydantic options"""
     out_config: Dict[str, Any] = {
         "title": None,
         "json_schema_extra": None,

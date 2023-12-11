@@ -104,11 +104,8 @@ def is_classvar(ann_type: Type[Any]) -> bool:
 def resolve_annotations(
     raw_annotations: Dict[str, Type[Any]], module_name: Optional[str]
 ) -> Dict[str, Type[Any]]:
-    """
-    Taken from pydantic v1
-
-    Resolve string or ForwardRef annotations into type objects if possible.
-    """
+    """Resolve string or ForwardRef annotations into type objects if possible."""
+    # Taken from pydantic v1.
     base_globals: Optional[Dict[str, Any]] = None
     if module_name:
         try:

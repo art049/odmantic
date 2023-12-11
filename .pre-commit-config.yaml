@@ -46,3 +46,5 @@ repos:
     rev: v1.8.1
     hooks:
       - id: darglint
+        files: "^odmantic/"
+        stages: [] # Only run in CI with --all since it's slow
