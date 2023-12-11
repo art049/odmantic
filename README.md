@@ -1,13 +1,10 @@
-<div align="center">
-<h1>ODMantic</h1>
+<b><h1>ODMantic</h1></b>
 
 [![build](https://github.com/art049/odmantic/workflows/build/badge.svg)](https://github.com/art049/odmantic/actions?query=workflow%3A%22build%22+branch%3Amaster)
 [![coverage](https://codecov.io/gh/art049/odmantic/branch/master/graph/badge.svg?token=3NYZK14STZ)](https://codecov.io/gh/art049/odmantic)
 ![python-3.7-3.8-3.9-3.10](https://img.shields.io/badge/python-3.7%20|%203.8%20|%203.9%20|%203.10-informational.svg)
 [![Package version](https://img.shields.io/pypi/v/odmantic?color=%2334D058&label=pypi)](https://pypi.org/project/odmantic)
 [![CodSpeed](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/art049/odmantic)
-
-</div>
 
 ---
 
