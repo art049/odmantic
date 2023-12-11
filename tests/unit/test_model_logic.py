@@ -118,7 +118,7 @@ def test_document_parsing_error_keyname():
 1 validation error for M
 field
   Key 'custom' not found in document [type=odmantic::key_not_found_in_document, input_value={'_id': ObjectId('<ObjectId>')}, input_type=dict]\
-"""
+"""  # noqa: E501
     )
 
 
@@ -139,7 +139,7 @@ def test_document_parsing_error_embedded_keyname():
 1 validation error for M
 e.f.a
   Key 'a' not found in document [type=odmantic::key_not_found_in_document, input_value={}, input_type=dict]\
-"""
+"""  # noqa: E501
     )
 
 
@@ -154,7 +154,7 @@ def test_embedded_document_parsing_error():
 1 validation error for E
 f
   Key 'f' not found in document [type=odmantic::key_not_found_in_document, input_value={}, input_type=dict]\
-"""
+"""  # noqa: E501
     )
 
 
@@ -168,7 +168,7 @@ def test_embedded_document_parsing_validation_error():
         [
             "1 validation error for E",
             "f",
-            "  Input should be a valid integer, unable to parse string as an integer [type=int_parsing, input_value='aa', input_type=str]",
+            "  Input should be a valid integer, unable to parse string as an integer [type=int_parsing, input_value='aa', input_type=str]",  # noqa: E501
         ]
     )
 
@@ -256,7 +256,7 @@ def test_embedded_model_list_parsing_invalid_type():
 1 validation error for M
 f
   Incorrect generic embedded model value '{1: {'name': 'Jack'}}' [type=odmantic::incorrect_generic_embedded_model_value, input_value={'_id': 1, 'f': {1: {'name': 'Jack'}}}, input_type=dict]\
-"""
+"""  # noqa: E501
     )
 
 
@@ -276,7 +276,7 @@ def test_embedded_model_list_parsing_missing_value():
 1 validation error for M
 f
   Key 'f' not found in document [type=odmantic::key_not_found_in_document, input_value={'_id': 1}, input_type=dict]\
-"""
+"""  # noqa: E501
     )
 
 
@@ -305,7 +305,7 @@ def test_embedded_model_dict_parsing_invalid_value():
 1 validation error for M
 f
   Incorrect generic embedded model value '[]' [type=odmantic::incorrect_generic_embedded_model_value, input_value={'_id': 1, 'f': []}, input_type=dict]\
-"""
+"""  # noqa: E501
     )
 
 
@@ -323,7 +323,7 @@ def test_embedded_model_dict_parsing_invalid_sub_value():
 1 validation error for M
 f.["key"].e
   Key 'e' not found in document [type=odmantic::key_not_found_in_document, input_value={'not_there': 'a'}, input_type=dict]\
-"""
+"""  # noqa: E501
     )
 
 
@@ -341,7 +341,7 @@ def test_embedded_model_list_parsing_invalid_sub_value():
 1 validation error for M
 f.[0].e
   Key 'e' not found in document [type=odmantic::key_not_found_in_document, input_value={'not_there': 'a'}, input_type=dict]\
-"""
+"""  # noqa: E501
     )
 
 

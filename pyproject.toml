@@ -45,8 +45,6 @@ dependencies = [
 ]
 [project.optional-dependencies]
 test = [
-    "black ~= 23.3.0",
-    "isort ~=5.8.0",
     "ruff ~= 0.0.277",
     "mypy ~= 1.4.1",
     "pytest ~= 7.0",

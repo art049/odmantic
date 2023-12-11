@@ -1,5 +1,3 @@
-from typing import Optional
-
 import pytest
 
 from odmantic.field import Field

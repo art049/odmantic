@@ -1190,7 +1190,7 @@ async def test_find_document_field_not_set_with_no_default(aio_engine: AIOEngine
 1 validation error for M
 field
   Key 'field' not found in document [type=odmantic::key_not_found_in_document, input_value={'_id': ObjectId('<ObjectId>')}, input_type=dict]\
-"""
+"""  # noqa: E501
     )
 
 
@@ -1208,7 +1208,7 @@ def test_sync_find_document_field_not_set_with_no_default(sync_engine: SyncEngin
 1 validation error for M
 field
   Key 'field' not found in document [type=odmantic::key_not_found_in_document, input_value={'_id': ObjectId('<ObjectId>')}, input_type=dict]\
-"""
+"""  # noqa: E501
     )
 
 

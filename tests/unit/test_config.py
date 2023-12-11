@@ -13,7 +13,7 @@ def test_config_enforced_pydantic_option():
             model_config = {"validate_assignment": True}
 
     assert str(exc_info.value) == snapshot(
-        "'M': configuration attribute 'validate_assignment' is enforced to True by ODMantic and cannot be changed"
+        "'M': configuration attribute 'validate_assignment' is enforced to True by ODMantic and cannot be changed"  # noqa: E501
     )
 
 

@@ -18,16 +18,6 @@ repos:
     hooks:
       - id: prettier
         exclude: "^docs/.*"
-  - repo: https://github.com/psf/black
-    rev: "23.3.0"
-    hooks:
-      - id: black
-        exclude: "^docs/.*|.github/release.py"
-  - repo: https://github.com/PyCQA/isort.git
-    rev: "5.12.0"
-    hooks:
-      - id: isort
-        exclude: "^docs/.*"
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.4.1
     hooks:
@@ -51,6 +41,7 @@ repos:
         files: "^odmantic/"
         additional_dependencies:
           - toml
+
   - repo: https://github.com/terrencepreilly/darglint
     rev: v1.8.1
     hooks:

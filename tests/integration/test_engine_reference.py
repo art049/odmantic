@@ -274,7 +274,7 @@ async def test_reference_not_set_in_database(aio_engine: AIOEngine):
 1 validation error for M
 r
   Referenced document not found for foreign key 'r' [type=odmantic::referenced_document_not_found, input_value={'_id': ObjectId('<ObjectId>')}, input_type=dict]\
-"""
+"""  # noqa: E501
     )
 
 
@@ -294,7 +294,7 @@ def test_sync_reference_not_set_in_database(sync_engine: SyncEngine):
 1 validation error for M
 r
   Referenced document not found for foreign key 'r' [type=odmantic::referenced_document_not_found, input_value={'_id': ObjectId('<ObjectId>')}, input_type=dict]\
-"""
+"""  # noqa: E501
     )
 
 
@@ -319,7 +319,7 @@ async def test_reference_incorect_reference_structure(aio_engine: AIOEngine):
 1 validation error for M
 r.field
   Key 'field' not found in document [type=odmantic::key_not_found_in_document, input_value={'_id': ObjectId('<ObjectId>')}, input_type=dict]\
-"""
+"""  # noqa: E501
     )
 
 
@@ -344,5 +344,5 @@ def test_sync_reference_incorect_reference_structure(sync_engine: SyncEngine):
 1 validation error for M
 r.field
   Key 'field' not found in document [type=odmantic::key_not_found_in_document, input_value={'_id': ObjectId('<ObjectId>')}, input_type=dict]\
-"""
+"""  # noqa: E501
     )
