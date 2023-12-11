@@ -125,12 +125,13 @@ jobs:
           TEST_MONGO_URI: ${{ steps.mongo-service.outputs.connection-string }}
           TEST_MONGO_MODE: ${{ matrix.mongo-mode }}
 
-      - uses: codecov/codecov-action@v1
+      - uses: codecov/codecov-action@v3
         if: github.event_name != 'schedule' # Don't report coverage for nightly builds
         with:
           file: ./coverage.xml
           flags: tests-${{ matrix.python-version }}-${{ matrix.mongo-version }}-${{ matrix.mongo-mode }}
           fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   integrated-realworld-test:
     runs-on: ubuntu-latest
