@@ -248,15 +248,9 @@ class ODMField(ODMBaseIndexableField):
         # The default importing value doesn't consider the default_factory setting by
         # default as it could result in inconsistent behaviors for datetime.now
         # factories for example
-        if self.model_config["parse_doc_with_default_factories"]:
-            return self.pydantic_field.get_default()
-
-        if self.pydantic_field.default is None:
-            # deepcopy is quite slow on None
-            value = None
-        else:
-            value = deepcopy(self.pydantic_field.default)
-        return value
+        return self.pydantic_field.get_default(
+            call_default_factory=self.model_config["parse_doc_with_default_factories"]
+        )
 
 
 class ODMReference(ODMBaseField):
