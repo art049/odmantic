@@ -40,7 +40,7 @@ Core features:
 
 ## Requirements
 
-**Python**: 3.8 and later (tested against 3.8, 3.9, 3.10, 3.11 and 3.12)
+**Python**: 3.8 and later (tested against 3.8, 3.9, 3.10 and 3.11)
 
 **MongoDB**: 4.0 and later
 

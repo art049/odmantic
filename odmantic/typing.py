@@ -1,11 +1,12 @@
 import sys
-from typing import TYPE_CHECKING, AbstractSet, Any
+from typing import TYPE_CHECKING, AbstractSet, Any  # noqa: F401
 from typing import Callable as TypingCallable
-from typing import (
+from typing import (  # noqa: F401
     ClassVar,
     Dict,
     ForwardRef,
     Iterable,
+    Literal,
     Mapping,
     Optional,
     Tuple,
@@ -13,9 +14,28 @@ from typing import (
     TypeVar,
     Union,
     _eval_type,
+    get_args,
+    get_origin,
 )
 
-from typing_extensions import Annotated, TypeAlias
+if sys.version_info < (3, 11):
+    from typing_extensions import dataclass_transform
+else:
+    from typing import dataclass_transform  # noqa: F401
+
+if sys.version_info < (3, 10):
+    from typing_extensions import TypeAlias
+else:
+    from typing import TypeAlias
+
+if sys.version_info < (3, 9):
+    from typing import _GenericAlias as GenericAlias  # type: ignore # noqa: F401
+
+    from typing_extensions import Annotated
+else:
+    from typing import Annotated  # noqa: F401
+    from typing import GenericAlias  # type: ignore
+
 
 if TYPE_CHECKING:
     NoArgAnyCallable: TypeAlias = TypingCallable[[], Any]
@@ -24,25 +44,6 @@ if TYPE_CHECKING:
     MappingIntStrAny: TypeAlias = "Mapping[int, Any] | Mapping[str, Any]"
     DictStrAny: TypeAlias = Dict[str, Any]
     IncEx: TypeAlias = "set[int] | set[str] | dict[int, Any] | dict[str, Any] | None"
-
-
-# Handles globally the typing imports from typing or the typing_extensions backport
-if sys.version_info < (3, 8):
-    from typing_extensions import Literal, get_args, get_origin
-else:
-    from typing import Literal, get_args, get_origin  # noqa: F401
-
-if sys.version_info < (3, 11):
-    from typing_extensions import dataclass_transform
-else:
-    # FIXME: add this back to coverage once 3.11 is released
-    from typing import dataclass_transform  # noqa: F401 # pragma: no cover
-
-HAS_GENERIC_ALIAS_BUILTIN = sys.version_info[:3] >= (3, 9, 0)  # PEP 560
-if HAS_GENERIC_ALIAS_BUILTIN:
-    from typing import GenericAlias  # type: ignore
-else:
-    from typing import _GenericAlias as GenericAlias  # type: ignore # noqa: F401
 
 
 # Taken from https://github.com/pydantic/pydantic/pull/2392
