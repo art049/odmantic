@@ -18,6 +18,7 @@ from typing import (
     FrozenSet,
     Iterable,
     List,
+    Literal,
     Optional,
     Set,
     Tuple,
@@ -67,7 +68,6 @@ from odmantic.index import Index, ODMBaseIndex, ODMSingleFieldIndex
 from odmantic.reference import ODMReferenceInfo
 from odmantic.typing import (
     GenericAlias,
-    Literal,
     dataclass_transform,
     get_args,
     get_first_type_argument_subclassing,

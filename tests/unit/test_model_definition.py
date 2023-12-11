@@ -7,6 +7,7 @@ from typing import (
     Dict,
     FrozenSet,
     List,
+    Literal,
     Mapping,
     Optional,
     Set,
@@ -27,7 +28,6 @@ from odmantic import ObjectId as ODMObjectId
 from odmantic.field import Field
 from odmantic.model import EmbeddedModel, Model
 from odmantic.reference import Reference
-from odmantic.typing import Literal
 
 
 class TheClassName(Model):

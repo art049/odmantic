@@ -1,8 +1,6 @@
 import re
 from enum import Enum
-from typing import TYPE_CHECKING, Any, Dict, Iterable, Pattern, Union
-
-from odmantic.typing import Literal
+from typing import TYPE_CHECKING, Any, Dict, Iterable, Literal, Pattern, Union
 
 if TYPE_CHECKING:
     from odmantic.field import FieldProxy
