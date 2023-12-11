@@ -191,7 +191,17 @@ def validate_type(type_: Type) -> Type:
     if type_origin is not None and type_origin is not Literal:
         type_args: Tuple[Type, ...] = get_args(type_)
         new_arg_types = tuple(validate_type(subtype) for subtype in type_args)
-        type_ = GenericAlias(type_origin, new_arg_types)
+        # FIXME: remove this hack when a better solution to handle dynamic
+        # generics is found
+        # https://github.com/pydantic/pydantic/issues/8354
+        if type_origin is Union:
+            new_root = Union[
+                int, str
+            ]  # We don't care about int,str since they will be replaced
+            setattr(new_root, "__args__", new_arg_types)
+            type_ = new_root
+        else:
+            type_ = GenericAlias(type_origin, new_arg_types)
     return type_
 
 
