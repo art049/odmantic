@@ -488,28 +488,28 @@ def test_update_pydantic_model(instance_to_update):
         first_name: str
 
     update_obj = Update(first_name=UPDATED_NAME)
-    instance_to_update.update(update_obj)
+    instance_to_update.model_update(update_obj)
     assert instance_to_update.first_name == UPDATED_NAME
     assert instance_to_update.last_name == INITIAL_LAST_NAME
 
 
 def test_update_dictionary(instance_to_update):
     update_obj = {"first_name": UPDATED_NAME}
-    instance_to_update.update(update_obj)
+    instance_to_update.model_update(update_obj)
     assert instance_to_update.first_name == UPDATED_NAME
     assert instance_to_update.last_name == INITIAL_LAST_NAME
 
 
 def test_update_include(instance_to_update):
     update_obj = {"first_name": UPDATED_NAME}
-    instance_to_update.update(update_obj, include=set())
+    instance_to_update.model_update(update_obj, include=set())
     assert instance_to_update.first_name == INITIAL_FIRST_NAME
     assert instance_to_update.last_name == INITIAL_LAST_NAME
 
 
 def test_update_exclude(instance_to_update):
     update_obj = {"first_name": UPDATED_NAME}
-    instance_to_update.update(update_obj, exclude={"first_name"})
+    instance_to_update.model_update(update_obj, exclude={"first_name"})
     assert instance_to_update.first_name == INITIAL_FIRST_NAME
     assert instance_to_update.last_name == INITIAL_LAST_NAME
 
@@ -520,7 +520,7 @@ def test_update_exclude_none(instance_to_update):
         last_name: Optional[str]
 
     update_obj = Update(first_name=UPDATED_NAME, last_name=None)
-    instance_to_update.update(update_obj, exclude_unset=False, exclude_none=True)
+    instance_to_update.model_update(update_obj, exclude_unset=False, exclude_none=True)
     assert instance_to_update.first_name == UPDATED_NAME
     assert instance_to_update.last_name == INITIAL_LAST_NAME
 
@@ -533,13 +533,15 @@ def test_update_exclude_defaults(instance_to_update):
         last_name: str = UPDATED_NAME
 
     update_obj = Update()
-    instance_to_update.update(update_obj, exclude_unset=False, exclude_defaults=True)
+    instance_to_update.model_update(
+        update_obj, exclude_unset=False, exclude_defaults=True
+    )
     assert instance_to_update == initial_instance
 
 
 def test_update_exclude_over_include(instance_to_update):
     update_obj = {"first_name": UPDATED_NAME}
-    instance_to_update.update(
+    instance_to_update.model_update(
         update_obj, include={"first_name"}, exclude={"first_name"}
     )
     assert instance_to_update.first_name == INITIAL_FIRST_NAME
@@ -553,7 +555,7 @@ def test_update_invalid():
     instance = M(f=12)
     update_obj = {"f": "aaa"}
     with pytest.raises(ValidationError):
-        instance.update(update_obj)
+        instance.model_update(update_obj)
 
 
 def test_update_model_undue_update_fields():
@@ -562,7 +564,7 @@ def test_update_model_undue_update_fields():
 
     instance = M(f=12)
     update_obj = {"not_in_model": "aaa"}
-    instance.update(update_obj)
+    instance.model_update(update_obj)
 
 
 def test_update_pydantic_unset_update_fields():
@@ -576,7 +578,7 @@ def test_update_pydantic_unset_update_fields():
 
     instance = M(f=0)
     update_obj = P()
-    instance.update(update_obj)
+    instance.model_update(update_obj)
     assert instance.f != UPDATEED_VALUE
 
 
@@ -591,7 +593,7 @@ def test_update_pydantic_unset_update_fields_include_unset():
 
     instance = M(f=0)
     update_obj = P()
-    instance.update(update_obj, exclude_unset=False)
+    instance.model_update(update_obj, exclude_unset=False)
     assert instance.f == UPDATEED_VALUE
 
 
@@ -600,7 +602,7 @@ def test_update_embedded_model():
         f: int
 
     instance = E(f=12)
-    instance.update({"f": 15})
+    instance.model_update({"f": 15})
     assert instance.f == 15
 
 
@@ -615,7 +617,7 @@ def test_update_reference():
     r1 = R(f=1)
 
     instance = M(r=r0)
-    instance.update({"r": r1})
+    instance.model_update({"r": r1})
     assert instance.r.f == r1.f
     assert instance.r == r1
 
@@ -626,7 +628,7 @@ def test_update_type_coercion():
 
     instance = M(f=12)
     update_obj = {"f": "12"}
-    instance.update(update_obj)
+    instance.model_update(update_obj)
     assert isinstance(instance.f, int)
 
 
@@ -644,7 +646,7 @@ def test_update_side_effect_field_modified():
     r = Rectangle(width=1, height=1)
     assert r.area == 1
     r.__fields_modified__.clear()
-    r.update({"width": 5})
+    r.model_update({"width": 5})
     assert r.area == 5
     assert "area" in r.__fields_modified__
 
@@ -666,7 +668,7 @@ def test_update_side_effect_field_modified_with_root_validator():
     r = Rectangle(width=1, height=1)
     assert r.area == 1
     r.__fields_modified__.clear()
-    r.update({"width": 5})
+    r.model_update({"width": 5})
     assert r.area == 5
     assert "area" in r.__fields_modified__
 
@@ -678,7 +680,7 @@ def test_update_dict_id_exception():
 
     m = M(alternate_id=0, f=0)
     with pytest.raises(ValueError, match="Updating the primary key is not supported"):
-        m.update({"alternate_id": 1})
+        m.model_update({"alternate_id": 1})
 
 
 @pytest.mark.parametrize(
@@ -695,7 +697,7 @@ def test_update_dict_alternate_id_filtered(update_kwargs):
         f: int
 
     m = M(alternate_id=0, f=0)
-    m.update({"alternate_id": 1}, **update_kwargs)
+    m.model_update({"alternate_id": 1}, **update_kwargs)
     assert m.f == 0 and m.alternate_id == 0, "instance should be unchanged"
 
 
@@ -710,7 +712,7 @@ def test_update_pydantic_id_exception():
         alternate_id: int
 
     with pytest.raises(ValueError, match="Updating the primary key is not supported"):
-        m.update(UpdateObject(alternate_id=1))
+        m.model_update(UpdateObject(alternate_id=1))
 
 
 @pytest.mark.parametrize(
@@ -730,5 +732,5 @@ def test_update_pydantic_alternate_id_filtered(update_kwargs):
         alternate_id: int
 
     m = M(alternate_id=0, f=0)
-    m.update(UpdateObject(alternate_id=1), **update_kwargs)
+    m.model_update(UpdateObject(alternate_id=1), **update_kwargs)
     assert m.f == 0 and m.alternate_id == 0, "instance should be unchanged"

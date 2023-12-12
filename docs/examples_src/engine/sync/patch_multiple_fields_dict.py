@@ -1,4 +1,4 @@
-from odmantic import SyncEngine, Model
+from odmantic import Model, SyncEngine
 
 
 class Player(Model):
@@ -15,7 +15,7 @@ print(repr(player_tlo))
 # Create the patch dictionary containing the new values
 patch_object = {"name": "TheLittleOne", "game": "Starcraft II"}
 # Update the local instance
-player_tlo.update(patch_object)
+player_tlo.model_update(patch_object)
 
 print(repr(player_tlo))
 #> Player(id=ObjectId(...), name='TheLittleOne', game='Starcraft II')

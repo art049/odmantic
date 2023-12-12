@@ -617,7 +617,29 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
                 value = getattr(self, field_name)
                 value._post_copy_update()
 
+    @deprecated(
+        "update is deprecated, please use model_update instead",
+    )
     def update(
+        self,
+        patch_object: Union[BaseModel, Dict[str, Any]],
+        *,
+        include: "IncEx" = None,
+        exclude: "IncEx" = None,
+        exclude_unset: bool = True,
+        exclude_defaults: bool = False,
+        exclude_none: bool = False,
+    ) -> None:
+        self.model_update(
+            patch_object,
+            include=include,
+            exclude=exclude,
+            exclude_unset=exclude_unset,
+            exclude_defaults=exclude_defaults,
+            exclude_none=exclude_none,
+        )
+
+    def model_update(
         self,
         patch_object: Union[BaseModel, Dict[str, Any]],
         *,
@@ -690,15 +712,6 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         "doc is deprecated, please use model_dump_doc instead",
     )
     def doc(self, include: Optional["AbstractSetIntStr"] = None) -> Dict[str, Any]:
-        """Generate a document representation of the instance (as a dictionary).
-
-        Args:
-            include: field that should be included; if None, every fields will be
-                included
-
-        Returns:
-            the document associated to the instance
-        """
         return self.model_dump_doc(include=include)
 
     def model_dump_doc(
@@ -954,7 +967,29 @@ class Model(_BaseODMModel, metaclass=ModelMetaclass):
                 )
         return tuple(indexes)
 
+    @deprecated(
+        "update is deprecated, please use model_update instead",
+    )
     def update(
+        self,
+        patch_object: Union[BaseModel, Dict[str, Any]],
+        *,
+        include: "IncEx" = None,
+        exclude: "IncEx" = None,
+        exclude_unset: bool = True,
+        exclude_defaults: bool = False,
+        exclude_none: bool = False,
+    ) -> None:
+        return self.model_update(
+            patch_object,
+            include=include,
+            exclude=exclude,
+            exclude_unset=exclude_unset,
+            exclude_defaults=exclude_defaults,
+            exclude_none=exclude_none,
+        )
+
+    def model_update(
         self,
         patch_object: Union[BaseModel, Dict[str, Any]],
         *,
@@ -981,7 +1016,7 @@ class Model(_BaseODMModel, metaclass=ModelMetaclass):
                     "Updating the primary key is not supported. "
                     "See the copy method if you want to modify the primary field."
                 )
-        return super().update(
+        return super().model_update(
             patch_object,
             include=include,
             exclude=exclude,
