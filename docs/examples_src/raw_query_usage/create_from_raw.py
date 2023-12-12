@@ -9,6 +9,6 @@ class User(Model):
 
 document = {"username": "John", "_id": ObjectId("5f8352a87a733b8b18b0cb27")}
 
-user = User.parse_doc(document)
+user = User.model_validate_doc(document)
 print(repr(user))
 #> User(id=ObjectId('5f8352a87a733b8b18b0cb27'), name='John')

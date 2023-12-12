@@ -775,7 +775,14 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         return doc
 
     @classmethod
+    @deprecated(
+        "parse_doc is deprecated, please use model_validate_doc instead",
+    )
     def parse_doc(cls: Type[BaseT], raw_doc: Dict) -> BaseT:
+        return cls.model_validate_doc(raw_doc)
+
+    @classmethod
+    def model_validate_doc(cls: Type[BaseT], raw_doc: Dict) -> BaseT:
         """Parse a BSON document into an instance of the Model
 
         Args:
