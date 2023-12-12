@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Integrate pydantic v2 ([#361](https://github.com/art049/odmantic/pull/361) by [@art049](https://github.com/art049))
+
 - 👷 Update CI to use GitHub Actions matrix instead of tox, upgrade minimum Pydantic to 1.10.8 as needed by the tests ([#376](https://github.com/art049/odmantic/pull/376) by [@tiangolo](https://github.com/tiangolo))
 
 - feat: benchmark operations ([#362](https://github.com/art049/odmantic/pull/362) by [@art049](https://github.com/art049))
