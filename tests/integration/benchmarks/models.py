@@ -1,6 +1,6 @@
 """Models based on https://github.com/tortoise/orm-benchmarks"""
 
-from datetime import datetime
+from datetime import datetime, timezone
 from decimal import Decimal
 from random import choice
 from typing import Iterator, Optional
@@ -13,8 +13,12 @@ Level = Literal[10, 20, 30, 40, 50]
 VALID_LEVELS = list(get_args(Level))
 
 
+def utc_now():
+    return datetime.now(timezone.utc)
+
+
 class SmallJournal(Model):
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
+    timestamp: datetime = Field(default_factory=utc_now)
     level: Level = Field(index=True)
     text: str = Field(index=True)
 
@@ -25,7 +29,7 @@ class SmallJournal(Model):
 
 
 class JournalWithRelations(Model):
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
+    timestamp: datetime = Field(default_factory=utc_now)
     level: Level = Field(index=True)
     text: str = Field(index=True)
 
@@ -33,7 +37,7 @@ class JournalWithRelations(Model):
 
 
 class BigJournal(Model):
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
+    timestamp: datetime = Field(default_factory=utc_now)
     level: Level = Field(index=True)
     text: str = Field(index=True)
 
