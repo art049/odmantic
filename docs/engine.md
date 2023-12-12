@@ -196,7 +196,7 @@ saving the instance.
 ### Patching multiple fields at once
 
 The easiest way to change multiple fields at once is to use the
-[Model.update][odmantic.model._BaseODMModel.update] method. This method will take either a
+[Model.model_update][odmantic.model._BaseODMModel.model_update] method. This method will take either a
 Pydantic object or a dictionary and update the matching fields of the instance.
 
 #### From a Pydantic Model
@@ -222,7 +222,7 @@ Directly changing the primary field value as explained above is not
 possible and a `NotImplementedError` exception will be raised if you try to do so.
 
 The easiest way to change an instance primary field is to perform a local copy of the
-instance using the [Model.copy][odmantic.model._BaseODMModel.copy] method.
+instance using the [Model.copy][odmantic.model._BaseODMModel.model_copy] method.
 
 {{ async_sync_snippet("engine", "primary_key_update.py", hl_lines="18 20 22") }}
 

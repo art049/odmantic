@@ -674,7 +674,7 @@ as a path parameter and the `TreePatchSchema` as the request body parameter.
 
 After all the parameters have been validated properly and the appropriate instance have
 been gathered, we can apply the modifications to the local instance using the
-[Model.update][odmantic.model._BaseODMModel.update] method. By default, the update
+[Model.model_update][odmantic.model._BaseODMModel.model_update] method. By default, the update
 method will replace each field values in the instance with the ones explicitely set in
 the patch object. Thus, the fields containing the None default values are not gonna be
 changed in the instance.
@@ -714,7 +714,7 @@ We can then finish by saving and returning the updated tree.
     (More details: [pydantic #1223](https://github.com/samuelcolvin/pydantic/issues/1223#issuecomment-594632324){:target=blank_},
      [pydantic: Required fields](https://pydantic-docs.helpmanual.io/usage/models/#required-fields){:target=blank_})
 
-    By default [Model.update][odmantic.model._BaseODMModel.update], will not apply
+    By default [Model.model_update][odmantic.model._BaseODMModel.model_update], will not apply
     values from unset (not explicitely populated) fields. Since we don't want to allow
     explicitely set `None` values in the example, we used fields defined as
     `#!python c: int = None`.
@@ -795,6 +795,6 @@ Some ideas that should arrive soon:
   document is not found an exception will be raised directly.
 - Implement the equivalent of MongoDB insert method to be able to create document
   without overwriting existing ones.
-- <del>Implement a Model.update method to update the model fields from a dictionnary or from
+- <del>Implement a Model.model_update method to update the model fields from a dictionnary or from
   a Pydantic schema.</del>
 - Automatically generate CRUD endpoints directly from an ODMantic Model.
