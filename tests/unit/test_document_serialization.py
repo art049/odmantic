@@ -10,7 +10,7 @@ def test_objectid_serialization():
         ...
 
     instance = M()
-    doc = instance.doc()
+    doc = instance.model_dump_doc()
     assert isinstance(doc["_id"], bson.ObjectId)
     assert doc["_id"] == instance.id
 
@@ -22,5 +22,5 @@ def test_extra_allowed_bson_serialization():
         model_config = {"extra": "allow"}
 
     instance = M(extra_field=Decimal("1.1"))
-    doc = instance.doc()
+    doc = instance.model_dump_doc()
     assert isinstance(doc["extra_field"], bson.Decimal128)

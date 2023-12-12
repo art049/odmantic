@@ -55,7 +55,7 @@ def _cmp_expression(f: "FieldProxy", op: str, cmp_value: Any) -> QueryExpression
     from odmantic.model import EmbeddedModel
 
     if isinstance(cmp_value, EmbeddedModel):
-        value = cmp_value.doc()
+        value = cmp_value.model_dump_doc()
     elif isinstance(cmp_value, Enum):
         value = cmp_value.value
     else:

@@ -210,7 +210,7 @@ def test_define_alternate_primary_key():
         name: str = Field(primary_field=True)
 
     instance = M(name="Jack")
-    assert instance.doc() == {"_id": "Jack"}
+    assert instance.model_dump_doc() == {"_id": "Jack"}
 
 
 def test_weird_overload_id_field():
@@ -219,7 +219,7 @@ def test_weird_overload_id_field():
         name: str = Field(primary_field=True)
 
     instance = M(id=15, name="Johnny")
-    assert instance.doc() == {"_id": "Johnny", "id": 15}
+    assert instance.model_dump_doc() == {"_id": "Johnny", "id": 15}
 
 
 @pytest.mark.skip("Not implemented, see if it should be supported...")
@@ -343,7 +343,7 @@ def test_embedded_model_key_name():
     class M(Model):
         field: E = Field(E(), key_name="hello")
 
-    doc = M().doc()
+    doc = M().model_dump_doc()
     assert "hello" in doc
     assert doc["hello"] == {"f": 3}
 
@@ -355,7 +355,7 @@ def test_embedded_model_as_primary_field():
     class M(Model):
         field: E = Field(primary_field=True)
 
-    assert M(field=E(f=1)).doc() == {"_id": {"f": 1}}
+    assert M(field=E(f=1)).model_dump_doc() == {"_id": {"f": 1}}
 
 
 def test_untouched_types_function():
@@ -406,7 +406,7 @@ def test_model_with_class_var():
     m = M(field=5)
     assert m.cls_var == "theclassvar"
     assert m.field == 5
-    assert "cls_var" not in m.doc().keys()
+    assert "cls_var" not in m.model_dump_doc().keys()
 
 
 def test_model_definition_extra_allow():
@@ -416,7 +416,7 @@ def test_model_definition_extra_allow():
         f: int
 
     instance = M(f=1, g=2)
-    assert instance.doc(include={"f", "g"}) == {"f": 1, "g": 2}
+    assert instance.model_dump_doc(include={"f", "g"}) == {"f": 1, "g": 2}
 
 
 def test_model_definition_extra_ignore():
@@ -426,7 +426,7 @@ def test_model_definition_extra_ignore():
         f: int
 
     instance = M(f=1, g=2)
-    assert instance.doc(include={"f", "g"}) == {"f": 1}
+    assert instance.model_dump_doc(include={"f", "g"}) == {"f": 1}
 
 
 def test_model_definition_extra_forbid():
@@ -447,7 +447,7 @@ def test_extra_field_type_subst():
 
     instance = M(f=1, oid=ODMObjectId())
 
-    assert isinstance(instance.doc()["oid"], ObjectId)
+    assert isinstance(instance.model_dump_doc()["oid"], ObjectId)
 
 
 def test_extra_field_document_parsing():
@@ -458,7 +458,7 @@ def test_extra_field_document_parsing():
 
     instance = M.parse_doc({"_id": ObjectId(), "f": 1, "extra": "hello"})
 
-    assert "extra" in instance.doc()
+    assert "extra" in instance.model_dump_doc()
 
 
 class EmForGenericDefinitionTest(EmbeddedModel):
