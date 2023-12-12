@@ -106,7 +106,7 @@ def test_validate_invalid_bson_objectid():
     errors = exc_info.value.errors()
     assert len(errors) == 2
     assert all(error["loc"][0] == "id" for error in errors)
-    assert any("Value error, Invalid ObjectId" in error["msg"] for error in errors)
+    assert "Value error, Invalid ObjectId" in [error["msg"] for error in errors]
 
 
 def test_validate_decimal_valid_string():

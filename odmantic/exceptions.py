@@ -68,12 +68,6 @@ def ODManticCustomError(
     return PydanticCustomError(odm_error_type, message_template, context)
 
 
-class _KeyNotFoundInDocumentError(ValueError):
-    def __init__(self, key_name: str):
-        super().__init__("key not found in document")
-        self.key_name = f"'{key_name}'"
-
-
 def KeyNotFoundInDocumentError(key_name: str) -> PydanticCustomError:
     return ODManticCustomError(
         "key_not_found_in_document",
@@ -82,24 +76,12 @@ def KeyNotFoundInDocumentError(key_name: str) -> PydanticCustomError:
     )
 
 
-class _ReferencedDocumentNotFoundError(ValueError):
-    def __init__(self, key_name: str):
-        super().__init__("referenced document not found")
-        self.foreign_key_name = f"'{key_name}'"
-
-
 def ReferencedDocumentNotFoundError(foreign_key_name: str) -> PydanticCustomError:
     return ODManticCustomError(
         "referenced_document_not_found",
         "Referenced document not found for foreign key '{foreign_key_name}'",
         {"foreign_key_name": foreign_key_name},
     )
-
-
-class _IncorrectGenericEmbeddedModelValue(ValueError):
-    def __init__(self, value: Any):
-        super().__init__("incorrect generic embedded model value")
-        self.value = value
 
 
 def IncorrectGenericEmbeddedModelValue(value: Any) -> PydanticCustomError:
