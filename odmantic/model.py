@@ -722,7 +722,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
             exclude_none=exclude_none,
         )
 
-    def __doc(
+    def __doc(  # noqa C901 # TODO: refactor document generation
         self,
         raw_doc: Dict[str, Any],
         model: Type["_BaseODMModel"],
@@ -754,12 +754,16 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
                 doc[field.key_name] = raw_doc[field_name]
 
         if model.model_config["extra"] == "allow":
-            extras = set(raw_doc.keys()) - set(model.__odm_fields__.keys())
+            # raw_doc is indexed by field name so we compare against odm field names
+            extras = set(raw_doc.keys()) - set(self.__odm_fields__.keys())
             for extra in extras:
                 value = raw_doc[extra]
                 subst_type = validate_type(type(value))
-                bson_serialization_method = getattr(subst_type, "__bson__", lambda x: x)
-                doc[extra] = bson_serialization_method(raw_doc[extra])
+                bson_serializer = _get_bson_serializer(subst_type)
+                if bson_serializer is not None:
+                    doc[extra] = bson_serializer(value)
+                else:
+                    doc[extra] = value
         return doc
 
     def doc(self, include: Optional["AbstractSetIntStr"] = None) -> Dict[str, Any]:
