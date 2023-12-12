@@ -6,5 +6,5 @@ class User(Model):
 
 
 user = User(name="John")
-print(user.doc())
+print(user.model_dump_doc())
 #> {'username': 'John', '_id': ObjectId('5f8352a87a733b8b18b0cb27')}

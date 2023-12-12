@@ -42,7 +42,7 @@ async def test_create_trees_count_get(
         assert response.status_code == 200
     assert await aio_engine.count(Tree) == count
     async for tree in aio_engine.find(Tree):
-        assert is_sub_dict(EXAMPLE_TREE_BODY, tree.dict())
+        assert is_sub_dict(EXAMPLE_TREE_BODY, tree.model_dump())
 
 
 async def test_get_tree_by_id(base_example_client: TestClient, aio_engine: AIOEngine):

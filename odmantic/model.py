@@ -17,7 +17,6 @@ from typing import (
     FrozenSet,
     Iterable,
     List,
-    Literal,
     Optional,
     Set,
     Tuple,
@@ -37,7 +36,7 @@ from pydantic.fields import Field as PDField
 from pydantic.fields import FieldInfo as PDFieldInfo
 from pydantic.main import BaseModel
 from pydantic_core import InitErrorDetails
-from typing_extensions import deprecated
+from typing_extensions import Literal, deprecated
 
 from odmantic.bson import (
     _BSON_SUBSTITUTED_FIELDS,
@@ -672,7 +671,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
                 if k not in odm_fields:
                     continue
                 patch_dict[k] = v
-        patched_instance_dict = {**self.dict(), **patch_dict}
+        patched_instance_dict = {**self.model_dump(), **patch_dict}
         # FIXME: improve performance by only running updated field validators and then
         # model validators
         patched_instance = self.validate(patched_instance_dict)
@@ -687,40 +686,36 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         super().__setattr__(name, value)
         self.__fields_modified__.add(name)
 
-    # TODO: rename to model_dump
-    def dict(  # Missing deprecated/ unsupported parameters
-        self,
-        *,
-        include: "IncEx" = None,
-        exclude: "IncEx" = None,
-        exclude_unset: bool = False,
-        exclude_defaults: bool = False,
-        exclude_none: bool = False,
-        by_alias: bool = False,  # FIXME when aliases are supported
-    ) -> "DictStrAny":
-        """Generate a dictionary representation of the model, optionally specifying
-        which fields to include or exclude.
+    @deprecated(
+        "doc is deprecated, please use model_dump_doc instead",
+    )
+    def doc(self, include: Optional["AbstractSetIntStr"] = None) -> Dict[str, Any]:
+        """Generate a document representation of the instance (as a dictionary).
 
         Args:
-            include: fields to include (include all fields if `None`)
-            exclude: fields to exclude this takes precedence over include
-            exclude_unset: only include fields explicitly set
-            exclude_defaults: only include fields that are different from their default
-                value
-            exclude_none: only include fields different from `None`
-            by_alias: **not supported yet**
+            include: field that should be included; if None, every fields will be
+                included
 
         Returns:
-            the dictionary representation of the instance
+            the document associated to the instance
         """
-        return super().model_dump(
-            mode="python",  # make sure bson fields are not serialized to JSON
-            include=include,
-            exclude=exclude,
-            exclude_unset=exclude_unset,
-            exclude_defaults=exclude_defaults,
-            exclude_none=exclude_none,
-        )
+        return self.model_dump_doc(include=include)
+
+    def model_dump_doc(
+        self, include: Optional["AbstractSetIntStr"] = None
+    ) -> Dict[str, Any]:
+        """Generate a document (BSON) representation of the instance (as a dictionary).
+
+        Args:
+            include: field that should be included; if None, every fields will be
+                included
+
+        Returns:
+            the document associated to the instance
+        """
+        raw_doc = self.model_dump()
+        doc = self.__doc(raw_doc, type(self), include)
+        return doc
 
     def __doc(  # noqa C901 # TODO: refactor document generation
         self,
@@ -764,20 +759,6 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
                     doc[extra] = bson_serializer(value)
                 else:
                     doc[extra] = value
-        return doc
-
-    def doc(self, include: Optional["AbstractSetIntStr"] = None) -> Dict[str, Any]:
-        """Generate a document representation of the instance (as a dictionary).
-
-        Args:
-            include: field that should be included; if None, every fields will be
-                included
-
-        Returns:
-            the document associated to the instance
-        """
-        raw_doc = self.dict()
-        doc = self.__doc(raw_doc, type(self), include)
         return doc
 
     @classmethod

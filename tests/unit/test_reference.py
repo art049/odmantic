@@ -38,4 +38,4 @@ def test_reference_with_custom_primary_field():
 
     r = Referenced(key=1)
     m = M(ref=r)
-    assert m.doc()["ref"] == 1
+    assert m.model_dump_doc()["ref"] == 1

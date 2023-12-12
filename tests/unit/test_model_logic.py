@@ -207,7 +207,7 @@ def test_embedded_model_alternate_key_name():
         f: Em
 
     instance = M(f=Em(name="Jack"))
-    doc = instance.doc()
+    doc = instance.model_dump_doc()
     assert doc["f"] == {"username": "Jack"}
     parsed = M.parse_doc(doc)
     assert parsed == instance
@@ -221,7 +221,7 @@ def test_embedded_model_list_alternate_key_name():
         f: List[Em]
 
     instance = M(f=[Em(name="Jack")])
-    doc = instance.doc()
+    doc = instance.model_dump_doc()
     assert doc["f"] == [{"username": "Jack"}]
     parsed = M.parse_doc(doc)
     assert parsed == instance
@@ -235,7 +235,7 @@ def test_embedded_model_tuple_alternate_key_name():
         f: Tuple[Em, ...]
 
     instance = M(f=(Em(name="Jack"),))
-    doc = instance.doc()
+    doc = instance.model_dump_doc()
     assert doc["f"] == [{"username": "Jack"}]
     parsed = M.parse_doc(doc)
     assert parsed == instance
@@ -446,7 +446,7 @@ def test_model_copy_with_reference(deep: bool):
     ref_instance = R(f=12)
     instance = M(r=ref_instance)
     copied = instance.model_copy(deep=deep)
-    assert instance.doc() == copied.doc()
+    assert instance.model_dump_doc() == copied.model_dump_doc()
     assert instance.r == copied.r
 
 

@@ -136,7 +136,7 @@ filterwarnings = [
     "ignore:the AIOEngineDependency object is deprecated.*:DeprecationWarning:odmantic.*",
 ]
 pythonpath = "src tests"
-addopts = "--benchmark-disable"
+addopts = "--benchmark-disable -W error::DeprecationWarning"
 [tool.coverage.run]
 branch = true
 [tool.coverage.report]

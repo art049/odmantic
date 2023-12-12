@@ -234,7 +234,7 @@ async def test_reference_with_key_name(aio_engine: AIOEngine):
         r: R = Reference(key_name="fancy_key_name")
 
     instance = M(r=R(field=3))
-    assert "fancy_key_name" in instance.doc()
+    assert "fancy_key_name" in instance.model_dump_doc()
     await aio_engine.save(instance)
 
     fetched = await aio_engine.find_one(M)
@@ -250,7 +250,7 @@ def test_sync_reference_with_key_name(sync_engine: SyncEngine):
         r: R = Reference(key_name="fancy_key_name")
 
     instance = M(r=R(field=3))
-    assert "fancy_key_name" in instance.doc()
+    assert "fancy_key_name" in instance.model_dump_doc()
     sync_engine.save(instance)
 
     fetched = sync_engine.find_one(M)
@@ -306,11 +306,11 @@ async def test_reference_incorect_reference_structure(aio_engine: AIOEngine):
         r: R = Reference()
 
     r = R(field=12)
-    r_doc = r.doc()
+    r_doc = r.model_dump_doc()
     del r_doc["field"]
     m = M(r=r)
     await aio_engine.get_collection(R).insert_one(r_doc)
-    await aio_engine.get_collection(M).insert_one(m.doc())
+    await aio_engine.get_collection(M).insert_one(m.model_dump_doc())
 
     with pytest.raises(DocumentParsingError) as exc_info:
         await aio_engine.find_one(M)
@@ -331,11 +331,11 @@ def test_sync_reference_incorect_reference_structure(sync_engine: SyncEngine):
         r: R = Reference()
 
     r = R(field=12)
-    r_doc = r.doc()
+    r_doc = r.model_dump_doc()
     del r_doc["field"]
     m = M(r=r)
     sync_engine.get_collection(R).insert_one(r_doc)
-    sync_engine.get_collection(M).insert_one(m.doc())
+    sync_engine.get_collection(M).insert_one(m.model_dump_doc())
 
     with pytest.raises(DocumentParsingError) as exc_info:
         sync_engine.find_one(M)

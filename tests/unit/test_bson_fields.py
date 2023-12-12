@@ -247,5 +247,5 @@ def test_with_bson_serializer_override_builtin_bson():
         id: MyObjectId = Field(..., default_factory=ObjectId, primary_field=True)
 
     instance = M()
-    parsed = instance.doc()
+    parsed = instance.model_dump_doc()
     assert parsed == {"_id": "encoded"}
