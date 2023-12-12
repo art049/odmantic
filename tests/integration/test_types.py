@@ -139,7 +139,7 @@ async def test_custom_bson_serializable(
         }
     )
     assert document is not None, "Couldn't retrieve the document with it's string value"
-    recovered_instance = ModelWithCustomField.parse_doc(document)
+    recovered_instance = ModelWithCustomField.model_validate_doc(document)
     assert recovered_instance.field == instance.field
 
 
@@ -159,5 +159,5 @@ def test_sync_custom_bson_serializable(
         }
     )
     assert document is not None, "Couldn't retrieve the document with it's string value"
-    recovered_instance = ModelWithCustomField.parse_doc(document)
+    recovered_instance = ModelWithCustomField.model_validate_doc(document)
     assert recovered_instance.field == instance.field

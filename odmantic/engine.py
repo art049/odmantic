@@ -80,7 +80,7 @@ class BaseCursor(Generic[ModelType]):
         self._results: Optional[List[ModelType]] = None
 
     def _parse_document(self, raw_doc: Dict) -> ModelType:
-        instance = self._model.parse_doc(raw_doc)
+        instance = self._model.model_validate_doc(raw_doc)
         object.__setattr__(instance, "__fields_modified__", set())
         return instance
 

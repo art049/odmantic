@@ -63,7 +63,7 @@ All the following find queries would give exactly the same results:
 ## Raw MongoDB documents
 ### Parsing documents
 You can parse MongoDB document to instances using the
-[parse_doc][odmantic.model._BaseODMModel.parse_doc] method.
+[model_validate_doc][odmantic.model._BaseODMModel.model_validate_doc] method.
 
 !!! tip
     If the provided documents contain extra fields, ODMantic will ignore them. This can

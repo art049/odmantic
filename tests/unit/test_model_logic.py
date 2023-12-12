@@ -100,7 +100,7 @@ def test_fields_modified_on_construction():
 
 
 def test_fields_modified_on_document_parsing():
-    instance = PersonModel.parse_doc(
+    instance = PersonModel.model_validate_doc(
         {"_id": ObjectId(), "first_name": "Jackie", "last_name": "Chan"}
     )
     assert instance.__fields_modified__ == set(["first_name", "last_name", "id"])
@@ -112,7 +112,7 @@ def test_document_parsing_error_keyname():
 
     id = ObjectId()
     with pytest.raises(DocumentParsingError) as exc_info:
-        M.parse_doc({"_id": id})
+        M.model_validate_doc({"_id": id})
     assert redact_objectid(str(exc_info.value), id) == snapshot(
         """\
 1 validation error for M
@@ -133,7 +133,7 @@ def test_document_parsing_error_embedded_keyname():
         e: E
 
     with pytest.raises(DocumentParsingError) as exc_info:
-        M.parse_doc({"_id": ObjectId(), "e": {"f": {}}})
+        M.model_validate_doc({"_id": ObjectId(), "e": {"f": {}}})
     assert str(exc_info.value) == snapshot(
         """\
 1 validation error for M
@@ -148,7 +148,7 @@ def test_embedded_document_parsing_error():
         f: int
 
     with pytest.raises(DocumentParsingError) as exc_info:
-        E.parse_doc({})
+        E.model_validate_doc({})
     assert str(exc_info.value) == snapshot(
         """\
 1 validation error for E
@@ -163,7 +163,7 @@ def test_embedded_document_parsing_validation_error():
         f: int
 
     with pytest.raises(DocumentParsingError) as exc_info:
-        E.parse_doc({"f": "aa"})
+        E.model_validate_doc({"f": "aa"})
     assert str(exc_info.value).splitlines()[:-1] == snapshot(
         [
             "1 validation error for E",
@@ -182,7 +182,7 @@ def test_embedded_model_alternate_key_name_with_default():
 
     _id = ObjectId()
     doc = {"_id": _id}
-    parsed = M.parse_doc(doc)
+    parsed = M.model_validate_doc(doc)
     assert parsed.f.name == "Jack"
 
 
@@ -196,7 +196,7 @@ def test_embedded_model_alternate_key_name_parsing_exception():
     _id = ObjectId()
     doc = {"_id": _id}
     with pytest.raises(DocumentParsingError):
-        M.parse_doc(doc)
+        M.model_validate_doc(doc)
 
 
 def test_embedded_model_alternate_key_name():
@@ -209,7 +209,7 @@ def test_embedded_model_alternate_key_name():
     instance = M(f=Em(name="Jack"))
     doc = instance.model_dump_doc()
     assert doc["f"] == {"username": "Jack"}
-    parsed = M.parse_doc(doc)
+    parsed = M.model_validate_doc(doc)
     assert parsed == instance
 
 
@@ -223,7 +223,7 @@ def test_embedded_model_list_alternate_key_name():
     instance = M(f=[Em(name="Jack")])
     doc = instance.model_dump_doc()
     assert doc["f"] == [{"username": "Jack"}]
-    parsed = M.parse_doc(doc)
+    parsed = M.model_validate_doc(doc)
     assert parsed == instance
 
 
@@ -237,7 +237,7 @@ def test_embedded_model_tuple_alternate_key_name():
     instance = M(f=(Em(name="Jack"),))
     doc = instance.model_dump_doc()
     assert doc["f"] == [{"username": "Jack"}]
-    parsed = M.parse_doc(doc)
+    parsed = M.model_validate_doc(doc)
     assert parsed == instance
 
 
@@ -249,7 +249,7 @@ def test_embedded_model_list_parsing_invalid_type():
         f: List[Em]
 
     with pytest.raises(DocumentParsingError) as exc_info:
-        M.parse_doc({"_id": 1, "f": {1: {"name": "Jack"}}})
+        M.model_validate_doc({"_id": 1, "f": {1: {"name": "Jack"}}})
 
     assert str(exc_info.value) == snapshot(
         """\
@@ -270,7 +270,7 @@ def test_embedded_model_list_parsing_missing_value():
     with pytest.raises(
         DocumentParsingError,
     ) as exc_info:
-        M.parse_doc({"_id": 1})
+        M.model_validate_doc({"_id": 1})
     assert str(exc_info.value) == snapshot(
         """\
 1 validation error for M
@@ -287,7 +287,7 @@ def test_embedded_model_list_parsing_missing_value_with_default():
     class M(Model):
         f: List[Em] = [Em(name="John")]
 
-    parsed = M.parse_doc({"_id": ObjectId()})
+    parsed = M.model_validate_doc({"_id": ObjectId()})
     assert parsed.f == [Em(name="John")]
 
 
@@ -299,7 +299,7 @@ def test_embedded_model_dict_parsing_invalid_value():
         f: Dict[str, Em]
 
     with pytest.raises(DocumentParsingError) as exc_info:
-        M.parse_doc({"_id": 1, "f": []})
+        M.model_validate_doc({"_id": 1, "f": []})
     assert str(exc_info.value) == snapshot(
         """\
 1 validation error for M
@@ -317,7 +317,7 @@ def test_embedded_model_dict_parsing_invalid_sub_value():
         f: Dict[str, Em]
 
     with pytest.raises(DocumentParsingError) as exc_info:
-        M.parse_doc({"_id": ObjectId(), "f": {"key": {"not_there": "a"}}})
+        M.model_validate_doc({"_id": ObjectId(), "f": {"key": {"not_there": "a"}}})
     assert str(exc_info.value) == snapshot(
         """\
 1 validation error for M
@@ -335,7 +335,7 @@ def test_embedded_model_list_parsing_invalid_sub_value():
         f: List[Em]
 
     with pytest.raises(DocumentParsingError) as exc_info:
-        M.parse_doc({"_id": ObjectId(), "f": [{"not_there": "a"}]})
+        M.model_validate_doc({"_id": ObjectId(), "f": [{"not_there": "a"}]})
     assert str(exc_info.value) == snapshot(
         """\
 1 validation error for M

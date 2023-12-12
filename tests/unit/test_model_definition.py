@@ -456,7 +456,7 @@ def test_extra_field_document_parsing():
 
         f: int
 
-    instance = M.parse_doc({"_id": ObjectId(), "f": 1, "extra": "hello"})
+    instance = M.model_validate_doc({"_id": ObjectId(), "f": 1, "extra": "hello"})
 
     assert "extra" in instance.model_dump_doc()
 
