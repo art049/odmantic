@@ -329,14 +329,9 @@ def test_invalid_collection_name_contain_system_dot():
             model_config = {"collection": "system.hi"}
 
 
-def test_legacy_custom_collection_name():
-    with pytest.warns(
-        DeprecationWarning,
-        match="Defining the collection name with `__collection__` is deprecated",
-    ):
-
-        class M(Model):
-            __collection__ = "collection_name"
+def test_custom_collection_name():
+    class M(Model):
+        model_config = {"collection": "collection_name"}
 
     assert M.__collection__ == "collection_name"
 

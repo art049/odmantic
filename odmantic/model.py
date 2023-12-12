@@ -5,7 +5,6 @@ import decimal
 import enum
 import pathlib
 import uuid
-import warnings
 from abc import ABCMeta
 from collections.abc import Callable as abcCallable
 from types import FunctionType
@@ -478,13 +477,6 @@ class ModelMetaclass(BaseModelMetaclass):
 
             if config["collection"] is not None:
                 collection_name = config["collection"]
-            elif "__collection__" in namespace:
-                collection_name = namespace["__collection__"]
-                warnings.warn(
-                    "Defining the collection name with `__collection__` is deprecated. "
-                    "Please use `collection` config attribute instead.",
-                    DeprecationWarning,
-                )
             else:
                 cls_name = name
                 if cls_name.endswith("Model"):
