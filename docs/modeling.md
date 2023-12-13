@@ -136,15 +136,31 @@ ensure that the area of the rectangle is less or equal to 9.
 !!! tip
     You can define class variables in the Models using the `typing.ClassVar` type
     construct, as done in this example with `MAX_AREA`. Those class variables will be
-    completely ignored by ODMantic while persisting instances to the database.
+    completely ignored by ODMantic while persisting instances in the database.
 
 ### Advanced Configuration
 
-The model configuration is done in the same way as with Pydantic models: using a [Config
-class](https://pydantic-docs.helpmanual.io/usage/model_config/){:target=blank_} defined
-in the model body.
+The model configuration is done in the same way as with Pydantic models: using a
+[ConfigDict](https://pydantic-docs.helpmanual.io/usage/model_config/){:target=blank_} `model_config` defined in the model body.
 
-**Available options**:
+Here is an example of a model configuration:
+
+```python
+class Event(Model):
+    date: datetime
+
+    model_config = {
+        "collection": "event_collection",
+        "parse_doc_with_default_factories": True,
+        "indexes": lambda: [
+            Index(Event.date, unique=True),
+            pymongo.IndexModel([("date", pymongo.DESCENDING)]),
+        ],
+    }
+```
+
+
+#### Available options
 
  `#!python collection: str`
  :    Customize the collection name associated to the model. See [this
@@ -203,21 +219,9 @@ in the model body.
 
       Default: `#!python Extra.ignore`
 
- `#!python json_loads` *(inherited from Pydantic)*
- :    Function used to decode JSON data
-
-      Default: `#!python json.loads`
-
- `#!python json_dumps` *(inherited from Pydantic)*
- :    Function used to encode JSON data
-
-      Default: `#!python json.dumps`
-
-
-
 
 For more details and examples about the options inherited from Pydantic, you can have a
-look to [Pydantic: Model
+look at [Pydantic: Model
 Config](https://pydantic-docs.helpmanual.io/usage/model_config/){:target=blank_}
 
 !!! warning
@@ -391,7 +395,7 @@ publisher. We can thus model this relation as a many-to-one relationship.
 
 The definition of a reference field **requires** the presence of the [Reference()][odmantic.reference.Reference]
 descriptor. Once the models are defined, linking two instances is done simply by
-assigning the reference field of referencing instance to the referenced instance.
+assigning the reference field of the referencing instance to the referenced instance.
 
 ??? question "Why is it required to include the Reference descriptor ?"
     The main goal behind enforcing the presence of the descriptor is to have a clear
@@ -417,7 +421,7 @@ assigning the reference field of referencing instance to the referenced instance
     }
     ```
     We can see that the publishers have been persisted to their collection even if no
-    explicit save has been perfomed.
+    explicit save has been performed.
     When calling the [engine.save][odmantic.engine.AIOEngine.save] method, the engine
     will persist automatically the referenced documents.
 

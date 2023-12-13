@@ -1,6 +1,6 @@
 import importlib.metadata
 
-from .bson import ObjectId
+from .bson import ObjectId, WithBsonSerializer
 from .engine import AIOEngine, SyncEngine
 from .field import Field
 from .index import Index
@@ -16,6 +16,7 @@ __all__ = [
     "Index",
     "ObjectId",
     "SyncEngine",
+    "WithBsonSerializer",
 ]
 
 

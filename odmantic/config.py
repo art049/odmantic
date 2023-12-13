@@ -11,8 +11,12 @@ if TYPE_CHECKING:
 
 class ODMConfigDict(ConfigDict, total=False):
     collection: str | None
+    """Customize the collection name associated to the model"""
     parse_doc_with_default_factories: bool
+    """Wether to allow populating field values with default factories while parsing
+    documents from the database"""
     indexes: Callable[[], Iterable[ODMIndex.Index | pymongo.IndexModel]] | None
+    """Define additional indexes for the model"""
 
 
 PYDANTIC_CONFIG_OPTIONS = set(ConfigDict.__annotations__.keys())
