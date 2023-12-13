@@ -12,8 +12,15 @@
       
         <link rel="canonical" href="https://art049.github.io/odmantic/changelog/">
       
+      
+        <link rel="prev" href="../contributing/">
+      
+      
+        <link rel="next" href="../migration_guide/">
+      
+      
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.4.4">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
     
     
       
@@ -21,14 +28,17 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.6b80c2a2.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.50c56a3b.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
-        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
+
+
     
+    
+      
     
     
       
@@ -53,13 +63,12 @@
   
   
 
-
-  <script id="__analytics">function __md_analytics(){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-180814888-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");ga("send","event","feedback","click",t,e),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){ga("send","pageview",e.pathname)})});var e=document.createElement("script");e.async=!0,e.src="https://www.google-analytics.com/analytics.js",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
-
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","UA-180814888-1"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","UA-180814888-1",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=UA-180814888-1",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
   
     <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
   
 
+    
     
     
   </head>
@@ -74,9 +83,6 @@
     
     <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="green">
   
-    
-    
-      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -96,7 +102,9 @@
     
       
 
-<header class="md-header" data-md-component="header">
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href=".." title="ODMantic" class="md-header__button md-logo" aria-label="ODMantic" data-md-component="logo">
       
@@ -105,6 +113,7 @@
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
+      
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
     </label>
     <div class="md-header__title" data-md-component="header-title">
@@ -124,31 +133,39 @@
       </div>
     </div>
     
-      <form class="md-header__option" data-md-component="palette">
-        
-          
-          
-          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
-          
-            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
-            </label>
-          
-        
-          
-          
-          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
-          
-            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
-            </label>
-          
-        
-      </form>
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
       <label class="md-header__button md-icon" for="__search">
+        
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
       </label>
       <div class="md-search" data-md-component="search" role="dialog">
@@ -157,12 +174,15 @@
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
+        
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
       </label>
       <nav class="md-search__options" aria-label="Search">
         
-        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
         </button>
       </nav>
@@ -174,7 +194,7 @@
           <div class="md-search-result__meta">
             Initializing search
           </div>
-          <ol class="md-search-result__list"></ol>
+          <ol class="md-search-result__list" role="presentation"></ol>
         </div>
       </div>
     </div>
@@ -186,7 +206,7 @@
         <a href="https://github.com/art049/odmantic" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
   </div>
   <div class="md-source__repository">
     art049/odmantic
@@ -216,6 +236,7 @@
                     
 
 
+
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="ODMantic" class="md-nav__button md-logo" aria-label="ODMantic" data-md-component="logo">
@@ -231,7 +252,7 @@
       <a href="https://github.com/art049/odmantic" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
   </div>
   <div class="md-source__repository">
     art049/odmantic
@@ -243,14 +264,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href=".." class="md-nav__link">
-        Overview
+        
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
       </a>
     </li>
   
@@ -258,14 +284,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../fields/" class="md-nav__link">
-        Fields
+        
+  
+  <span class="md-ellipsis">
+    Fields
+  </span>
+  
+
       </a>
     </li>
   
@@ -273,14 +304,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../modeling/" class="md-nav__link">
-        Modeling
+        
+  
+  <span class="md-ellipsis">
+    Modeling
+  </span>
+  
+
       </a>
     </li>
   
@@ -288,14 +324,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../engine/" class="md-nav__link">
-        Engine
+        
+  
+  <span class="md-ellipsis">
+    Engine
+  </span>
+  
+
       </a>
     </li>
   
@@ -303,14 +344,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../querying/" class="md-nav__link">
-        Querying
+        
+  
+  <span class="md-ellipsis">
+    Querying
+  </span>
+  
+
       </a>
     </li>
   
@@ -318,14 +364,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../raw_query_usage/" class="md-nav__link">
-        Raw query usage
+        
+  
+  <span class="md-ellipsis">
+    Raw query usage
+  </span>
+  
+
       </a>
     </li>
   
@@ -333,14 +384,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../usage_fastapi/" class="md-nav__link">
-        Usage with FastAPI
+        
+  
+  <span class="md-ellipsis">
+    Usage with FastAPI
+  </span>
+  
+
       </a>
     </li>
   
@@ -348,14 +404,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../usage_pydantic/" class="md-nav__link">
-        Usage with Pydantic
+        
+  
+  <span class="md-ellipsis">
+    Usage with Pydantic
+  </span>
+  
+
       </a>
     </li>
   
@@ -363,188 +424,273 @@
     
       
       
-      
-
+  
   
   
   
     
+    
+    
+    
+    
     <li class="md-nav__item md-nav__item--nested">
       
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_9">
-          API Reference
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="API Reference" data-md-level="1">
-        <label class="md-nav__title" for="__nav_9">
-          <span class="md-nav__icon md-icon"></span>
-          API Reference
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
           
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    API Reference
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            API Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../api_reference/model/" class="md-nav__link">
-        odmantic.model
+        
+  
+  <span class="md-ellipsis">
+    odmantic.model
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../api_reference/engine/" class="md-nav__link">
-        odmantic.engine
+        
+  
+  <span class="md-ellipsis">
+    odmantic.engine
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../api_reference/session/" class="md-nav__link">
-        odmantic.session
+        
+  
+  <span class="md-ellipsis">
+    odmantic.session
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../api_reference/query/" class="md-nav__link">
-        odmantic.query
+        
+  
+  <span class="md-ellipsis">
+    odmantic.query
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../api_reference/field/" class="md-nav__link">
-        odmantic.field
+        
+  
+  <span class="md-ellipsis">
+    odmantic.field
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../api_reference/reference/" class="md-nav__link">
-        odmantic.reference
+        
+  
+  <span class="md-ellipsis">
+    odmantic.reference
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../api_reference/" class="md-nav__link">
-        odmantic.index
+        
+  
+  <span class="md-ellipsis">
+    odmantic.index
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../api_reference/bson/" class="md-nav__link">
-        odmantic.bson
+        
+  
+  <span class="md-ellipsis">
+    odmantic.bson
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../api_reference/fastapi/" class="md-nav__link">
-        odmantic.fastapi
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
   
   
   
     <li class="md-nav__item">
       <a href="../api_reference/exceptions/" class="md-nav__link">
-        odmantic.exceptions
+        
+  
+  <span class="md-ellipsis">
+    odmantic.exceptions
+  </span>
+  
+
       </a>
     </li>
   
 
+              
             
-          
-        </ul>
-      </nav>
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api_reference/config/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    odmantic.config
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../contributing/" class="md-nav__link">
-        Contributing
+        
+  
+  <span class="md-ellipsis">
+    Contributing
+  </span>
+  
+
       </a>
     </li>
   
@@ -552,28 +698,39 @@
     
       
       
-      
-
   
   
     
   
   
+  
     <li class="md-nav__item md-nav__item--active">
       
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
         
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Changelog
+          
+  
+  <span class="md-ellipsis">
+    Changelog
+  </span>
+  
+
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Changelog
+        
+  
+  <span class="md-ellipsis">
+    Changelog
+  </span>
+  
+
       </a>
       
         
@@ -593,14 +750,75 @@
       
         <li class="md-nav__item">
   <a href="#unreleased" class="md-nav__link">
-    Unreleased
+    <span class="md-ellipsis">
+      Unreleased
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
+  <a href="#100-2023-12-13" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.0.0 - 2023-12-13
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.0 - 2023-12-13">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#breaking-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Breaking changes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removals" class="md-nav__link">
+    <span class="md-ellipsis">
+      Removals
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deprecations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deprecations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deprecations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#details" class="md-nav__link">
+    <span class="md-ellipsis">
+      Details
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#092-2023-01-03" class="md-nav__link">
-    0.9.2 - 2023-01-03
+    <span class="md-ellipsis">
+      0.9.2 - 2023-01-03
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.9.2 - 2023-01-03">
@@ -608,14 +826,18 @@
         
           <li class="md-nav__item">
   <a href="#fixed" class="md-nav__link">
-    Fixed
+    <span class="md-ellipsis">
+      Fixed
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#internals" class="md-nav__link">
-    Internals
+    <span class="md-ellipsis">
+      Internals
+    </span>
   </a>
   
 </li>
@@ -627,7 +849,9 @@
       
         <li class="md-nav__item">
   <a href="#091-2022-11-24" class="md-nav__link">
-    0.9.1 - 2022-11-24
+    <span class="md-ellipsis">
+      0.9.1 - 2022-11-24
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.9.1 - 2022-11-24">
@@ -635,14 +859,18 @@
         
           <li class="md-nav__item">
   <a href="#fixed_1" class="md-nav__link">
-    Fixed
+    <span class="md-ellipsis">
+      Fixed
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#internals_1" class="md-nav__link">
-    Internals
+    <span class="md-ellipsis">
+      Internals
+    </span>
   </a>
   
 </li>
@@ -654,7 +882,9 @@
       
         <li class="md-nav__item">
   <a href="#090-2022-09-25" class="md-nav__link">
-    0.9.0 - 2022-09-25
+    <span class="md-ellipsis">
+      0.9.0 - 2022-09-25
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.9.0 - 2022-09-25">
@@ -662,14 +892,18 @@
         
           <li class="md-nav__item">
   <a href="#added" class="md-nav__link">
-    Added
+    <span class="md-ellipsis">
+      Added
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#fixed_2" class="md-nav__link">
-    Fixed
+    <span class="md-ellipsis">
+      Fixed
+    </span>
   </a>
   
 </li>
@@ -681,7 +915,9 @@
       
         <li class="md-nav__item">
   <a href="#080-2022-09-09" class="md-nav__link">
-    0.8.0 - 2022-09-09
+    <span class="md-ellipsis">
+      0.8.0 - 2022-09-09
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.8.0 - 2022-09-09">
@@ -689,14 +925,18 @@
         
           <li class="md-nav__item">
   <a href="#added_1" class="md-nav__link">
-    Added
+    <span class="md-ellipsis">
+      Added
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#fixed_3" class="md-nav__link">
-    Fixed
+    <span class="md-ellipsis">
+      Fixed
+    </span>
   </a>
   
 </li>
@@ -708,7 +948,9 @@
       
         <li class="md-nav__item">
   <a href="#071-2022-09-02" class="md-nav__link">
-    0.7.1 - 2022-09-02
+    <span class="md-ellipsis">
+      0.7.1 - 2022-09-02
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.7.1 - 2022-09-02">
@@ -716,14 +958,18 @@
         
           <li class="md-nav__item">
   <a href="#fixed_4" class="md-nav__link">
-    Fixed
+    <span class="md-ellipsis">
+      Fixed
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#internals_2" class="md-nav__link">
-    Internals
+    <span class="md-ellipsis">
+      Internals
+    </span>
   </a>
   
 </li>
@@ -735,7 +981,9 @@
       
         <li class="md-nav__item">
   <a href="#070-2022-08-30" class="md-nav__link">
-    0.7.0 - 2022-08-30
+    <span class="md-ellipsis">
+      0.7.0 - 2022-08-30
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.7.0 - 2022-08-30">
@@ -743,14 +991,18 @@
         
           <li class="md-nav__item">
   <a href="#added_2" class="md-nav__link">
-    Added
+    <span class="md-ellipsis">
+      Added
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#internals_3" class="md-nav__link">
-    Internals
+    <span class="md-ellipsis">
+      Internals
+    </span>
   </a>
   
 </li>
@@ -762,36 +1014,46 @@
       
         <li class="md-nav__item">
   <a href="#060-2022-08-24" class="md-nav__link">
-    0.6.0 - 2022-08-24
+    <span class="md-ellipsis">
+      0.6.0 - 2022-08-24
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.6.0 - 2022-08-24">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#breaking-changes" class="md-nav__link">
-    Breaking Changes
+  <a href="#breaking-changes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Breaking Changes
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#added_3" class="md-nav__link">
-    Added
+    <span class="md-ellipsis">
+      Added
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#fixed_5" class="md-nav__link">
-    Fixed
+    <span class="md-ellipsis">
+      Fixed
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#internals_4" class="md-nav__link">
-    Internals
+    <span class="md-ellipsis">
+      Internals
+    </span>
   </a>
   
 </li>
@@ -803,14 +1065,18 @@
       
         <li class="md-nav__item">
   <a href="#050-2022-06-01" class="md-nav__link">
-    0.5.0 - 2022-06-01
+    <span class="md-ellipsis">
+      0.5.0 - 2022-06-01
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#040-2022-04-23" class="md-nav__link">
-    0.4.0 - 2022-04-23
+    <span class="md-ellipsis">
+      0.4.0 - 2022-04-23
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.4.0 - 2022-04-23">
@@ -818,21 +1084,27 @@
         
           <li class="md-nav__item">
   <a href="#added_4" class="md-nav__link">
-    Added
+    <span class="md-ellipsis">
+      Added
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#fixed_6" class="md-nav__link">
-    Fixed
+    <span class="md-ellipsis">
+      Fixed
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#internals_5" class="md-nav__link">
-    Internals
+    <span class="md-ellipsis">
+      Internals
+    </span>
   </a>
   
 </li>
@@ -844,7 +1116,9 @@
       
         <li class="md-nav__item">
   <a href="#035-2021-05-12" class="md-nav__link">
-    0.3.5 - 2021-05-12
+    <span class="md-ellipsis">
+      0.3.5 - 2021-05-12
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.3.5 - 2021-05-12">
@@ -852,7 +1126,9 @@
         
           <li class="md-nav__item">
   <a href="#security" class="md-nav__link">
-    Security
+    <span class="md-ellipsis">
+      Security
+    </span>
   </a>
   
 </li>
@@ -864,7 +1140,9 @@
       
         <li class="md-nav__item">
   <a href="#034-2021-03-04" class="md-nav__link">
-    0.3.4 - 2021-03-04
+    <span class="md-ellipsis">
+      0.3.4 - 2021-03-04
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.3.4 - 2021-03-04">
@@ -872,14 +1150,18 @@
         
           <li class="md-nav__item">
   <a href="#fixed_7" class="md-nav__link">
-    Fixed
+    <span class="md-ellipsis">
+      Fixed
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#internals_6" class="md-nav__link">
-    Internals
+    <span class="md-ellipsis">
+      Internals
+    </span>
   </a>
   
 </li>
@@ -891,7 +1173,9 @@
       
         <li class="md-nav__item">
   <a href="#033-2021-02-13" class="md-nav__link">
-    0.3.3 - 2021-02-13
+    <span class="md-ellipsis">
+      0.3.3 - 2021-02-13
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.3.3 - 2021-02-13">
@@ -899,14 +1183,18 @@
         
           <li class="md-nav__item">
   <a href="#fixed_8" class="md-nav__link">
-    Fixed
+    <span class="md-ellipsis">
+      Fixed
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#internals_7" class="md-nav__link">
-    Internals
+    <span class="md-ellipsis">
+      Internals
+    </span>
   </a>
   
 </li>
@@ -918,7 +1206,9 @@
       
         <li class="md-nav__item">
   <a href="#032-2020-12-15" class="md-nav__link">
-    0.3.2 - 2020-12-15
+    <span class="md-ellipsis">
+      0.3.2 - 2020-12-15
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.3.2 - 2020-12-15">
@@ -926,14 +1216,18 @@
         
           <li class="md-nav__item">
   <a href="#added_5" class="md-nav__link">
-    Added
+    <span class="md-ellipsis">
+      Added
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#internals_8" class="md-nav__link">
-    Internals
+    <span class="md-ellipsis">
+      Internals
+    </span>
   </a>
   
 </li>
@@ -945,7 +1239,9 @@
       
         <li class="md-nav__item">
   <a href="#031-2020-11-16" class="md-nav__link">
-    0.3.1 - 2020-11-16
+    <span class="md-ellipsis">
+      0.3.1 - 2020-11-16
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.3.1 - 2020-11-16">
@@ -953,14 +1249,18 @@
         
           <li class="md-nav__item">
   <a href="#added_6" class="md-nav__link">
-    Added
+    <span class="md-ellipsis">
+      Added
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#fixed_9" class="md-nav__link">
-    Fixed
+    <span class="md-ellipsis">
+      Fixed
+    </span>
   </a>
   
 </li>
@@ -972,7 +1272,9 @@
       
         <li class="md-nav__item">
   <a href="#030-2020-11-09" class="md-nav__link">
-    0.3.0 - 2020-11-09
+    <span class="md-ellipsis">
+      0.3.0 - 2020-11-09
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.3.0 - 2020-11-09">
@@ -980,14 +1282,18 @@
         
           <li class="md-nav__item">
   <a href="#deprecated" class="md-nav__link">
-    Deprecated
+    <span class="md-ellipsis">
+      Deprecated
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#added_7" class="md-nav__link">
-    Added
+    <span class="md-ellipsis">
+      Added
+    </span>
   </a>
   
 </li>
@@ -999,7 +1305,9 @@
       
         <li class="md-nav__item">
   <a href="#021-2020-10-25" class="md-nav__link">
-    0.2.1 - 2020-10-25
+    <span class="md-ellipsis">
+      0.2.1 - 2020-10-25
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.2.1 - 2020-10-25">
@@ -1007,7 +1315,9 @@
         
           <li class="md-nav__item">
   <a href="#fixed_10" class="md-nav__link">
-    Fixed
+    <span class="md-ellipsis">
+      Fixed
+    </span>
   </a>
   
 </li>
@@ -1019,7 +1329,9 @@
       
         <li class="md-nav__item">
   <a href="#020-2020-10-25" class="md-nav__link">
-    0.2.0 - 2020-10-25
+    <span class="md-ellipsis">
+      0.2.0 - 2020-10-25
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.2.0 - 2020-10-25">
@@ -1027,28 +1339,36 @@
         
           <li class="md-nav__item">
   <a href="#deprecated_1" class="md-nav__link">
-    Deprecated
+    <span class="md-ellipsis">
+      Deprecated
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#added_8" class="md-nav__link">
-    Added
+    <span class="md-ellipsis">
+      Added
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#fixed_11" class="md-nav__link">
-    Fixed
+    <span class="md-ellipsis">
+      Fixed
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#docs" class="md-nav__link">
-    Docs
+    <span class="md-ellipsis">
+      Docs
+    </span>
   </a>
   
 </li>
@@ -1060,7 +1380,9 @@
       
         <li class="md-nav__item">
   <a href="#010-2020-10-19" class="md-nav__link">
-    0.1.0 - 2020-10-19
+    <span class="md-ellipsis">
+      0.1.0 - 2020-10-19
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.1.0 - 2020-10-19">
@@ -1068,7 +1390,9 @@
         
           <li class="md-nav__item">
   <a href="#initial-release" class="md-nav__link">
-    Initial Release
+    <span class="md-ellipsis">
+      Initial Release
+    </span>
   </a>
   
 </li>
@@ -1082,6 +1406,26 @@
   
 </nav>
       
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../migration_guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Migration Guide
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -1114,14 +1458,75 @@
       
         <li class="md-nav__item">
   <a href="#unreleased" class="md-nav__link">
-    Unreleased
+    <span class="md-ellipsis">
+      Unreleased
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
+  <a href="#100-2023-12-13" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.0.0 - 2023-12-13
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.0 - 2023-12-13">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#breaking-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Breaking changes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removals" class="md-nav__link">
+    <span class="md-ellipsis">
+      Removals
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deprecations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deprecations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deprecations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#details" class="md-nav__link">
+    <span class="md-ellipsis">
+      Details
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#092-2023-01-03" class="md-nav__link">
-    0.9.2 - 2023-01-03
+    <span class="md-ellipsis">
+      0.9.2 - 2023-01-03
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.9.2 - 2023-01-03">
@@ -1129,14 +1534,18 @@
         
           <li class="md-nav__item">
   <a href="#fixed" class="md-nav__link">
-    Fixed
+    <span class="md-ellipsis">
+      Fixed
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#internals" class="md-nav__link">
-    Internals
+    <span class="md-ellipsis">
+      Internals
+    </span>
   </a>
   
 </li>
@@ -1148,7 +1557,9 @@
       
         <li class="md-nav__item">
   <a href="#091-2022-11-24" class="md-nav__link">
-    0.9.1 - 2022-11-24
+    <span class="md-ellipsis">
+      0.9.1 - 2022-11-24
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.9.1 - 2022-11-24">
@@ -1156,14 +1567,18 @@
         
           <li class="md-nav__item">
   <a href="#fixed_1" class="md-nav__link">
-    Fixed
+    <span class="md-ellipsis">
+      Fixed
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#internals_1" class="md-nav__link">
-    Internals
+    <span class="md-ellipsis">
+      Internals
+    </span>
   </a>
   
 </li>
@@ -1175,7 +1590,9 @@
       
         <li class="md-nav__item">
   <a href="#090-2022-09-25" class="md-nav__link">
-    0.9.0 - 2022-09-25
+    <span class="md-ellipsis">
+      0.9.0 - 2022-09-25
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.9.0 - 2022-09-25">
@@ -1183,14 +1600,18 @@
         
           <li class="md-nav__item">
   <a href="#added" class="md-nav__link">
-    Added
+    <span class="md-ellipsis">
+      Added
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#fixed_2" class="md-nav__link">
-    Fixed
+    <span class="md-ellipsis">
+      Fixed
+    </span>
   </a>
   
 </li>
@@ -1202,7 +1623,9 @@
       
         <li class="md-nav__item">
   <a href="#080-2022-09-09" class="md-nav__link">
-    0.8.0 - 2022-09-09
+    <span class="md-ellipsis">
+      0.8.0 - 2022-09-09
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.8.0 - 2022-09-09">
@@ -1210,14 +1633,18 @@
         
           <li class="md-nav__item">
   <a href="#added_1" class="md-nav__link">
-    Added
+    <span class="md-ellipsis">
+      Added
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#fixed_3" class="md-nav__link">
-    Fixed
+    <span class="md-ellipsis">
+      Fixed
+    </span>
   </a>
   
 </li>
@@ -1229,7 +1656,9 @@
       
         <li class="md-nav__item">
   <a href="#071-2022-09-02" class="md-nav__link">
-    0.7.1 - 2022-09-02
+    <span class="md-ellipsis">
+      0.7.1 - 2022-09-02
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.7.1 - 2022-09-02">
@@ -1237,14 +1666,18 @@
         
           <li class="md-nav__item">
   <a href="#fixed_4" class="md-nav__link">
-    Fixed
+    <span class="md-ellipsis">
+      Fixed
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#internals_2" class="md-nav__link">
-    Internals
+    <span class="md-ellipsis">
+      Internals
+    </span>
   </a>
   
 </li>
@@ -1256,7 +1689,9 @@
       
         <li class="md-nav__item">
   <a href="#070-2022-08-30" class="md-nav__link">
-    0.7.0 - 2022-08-30
+    <span class="md-ellipsis">
+      0.7.0 - 2022-08-30
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.7.0 - 2022-08-30">
@@ -1264,14 +1699,18 @@
         
           <li class="md-nav__item">
   <a href="#added_2" class="md-nav__link">
-    Added
+    <span class="md-ellipsis">
+      Added
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#internals_3" class="md-nav__link">
-    Internals
+    <span class="md-ellipsis">
+      Internals
+    </span>
   </a>
   
 </li>
@@ -1283,36 +1722,46 @@
       
         <li class="md-nav__item">
   <a href="#060-2022-08-24" class="md-nav__link">
-    0.6.0 - 2022-08-24
+    <span class="md-ellipsis">
+      0.6.0 - 2022-08-24
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.6.0 - 2022-08-24">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#breaking-changes" class="md-nav__link">
-    Breaking Changes
+  <a href="#breaking-changes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Breaking Changes
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#added_3" class="md-nav__link">
-    Added
+    <span class="md-ellipsis">
+      Added
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#fixed_5" class="md-nav__link">
-    Fixed
+    <span class="md-ellipsis">
+      Fixed
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#internals_4" class="md-nav__link">
-    Internals
+    <span class="md-ellipsis">
+      Internals
+    </span>
   </a>
   
 </li>
@@ -1324,14 +1773,18 @@
       
         <li class="md-nav__item">
   <a href="#050-2022-06-01" class="md-nav__link">
-    0.5.0 - 2022-06-01
+    <span class="md-ellipsis">
+      0.5.0 - 2022-06-01
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#040-2022-04-23" class="md-nav__link">
-    0.4.0 - 2022-04-23
+    <span class="md-ellipsis">
+      0.4.0 - 2022-04-23
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.4.0 - 2022-04-23">
@@ -1339,21 +1792,27 @@
         
           <li class="md-nav__item">
   <a href="#added_4" class="md-nav__link">
-    Added
+    <span class="md-ellipsis">
+      Added
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#fixed_6" class="md-nav__link">
-    Fixed
+    <span class="md-ellipsis">
+      Fixed
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#internals_5" class="md-nav__link">
-    Internals
+    <span class="md-ellipsis">
+      Internals
+    </span>
   </a>
   
 </li>
@@ -1365,7 +1824,9 @@
       
         <li class="md-nav__item">
   <a href="#035-2021-05-12" class="md-nav__link">
-    0.3.5 - 2021-05-12
+    <span class="md-ellipsis">
+      0.3.5 - 2021-05-12
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.3.5 - 2021-05-12">
@@ -1373,7 +1834,9 @@
         
           <li class="md-nav__item">
   <a href="#security" class="md-nav__link">
-    Security
+    <span class="md-ellipsis">
+      Security
+    </span>
   </a>
   
 </li>
@@ -1385,7 +1848,9 @@
       
         <li class="md-nav__item">
   <a href="#034-2021-03-04" class="md-nav__link">
-    0.3.4 - 2021-03-04
+    <span class="md-ellipsis">
+      0.3.4 - 2021-03-04
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.3.4 - 2021-03-04">
@@ -1393,14 +1858,18 @@
         
           <li class="md-nav__item">
   <a href="#fixed_7" class="md-nav__link">
-    Fixed
+    <span class="md-ellipsis">
+      Fixed
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#internals_6" class="md-nav__link">
-    Internals
+    <span class="md-ellipsis">
+      Internals
+    </span>
   </a>
   
 </li>
@@ -1412,7 +1881,9 @@
       
         <li class="md-nav__item">
   <a href="#033-2021-02-13" class="md-nav__link">
-    0.3.3 - 2021-02-13
+    <span class="md-ellipsis">
+      0.3.3 - 2021-02-13
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.3.3 - 2021-02-13">
@@ -1420,14 +1891,18 @@
         
           <li class="md-nav__item">
   <a href="#fixed_8" class="md-nav__link">
-    Fixed
+    <span class="md-ellipsis">
+      Fixed
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#internals_7" class="md-nav__link">
-    Internals
+    <span class="md-ellipsis">
+      Internals
+    </span>
   </a>
   
 </li>
@@ -1439,7 +1914,9 @@
       
         <li class="md-nav__item">
   <a href="#032-2020-12-15" class="md-nav__link">
-    0.3.2 - 2020-12-15
+    <span class="md-ellipsis">
+      0.3.2 - 2020-12-15
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.3.2 - 2020-12-15">
@@ -1447,14 +1924,18 @@
         
           <li class="md-nav__item">
   <a href="#added_5" class="md-nav__link">
-    Added
+    <span class="md-ellipsis">
+      Added
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#internals_8" class="md-nav__link">
-    Internals
+    <span class="md-ellipsis">
+      Internals
+    </span>
   </a>
   
 </li>
@@ -1466,7 +1947,9 @@
       
         <li class="md-nav__item">
   <a href="#031-2020-11-16" class="md-nav__link">
-    0.3.1 - 2020-11-16
+    <span class="md-ellipsis">
+      0.3.1 - 2020-11-16
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.3.1 - 2020-11-16">
@@ -1474,14 +1957,18 @@
         
           <li class="md-nav__item">
   <a href="#added_6" class="md-nav__link">
-    Added
+    <span class="md-ellipsis">
+      Added
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#fixed_9" class="md-nav__link">
-    Fixed
+    <span class="md-ellipsis">
+      Fixed
+    </span>
   </a>
   
 </li>
@@ -1493,7 +1980,9 @@
       
         <li class="md-nav__item">
   <a href="#030-2020-11-09" class="md-nav__link">
-    0.3.0 - 2020-11-09
+    <span class="md-ellipsis">
+      0.3.0 - 2020-11-09
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.3.0 - 2020-11-09">
@@ -1501,14 +1990,18 @@
         
           <li class="md-nav__item">
   <a href="#deprecated" class="md-nav__link">
-    Deprecated
+    <span class="md-ellipsis">
+      Deprecated
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#added_7" class="md-nav__link">
-    Added
+    <span class="md-ellipsis">
+      Added
+    </span>
   </a>
   
 </li>
@@ -1520,7 +2013,9 @@
       
         <li class="md-nav__item">
   <a href="#021-2020-10-25" class="md-nav__link">
-    0.2.1 - 2020-10-25
+    <span class="md-ellipsis">
+      0.2.1 - 2020-10-25
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.2.1 - 2020-10-25">
@@ -1528,7 +2023,9 @@
         
           <li class="md-nav__item">
   <a href="#fixed_10" class="md-nav__link">
-    Fixed
+    <span class="md-ellipsis">
+      Fixed
+    </span>
   </a>
   
 </li>
@@ -1540,7 +2037,9 @@
       
         <li class="md-nav__item">
   <a href="#020-2020-10-25" class="md-nav__link">
-    0.2.0 - 2020-10-25
+    <span class="md-ellipsis">
+      0.2.0 - 2020-10-25
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.2.0 - 2020-10-25">
@@ -1548,28 +2047,36 @@
         
           <li class="md-nav__item">
   <a href="#deprecated_1" class="md-nav__link">
-    Deprecated
+    <span class="md-ellipsis">
+      Deprecated
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#added_8" class="md-nav__link">
-    Added
+    <span class="md-ellipsis">
+      Added
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#fixed_11" class="md-nav__link">
-    Fixed
+    <span class="md-ellipsis">
+      Fixed
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#docs" class="md-nav__link">
-    Docs
+    <span class="md-ellipsis">
+      Docs
+    </span>
   </a>
   
 </li>
@@ -1581,7 +2088,9 @@
       
         <li class="md-nav__item">
   <a href="#010-2020-10-19" class="md-nav__link">
-    0.1.0 - 2020-10-19
+    <span class="md-ellipsis">
+      0.1.0 - 2020-10-19
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="0.1.0 - 2020-10-19">
@@ -1589,7 +2098,9 @@
         
           <li class="md-nav__item">
   <a href="#initial-release" class="md-nav__link">
-    Initial Release
+    <span class="md-ellipsis">
+      Initial Release
+    </span>
   </a>
   
 </li>
@@ -1607,21 +2118,104 @@
               </div>
             
           
-          <div class="md-content" data-md-component="content">
-            <article class="md-content__inner md-typeset">
-              
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
                 
+                  
 
-  <a href="https://github.com/art049/odmantic/edit/master/docs/changelog.md" title="Edit this page" class="md-content__button md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+  
+  
 
 
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h1>
 <p><sub>The format is based on <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>,
 and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</sub></p>
-<h2 id="unreleased"><a href="https://github.com/art049/odmantic/compare/v0.9.2...HEAD">Unreleased</a><a class="headerlink" href="#unreleased" title="Permanent link">&para;</a></h2>
+<h2 id="unreleased"><a href="https://github.com/art049/odmantic/compare/v1.0.0...HEAD">Unreleased</a><a class="headerlink" href="#unreleased" title="Permanent link">&para;</a></h2>
+<h2 id="100-2023-12-13"><a href="https://github.com/art049/odmantic/compare/v0.9.2...v1.0.0">1.0.0</a> - 2023-12-13<a class="headerlink" href="#100-2023-12-13" title="Permanent link">&para;</a></h2>
+<p>I'm excited to announce ODMantic v1.0.0, with Pydantic v2 support! 🎉</p>
+<p>This release brings a range of changes that are aligned with the new Pydantic architecture.
+Keeping a maintainable and healthy codebase was especially important.
+Thus from now on, ODMantic will not support Python 3.7, Pydantic V1, and Motor 2.x anymore.</p>
+<p>Overall, integrating with Pydantic v2 brings around <strong>30% performance improvements</strong> on
+common operations. ⚡️⚡️⚡️</p>
+<p>We have a lot of room to improve the performance further now that we only support Pydantic v2.
+There is also a 300% 👀 improvement on the bulk saves crafted by <a class="magiclink magiclink-github magiclink-mention" href="https://github.com/tiangolo" title="GitHub User: tiangolo">@tiangolo</a> that will be merged soon! 🚀</p>
+<p>Special thanks to <a class="magiclink magiclink-github magiclink-mention" href="https://github.com/tiangolo" title="GitHub User: tiangolo">@tiangolo</a> for his help on this release and for saving me a lot of time
+figuring out a particularly annoying bug!</p>
+<p>Check out the <strong><a href="https://art049.github.io/odmantic/migration_guide/">migration guide</a></strong> to
+upgrade your codebase and enjoy this new release!</p>
+<h3 id="breaking-changes">Breaking changes<a class="headerlink" href="#breaking-changes" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>Support for Python 3.7, Pydantic v1 and Motor 2.x has been dropped</p>
+</li>
+<li>
+<p><code>Optional[T]</code> doesn't have a <code>None</code> implicit default value anymore</p>
+</li>
+<li>
+<p><code>Model.copy</code> doesn't support the <code>exclude</code> and <code>include</code> kwargs anymore</p>
+</li>
+<li>
+<p><code>odmantic.Field</code> doesn't accept extra kwargs anymore since it's slated to be removed in Pydantic</p>
+</li>
+<li>
+<p>The <code>Config</code> class is no longer supported and the <code>model_config</code> dict should be used instead</p>
+</li>
+<li>
+<p><code>DocumentParsingError</code> is no longer a subclass of <code>ValidationError</code></p>
+</li>
+<li>
+<p>The <code>__bson__</code> class method is no longer supported to define BSON encoders on custom types. The new method to customize BSON encoding is to use the <code>WithBSONSerializer</code> annotation.</p>
+</li>
+<li>
+<p>Decimals (<code>decimal.Decimal</code> and <code>bson.Decimal128</code>) are now serialized as strings in JSON documents</p>
+</li>
+<li>
+<p>Custom JSON encoders(defined with the <code>json_encoders</code> config option) are no longer effective on <code>odmantic.bson</code> types. Annotated types with <code>pydantic.PlainSerializer</code> should be used instead.</p>
+</li>
+</ul>
+<h3 id="removals">Removals<a class="headerlink" href="#removals" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><code>AIOEngineDependency</code> has been removed since it was deprecated in v0.2.0 in favor of a global engine object</p>
+</li>
+<li>
+<p>Defining the collection with <code>__collection__</code> has been removed since it was deprecated in v0.3.0 in favor of the <code>collection</code> config option</p>
+</li>
+</ul>
+<h3 id="deprecations">Deprecations<a class="headerlink" href="#deprecations" title="Permanent link">&para;</a></h3>
+<p><em>We comply with the new Pydantic method naming, prefixing them with <code>model_</code></em></p>
+<ul>
+<li>
+<p><code>Model.dict</code> has been deprecated in favor of <code>Model.model_dump</code></p>
+</li>
+<li>
+<p><code>Model.doc</code> has been deprecated in favor of <code>Model.model_dump_doc</code></p>
+</li>
+<li>
+<p><code>Model.parse_doc</code> has been deprecated in favor of <code>Model.model_validate_doc</code></p>
+</li>
+<li>
+<p><code>Model.update</code> has been deprecated in favor of <code>Model.model_update</code></p>
+</li>
+<li>
+<p><code>Model.copy</code> has been deprecated in favor of <code>Model.model_copy</code></p>
+</li>
+</ul>
+<hr />
+<h4 id="details">Details<a class="headerlink" href="#details" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p>Integrate with Pydantic V2(<a href="https://github.com/art049/odmantic/pull/361">#361</a> and <a href="https://github.com/art049/odmantic/pull/377">#377</a> by <a href="https://github.com/art049">@art049</a>)</p>
+</li>
+<li>
+<p>Update CI to use GitHub Actions matrix instead of tox, upgrade minimum Pydantic to 1.10.8 as needed by the tests (<a href="https://github.com/art049/odmantic/pull/376">#376</a> by <a href="https://github.com/tiangolo">@tiangolo</a>)</p>
+</li>
+<li>
+<p>Add benchmarks on common sync operations (<a href="https://github.com/art049/odmantic/pull/362">#362</a> by <a href="https://github.com/art049">@art049</a>)</p>
+</li>
+</ul>
 <h2 id="092-2023-01-03"><a href="https://github.com/art049/odmantic/compare/v0.9.1...v0.9.2">0.9.2</a> - 2023-01-03<a class="headerlink" href="#092-2023-01-03" title="Permanent link">&para;</a></h2>
 <h3 id="fixed">Fixed<a class="headerlink" href="#fixed" title="Permanent link">&para;</a></h3>
 <ul>
@@ -1723,7 +2317,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 </li>
 </ul>
 <h2 id="060-2022-08-24"><a href="https://github.com/art049/odmantic/compare/v0.5.0...v0.6.0">0.6.0</a> - 2022-08-24<a class="headerlink" href="#060-2022-08-24" title="Permanent link">&para;</a></h2>
-<h4 id="breaking-changes">Breaking Changes<a class="headerlink" href="#breaking-changes" title="Permanent link">&para;</a></h4>
+<h4 id="breaking-changes_1">Breaking Changes<a class="headerlink" href="#breaking-changes_1" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Drop support for Python 3.6 (<a href="https://github.com/art049/odmantic/pull/230">#230</a> by <a href="https://github.com/tiangolo">@tiangolo</a>)</li>
 </ul>
@@ -2013,43 +2607,31 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <h4 id="initial-release">Initial Release<a class="headerlink" href="#initial-release" title="Permanent link">&para;</a></h4>
 
 
+
+
+
+
+
+
+
   
 
 
 
 
-              
-            </article>
-            
+                
+              </article>
+            </div>
+          
+          
   <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
 
-          </div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
       </main>
       
         <footer class="md-footer">
-  
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="../contributing/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Contributing" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Contributing
-            </div>
-          </div>
-        </a>
-      
-      
-    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -2067,29 +2649,35 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
   
     
     
+    
+    
       
       
     
     <a href="https://github.com/art049" target="_blank" rel="noopener" title="github.com" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
     </a>
   
+    
+    
     
     
       
       
     
     <a href="https://twitter.com/art049" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
     </a>
   
+    
+    
     
     
       
       
     
     <a href="https://www.linkedin.com/in/arthur-pastel-a08579112" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
     </a>
   
 </div>
@@ -2103,10 +2691,11 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["instant", "content.tabs.link"], "search": "../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["instant", "content.tabs.link"], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.2ab50757.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7c377c4.min.js"></script>
       
         <script src="../js/gitter.js"></script>
       

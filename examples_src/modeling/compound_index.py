@@ -7,8 +7,9 @@ class Product(Model):
     category: str
     sku: str = Field(unique=True)
 
-    class Config:
-        @staticmethod
-        def indexes():
-            yield Index(Product.name, Product.stock, name="name_stock_index")
-            yield Index(Product.name, Product.category, unique=True)
+    model_config = {
+        "indexes": lambda: [
+            Index(Product.name, Product.stock, name="name_stock_index"),
+            Index(Product.name, Product.category, unique=True),
+        ]
+    }

@@ -41,7 +41,7 @@ pipeline.append(
     }
 )
 documents = await collection.aggregate(pipeline).to_list(length=None)
-small_rectangles = [Rectangle.parse_doc(doc) for doc in documents]
+small_rectangles = [Rectangle.model_validate_doc(doc) for doc in documents]
 print(small_rectangles)
 #> [
 #>     Rectangle(id=ObjectId("..."), length=0.1, width=1.0),

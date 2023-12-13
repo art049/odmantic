@@ -12,8 +12,15 @@
       
         <link rel="canonical" href="https://art049.github.io/odmantic/api_reference/engine/">
       
+      
+        <link rel="prev" href="../model/">
+      
+      
+        <link rel="next" href="../session/">
+      
+      
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.4.4">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
     
     
       
@@ -21,14 +28,17 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.6b80c2a2.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.cbb835fc.min.css">
-        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
+
+
     
+    
+      
     
     
       
@@ -53,13 +63,12 @@
   
   
 
-
-  <script id="__analytics">function __md_analytics(){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-180814888-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");ga("send","event","feedback","click",t,e),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){ga("send","pageview",e.pathname)})});var e=document.createElement("script");e.async=!0,e.src="https://www.google-analytics.com/analytics.js",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
-
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","UA-180814888-1"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","UA-180814888-1",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=UA-180814888-1",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
   
     <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
   
 
+    
     
     
   </head>
@@ -74,9 +83,6 @@
     
     <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="green">
   
-    
-    
-      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -96,7 +102,9 @@
     
       
 
-<header class="md-header" data-md-component="header">
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="ODMantic" class="md-header__button md-logo" aria-label="ODMantic" data-md-component="logo">
       
@@ -105,6 +113,7 @@
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
+      
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
     </label>
     <div class="md-header__title" data-md-component="header-title">
@@ -124,31 +133,39 @@
       </div>
     </div>
     
-      <form class="md-header__option" data-md-component="palette">
-        
-          
-          
-          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
-          
-            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
-            </label>
-          
-        
-          
-          
-          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
-          
-            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
-            </label>
-          
-        
-      </form>
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
       <label class="md-header__button md-icon" for="__search">
+        
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
       </label>
       <div class="md-search" data-md-component="search" role="dialog">
@@ -157,12 +174,15 @@
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
+        
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
       </label>
       <nav class="md-search__options" aria-label="Search">
         
-        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
         </button>
       </nav>
@@ -174,7 +194,7 @@
           <div class="md-search-result__meta">
             Initializing search
           </div>
-          <ol class="md-search-result__list"></ol>
+          <ol class="md-search-result__list" role="presentation"></ol>
         </div>
       </div>
     </div>
@@ -186,7 +206,7 @@
         <a href="https://github.com/art049/odmantic" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
   </div>
   <div class="md-source__repository">
     art049/odmantic
@@ -216,6 +236,7 @@
                     
 
 
+
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="ODMantic" class="md-nav__button md-logo" aria-label="ODMantic" data-md-component="logo">
@@ -231,7 +252,7 @@
       <a href="https://github.com/art049/odmantic" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
   </div>
   <div class="md-source__repository">
     art049/odmantic
@@ -243,14 +264,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../.." class="md-nav__link">
-        Overview
+        
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
       </a>
     </li>
   
@@ -258,14 +284,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../fields/" class="md-nav__link">
-        Fields
+        
+  
+  <span class="md-ellipsis">
+    Fields
+  </span>
+  
+
       </a>
     </li>
   
@@ -273,14 +304,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../modeling/" class="md-nav__link">
-        Modeling
+        
+  
+  <span class="md-ellipsis">
+    Modeling
+  </span>
+  
+
       </a>
     </li>
   
@@ -288,14 +324,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../engine/" class="md-nav__link">
-        Engine
+        
+  
+  <span class="md-ellipsis">
+    Engine
+  </span>
+  
+
       </a>
     </li>
   
@@ -303,14 +344,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../querying/" class="md-nav__link">
-        Querying
+        
+  
+  <span class="md-ellipsis">
+    Querying
+  </span>
+  
+
       </a>
     </li>
   
@@ -318,14 +364,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../raw_query_usage/" class="md-nav__link">
-        Raw query usage
+        
+  
+  <span class="md-ellipsis">
+    Raw query usage
+  </span>
+  
+
       </a>
     </li>
   
@@ -333,14 +384,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../usage_fastapi/" class="md-nav__link">
-        Usage with FastAPI
+        
+  
+  <span class="md-ellipsis">
+    Usage with FastAPI
+  </span>
+  
+
       </a>
     </li>
   
@@ -348,14 +404,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../usage_pydantic/" class="md-nav__link">
-        Usage with Pydantic
+        
+  
+  <span class="md-ellipsis">
+    Usage with Pydantic
+  </span>
+  
+
       </a>
     </li>
   
@@ -363,68 +424,97 @@
     
       
       
-      
-
   
   
     
   
   
+  
+    
+    
+    
+    
     
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" checked>
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_9">
-          API Reference
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="API Reference" data-md-level="1">
-        <label class="md-nav__title" for="__nav_9">
-          <span class="md-nav__icon md-icon"></span>
-          API Reference
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
+        
           
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    API Reference
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            API Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../model/" class="md-nav__link">
-        odmantic.model
+        
+  
+  <span class="md-ellipsis">
+    odmantic.model
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
   
   
     
   
   
+  
     <li class="md-nav__item md-nav__item--active">
       
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          odmantic.engine
+          
+  
+  <span class="md-ellipsis">
+    odmantic.engine
+  </span>
+  
+
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        odmantic.engine
+        
+  
+  <span class="md-ellipsis">
+    odmantic.engine
+  </span>
+  
+
       </a>
       
         
@@ -442,208 +532,252 @@
       
         <li class="md-nav__item">
   <a href="#odmantic.engine.AIOEngine" class="md-nav__link">
-    AIOEngine
+    <span class="md-ellipsis">
+      AIOEngine
+    </span>
   </a>
   
-    <nav class="md-nav" aria-label="AIOEngine">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.AIOEngine.__init__" class="md-nav__link">
-    __init__()
+    <span class="md-ellipsis">
+      __init__()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.AIOEngine.configure_database" class="md-nav__link">
-    configure_database()
+    <span class="md-ellipsis">
+      configure_database()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.AIOEngine.count" class="md-nav__link">
-    count()
+    <span class="md-ellipsis">
+      count()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.AIOEngine.delete" class="md-nav__link">
-    delete()
+    <span class="md-ellipsis">
+      delete()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.AIOEngine.find" class="md-nav__link">
-    find()
+    <span class="md-ellipsis">
+      find()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.AIOEngine.find_one" class="md-nav__link">
-    find_one()
+    <span class="md-ellipsis">
+      find_one()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.AIOEngine.get_collection" class="md-nav__link">
-    get_collection()
+    <span class="md-ellipsis">
+      get_collection()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.AIOEngine.remove" class="md-nav__link">
-    remove()
+    <span class="md-ellipsis">
+      remove()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.AIOEngine.save" class="md-nav__link">
-    save()
+    <span class="md-ellipsis">
+      save()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.AIOEngine.save_all" class="md-nav__link">
-    save_all()
+    <span class="md-ellipsis">
+      save_all()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.AIOEngine.session" class="md-nav__link">
-    session()
+    <span class="md-ellipsis">
+      session()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.AIOEngine.transaction" class="md-nav__link">
-    transaction()
+    <span class="md-ellipsis">
+      transaction()
+    </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#odmantic.engine.AIOCursor" class="md-nav__link">
-    AIOCursor
+    <span class="md-ellipsis">
+      AIOCursor
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#odmantic.engine.SyncEngine" class="md-nav__link">
-    SyncEngine
+    <span class="md-ellipsis">
+      SyncEngine
+    </span>
   </a>
   
-    <nav class="md-nav" aria-label="SyncEngine">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.SyncEngine.__init__" class="md-nav__link">
-    __init__()
+    <span class="md-ellipsis">
+      __init__()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.SyncEngine.configure_database" class="md-nav__link">
-    configure_database()
+    <span class="md-ellipsis">
+      configure_database()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.SyncEngine.count" class="md-nav__link">
-    count()
+    <span class="md-ellipsis">
+      count()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.SyncEngine.delete" class="md-nav__link">
-    delete()
+    <span class="md-ellipsis">
+      delete()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.SyncEngine.find" class="md-nav__link">
-    find()
+    <span class="md-ellipsis">
+      find()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.SyncEngine.find_one" class="md-nav__link">
-    find_one()
+    <span class="md-ellipsis">
+      find_one()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.SyncEngine.get_collection" class="md-nav__link">
-    get_collection()
+    <span class="md-ellipsis">
+      get_collection()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.SyncEngine.remove" class="md-nav__link">
-    remove()
+    <span class="md-ellipsis">
+      remove()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.SyncEngine.save" class="md-nav__link">
-    save()
+    <span class="md-ellipsis">
+      save()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.SyncEngine.save_all" class="md-nav__link">
-    save_all()
+    <span class="md-ellipsis">
+      save_all()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.SyncEngine.session" class="md-nav__link">
-    session()
+    <span class="md-ellipsis">
+      session()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.SyncEngine.transaction" class="md-nav__link">
-    transaction()
+    <span class="md-ellipsis">
+      transaction()
+    </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#odmantic.engine.SyncCursor" class="md-nav__link">
-    SyncCursor
+    <span class="md-ellipsis">
+      SyncCursor
+    </span>
   </a>
   
 </li>
@@ -655,136 +789,198 @@
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../session/" class="md-nav__link">
-        odmantic.session
+        
+  
+  <span class="md-ellipsis">
+    odmantic.session
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../query/" class="md-nav__link">
-        odmantic.query
+        
+  
+  <span class="md-ellipsis">
+    odmantic.query
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../field/" class="md-nav__link">
-        odmantic.field
+        
+  
+  <span class="md-ellipsis">
+    odmantic.field
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../reference/" class="md-nav__link">
-        odmantic.reference
+        
+  
+  <span class="md-ellipsis">
+    odmantic.reference
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../" class="md-nav__link">
-        odmantic.index
+        
+  
+  <span class="md-ellipsis">
+    odmantic.index
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../bson/" class="md-nav__link">
-        odmantic.bson
+        
+  
+  <span class="md-ellipsis">
+    odmantic.bson
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../fastapi/" class="md-nav__link">
-        odmantic.fastapi
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
   
   
   
     <li class="md-nav__item">
       <a href="../exceptions/" class="md-nav__link">
-        odmantic.exceptions
+        
+  
+  <span class="md-ellipsis">
+    odmantic.exceptions
+  </span>
+  
+
       </a>
     </li>
   
 
+              
             
-          
-        </ul>
-      </nav>
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../config/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    odmantic.config
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../contributing/" class="md-nav__link">
-        Contributing
+        
+  
+  <span class="md-ellipsis">
+    Contributing
+  </span>
+  
+
       </a>
     </li>
   
@@ -792,14 +988,39 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../changelog/" class="md-nav__link">
-        Changelog
+        
+  
+  <span class="md-ellipsis">
+    Changelog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../migration_guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Migration Guide
+  </span>
+  
+
       </a>
     </li>
   
@@ -831,208 +1052,252 @@
       
         <li class="md-nav__item">
   <a href="#odmantic.engine.AIOEngine" class="md-nav__link">
-    AIOEngine
+    <span class="md-ellipsis">
+      AIOEngine
+    </span>
   </a>
   
-    <nav class="md-nav" aria-label="AIOEngine">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.AIOEngine.__init__" class="md-nav__link">
-    __init__()
+    <span class="md-ellipsis">
+      __init__()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.AIOEngine.configure_database" class="md-nav__link">
-    configure_database()
+    <span class="md-ellipsis">
+      configure_database()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.AIOEngine.count" class="md-nav__link">
-    count()
+    <span class="md-ellipsis">
+      count()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.AIOEngine.delete" class="md-nav__link">
-    delete()
+    <span class="md-ellipsis">
+      delete()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.AIOEngine.find" class="md-nav__link">
-    find()
+    <span class="md-ellipsis">
+      find()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.AIOEngine.find_one" class="md-nav__link">
-    find_one()
+    <span class="md-ellipsis">
+      find_one()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.AIOEngine.get_collection" class="md-nav__link">
-    get_collection()
+    <span class="md-ellipsis">
+      get_collection()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.AIOEngine.remove" class="md-nav__link">
-    remove()
+    <span class="md-ellipsis">
+      remove()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.AIOEngine.save" class="md-nav__link">
-    save()
+    <span class="md-ellipsis">
+      save()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.AIOEngine.save_all" class="md-nav__link">
-    save_all()
+    <span class="md-ellipsis">
+      save_all()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.AIOEngine.session" class="md-nav__link">
-    session()
+    <span class="md-ellipsis">
+      session()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.AIOEngine.transaction" class="md-nav__link">
-    transaction()
+    <span class="md-ellipsis">
+      transaction()
+    </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#odmantic.engine.AIOCursor" class="md-nav__link">
-    AIOCursor
+    <span class="md-ellipsis">
+      AIOCursor
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#odmantic.engine.SyncEngine" class="md-nav__link">
-    SyncEngine
+    <span class="md-ellipsis">
+      SyncEngine
+    </span>
   </a>
   
-    <nav class="md-nav" aria-label="SyncEngine">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.SyncEngine.__init__" class="md-nav__link">
-    __init__()
+    <span class="md-ellipsis">
+      __init__()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.SyncEngine.configure_database" class="md-nav__link">
-    configure_database()
+    <span class="md-ellipsis">
+      configure_database()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.SyncEngine.count" class="md-nav__link">
-    count()
+    <span class="md-ellipsis">
+      count()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.SyncEngine.delete" class="md-nav__link">
-    delete()
+    <span class="md-ellipsis">
+      delete()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.SyncEngine.find" class="md-nav__link">
-    find()
+    <span class="md-ellipsis">
+      find()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.SyncEngine.find_one" class="md-nav__link">
-    find_one()
+    <span class="md-ellipsis">
+      find_one()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.SyncEngine.get_collection" class="md-nav__link">
-    get_collection()
+    <span class="md-ellipsis">
+      get_collection()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.SyncEngine.remove" class="md-nav__link">
-    remove()
+    <span class="md-ellipsis">
+      remove()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.SyncEngine.save" class="md-nav__link">
-    save()
+    <span class="md-ellipsis">
+      save()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.SyncEngine.save_all" class="md-nav__link">
-    save_all()
+    <span class="md-ellipsis">
+      save_all()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.SyncEngine.session" class="md-nav__link">
-    session()
+    <span class="md-ellipsis">
+      session()
+    </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#odmantic.engine.SyncEngine.transaction" class="md-nav__link">
-    transaction()
+    <span class="md-ellipsis">
+      transaction()
+    </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#odmantic.engine.SyncCursor" class="md-nav__link">
-    SyncCursor
+    <span class="md-ellipsis">
+      SyncCursor
+    </span>
   </a>
   
 </li>
@@ -1045,15 +1310,14 @@
               </div>
             
           
-          <div class="md-content" data-md-component="content">
-            <article class="md-content__inner md-typeset">
-              
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
                 
+                  
 
-  <a href="https://github.com/art049/odmantic/edit/master/docs/api_reference/engine.md" title="Edit this page" class="md-content__button md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+  
+  
 
 
   <h1>odmantic.engine</h1>
@@ -1062,25 +1326,18 @@
 
 
 
-<h2 id="odmantic.engine.AIOEngine" class="doc doc-heading">
-        <code>odmantic.engine.AIOEngine</code>
-
-
-<a href="#odmantic.engine.AIOEngine" class="headerlink" title="Permanent link">&para;</a></h2>
-
-
+<a id="odmantic.engine.AIOEngine"></a>
   <div class="doc doc-contents first">
-      <p class="doc doc-class-bases">
-        Bases: <code><span title="odmantic.engine.BaseEngine">BaseEngine</span></code></p>
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="odmantic.engine.BaseEngine">BaseEngine</span></code></p>
 
   
       <p>The AIOEngine object is responsible for handling database operations with MongoDB
 in an asynchronous way using motor.</p>
 
-
-        <details class="quote">
-          <summary>Source code in <code>odmantic/engine.py</code></summary>
-          <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">295</span>
+            <details class="quote">
+              <summary>Source code in <code>odmantic/engine.py</code></summary>
+              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">295</span>
 <span class="normal">296</span>
 <span class="normal">297</span>
 <span class="normal">298</span>
@@ -1726,11 +1983,11 @@ in an asynchronous way using motor.</p>
 
         <span class="n">fields_to_update</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">__fields_modified__</span> <span class="o">|</span> <span class="n">instance</span><span class="o">.</span><span class="n">__mutable_fields__</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fields_to_update</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">doc</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">doc</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="n">fields_to_update</span><span class="p">)</span>
+            <span class="n">doc</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">model_dump_doc</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="n">fields_to_update</span><span class="p">)</span>
             <span class="n">collection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">instance</span><span class="p">))</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">await</span> <span class="n">collection</span><span class="o">.</span><span class="n">update_one</span><span class="p">(</span>
-                    <span class="n">instance</span><span class="o">.</span><span class="n">doc</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">{</span><span class="n">instance</span><span class="o">.</span><span class="n">__primary_field__</span><span class="p">}),</span>
+                    <span class="n">instance</span><span class="o">.</span><span class="n">model_dump_doc</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">{</span><span class="n">instance</span><span class="o">.</span><span class="n">__primary_field__</span><span class="p">}),</span>
                     <span class="p">{</span><span class="s2">&quot;$set&quot;</span><span class="p">:</span> <span class="n">doc</span><span class="p">},</span>
                     <span class="n">upsert</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                     <span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">,</span>
@@ -1916,7 +2173,7 @@ in an asynchronous way using motor.</p>
         <span class="p">)</span>
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-        </details>
+            </details>
 
   
 
@@ -1930,19 +2187,23 @@ in an asynchronous way using motor.</p>
 
 
 
+
 <div class="doc doc-object doc-function">
 
 
 
-<h3 id="odmantic.engine.AIOEngine.__init__" class="doc doc-heading">
-<code class="codehilite language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">client</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">)</span></code>
 
-<a href="#odmantic.engine.AIOEngine.__init__" class="headerlink" title="Permanent link">&para;</a></h3>
+<h2 id="odmantic.engine.AIOEngine.__init__" class="doc doc-heading">
+          <code class=" language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">client</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">)</span></code>
+
+<a href="#odmantic.engine.AIOEngine.__init__" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
   
       <p>Engine constructor.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -1960,8 +2221,12 @@ in an asynchronous way using motor.</p>
           <td>
                 <code><span title="typing.Union">Union</span>[<span title="motor.motor_asyncio.AsyncIOMotorClient">AsyncIOMotorClient</span>, None]</code>
           </td>
-          <td><p>instance of an AsyncIO motor client. If None, a default one
-    will be created</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>instance of an AsyncIO motor client. If None, a default one
+    will be created</p>
+            </div>
+          </td>
           <td>
                 <code>None</code>
           </td>
@@ -1971,7 +2236,11 @@ in an asynchronous way using motor.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>name of the database to use</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>name of the database to use</p>
+            </div>
+          </td>
           <td>
                 <code>&#39;test&#39;</code>
           </td>
@@ -1982,9 +2251,9 @@ in an asynchronous way using motor.</p>
 #noqa: DAR401 RuntimeError
 -->
 
-      <details class="quote">
-        <summary>Source code in <code>odmantic/engine.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">303</span>
+          <details class="quote">
+            <summary>Source code in <code>odmantic/engine.py</code></summary>
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">303</span>
 <span class="normal">304</span>
 <span class="normal">305</span>
 <span class="normal">306</span>
@@ -2032,28 +2301,32 @@ in an asynchronous way using motor.</p>
         <span class="n">client</span> <span class="o">=</span> <span class="n">AsyncIOMotorClient</span><span class="p">()</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="n">database</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
-<h3 id="odmantic.engine.AIOEngine.configure_database" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">configure_database</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">update_existing_indexes</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<h2 id="odmantic.engine.AIOEngine.configure_database" class="doc doc-heading">
+          <code class=" language-python"><span class="n">configure_database</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">update_existing_indexes</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-async"><code>async</code></small>
   </span>
 
-<a href="#odmantic.engine.AIOEngine.configure_database" class="headerlink" title="Permanent link">&para;</a></h3>
+<a href="#odmantic.engine.AIOEngine.configure_database" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
   
       <p>Apply model constraints to the database.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -2071,7 +2344,11 @@ in an asynchronous way using motor.</p>
           <td>
                 <code><span title="typing.Sequence">Sequence</span>[<span title="typing.Type">Type</span>[<span title="odmantic.engine.ModelType">ModelType</span>]]</code>
           </td>
-          <td><p>list of models to initialize the database with</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>list of models to initialize the database with</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -2081,7 +2358,11 @@ in an asynchronous way using motor.</p>
           <td>
                 <code>bool</code>
           </td>
-          <td><p>conflicting indexes will be dropped before creation</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>conflicting indexes will be dropped before creation</p>
+            </div>
+          </td>
           <td>
                 <code>False</code>
           </td>
@@ -2091,7 +2372,11 @@ in an asynchronous way using motor.</p>
           <td>
                 <code><span title="odmantic.engine.SyncSessionType">SyncSessionType</span></code>
           </td>
-          <td><p>an optional session to use for the operation</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>an optional session to use for the operation</p>
+            </div>
+          </td>
           <td>
                 <code>None</code>
           </td>
@@ -2102,9 +2387,9 @@ in an asynchronous way using motor.</p>
 #noqa: DAR401 pymongo.errors.OperationFailure
 -->
 
-      <details class="quote">
-        <summary>Source code in <code>odmantic/engine.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">348</span>
+          <details class="quote">
+            <summary>Source code in <code>odmantic/engine.py</code></summary>
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">348</span>
 <span class="normal">349</span>
 <span class="normal">350</span>
 <span class="normal">351</span>
@@ -2192,28 +2477,32 @@ in an asynchronous way using motor.</p>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">raise</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
-<h3 id="odmantic.engine.AIOEngine.count" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">count</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<h2 id="odmantic.engine.AIOEngine.count" class="doc doc-heading">
+          <code class=" language-python"><span class="n">count</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-async"><code>async</code></small>
   </span>
 
-<a href="#odmantic.engine.AIOEngine.count" class="headerlink" title="Permanent link">&para;</a></h3>
+<a href="#odmantic.engine.AIOEngine.count" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
   
       <p>Get the count of documents matching a query</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -2231,7 +2520,11 @@ in an asynchronous way using motor.</p>
           <td>
                 <code><span title="typing.Type">Type</span>[<span title="odmantic.engine.ModelType">ModelType</span>]</code>
           </td>
-          <td><p>model to perform the operation on</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>model to perform the operation on</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -2241,7 +2534,11 @@ in an asynchronous way using motor.</p>
           <td>
                 <code><span title="typing.Union">Union</span>[<a class="autorefs autorefs-internal" title="odmantic.query.QueryExpression" href="../query/#odmantic.query.QueryExpression">QueryExpression</a>, <span title="typing.Dict">Dict</span>, bool]</code>
           </td>
-          <td><p>query filters to apply</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>query filters to apply</p>
+            </div>
+          </td>
           <td>
                 <code>()</code>
           </td>
@@ -2251,13 +2548,19 @@ in an asynchronous way using motor.</p>
           <td>
                 <code><span title="odmantic.engine.AIOSessionType">AIOSessionType</span></code>
           </td>
-          <td><p>an optional session to use for the operation</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>an optional session to use for the operation</p>
+            </div>
+          </td>
           <td>
                 <code>None</code>
           </td>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Returns:</strong></p>
   <table>
@@ -2272,7 +2575,11 @@ in an asynchronous way using motor.</p>
           <td>
                 <code>int</code>
           </td>
-          <td><p>number of document matching the query</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>number of document matching the query</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -2280,9 +2587,9 @@ in an asynchronous way using motor.</p>
 #noqa: DAR401 TypeError
 -->
 
-      <details class="quote">
-        <summary>Source code in <code>odmantic/engine.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">685</span>
+          <details class="quote">
+            <summary>Source code in <code>odmantic/engine.py</code></summary>
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">685</span>
 <span class="normal">686</span>
 <span class="normal">687</span>
 <span class="normal">688</span>
@@ -2338,28 +2645,32 @@ in an asynchronous way using motor.</p>
     <span class="p">)</span>
     <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
-<h3 id="odmantic.engine.AIOEngine.delete" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">delete</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<h2 id="odmantic.engine.AIOEngine.delete" class="doc doc-heading">
+          <code class=" language-python"><span class="n">delete</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-async"><code>async</code></small>
   </span>
 
-<a href="#odmantic.engine.AIOEngine.delete" class="headerlink" title="Permanent link">&para;</a></h3>
+<a href="#odmantic.engine.AIOEngine.delete" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
   
       <p>Delete an instance from the database</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -2377,7 +2688,11 @@ in an asynchronous way using motor.</p>
           <td>
                 <code><span title="odmantic.engine.ModelType">ModelType</span></code>
           </td>
-          <td><p>the instance to delete</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>the instance to delete</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -2387,13 +2702,19 @@ in an asynchronous way using motor.</p>
           <td>
                 <code><span title="odmantic.engine.AIOSessionType">AIOSessionType</span></code>
           </td>
-          <td><p>an optional session to use for the operation</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>an optional session to use for the operation</p>
+            </div>
+          </td>
           <td>
                 <code>None</code>
           </td>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Raises:</strong></p>
   <table>
@@ -2408,14 +2729,18 @@ in an asynchronous way using motor.</p>
           <td>
                 <code><a class="autorefs autorefs-internal" title="odmantic.exceptions.DocumentNotFoundError" href="../exceptions/#odmantic.exceptions.DocumentNotFoundError">DocumentNotFoundError</a></code>
           </td>
-          <td><p>the instance has not been persisted to the database</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>the instance has not been persisted to the database</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
 
-      <details class="quote">
-        <summary>Source code in <code>odmantic/engine.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">626</span>
+          <details class="quote">
+            <summary>Source code in <code>odmantic/engine.py</code></summary>
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">626</span>
 <span class="normal">627</span>
 <span class="normal">628</span>
 <span class="normal">629</span>
@@ -2465,24 +2790,28 @@ in an asynchronous way using motor.</p>
     <span class="k">if</span> <span class="n">count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">DocumentNotFoundError</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
-<h3 id="odmantic.engine.AIOEngine.find" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">find</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
-<a href="#odmantic.engine.AIOEngine.find" class="headerlink" title="Permanent link">&para;</a></h3>
+<h2 id="odmantic.engine.AIOEngine.find" class="doc doc-heading">
+          <code class=" language-python"><span class="n">find</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#odmantic.engine.AIOEngine.find" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
   
       <p>Search for Model instances matching the query filter provided</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -2500,7 +2829,11 @@ in an asynchronous way using motor.</p>
           <td>
                 <code><span title="typing.Type">Type</span>[<span title="odmantic.engine.ModelType">ModelType</span>]</code>
           </td>
-          <td><p>model to perform the operation on</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>model to perform the operation on</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -2510,7 +2843,11 @@ in an asynchronous way using motor.</p>
           <td>
                 <code><span title="typing.Union">Union</span>[<a class="autorefs autorefs-internal" title="odmantic.query.QueryExpression" href="../query/#odmantic.query.QueryExpression">QueryExpression</a>, <span title="typing.Dict">Dict</span>, bool]</code>
           </td>
-          <td><p>query filter to apply</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>query filter to apply</p>
+            </div>
+          </td>
           <td>
                 <code>()</code>
           </td>
@@ -2520,7 +2857,11 @@ in an asynchronous way using motor.</p>
           <td>
                 <code><span title="typing.Optional">Optional</span>[<span title="typing.Any">Any</span>]</code>
           </td>
-          <td><p>sort expression</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>sort expression</p>
+            </div>
+          </td>
           <td>
                 <code>None</code>
           </td>
@@ -2530,7 +2871,11 @@ in an asynchronous way using motor.</p>
           <td>
                 <code>int</code>
           </td>
-          <td><p>number of document to skip</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>number of document to skip</p>
+            </div>
+          </td>
           <td>
                 <code>0</code>
           </td>
@@ -2540,7 +2885,11 @@ in an asynchronous way using motor.</p>
           <td>
                 <code><span title="typing.Optional">Optional</span>[int]</code>
           </td>
-          <td><p>maximum number of instance fetched</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>maximum number of instance fetched</p>
+            </div>
+          </td>
           <td>
                 <code>None</code>
           </td>
@@ -2550,13 +2899,19 @@ in an asynchronous way using motor.</p>
           <td>
                 <code><span title="odmantic.engine.AIOSessionType">AIOSessionType</span></code>
           </td>
-          <td><p>an optional session to use for the operation</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>an optional session to use for the operation</p>
+            </div>
+          </td>
           <td>
                 <code>None</code>
           </td>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Raises:</strong></p>
   <table>
@@ -2571,10 +2926,16 @@ in an asynchronous way using motor.</p>
           <td>
                 <code>DocumentParsingError</code>
           </td>
-          <td><p>unable to parse one of the resulting documents</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>unable to parse one of the resulting documents</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Returns:</strong></p>
   <table>
@@ -2589,7 +2950,11 @@ in an asynchronous way using motor.</p>
           <td>
                 <code><a class="autorefs autorefs-internal" title="odmantic.engine.AIOCursor" href="#odmantic.engine.AIOCursor">AIOCursor</a>[<span title="odmantic.engine.ModelType">ModelType</span>]</code>
           </td>
-          <td><p><a class="autorefs autorefs-internal" href="#odmantic.engine.AIOCursor">odmantic.engine.AIOCursor</a> of the query</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p><a class="autorefs autorefs-internal" href="#odmantic.engine.AIOCursor">odmantic.engine.AIOCursor</a> of the query</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -2599,9 +2964,9 @@ in an asynchronous way using motor.</p>
 #noqa: DAR402 DocumentParsingError
 -->
 
-      <details class="quote">
-        <summary>Source code in <code>odmantic/engine.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">433</span>
+          <details class="quote">
+            <summary>Source code in <code>odmantic/engine.py</code></summary>
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">433</span>
 <span class="normal">434</span>
 <span class="normal">435</span>
 <span class="normal">436</span>
@@ -2691,28 +3056,32 @@ in an asynchronous way using motor.</p>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">AIOCursor</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">motor_cursor</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
-<h3 id="odmantic.engine.AIOEngine.find_one" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">find_one</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<h2 id="odmantic.engine.AIOEngine.find_one" class="doc doc-heading">
+          <code class=" language-python"><span class="n">find_one</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-async"><code>async</code></small>
   </span>
 
-<a href="#odmantic.engine.AIOEngine.find_one" class="headerlink" title="Permanent link">&para;</a></h3>
+<a href="#odmantic.engine.AIOEngine.find_one" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
   
       <p>Search for a Model instance matching the query filter provided</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -2730,7 +3099,11 @@ in an asynchronous way using motor.</p>
           <td>
                 <code><span title="typing.Type">Type</span>[<span title="odmantic.engine.ModelType">ModelType</span>]</code>
           </td>
-          <td><p>model to perform the operation on</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>model to perform the operation on</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -2740,7 +3113,11 @@ in an asynchronous way using motor.</p>
           <td>
                 <code><span title="typing.Union">Union</span>[<a class="autorefs autorefs-internal" title="odmantic.query.QueryExpression" href="../query/#odmantic.query.QueryExpression">QueryExpression</a>, <span title="typing.Dict">Dict</span>, bool]</code>
           </td>
-          <td><p>query filter to apply</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>query filter to apply</p>
+            </div>
+          </td>
           <td>
                 <code>()</code>
           </td>
@@ -2750,7 +3127,11 @@ in an asynchronous way using motor.</p>
           <td>
                 <code><span title="typing.Optional">Optional</span>[<span title="typing.Any">Any</span>]</code>
           </td>
-          <td><p>sort expression</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>sort expression</p>
+            </div>
+          </td>
           <td>
                 <code>None</code>
           </td>
@@ -2760,13 +3141,19 @@ in an asynchronous way using motor.</p>
           <td>
                 <code><span title="odmantic.engine.AIOSessionType">AIOSessionType</span></code>
           </td>
-          <td><p>an optional session to use for the operation</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>an optional session to use for the operation</p>
+            </div>
+          </td>
           <td>
                 <code>None</code>
           </td>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Raises:</strong></p>
   <table>
@@ -2781,10 +3168,16 @@ in an asynchronous way using motor.</p>
           <td>
                 <code>DocumentParsingError</code>
           </td>
-          <td><p>unable to parse the resulting document</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>unable to parse the resulting document</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Returns:</strong></p>
   <table>
@@ -2799,7 +3192,11 @@ in an asynchronous way using motor.</p>
           <td>
                 <code><span title="typing.Optional">Optional</span>[<span title="odmantic.engine.ModelType">ModelType</span>]</code>
           </td>
-          <td><p>the fetched instance if found otherwise None</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>the fetched instance if found otherwise None</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -2808,9 +3205,9 @@ in an asynchronous way using motor.</p>
 #noqa: DAR402 DocumentParsingError
 -->
 
-      <details class="quote">
-        <summary>Source code in <code>odmantic/engine.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">479</span>
+          <details class="quote">
+            <summary>Source code in <code>odmantic/engine.py</code></summary>
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">479</span>
 <span class="normal">480</span>
 <span class="normal">481</span>
 <span class="normal">482</span>
@@ -2878,24 +3275,28 @@ in an asynchronous way using motor.</p>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="k">return</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
-<h3 id="odmantic.engine.AIOEngine.get_collection" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">get_collection</span><span class="p">(</span><span class="n">model</span><span class="p">)</span></code>
 
-<a href="#odmantic.engine.AIOEngine.get_collection" class="headerlink" title="Permanent link">&para;</a></h3>
+<h2 id="odmantic.engine.AIOEngine.get_collection" class="doc doc-heading">
+          <code class=" language-python"><span class="n">get_collection</span><span class="p">(</span><span class="n">model</span><span class="p">)</span></code>
+
+<a href="#odmantic.engine.AIOEngine.get_collection" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
   
       <p>Get the motor collection associated to a Model.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -2913,13 +3314,19 @@ in an asynchronous way using motor.</p>
           <td>
                 <code><span title="typing.Type">Type</span>[<span title="odmantic.engine.ModelType">ModelType</span>]</code>
           </td>
-          <td><p>model class</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>model class</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Returns:</strong></p>
   <table>
@@ -2934,14 +3341,18 @@ in an asynchronous way using motor.</p>
           <td>
                 <code><span title="motor.motor_asyncio.AsyncIOMotorCollection">AsyncIOMotorCollection</span></code>
           </td>
-          <td><p>the AsyncIO motor collection object</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>the AsyncIO motor collection object</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
 
-      <details class="quote">
-        <summary>Source code in <code>odmantic/engine.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">328</span>
+          <details class="quote">
+            <summary>Source code in <code>odmantic/engine.py</code></summary>
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">328</span>
 <span class="normal">329</span>
 <span class="normal">330</span>
 <span class="normal">331</span>
@@ -2961,28 +3372,32 @@ in an asynchronous way using motor.</p>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">__collection__</span><span class="p">]</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
-<h3 id="odmantic.engine.AIOEngine.remove" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">remove</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">,</span> <span class="n">just_one</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<h2 id="odmantic.engine.AIOEngine.remove" class="doc doc-heading">
+          <code class=" language-python"><span class="n">remove</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">,</span> <span class="n">just_one</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-async"><code>async</code></small>
   </span>
 
-<a href="#odmantic.engine.AIOEngine.remove" class="headerlink" title="Permanent link">&para;</a></h3>
+<a href="#odmantic.engine.AIOEngine.remove" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
   
       <p>Delete Model instances matching the query filter provided</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -3000,7 +3415,11 @@ in an asynchronous way using motor.</p>
           <td>
                 <code><span title="typing.Type">Type</span>[<span title="odmantic.engine.ModelType">ModelType</span>]</code>
           </td>
-          <td><p>model to perform the operation on</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>model to perform the operation on</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -3010,7 +3429,11 @@ in an asynchronous way using motor.</p>
           <td>
                 <code><span title="typing.Union">Union</span>[<a class="autorefs autorefs-internal" title="odmantic.query.QueryExpression" href="../query/#odmantic.query.QueryExpression">QueryExpression</a>, <span title="typing.Dict">Dict</span>, bool]</code>
           </td>
-          <td><p>query filter to apply</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>query filter to apply</p>
+            </div>
+          </td>
           <td>
                 <code>()</code>
           </td>
@@ -3020,7 +3443,11 @@ in an asynchronous way using motor.</p>
           <td>
                 <code>bool</code>
           </td>
-          <td><p>limit the deletion to just one document</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>limit the deletion to just one document</p>
+            </div>
+          </td>
           <td>
                 <code>False</code>
           </td>
@@ -3030,13 +3457,19 @@ in an asynchronous way using motor.</p>
           <td>
                 <code><span title="odmantic.engine.AIOSessionType">AIOSessionType</span></code>
           </td>
-          <td><p>an optional session to use for the operation</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>an optional session to use for the operation</p>
+            </div>
+          </td>
           <td>
                 <code>None</code>
           </td>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Returns:</strong></p>
   <table>
@@ -3051,14 +3484,18 @@ in an asynchronous way using motor.</p>
           <td>
                 <code>int</code>
           </td>
-          <td><p>the number of instances deleted from the database.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>the number of instances deleted from the database.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
 
-      <details class="quote">
-        <summary>Source code in <code>odmantic/engine.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">652</span>
+          <details class="quote">
+            <summary>Source code in <code>odmantic/engine.py</code></summary>
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">652</span>
 <span class="normal">653</span>
 <span class="normal">654</span>
 <span class="normal">655</span>
@@ -3122,23 +3559,25 @@ in an asynchronous way using motor.</p>
 
     <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">deleted_count</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
-<h3 id="odmantic.engine.AIOEngine.save" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">save</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<h2 id="odmantic.engine.AIOEngine.save" class="doc doc-heading">
+          <code class=" language-python"><span class="n">save</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-async"><code>async</code></small>
   </span>
 
-<a href="#odmantic.engine.AIOEngine.save" class="headerlink" title="Permanent link">&para;</a></h3>
+<a href="#odmantic.engine.AIOEngine.save" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
@@ -3147,6 +3586,8 @@ in an asynchronous way using motor.</p>
 <p>This method behaves as an 'upsert' operation. If a document already exists
 with the same primary key, it will be overwritten.</p>
 <p>All the other models referenced by this instance will be saved as well.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -3164,7 +3605,11 @@ with the same primary key, it will be overwritten.</p>
           <td>
                 <code><span title="odmantic.engine.ModelType">ModelType</span></code>
           </td>
-          <td><p>instance to persist</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>instance to persist</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -3174,15 +3619,21 @@ with the same primary key, it will be overwritten.</p>
           <td>
                 <code><span title="odmantic.engine.AIOSessionType">AIOSessionType</span></code>
           </td>
-          <td><p>An optional session to use for the operation. If not provided, an
+          <td>
+            <div class="doc-md-description">
+              <p>An optional session to use for the operation. If not provided, an
      internal session will be used to persist the instance and
-     sub-instances.</p></td>
+     sub-instances.</p>
+            </div>
+          </td>
           <td>
                 <code>None</code>
           </td>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Returns:</strong></p>
   <table>
@@ -3197,10 +3648,16 @@ with the same primary key, it will be overwritten.</p>
           <td>
                 <code><span title="odmantic.engine.ModelType">ModelType</span></code>
           </td>
-          <td><p>the saved instance</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>the saved instance</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Raises:</strong></p>
   <table>
@@ -3215,12 +3672,16 @@ with the same primary key, it will be overwritten.</p>
           <td>
                 <code><a class="autorefs autorefs-internal" title="odmantic.exceptions.DuplicateKeyError" href="../exceptions/#odmantic.exceptions.DuplicateKeyError">DuplicateKeyError</a></code>
           </td>
-          <td><p>the instance is duplicated according to a unique index.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>the instance is duplicated according to a unique index.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
 
-<details class="note">
+<details class="note" open>
   <summary>NOTE</summary>
   <p>The save operation actually modify the instance argument in place. However,
 the instance is still returned for convenience.</p>
@@ -3229,9 +3690,9 @@ the instance is still returned for convenience.</p>
 #noqa: DAR402 DuplicateKeyError
 -->
 
-      <details class="quote">
-        <summary>Source code in <code>odmantic/engine.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">538</span>
+          <details class="quote">
+            <summary>Source code in <code>odmantic/engine.py</code></summary>
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">538</span>
 <span class="normal">539</span>
 <span class="normal">540</span>
 <span class="normal">541</span>
@@ -3315,23 +3776,25 @@ the instance is still returned for convenience.</p>
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_save</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">local_session</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">instance</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
-<h3 id="odmantic.engine.AIOEngine.save_all" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">save_all</span><span class="p">(</span><span class="n">instances</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<h2 id="odmantic.engine.AIOEngine.save_all" class="doc doc-heading">
+          <code class=" language-python"><span class="n">save_all</span><span class="p">(</span><span class="n">instances</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-async"><code>async</code></small>
   </span>
 
-<a href="#odmantic.engine.AIOEngine.save_all" class="headerlink" title="Permanent link">&para;</a></h3>
+<a href="#odmantic.engine.AIOEngine.save_all" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
@@ -3341,6 +3804,8 @@ the instance is still returned for convenience.</p>
 already exists with the same primary key, it will be overwritten.</p>
 <p>All the other models referenced by this instance will be recursively saved as
 well.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -3358,7 +3823,11 @@ well.</p>
           <td>
                 <code><span title="typing.Sequence">Sequence</span>[<span title="odmantic.engine.ModelType">ModelType</span>]</code>
           </td>
-          <td><p>instances to persist</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>instances to persist</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -3368,14 +3837,20 @@ well.</p>
           <td>
                 <code><span title="odmantic.engine.AIOSessionType">AIOSessionType</span></code>
           </td>
-          <td><p>An optional session to use for the operation. If not provided, an
-     internal session will be used to persist the instances.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>An optional session to use for the operation. If not provided, an
+     internal session will be used to persist the instances.</p>
+            </div>
+          </td>
           <td>
                 <code>None</code>
           </td>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Returns:</strong></p>
   <table>
@@ -3390,10 +3865,16 @@ well.</p>
           <td>
                 <code><span title="typing.List">List</span>[<span title="odmantic.engine.ModelType">ModelType</span>]</code>
           </td>
-          <td><p>the saved instances</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>the saved instances</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Raises:</strong></p>
   <table>
@@ -3408,12 +3889,16 @@ well.</p>
           <td>
                 <code><a class="autorefs autorefs-internal" title="odmantic.exceptions.DuplicateKeyError" href="../exceptions/#odmantic.exceptions.DuplicateKeyError">DuplicateKeyError</a></code>
           </td>
-          <td><p>an instance is duplicated according to a unique index.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>an instance is duplicated according to a unique index.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
 
-<details class="note">
+<details class="note" open>
   <summary>NOTE</summary>
   <p>The save_all operation actually modify the arguments in place. However, the
 instances are still returned for convenience.</p>
@@ -3421,9 +3906,9 @@ instances are still returned for convenience.</p>
 #noqa: DAR402 DuplicateKeyError
 -->
 
-      <details class="quote">
-        <summary>Source code in <code>odmantic/engine.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">581</span>
+          <details class="quote">
+            <summary>Source code in <code>odmantic/engine.py</code></summary>
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">581</span>
 <span class="normal">582</span>
 <span class="normal">583</span>
 <span class="normal">584</span>
@@ -3511,24 +3996,28 @@ instances are still returned for convenience.</p>
             <span class="p">]</span>
     <span class="k">return</span> <span class="n">added_instances</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
-<h3 id="odmantic.engine.AIOEngine.session" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">session</span><span class="p">()</span></code>
 
-<a href="#odmantic.engine.AIOEngine.session" class="headerlink" title="Permanent link">&para;</a></h3>
+<h2 id="odmantic.engine.AIOEngine.session" class="doc doc-heading">
+          <code class=" language-python"><span class="n">session</span><span class="p">()</span></code>
+
+<a href="#odmantic.engine.AIOEngine.session" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
   
       <p>Get a new session for the engine to allow ordering sequential operations.</p>
+
+
 
   <p><strong>Returns:</strong></p>
   <table>
@@ -3543,7 +4032,11 @@ instances are still returned for convenience.</p>
           <td>
                 <code><a class="autorefs autorefs-internal" title="odmantic.session.AIOSession" href="../session/#odmantic.session.AIOSession">AIOSession</a></code>
           </td>
-          <td><p>a new session object</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>a new session object</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -3555,9 +4048,9 @@ instances are still returned for convenience.</p>
     <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">john</span><span class="p">)</span>
 </code></pre></div>
 
-      <details class="quote">
-        <summary>Source code in <code>odmantic/engine.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">393</span>
+          <details class="quote">
+            <summary>Source code in <code>odmantic/engine.py</code></summary>
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">393</span>
 <span class="normal">394</span>
 <span class="normal">395</span>
 <span class="normal">396</span>
@@ -3591,24 +4084,28 @@ instances are still returned for convenience.</p>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">AIOSession</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
-<h3 id="odmantic.engine.AIOEngine.transaction" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">transaction</span><span class="p">()</span></code>
 
-<a href="#odmantic.engine.AIOEngine.transaction" class="headerlink" title="Permanent link">&para;</a></h3>
+<h2 id="odmantic.engine.AIOEngine.transaction" class="doc doc-heading">
+          <code class=" language-python"><span class="n">transaction</span><span class="p">()</span></code>
+
+<a href="#odmantic.engine.AIOEngine.transaction" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
   
       <p>Get a new transaction for the engine to aggregate sequential operations.</p>
+
+
 
   <p><strong>Returns:</strong></p>
   <table>
@@ -3623,7 +4120,11 @@ instances are still returned for convenience.</p>
           <td>
                 <code><a class="autorefs autorefs-internal" title="odmantic.session.AIOTransaction" href="../session/#odmantic.engine.AIOTransaction">AIOTransaction</a></code>
           </td>
-          <td><p>a new transaction object</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>a new transaction object</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -3636,14 +4137,14 @@ instances are still returned for convenience.</p>
     <span class="k">await</span> <span class="n">transaction</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
 </code></pre></div></p>
 
-<details class="warning">
+<details class="warning" open>
   <summary>Warning</summary>
   <p>MongoDB transaction are only supported on replicated clusters: either
 directly a replicaSet or a sharded cluster with replication enabled.</p>
 </details>
-      <details class="quote">
-        <summary>Source code in <code>odmantic/engine.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">411</span>
+          <details class="quote">
+            <summary>Source code in <code>odmantic/engine.py</code></summary>
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">411</span>
 <span class="normal">412</span>
 <span class="normal">413</span>
 <span class="normal">414</span>
@@ -3685,7 +4186,7 @@ directly a replicaSet or a sharded cluster with replication enabled.</p>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">AIOTransaction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
@@ -3702,31 +4203,22 @@ directly a replicaSet or a sharded cluster with replication enabled.</p>
 
 
 
-<h2 id="odmantic.engine.AIOCursor" class="doc doc-heading">
-        <code>odmantic.engine.AIOCursor</code>
-
-
-<a href="#odmantic.engine.AIOCursor" class="headerlink" title="Permanent link">&para;</a></h2>
-
-
+<a id="odmantic.engine.AIOCursor"></a>
   <div class="doc doc-contents first">
-      <p class="doc doc-class-bases">
-        Bases: <code><span title="odmantic.engine.BaseCursor">BaseCursor</span>[<span title="odmantic.engine.ModelType">ModelType</span>]</code>, <code><span title="typing.AsyncIterable">AsyncIterable</span>[<span title="odmantic.engine.ModelType">ModelType</span>]</code>, <code><span title="typing.Awaitable">Awaitable</span>[<span title="typing.List">List</span>[<span title="odmantic.engine.ModelType">ModelType</span>]]</code></p>
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="odmantic.engine.BaseCursor">BaseCursor</span>[<span title="odmantic.engine.ModelType">ModelType</span>]</code>, <code><span title="typing.AsyncIterable">AsyncIterable</span>[<span title="odmantic.engine.ModelType">ModelType</span>]</code>, <code><span title="typing.Awaitable">Awaitable</span>[<span title="typing.List">List</span>[<span title="odmantic.engine.ModelType">ModelType</span>]]</code></p>
 
   
       <p>This object has to be built from the <a class="autorefs autorefs-internal" href="#odmantic.engine.AIOEngine.find">odmantic.engine.AIOEngine.find</a> method.</p>
-
-<details class="an-aiocursor-object-support-multiple-async-operations">
-  <summary>An AIOCursor object support multiple async operations</summary>
-  <ul>
+<p>An AIOCursor object support multiple async operations:</p>
+<ul>
 <li><strong>async for</strong>: asynchronously iterate over the query results</li>
 <li><strong>await</strong> : when awaited it will return a list of the fetched models</li>
 </ul>
-</details>
 
-        <details class="quote">
-          <summary>Source code in <code>odmantic/engine.py</code></summary>
-          <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 88</span>
+            <details class="quote">
+              <summary>Source code in <code>odmantic/engine.py</code></summary>
+              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 88</span>
 <span class="normal"> 89</span>
 <span class="normal"> 90</span>
 <span class="normal"> 91</span>
@@ -3802,7 +4294,7 @@ directly a replicaSet or a sharded cluster with replication enabled.</p>
             <span class="k">yield</span> <span class="n">instance</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_results</span> <span class="o">=</span> <span class="n">results</span>
 </code></pre></div></td></tr></table></div>
-        </details>
+            </details>
 
   
 
@@ -3828,25 +4320,18 @@ directly a replicaSet or a sharded cluster with replication enabled.</p>
 
 
 
-<h2 id="odmantic.engine.SyncEngine" class="doc doc-heading">
-        <code>odmantic.engine.SyncEngine</code>
-
-
-<a href="#odmantic.engine.SyncEngine" class="headerlink" title="Permanent link">&para;</a></h2>
-
-
+<a id="odmantic.engine.SyncEngine"></a>
   <div class="doc doc-contents first">
-      <p class="doc doc-class-bases">
-        Bases: <code><span title="odmantic.engine.BaseEngine">BaseEngine</span></code></p>
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="odmantic.engine.BaseEngine">BaseEngine</span></code></p>
 
   
       <p>The SyncEngine object is responsible for handling database operations with
 MongoDB in an synchronous way using pymongo.</p>
 
-
-        <details class="quote">
-          <summary>Source code in <code>odmantic/engine.py</code></summary>
-          <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 715</span>
+            <details class="quote">
+              <summary>Source code in <code>odmantic/engine.py</code></summary>
+              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 715</span>
 <span class="normal"> 716</span>
 <span class="normal"> 717</span>
 <span class="normal"> 718</span>
@@ -4456,11 +4941,11 @@ MongoDB in an synchronous way using pymongo.</p>
 
         <span class="n">fields_to_update</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">__fields_modified__</span> <span class="o">|</span> <span class="n">instance</span><span class="o">.</span><span class="n">__mutable_fields__</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fields_to_update</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">doc</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">doc</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="n">fields_to_update</span><span class="p">)</span>
+            <span class="n">doc</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">model_dump_doc</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="n">fields_to_update</span><span class="p">)</span>
             <span class="n">collection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">instance</span><span class="p">))</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">collection</span><span class="o">.</span><span class="n">update_one</span><span class="p">(</span>
-                    <span class="n">instance</span><span class="o">.</span><span class="n">doc</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">{</span><span class="n">instance</span><span class="o">.</span><span class="n">__primary_field__</span><span class="p">}),</span>
+                    <span class="n">instance</span><span class="o">.</span><span class="n">model_dump_doc</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">{</span><span class="n">instance</span><span class="o">.</span><span class="n">__primary_field__</span><span class="p">}),</span>
                     <span class="p">{</span><span class="s2">&quot;$set&quot;</span><span class="p">:</span> <span class="n">doc</span><span class="p">},</span>
                     <span class="n">upsert</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                     <span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">,</span>
@@ -4638,7 +5123,7 @@ MongoDB in an synchronous way using pymongo.</p>
         <span class="n">count</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">count_documents</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_session</span><span class="p">(</span><span class="n">session</span><span class="p">))</span>
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-        </details>
+            </details>
 
   
 
@@ -4652,19 +5137,23 @@ MongoDB in an synchronous way using pymongo.</p>
 
 
 
+
 <div class="doc doc-object doc-function">
 
 
 
-<h3 id="odmantic.engine.SyncEngine.__init__" class="doc doc-heading">
-<code class="codehilite language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">client</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">)</span></code>
 
-<a href="#odmantic.engine.SyncEngine.__init__" class="headerlink" title="Permanent link">&para;</a></h3>
+<h2 id="odmantic.engine.SyncEngine.__init__" class="doc doc-heading">
+          <code class=" language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">client</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">)</span></code>
+
+<a href="#odmantic.engine.SyncEngine.__init__" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
   
       <p>Engine constructor.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -4680,10 +5169,14 @@ MongoDB in an synchronous way using pymongo.</p>
         <tr>
           <td><code>client</code></td>
           <td>
-                <code>Union[MongoClient, None]</code>
+                <code><span title="typing.Union">Union</span>[<span title="pymongo.MongoClient">MongoClient</span>, None]</code>
           </td>
-          <td><p>instance of a PyMongo client. If None, a default one
-    will be created</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>instance of a PyMongo client. If None, a default one
+    will be created</p>
+            </div>
+          </td>
           <td>
                 <code>None</code>
           </td>
@@ -4693,7 +5186,11 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code>str</code>
           </td>
-          <td><p>name of the database to use</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>name of the database to use</p>
+            </div>
+          </td>
           <td>
                 <code>&#39;test&#39;</code>
           </td>
@@ -4701,9 +5198,9 @@ MongoDB in an synchronous way using pymongo.</p>
     </tbody>
   </table>
 
-      <details class="quote">
-        <summary>Source code in <code>odmantic/engine.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">723</span>
+          <details class="quote">
+            <summary>Source code in <code>odmantic/engine.py</code></summary>
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">723</span>
 <span class="normal">724</span>
 <span class="normal">725</span>
 <span class="normal">726</span>
@@ -4733,24 +5230,28 @@ MongoDB in an synchronous way using pymongo.</p>
         <span class="n">client</span> <span class="o">=</span> <span class="n">MongoClient</span><span class="p">()</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="n">database</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
-<h3 id="odmantic.engine.SyncEngine.configure_database" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">configure_database</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">update_existing_indexes</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
-<a href="#odmantic.engine.SyncEngine.configure_database" class="headerlink" title="Permanent link">&para;</a></h3>
+<h2 id="odmantic.engine.SyncEngine.configure_database" class="doc doc-heading">
+          <code class=" language-python"><span class="n">configure_database</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">update_existing_indexes</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#odmantic.engine.SyncEngine.configure_database" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
   
       <p>Apply model constraints to the database.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -4768,7 +5269,11 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code><span title="typing.Sequence">Sequence</span>[<span title="typing.Type">Type</span>[<span title="odmantic.engine.ModelType">ModelType</span>]]</code>
           </td>
-          <td><p>list of models to initialize the database with</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>list of models to initialize the database with</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -4778,7 +5283,11 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code>bool</code>
           </td>
-          <td><p>conflicting indexes will be dropped before creation</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>conflicting indexes will be dropped before creation</p>
+            </div>
+          </td>
           <td>
                 <code>False</code>
           </td>
@@ -4788,7 +5297,11 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code><span title="odmantic.engine.SyncSessionType">SyncSessionType</span></code>
           </td>
-          <td><p>an optional session to use for the operation</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>an optional session to use for the operation</p>
+            </div>
+          </td>
           <td>
                 <code>None</code>
           </td>
@@ -4799,9 +5312,9 @@ MongoDB in an synchronous way using pymongo.</p>
 #noqa: DAR401 pymongo.errors.OperationFailure
 -->
 
-      <details class="quote">
-        <summary>Source code in <code>odmantic/engine.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">760</span>
+          <details class="quote">
+            <summary>Source code in <code>odmantic/engine.py</code></summary>
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">760</span>
 <span class="normal">761</span>
 <span class="normal">762</span>
 <span class="normal">763</span>
@@ -4885,24 +5398,28 @@ MongoDB in an synchronous way using pymongo.</p>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">raise</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
-<h3 id="odmantic.engine.SyncEngine.count" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">count</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
-<a href="#odmantic.engine.SyncEngine.count" class="headerlink" title="Permanent link">&para;</a></h3>
+<h2 id="odmantic.engine.SyncEngine.count" class="doc doc-heading">
+          <code class=" language-python"><span class="n">count</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#odmantic.engine.SyncEngine.count" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
   
       <p>Get the count of documents matching a query</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -4920,7 +5437,11 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code><span title="typing.Type">Type</span>[<span title="odmantic.engine.ModelType">ModelType</span>]</code>
           </td>
-          <td><p>model to perform the operation on</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>model to perform the operation on</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -4930,7 +5451,11 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code><span title="typing.Union">Union</span>[<a class="autorefs autorefs-internal" title="odmantic.query.QueryExpression" href="../query/#odmantic.query.QueryExpression">QueryExpression</a>, <span title="typing.Dict">Dict</span>, bool]</code>
           </td>
-          <td><p>query filters to apply</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>query filters to apply</p>
+            </div>
+          </td>
           <td>
                 <code>()</code>
           </td>
@@ -4940,13 +5465,19 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code><span title="odmantic.engine.SyncSessionType">SyncSessionType</span></code>
           </td>
-          <td><p>an optional session to use for the operation</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>an optional session to use for the operation</p>
+            </div>
+          </td>
           <td>
                 <code>None</code>
           </td>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Returns:</strong></p>
   <table>
@@ -4961,7 +5492,11 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code>int</code>
           </td>
-          <td><p>number of document matching the query</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>number of document matching the query</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -4969,9 +5504,9 @@ MongoDB in an synchronous way using pymongo.</p>
 #noqa: DAR401 TypeError
 -->
 
-      <details class="quote">
-        <summary>Source code in <code>odmantic/engine.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1085</span>
+          <details class="quote">
+            <summary>Source code in <code>odmantic/engine.py</code></summary>
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1085</span>
 <span class="normal">1086</span>
 <span class="normal">1087</span>
 <span class="normal">1088</span>
@@ -5023,24 +5558,28 @@ MongoDB in an synchronous way using pymongo.</p>
     <span class="n">count</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">count_documents</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_session</span><span class="p">(</span><span class="n">session</span><span class="p">))</span>
     <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
-<h3 id="odmantic.engine.SyncEngine.delete" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">delete</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
-<a href="#odmantic.engine.SyncEngine.delete" class="headerlink" title="Permanent link">&para;</a></h3>
+<h2 id="odmantic.engine.SyncEngine.delete" class="doc doc-heading">
+          <code class=" language-python"><span class="n">delete</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#odmantic.engine.SyncEngine.delete" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
   
       <p>Delete an instance from the database</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -5058,7 +5597,11 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code><span title="odmantic.engine.ModelType">ModelType</span></code>
           </td>
-          <td><p>the instance to delete</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>the instance to delete</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -5068,13 +5611,19 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code><span title="odmantic.engine.SyncSessionType">SyncSessionType</span></code>
           </td>
-          <td><p>an optional session to use for the operation</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>an optional session to use for the operation</p>
+            </div>
+          </td>
           <td>
                 <code>None</code>
           </td>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Raises:</strong></p>
   <table>
@@ -5089,14 +5638,18 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code><a class="autorefs autorefs-internal" title="odmantic.exceptions.DocumentNotFoundError" href="../exceptions/#odmantic.exceptions.DocumentNotFoundError">DocumentNotFoundError</a></code>
           </td>
-          <td><p>the instance has not been persisted to the database</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>the instance has not been persisted to the database</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
 
-      <details class="quote">
-        <summary>Source code in <code>odmantic/engine.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1032</span>
+          <details class="quote">
+            <summary>Source code in <code>odmantic/engine.py</code></summary>
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1032</span>
 <span class="normal">1033</span>
 <span class="normal">1034</span>
 <span class="normal">1035</span>
@@ -5144,24 +5697,28 @@ MongoDB in an synchronous way using pymongo.</p>
     <span class="k">if</span> <span class="n">count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">DocumentNotFoundError</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
-<h3 id="odmantic.engine.SyncEngine.find" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">find</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
-<a href="#odmantic.engine.SyncEngine.find" class="headerlink" title="Permanent link">&para;</a></h3>
+<h2 id="odmantic.engine.SyncEngine.find" class="doc doc-heading">
+          <code class=" language-python"><span class="n">find</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#odmantic.engine.SyncEngine.find" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
   
       <p>Search for Model instances matching the query filter provided</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -5179,7 +5736,11 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code><span title="typing.Type">Type</span>[<span title="odmantic.engine.ModelType">ModelType</span>]</code>
           </td>
-          <td><p>model to perform the operation on</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>model to perform the operation on</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -5189,7 +5750,11 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code><span title="typing.Union">Union</span>[<a class="autorefs autorefs-internal" title="odmantic.query.QueryExpression" href="../query/#odmantic.query.QueryExpression">QueryExpression</a>, <span title="typing.Dict">Dict</span>, bool]</code>
           </td>
-          <td><p>query filter to apply</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>query filter to apply</p>
+            </div>
+          </td>
           <td>
                 <code>()</code>
           </td>
@@ -5199,7 +5764,11 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code><span title="typing.Optional">Optional</span>[<span title="typing.Any">Any</span>]</code>
           </td>
-          <td><p>sort expression</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>sort expression</p>
+            </div>
+          </td>
           <td>
                 <code>None</code>
           </td>
@@ -5209,7 +5778,11 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code>int</code>
           </td>
-          <td><p>number of document to skip</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>number of document to skip</p>
+            </div>
+          </td>
           <td>
                 <code>0</code>
           </td>
@@ -5219,7 +5792,11 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code><span title="typing.Optional">Optional</span>[int]</code>
           </td>
-          <td><p>maximum number of instance fetched</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>maximum number of instance fetched</p>
+            </div>
+          </td>
           <td>
                 <code>None</code>
           </td>
@@ -5229,13 +5806,19 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code><span title="odmantic.engine.SyncSessionType">SyncSessionType</span></code>
           </td>
-          <td><p>an optional session to use for the operation</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>an optional session to use for the operation</p>
+            </div>
+          </td>
           <td>
                 <code>None</code>
           </td>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Raises:</strong></p>
   <table>
@@ -5250,10 +5833,16 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code>DocumentParsingError</code>
           </td>
-          <td><p>unable to parse one of the resulting documents</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>unable to parse one of the resulting documents</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Returns:</strong></p>
   <table>
@@ -5268,7 +5857,11 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code><a class="autorefs autorefs-internal" title="odmantic.engine.SyncCursor" href="#odmantic.engine.SyncCursor">SyncCursor</a>[<span title="odmantic.engine.ModelType">ModelType</span>]</code>
           </td>
-          <td><p><a class="autorefs autorefs-internal" href="#odmantic.engine.SyncCursor">odmantic.engine.SyncCursor</a> of the query</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p><a class="autorefs autorefs-internal" href="#odmantic.engine.SyncCursor">odmantic.engine.SyncCursor</a> of the query</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -5278,9 +5871,9 @@ MongoDB in an synchronous way using pymongo.</p>
 #noqa: DAR402 DocumentParsingError
 -->
 
-      <details class="quote">
-        <summary>Source code in <code>odmantic/engine.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">843</span>
+          <details class="quote">
+            <summary>Source code in <code>odmantic/engine.py</code></summary>
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">843</span>
 <span class="normal">844</span>
 <span class="normal">845</span>
 <span class="normal">846</span>
@@ -5366,24 +5959,28 @@ MongoDB in an synchronous way using pymongo.</p>
     <span class="n">cursor</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_session</span><span class="p">(</span><span class="n">session</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">SyncCursor</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">cursor</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
-<h3 id="odmantic.engine.SyncEngine.find_one" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">find_one</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
-<a href="#odmantic.engine.SyncEngine.find_one" class="headerlink" title="Permanent link">&para;</a></h3>
+<h2 id="odmantic.engine.SyncEngine.find_one" class="doc doc-heading">
+          <code class=" language-python"><span class="n">find_one</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#odmantic.engine.SyncEngine.find_one" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
   
       <p>Search for a Model instance matching the query filter provided</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -5401,7 +5998,11 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code><span title="typing.Type">Type</span>[<span title="odmantic.engine.ModelType">ModelType</span>]</code>
           </td>
-          <td><p>model to perform the operation on</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>model to perform the operation on</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -5411,7 +6012,11 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code><span title="typing.Union">Union</span>[<a class="autorefs autorefs-internal" title="odmantic.query.QueryExpression" href="../query/#odmantic.query.QueryExpression">QueryExpression</a>, <span title="typing.Dict">Dict</span>, bool]</code>
           </td>
-          <td><p>query filter to apply</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>query filter to apply</p>
+            </div>
+          </td>
           <td>
                 <code>()</code>
           </td>
@@ -5421,7 +6026,11 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code><span title="typing.Optional">Optional</span>[<span title="typing.Any">Any</span>]</code>
           </td>
-          <td><p>sort expression</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>sort expression</p>
+            </div>
+          </td>
           <td>
                 <code>None</code>
           </td>
@@ -5431,13 +6040,19 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code><span title="odmantic.engine.SyncSessionType">SyncSessionType</span></code>
           </td>
-          <td><p>an optional session to use for the operation</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>an optional session to use for the operation</p>
+            </div>
+          </td>
           <td>
                 <code>None</code>
           </td>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Raises:</strong></p>
   <table>
@@ -5452,10 +6067,16 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code>DocumentParsingError</code>
           </td>
-          <td><p>unable to parse the resulting document</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>unable to parse the resulting document</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Returns:</strong></p>
   <table>
@@ -5470,7 +6091,11 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code><span title="typing.Optional">Optional</span>[<span title="odmantic.engine.ModelType">ModelType</span>]</code>
           </td>
-          <td><p>the fetched instance if found otherwise None</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>the fetched instance if found otherwise None</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -5479,9 +6104,9 @@ MongoDB in an synchronous way using pymongo.</p>
 #noqa: DAR402 DocumentParsingError
 -->
 
-      <details class="quote">
-        <summary>Source code in <code>odmantic/engine.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">887</span>
+          <details class="quote">
+            <summary>Source code in <code>odmantic/engine.py</code></summary>
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">887</span>
 <span class="normal">888</span>
 <span class="normal">889</span>
 <span class="normal">890</span>
@@ -5549,24 +6174,28 @@ MongoDB in an synchronous way using pymongo.</p>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="k">return</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
-<h3 id="odmantic.engine.SyncEngine.get_collection" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">get_collection</span><span class="p">(</span><span class="n">model</span><span class="p">)</span></code>
 
-<a href="#odmantic.engine.SyncEngine.get_collection" class="headerlink" title="Permanent link">&para;</a></h3>
+<h2 id="odmantic.engine.SyncEngine.get_collection" class="doc doc-heading">
+          <code class=" language-python"><span class="n">get_collection</span><span class="p">(</span><span class="n">model</span><span class="p">)</span></code>
+
+<a href="#odmantic.engine.SyncEngine.get_collection" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
   
       <p>Get the pymongo collection associated to a Model.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -5584,13 +6213,19 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code><span title="typing.Type">Type</span>[<span title="odmantic.engine.ModelType">ModelType</span>]</code>
           </td>
-          <td><p>model class</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>model class</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Returns:</strong></p>
   <table>
@@ -5605,14 +6240,18 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code><span title="pymongo.collection.Collection">Collection</span></code>
           </td>
-          <td><p>the pymongo collection object</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>the pymongo collection object</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
 
-      <details class="quote">
-        <summary>Source code in <code>odmantic/engine.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">739</span>
+          <details class="quote">
+            <summary>Source code in <code>odmantic/engine.py</code></summary>
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">739</span>
 <span class="normal">740</span>
 <span class="normal">741</span>
 <span class="normal">742</span>
@@ -5634,24 +6273,28 @@ MongoDB in an synchronous way using pymongo.</p>
     <span class="n">collection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">__collection__</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">collection</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
-<h3 id="odmantic.engine.SyncEngine.remove" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">remove</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">,</span> <span class="n">just_one</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
-<a href="#odmantic.engine.SyncEngine.remove" class="headerlink" title="Permanent link">&para;</a></h3>
+<h2 id="odmantic.engine.SyncEngine.remove" class="doc doc-heading">
+          <code class=" language-python"><span class="n">remove</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">queries</span><span class="p">,</span> <span class="n">just_one</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#odmantic.engine.SyncEngine.remove" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
   
       <p>Delete Model instances matching the query filter provided</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -5669,7 +6312,11 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code><span title="typing.Type">Type</span>[<span title="odmantic.engine.ModelType">ModelType</span>]</code>
           </td>
-          <td><p>model to perform the operation on</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>model to perform the operation on</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -5679,7 +6326,11 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code><span title="typing.Union">Union</span>[<a class="autorefs autorefs-internal" title="odmantic.query.QueryExpression" href="../query/#odmantic.query.QueryExpression">QueryExpression</a>, <span title="typing.Dict">Dict</span>, bool]</code>
           </td>
-          <td><p>query filter to apply</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>query filter to apply</p>
+            </div>
+          </td>
           <td>
                 <code>()</code>
           </td>
@@ -5689,7 +6340,11 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code>bool</code>
           </td>
-          <td><p>limit the deletion to just one document</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>limit the deletion to just one document</p>
+            </div>
+          </td>
           <td>
                 <code>False</code>
           </td>
@@ -5699,13 +6354,19 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code><span title="odmantic.engine.SyncSessionType">SyncSessionType</span></code>
           </td>
-          <td><p>an optional session to use for the operation</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>an optional session to use for the operation</p>
+            </div>
+          </td>
           <td>
                 <code>None</code>
           </td>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Returns:</strong></p>
   <table>
@@ -5720,14 +6381,18 @@ MongoDB in an synchronous way using pymongo.</p>
           <td>
                 <code>int</code>
           </td>
-          <td><p>the number of instances deleted from the database.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>the number of instances deleted from the database.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
 
-      <details class="quote">
-        <summary>Source code in <code>odmantic/engine.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1057</span>
+          <details class="quote">
+            <summary>Source code in <code>odmantic/engine.py</code></summary>
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1057</span>
 <span class="normal">1058</span>
 <span class="normal">1059</span>
 <span class="normal">1060</span>
@@ -5781,19 +6446,21 @@ MongoDB in an synchronous way using pymongo.</p>
 
     <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">deleted_count</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
-<h3 id="odmantic.engine.SyncEngine.save" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">save</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
-<a href="#odmantic.engine.SyncEngine.save" class="headerlink" title="Permanent link">&para;</a></h3>
+<h2 id="odmantic.engine.SyncEngine.save" class="doc doc-heading">
+          <code class=" language-python"><span class="n">save</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#odmantic.engine.SyncEngine.save" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
@@ -5802,6 +6469,8 @@ MongoDB in an synchronous way using pymongo.</p>
 <p>This method behaves as an 'upsert' operation. If a document already exists
 with the same primary key, it will be overwritten.</p>
 <p>All the other models referenced by this instance will be saved as well.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -5819,7 +6488,11 @@ with the same primary key, it will be overwritten.</p>
           <td>
                 <code><span title="odmantic.engine.ModelType">ModelType</span></code>
           </td>
-          <td><p>instance to persist</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>instance to persist</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -5829,15 +6502,21 @@ with the same primary key, it will be overwritten.</p>
           <td>
                 <code><span title="odmantic.engine.SyncSessionType">SyncSessionType</span></code>
           </td>
-          <td><p>An optional session to use for the operation. If not provided, an
+          <td>
+            <div class="doc-md-description">
+              <p>An optional session to use for the operation. If not provided, an
      internal session will be used to persist the instance and
-     sub-instances.</p></td>
+     sub-instances.</p>
+            </div>
+          </td>
           <td>
                 <code>None</code>
           </td>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Returns:</strong></p>
   <table>
@@ -5852,10 +6531,16 @@ with the same primary key, it will be overwritten.</p>
           <td>
                 <code><span title="odmantic.engine.ModelType">ModelType</span></code>
           </td>
-          <td><p>the saved instance</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>the saved instance</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Raises:</strong></p>
   <table>
@@ -5870,12 +6555,16 @@ with the same primary key, it will be overwritten.</p>
           <td>
                 <code><a class="autorefs autorefs-internal" title="odmantic.exceptions.DuplicateKeyError" href="../exceptions/#odmantic.exceptions.DuplicateKeyError">DuplicateKeyError</a></code>
           </td>
-          <td><p>the instance is duplicated according to a unique index.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>the instance is duplicated according to a unique index.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
 
-<details class="note">
+<details class="note" open>
   <summary>NOTE</summary>
   <p>The save operation actually modify the instance argument in place. However,
 the instance is still returned for convenience.</p>
@@ -5884,9 +6573,9 @@ the instance is still returned for convenience.</p>
 #noqa: DAR402 DuplicateKeyError
 -->
 
-      <details class="quote">
-        <summary>Source code in <code>odmantic/engine.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">944</span>
+          <details class="quote">
+            <summary>Source code in <code>odmantic/engine.py</code></summary>
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">944</span>
 <span class="normal">945</span>
 <span class="normal">946</span>
 <span class="normal">947</span>
@@ -5972,19 +6661,21 @@ the instance is still returned for convenience.</p>
             <span class="bp">self</span><span class="o">.</span><span class="n">_save</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">local_session</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">instance</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
-<h3 id="odmantic.engine.SyncEngine.save_all" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">save_all</span><span class="p">(</span><span class="n">instances</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
-<a href="#odmantic.engine.SyncEngine.save_all" class="headerlink" title="Permanent link">&para;</a></h3>
+<h2 id="odmantic.engine.SyncEngine.save_all" class="doc doc-heading">
+          <code class=" language-python"><span class="n">save_all</span><span class="p">(</span><span class="n">instances</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#odmantic.engine.SyncEngine.save_all" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
@@ -5994,6 +6685,8 @@ the instance is still returned for convenience.</p>
 already exists with the same primary key, it will be overwritten.</p>
 <p>All the other models referenced by this instance will be recursively saved as
 well.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -6011,7 +6704,11 @@ well.</p>
           <td>
                 <code><span title="typing.Sequence">Sequence</span>[<span title="odmantic.engine.ModelType">ModelType</span>]</code>
           </td>
-          <td><p>instances to persist</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>instances to persist</p>
+            </div>
+          </td>
           <td>
               <em>required</em>
           </td>
@@ -6021,14 +6718,20 @@ well.</p>
           <td>
                 <code><span title="odmantic.engine.SyncSessionType">SyncSessionType</span></code>
           </td>
-          <td><p>An optional session to use for the operation. If not provided an
-     internal session will be used to persist the instances.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>An optional session to use for the operation. If not provided an
+     internal session will be used to persist the instances.</p>
+            </div>
+          </td>
           <td>
                 <code>None</code>
           </td>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Returns:</strong></p>
   <table>
@@ -6043,10 +6746,16 @@ well.</p>
           <td>
                 <code><span title="typing.List">List</span>[<span title="odmantic.engine.ModelType">ModelType</span>]</code>
           </td>
-          <td><p>the saved instances</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>the saved instances</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Raises:</strong></p>
   <table>
@@ -6061,12 +6770,16 @@ well.</p>
           <td>
                 <code><a class="autorefs autorefs-internal" title="odmantic.exceptions.DuplicateKeyError" href="../exceptions/#odmantic.exceptions.DuplicateKeyError">DuplicateKeyError</a></code>
           </td>
-          <td><p>an instance is duplicated according to a unique index.</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>an instance is duplicated according to a unique index.</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
 
-<details class="note">
+<details class="note" open>
   <summary>NOTE</summary>
   <p>The save_all operation actually modify the arguments in place. However, the
 instances are still returned for convenience.</p>
@@ -6074,9 +6787,9 @@ instances are still returned for convenience.</p>
 #noqa: DAR402 DuplicateKeyError
 -->
 
-      <details class="quote">
-        <summary>Source code in <code>odmantic/engine.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 988</span>
+          <details class="quote">
+            <summary>Source code in <code>odmantic/engine.py</code></summary>
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 988</span>
 <span class="normal"> 989</span>
 <span class="normal"> 990</span>
 <span class="normal"> 991</span>
@@ -6162,24 +6875,28 @@ instances are still returned for convenience.</p>
             <span class="p">]</span>
     <span class="k">return</span> <span class="n">added_instances</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
-<h3 id="odmantic.engine.SyncEngine.session" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">session</span><span class="p">()</span></code>
 
-<a href="#odmantic.engine.SyncEngine.session" class="headerlink" title="Permanent link">&para;</a></h3>
+<h2 id="odmantic.engine.SyncEngine.session" class="doc doc-heading">
+          <code class=" language-python"><span class="n">session</span><span class="p">()</span></code>
+
+<a href="#odmantic.engine.SyncEngine.session" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
   
       <p>Get a new session for the engine to allow ordering sequential operations.</p>
+
+
 
   <p><strong>Returns:</strong></p>
   <table>
@@ -6194,7 +6911,11 @@ instances are still returned for convenience.</p>
           <td>
                 <code><a class="autorefs autorefs-internal" title="odmantic.session.SyncSession" href="../session/#odmantic.engine.SyncSession">SyncSession</a></code>
           </td>
-          <td><p>a new session object</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>a new session object</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -6206,9 +6927,9 @@ instances are still returned for convenience.</p>
     <span class="n">session</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">john</span><span class="p">)</span>
 </code></pre></div>
 
-      <details class="quote">
-        <summary>Source code in <code>odmantic/engine.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">803</span>
+          <details class="quote">
+            <summary>Source code in <code>odmantic/engine.py</code></summary>
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">803</span>
 <span class="normal">804</span>
 <span class="normal">805</span>
 <span class="normal">806</span>
@@ -6242,24 +6963,28 @@ instances are still returned for convenience.</p>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">SyncSession</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
-<h3 id="odmantic.engine.SyncEngine.transaction" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">transaction</span><span class="p">()</span></code>
 
-<a href="#odmantic.engine.SyncEngine.transaction" class="headerlink" title="Permanent link">&para;</a></h3>
+<h2 id="odmantic.engine.SyncEngine.transaction" class="doc doc-heading">
+          <code class=" language-python"><span class="n">transaction</span><span class="p">()</span></code>
+
+<a href="#odmantic.engine.SyncEngine.transaction" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
   
       <p>Get a new transaction for the engine to aggregate sequential operations.</p>
+
+
 
   <p><strong>Returns:</strong></p>
   <table>
@@ -6274,7 +6999,11 @@ instances are still returned for convenience.</p>
           <td>
                 <code><a class="autorefs autorefs-internal" title="odmantic.session.SyncTransaction" href="../session/#odmantic.engine.SyncTransaction">SyncTransaction</a></code>
           </td>
-          <td><p>a new transaction object</p></td>
+          <td>
+            <div class="doc-md-description">
+              <p>a new transaction object</p>
+            </div>
+          </td>
         </tr>
     </tbody>
   </table>
@@ -6287,14 +7016,14 @@ instances are still returned for convenience.</p>
     <span class="n">transaction</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
 </code></pre></div></p>
 
-<details class="warning">
+<details class="warning" open>
   <summary>Warning</summary>
   <p>MongoDB transaction are only supported on replicated clusters: either
 directly a replicaSet or a sharded cluster with replication enabled.</p>
 </details>
-      <details class="quote">
-        <summary>Source code in <code>odmantic/engine.py</code></summary>
-        <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">821</span>
+          <details class="quote">
+            <summary>Source code in <code>odmantic/engine.py</code></summary>
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">821</span>
 <span class="normal">822</span>
 <span class="normal">823</span>
 <span class="normal">824</span>
@@ -6336,7 +7065,7 @@ directly a replicaSet or a sharded cluster with replication enabled.</p>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">SyncTransaction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
@@ -6353,26 +7082,19 @@ directly a replicaSet or a sharded cluster with replication enabled.</p>
 
 
 
-<h2 id="odmantic.engine.SyncCursor" class="doc doc-heading">
-        <code>odmantic.engine.SyncCursor</code>
-
-
-<a href="#odmantic.engine.SyncCursor" class="headerlink" title="Permanent link">&para;</a></h2>
-
-
+<a id="odmantic.engine.SyncCursor"></a>
   <div class="doc doc-contents first">
-      <p class="doc doc-class-bases">
-        Bases: <code><span title="odmantic.engine.BaseCursor">BaseCursor</span>[<span title="odmantic.engine.ModelType">ModelType</span>]</code>, <code><span title="typing.Iterable">Iterable</span>[<span title="odmantic.engine.ModelType">ModelType</span>]</code></p>
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="odmantic.engine.BaseCursor">BaseCursor</span>[<span title="odmantic.engine.ModelType">ModelType</span>]</code>, <code><span title="typing.Iterable">Iterable</span>[<span title="odmantic.engine.ModelType">ModelType</span>]</code></p>
 
   
       <p>This object has to be built from the <a class="autorefs autorefs-internal" href="#odmantic.engine.SyncEngine.find">odmantic.engine.SyncEngine.find</a> method.</p>
 <p>A SyncCursor object supports iterating over the query results using <strong><code>for</code></strong>.</p>
 <p>To get a list of all the results you can wrap it with <code>list</code>, as in <code>list(cursor)</code>.</p>
 
-
-        <details class="quote">
-          <summary>Source code in <code>odmantic/engine.py</code></summary>
-          <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">128</span>
+            <details class="quote">
+              <summary>Source code in <code>odmantic/engine.py</code></summary>
+              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">128</span>
 <span class="normal">129</span>
 <span class="normal">130</span>
 <span class="normal">131</span>
@@ -6420,7 +7142,7 @@ directly a replicaSet or a sharded cluster with replication enabled.</p>
             <span class="k">yield</span> <span class="n">instance</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_results</span> <span class="o">=</span> <span class="n">results</span>
 </code></pre></div></td></tr></table></div>
-        </details>
+            </details>
 
   
 
@@ -6443,58 +7165,31 @@ directly a replicaSet or a sharded cluster with replication enabled.</p>
 </div>
 
 
+
+
+
+
+
+
+
   
 
 
 
 
-              
-            </article>
-            
+                
+              </article>
+            </div>
+          
+          
   <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
 
-          </div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
       </main>
       
         <footer class="md-footer">
-  
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="../model/" class="md-footer__link md-footer__link--prev" aria-label="Previous: odmantic.model" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              odmantic.model
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="../session/" class="md-footer__link md-footer__link--next" aria-label="Next: odmantic.session" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              odmantic.session
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -6512,29 +7207,35 @@ directly a replicaSet or a sharded cluster with replication enabled.</p>
   
     
     
+    
+    
       
       
     
     <a href="https://github.com/art049" target="_blank" rel="noopener" title="github.com" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
     </a>
   
+    
+    
     
     
       
       
     
     <a href="https://twitter.com/art049" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
     </a>
   
+    
+    
     
     
       
       
     
     <a href="https://www.linkedin.com/in/arthur-pastel-a08579112" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
     </a>
   
 </div>
@@ -6548,10 +7249,11 @@ directly a replicaSet or a sharded cluster with replication enabled.</p>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["instant", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["instant", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.2ab50757.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
       
         <script src="../../js/gitter.js"></script>
       

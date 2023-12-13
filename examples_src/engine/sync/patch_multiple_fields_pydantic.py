@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from odmantic import SyncEngine, Model
+from odmantic import Model, SyncEngine
 
 
 class Player(Model):
@@ -24,7 +24,7 @@ class PatchPlayerSchema(BaseModel):
 # Create the patch object containing the new values
 patch_object = PatchPlayerSchema(name="TheLittleOne", game="Starcraft II")
 # Apply the patch to the instance
-player_tlo.update(patch_object)
+player_tlo.model_update(patch_object)
 
 print(repr(player_tlo))
 #> Player(id=ObjectId(...), name='TheLittleOne', game='Starcraft II')

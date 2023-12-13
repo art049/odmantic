@@ -10,7 +10,7 @@ class Player(Model):
 
 document = {"name": "Leeroy", "_id": ObjectId("5f8352a87a733b8b18b0cb27")}
 
-user = Player.parse_doc(document)
+user = Player.model_validate_doc(document)
 print(repr(user))
 #> Player(
 #>     id=ObjectId("5f8352a87a733b8b18b0cb27"),

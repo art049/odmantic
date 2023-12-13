@@ -1,9 +1,7 @@
-from bson import Binary
+from typing import Annotated
+from odmantic import AIOEngine, Model, WithBsonSerializer
 
-from odmantic import AIOEngine, Model
-
-
-class ASCIISerializedAsBinary(str):
+class ASCIISerializedAsBinaryBase(str):
     @classmethod
     def __get_validators__(cls):
         yield cls.validate
@@ -18,17 +16,20 @@ class ASCIISerializedAsBinary(str):
             raise ValueError("Only ascii characters are allowed")
         return v
 
-    @classmethod
-    def __bson__(cls, v: str):
-        # We can encode this string as ascii since it contains
-        # only ascii characters
-        bytes_ = v.encode("ascii")
-        return bytes_
 
+def serialize_ascii_to_bytes(v: ASCIISerializedAsBinaryBase) -> bytes:
+    # We can encode this string as ascii since it contains
+    # only ascii characters
+    bytes_ = v.encode("ascii")
+    return bytes_
+
+
+ASCIISerializedAsBinary = Annotated[
+    ASCIISerializedAsBinaryBase, WithBsonSerializer(serialize_ascii_to_bytes)
+]
 
 class Example(Model):
     field: ASCIISerializedAsBinary
-
 
 engine = AIOEngine()
 await engine.save(Example(field="hello world"))
