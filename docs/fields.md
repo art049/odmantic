@@ -3,7 +3,7 @@
 
 The [`ObjectId` data type](https://docs.mongodb.com/manual/reference/method/ObjectId/){:target=blank_}
  is the default primary key type used by MongoDB. An `ObjectId` comes with many
- information embedded into it (timestamp, machine identifier, ...). Since by default
+ information embedded into it (timestamp, machine identifier, ...). Since by default,
  MongoDB will create a field `_id` containing an `ObjectId` primary key, ODMantic will
  bind it automatically to an implicit field named `id`.
 
@@ -27,7 +27,8 @@ keys](#primary-key).
 
 By default, every single field will be required. To specify a field as non-required, the
 easiest way is to use the `typing.Optional` generic type that will allow the field to
-take the `None` value as well (it will be stored as `null` in the database).
+take the `None` value as well (it will be stored as `null` in the database) and to give
+it a default value of `None`.
 
 ```python hl_lines="8" linenums="1"
 --8<-- "fields/optional.py"
@@ -203,9 +204,6 @@ descriptor using the `default` keyword argument.
     It's possible to enable this behavior with the `parse_doc_with_default_factories`
     [Config](modeling.md#advanced-configuration) option.
 
-!!! tip
-    For `typing.Optional` fields, `None` is already set as the default value
-
 !!! warning "Default values validation"
     Currently the default values are not validated yet during the model creation.
 
@@ -316,12 +314,12 @@ validation features provided by pydantic are available:
 - Define custom model validators: [more details](modeling.md#custom-model-validators)
 
 ## Custom field types
-Exactly in the same way pydantic allows it, it's possible to define custom field types as well with ODMantic ([pydantic: Custom data types](https://pydantic-docs.helpmanual.io/usage/types/#custom-data-types){:target=blank_}).
+Exactly in the same way pydantic allows it, it's possible to define custom field types as well with ODMantic ([Pydantic: Custom data types](https://docs.pydantic.dev/latest/concepts/types/#custom-types){:target=blank_}).
 
 Sometimes, it might be required to customize as well the field BSON serialization. In
 order to do this, the field class will have to implement the `__bson__` class method.
 
-```python linenums="1" hl_lines="13-14 21-26"
+```python linenums="1" hl_lines="11-12 20-24 27-29 32"
 --8<-- "fields/custom_bson_serialization.py"
 ```
 

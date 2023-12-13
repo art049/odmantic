@@ -15,5 +15,5 @@ class M(BaseBSONModel):
     }
 
 
-print(M(id=ObjectId(), date=datetime.utcnow()).json())
+print(M(id=ObjectId(), date=datetime.utcnow()).model_dump_json())
 #> {"id": "5fa3378c8fde3766574d874d", "date": 2020}

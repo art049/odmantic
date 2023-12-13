@@ -82,7 +82,7 @@ watch:
   - docs/
 
 nav:
-  - Overview: index.md
+  - Getting Started: index.md
   - fields.md
   - modeling.md
   - engine.md
@@ -100,8 +100,10 @@ nav:
       - odmantic.index: ./api_reference/index.md
       - odmantic.bson: ./api_reference/bson.md
       - odmantic.exceptions: ./api_reference/exceptions.md
+      - odmantic.config: ./api_reference/config.md
   - contributing.md
   - changelog.md
+  - migration_guide.md
 
 extra:
   social:

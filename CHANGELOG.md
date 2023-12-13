@@ -5,13 +5,77 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Finalize V1 ([#377](https://github.com/art049/odmantic/pull/377) by [@art049](https://github.com/art049))
+I'm excited to announce ODMantic v1.0.0, with Pydantic v2 support! 🎉
 
-- Integrate pydantic v2 ([#361](https://github.com/art049/odmantic/pull/361) by [@art049](https://github.com/art049))
+This release brings a range of changes that are aligned with the new Pydantic architecture.
+Keeping a maintainable and healthy codebase was especially important.
+Thus from now on, ODMantic will not support Python 3.7, Pydantic V1, and Motor 2.x anymore.
 
-- 👷 Update CI to use GitHub Actions matrix instead of tox, upgrade minimum Pydantic to 1.10.8 as needed by the tests ([#376](https://github.com/art049/odmantic/pull/376) by [@tiangolo](https://github.com/tiangolo))
+Overall, integrating with Pydantic v2 brings around **30% performance improvements** on
+common operations. ⚡️⚡️⚡️
 
-- feat: benchmark operations ([#362](https://github.com/art049/odmantic/pull/362) by [@art049](https://github.com/art049))
+We have a lot of room to improve the performance further now that we only support Pydantic v2.
+There is also a 300% 👀 improvement on the bulk saves crafted by @tiangolo that will be merged soon! 🚀
+
+Special thanks to @tiangolo for his help on this release and for saving me a lot of time
+figuring out a particularly annoying bug!
+
+Check out the **[migration guide](https://art049.github.io/odmantic/migration_guide/)** to
+upgrade your codebase and enjoy this new release!
+
+### Breaking changes
+
+- Support for Python 3.7, Pydantic v1 and Motor 2.x has been dropped
+
+- `Optional[T]` doesn't have a `None` implicit default value anymore
+
+- `Model.copy` doesn't support the `exclude` and `include` kwargs anymore
+
+- `odmantic.Field` doesn't accept extra kwargs anymore since it's slated to be removed in Pydantic
+
+- The `Config` class is no longer supported and the `model_config` dict should be used instead
+
+- `DocumentParsingError` is no longer a subclass of `ValidationError`
+
+- The `__bson__` class method is no longer supported to define BSON encoders on custom types. The new method to customize BSON encoding is to use the `WithBSONSerializer` annotation.
+
+- Decimals (`decimal.Decimal` and `bson.Decimal128`) are now serialized as strings in JSON documents
+
+- Custom JSON encoders(defined with the `json_encoders` config option) are no longer effective on `odmantic.bson` types. Annotated types with `pydantic.PlainSerializer` should be used instead.
+
+
+
+### Removals
+
+- `AIOEngineDependency` has been removed since it was deprecated in v0.2.0 in favor of a global engine object
+
+- Defining the collection with `__collection__` has been removed since it was deprecated in v0.3.0 in favor of the `collection` config option
+
+
+### Deprecations
+
+_We comply with the new Pydantic method naming, prefixing them with `model_`_
+
+- `Model.dict` has been deprecated in favor of `Model.model_dump`
+
+- `Model.doc` has been deprecated in favor of `Model.model_dump_doc`
+
+- `Model.parse_doc` has been deprecated in favor of `Model.model_validate_doc`
+
+- `Model.update` has been deprecated in favor of `Model.model_update`
+
+- `Model.copy` has been deprecated in favor of `Model.model_copy`
+
+
+---
+
+#### Details
+
+- Integrate with Pydantic V2([#361](https://github.com/art049/odmantic/pull/361) and [#377](https://github.com/art049/odmantic/pull/377) by [@art049](https://github.com/art049))
+
+- Update CI to use GitHub Actions matrix instead of tox, upgrade minimum Pydantic to 1.10.8 as needed by the tests ([#376](https://github.com/art049/odmantic/pull/376) by [@tiangolo](https://github.com/tiangolo))
+
+- Add benchmarks on common sync operations ([#362](https://github.com/art049/odmantic/pull/362) by [@art049](https://github.com/art049))
 
 ## [0.9.2] - 2023-01-03
 
