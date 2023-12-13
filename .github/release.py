@@ -9,6 +9,7 @@ from semver import VersionInfo
 
 
 class BumpType(str, Enum):
+    major = "major"
     minor = "minor"
     patch = "patch"
 
@@ -19,6 +20,8 @@ def get_current_version() -> VersionInfo:
 
 
 def get_new_version(current_version: VersionInfo, bump_type: BumpType) -> VersionInfo:
+    if bump_type == BumpType.major:
+        return current_version.bump_major()
     if bump_type == BumpType.minor:
         return current_version.bump_minor()
     if bump_type == BumpType.patch:
