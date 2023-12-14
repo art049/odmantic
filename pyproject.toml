@@ -75,7 +75,7 @@ doc = [
     "mkdocstrings[python] ~= 0.24.0",
     "mkdocs-macros-plugin ~= 1.0.4",
 ]
-dev = ["ipython ~= 7.16.1"]
+dev = ["ipython >= 7.16.1,< 8.19.0"]
 
 [project.urls]
 Documentation = "https://art049.github.io/odmantic"
