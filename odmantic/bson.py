@@ -135,7 +135,7 @@ class Decimal128(bson.decimal128.Decimal128):
         _handler: Callable[[Any], core_schema.CoreSchema],
     ) -> core_schema.CoreSchema:
         def validate_from_decimal_repr(
-            value: Union[decimal.Decimal, float, str, Tuple[int, Sequence[int], int]]
+            value: Union[decimal.Decimal, float, str, Tuple[int, Sequence[int], int]],
         ) -> bson.decimal128.Decimal128:
             try:
                 return bson.decimal128.Decimal128(value)
@@ -347,9 +347,7 @@ class _datetime(datetime):
     def __get_pydantic_json_schema__(
         cls, _core_schema: core_schema.CoreSchema, handler: GetJsonSchemaHandler
     ) -> JsonSchemaValue:
-        schema = handler(core_schema.datetime_schema())
-        schema.update(example=datetime.utcnow().isoformat())
-        return schema
+        return handler(core_schema.datetime_schema())
 
 
 class _decimalDecimalPydanticAnnotation:
