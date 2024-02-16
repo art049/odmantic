@@ -194,11 +194,9 @@ def validate_type(type_: Type) -> Type:
         # generics is found
         # https://github.com/pydantic/pydantic/issues/8354
         if type_origin is Union:
-            new_root = Union[
-                int, str
-            ]  # We don't care about int,str since they will be replaced
-            setattr(new_root, "__args__", new_arg_types)
-            type_ = new_root  # type: ignore
+            # as new_arg_types is a tuple, we can directly create a matching Union instance,
+            # instead of hacking our way around it: https://stackoverflow.com/a/72884529/3784643
+            type_ = Union[new_arg_types]  # type: ignore
         else:
             type_ = GenericAlias(type_origin, new_arg_types)  # type: ignore
     return type_
