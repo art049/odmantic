@@ -45,7 +45,7 @@ dependencies = [
 ]
 [project.optional-dependencies]
 test = [
-    "ruff ~= 0.0.277",
+    "ruff >= 0.0.277,< 0.4.0",
     "mypy ~= 1.4.1",
     "pytest ~= 7.0",
     "pytest-xdist ~= 2.1.0",
