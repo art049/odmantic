@@ -25,7 +25,7 @@ tasks:
     deps:
       - task: "mongodb:check"
     cmds:
-      - pytest -rs -n auto
+      - python -m pytest -rs -n auto
 
   bench:
     desc: |
@@ -33,7 +33,7 @@ tasks:
     deps:
       - task: "mongodb:check"
     cmds:
-      - pytest --benchmark-enable --benchmark-only
+      - python -m pytest --benchmark-enable --benchmark-only
 
   default:
     desc: |
@@ -41,7 +41,7 @@ tasks:
     deps:
       - task: mongodb
     cmds:
-      - pytest -rs --testmon
+      - python -m pytest -rs --testmon
 
   coverage:
     desc: Get the test coverage (xml and html) with the current version.
@@ -68,8 +68,8 @@ tasks:
   format:
     desc: Format the code (and imports).
     cmds:
-      - isort odmantic tests
-      - black odmantic tests
+      - python -m isort odmantic tests
+      - python -m black odmantic tests
 
   setup:
     desc: Configure the development environment.
