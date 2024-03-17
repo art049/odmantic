@@ -1,4 +1,6 @@
-from .bson import ObjectId
+import importlib.metadata
+
+from .bson import ObjectId, WithBsonSerializer
 from .engine import AIOEngine, SyncEngine
 from .field import Field
 from .index import Index
@@ -14,13 +16,8 @@ __all__ = [
     "Index",
     "ObjectId",
     "SyncEngine",
+    "WithBsonSerializer",
 ]
 
-# Cleanest way to handle version changes with poetry while not hardcoding the version
-# https://github.com/python-poetry/poetry/pull/2366#issuecomment-652418094
-try:
-    import importlib.metadata as importlib_metadata
-except ModuleNotFoundError:
-    import importlib_metadata  # type: ignore
 
-__version__ = importlib_metadata.version(__name__)
+__version__ = importlib.metadata.version(__name__)

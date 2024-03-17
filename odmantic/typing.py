@@ -1,40 +1,39 @@
 import sys
-from typing import Any
+from typing import TYPE_CHECKING, AbstractSet, Any  # noqa: F401
 from typing import Callable as TypingCallable
-from typing import Tuple, Type, TypeVar, Union
+from typing import Dict, Iterable, Mapping, Tuple, Type, TypeVar, Union  # noqa: F401
 
-NoArgAnyCallable = TypingCallable[[], Any]
-
-# Handles globally the typing imports from typing or the typing_extensions backport
-if sys.version_info < (3, 8):
-    from typing_extensions import Literal, get_args, get_origin
-else:
-    from typing import Literal, get_args, get_origin  # noqa: F401
+from pydantic.v1.typing import is_classvar, resolve_annotations  # noqa: F401
+from pydantic.v1.utils import lenient_issubclass
 
 if sys.version_info < (3, 11):
     from typing_extensions import dataclass_transform
 else:
-    # FIXME: add this back to coverage once 3.11 is released
-    from typing import dataclass_transform  # noqa: F401 # pragma: no cover
+    from typing import dataclass_transform  # noqa: F401
 
-HAS_GENERIC_ALIAS_BUILTIN = sys.version_info[:3] >= (3, 9, 0)  # PEP 560
-if HAS_GENERIC_ALIAS_BUILTIN:
-    from typing import GenericAlias  # type: ignore
+if sys.version_info < (3, 10):
+    from typing_extensions import TypeAlias
 else:
-    from typing import _GenericAlias as GenericAlias  # type: ignore # noqa: F401
+    from typing import TypeAlias
+
+if sys.version_info < (3, 9):
+    from typing import _GenericAlias as GenericAlias  # noqa: F401
+
+    # Even if get_args and get_origin are available in typing, it's important to
+    # import them from typing_extensions to have proper origins with Annotated fields
+    from typing_extensions import Annotated, get_args, get_origin
+else:
+    from typing import GenericAlias  # type: ignore  # noqa: F401
+    from typing import Annotated, get_args, get_origin  # noqa: F401
 
 
-# Taken from https://github.com/pydantic/pydantic/pull/2392
-# Reimplemented here to avoid a dependency deprecation on pydantic1.7
-def lenient_issubclass(
-    cls: Any, class_or_tuple: Union[Type[Any], Tuple[Type[Any], ...]]
-) -> bool:
-    try:
-        return isinstance(cls, type) and issubclass(cls, class_or_tuple)
-    except TypeError:
-        if isinstance(cls, GenericAlias):
-            return False
-        raise  # pragma: no cover
+if TYPE_CHECKING:
+    NoArgAnyCallable: TypeAlias = TypingCallable[[], Any]
+    ReprArgs: TypeAlias = "Iterable[tuple[str | None, Any]]"
+    AbstractSetIntStr: TypeAlias = "AbstractSet[int] | AbstractSet[str]"
+    MappingIntStrAny: TypeAlias = "Mapping[int, Any] | Mapping[str, Any]"
+    DictStrAny: TypeAlias = Dict[str, Any]
+    IncEx: TypeAlias = "set[int] | set[str] | dict[int, Any] | dict[str, Any] | None"
 
 
 def is_type_argument_subclass(

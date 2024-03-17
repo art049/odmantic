@@ -1,8 +1,6 @@
 import re
 from enum import Enum
-from typing import TYPE_CHECKING, Any, Dict, Iterable, Pattern, Union
-
-from odmantic.typing import Literal
+from typing import TYPE_CHECKING, Any, Dict, Iterable, Literal, Pattern, Union
 
 if TYPE_CHECKING:
     from odmantic.field import FieldProxy
@@ -57,7 +55,7 @@ def _cmp_expression(f: "FieldProxy", op: str, cmp_value: Any) -> QueryExpression
     from odmantic.model import EmbeddedModel
 
     if isinstance(cmp_value, EmbeddedModel):
-        value = cmp_value.doc()
+        value = cmp_value.model_dump_doc()
     elif isinstance(cmp_value, Enum):
         value = cmp_value.value
     else:

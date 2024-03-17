@@ -35,7 +35,6 @@ only_on_replica = pytest.mark.skipif(
 
 @pytest.fixture(scope="session")
 def event_loop():
-    asyncio.get_event_loop().close()
     loop = asyncio.get_event_loop_policy().new_event_loop()
     asyncio.set_event_loop(loop)
     yield loop
@@ -70,6 +69,8 @@ async def aio_engine(motor_client: AsyncIOMotorClient, database_name: str):
     yield sess
     if os.getenv("TEST_DEBUG") is None:
         await motor_client.drop_database(database_name)
+    else:
+        print(f"Database {database_name} not dropped")
 
 
 @pytest.fixture(scope="function")

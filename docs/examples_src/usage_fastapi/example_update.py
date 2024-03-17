@@ -34,6 +34,6 @@ async def update_tree_by_id(id: ObjectId, patch: TreePatchSchema):
     tree = await engine.find_one(Tree, Tree.id == id)
     if tree is None:
         raise HTTPException(404)
-    tree.update(patch)
+    tree.model_update(patch)
     await engine.save(tree)
     return tree

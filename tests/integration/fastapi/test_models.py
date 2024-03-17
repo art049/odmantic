@@ -32,7 +32,11 @@ def test_object_id_fastapi_get_query_invalid_id(fastapi_app, test_client):
     invalid_oid_str = "a"
     response = test_client.get(f"/{invalid_oid_str}")
     assert response.status_code == 422
-    assert response.json()["detail"][0]["loc"] == ["path", "id"]
+    assert response.json()["detail"][0]["loc"] == [
+        "path",
+        "id",
+        "is-instance[ObjectId]",
+    ]
 
 
 @pytest.mark.skip("Need to specify custom json_encoder or to use a root_type")
@@ -53,8 +57,8 @@ def test_object_id_fastapi_pydantic_response_model(fastapi_app, test_client):
     class PydanticModel(BaseBSONModel):
         id: ObjectId
 
-        class Config:
-            """Defining a config object WITHOUT json_encoders arguments"""
+        # Defining a config object WITHOUT json_encoders arguments
+        model_config = {}
 
     @fastapi_app.get("/", response_model=PydanticModel)
     def get():
@@ -111,23 +115,23 @@ def test_openapi_json_with_bson_fields(fastapi_app, test_client):
 
 @pytest.mark.parametrize("base", (Model, EmbeddedModel))
 def test_docstring_not_nullified(base: Type):
-    class M(base):  # type: ignore
+    class M(base):
         """My docstring"""
 
     doc = getdoc(M)
     assert doc is None or doc == "My docstring"
-    description = M.schema()["description"]
+    description = M.model_json_schema()["description"]
     assert description == "My docstring"
 
 
 @pytest.mark.parametrize("base", (Model, EmbeddedModel))
 def test_docstring_nullified(base: Type):
-    class M(base):  # type: ignore
+    class M(base):
         ...
 
     doc = getdoc(M)
     assert doc == ""
-    assert "description" not in M.schema()
+    assert "description" not in M.model_json_schema()
 
 
 @pytest.mark.parametrize("base", (Model, EmbeddedModel, BaseBSONModel))
@@ -138,19 +142,18 @@ def test_base_classes_docstring_not_nullified(base: Type):
 
 @pytest.mark.parametrize("base", (Model, EmbeddedModel))
 def test_pydantic_model_title(base: Type):
-    class M(base):  # type: ignore
+    class M(base):
         ...
 
-    assert M.__pydantic_model__.schema()["title"] == "M"
+    assert M.__pydantic_model__.model_json_schema()["title"] == "M"
 
 
 @pytest.mark.parametrize("base", (Model, EmbeddedModel))
 def test_pydantic_model_custom_title(base: Type):
-    class M(base):  # type: ignore
-        class Config:
-            title = "CustomTitle"
+    class M(base):
+        model_config = {"title": "CustomTitle"}
 
-    assert M.__pydantic_model__.schema()["title"] == "CustomTitle"
+    assert M.__pydantic_model__.model_json_schema()["title"] == "CustomTitle"
 
 
 def test_pydantic_model_references():
@@ -167,7 +170,7 @@ def test_pydantic_model_references():
         Base.__pydantic_model__, Model
     ), "the pydantic_model should inherit from Model"
 
-    b_pure = Base.__pydantic_model__(field=Referenced())
+    b_pure = Base.__pydantic_model__(field=Referenced().__pydantic_model__())
     assert not issubclass(
         type(b_pure.field), Model  # type: ignore
     ), "the pure field should not inherit from Model"

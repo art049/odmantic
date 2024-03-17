@@ -63,7 +63,7 @@ All the following find queries would give exactly the same results:
 ## Raw MongoDB documents
 ### Parsing documents
 You can parse MongoDB document to instances using the
-[parse_doc][odmantic.model._BaseODMModel.parse_doc] method.
+[model_validate_doc][odmantic.model._BaseODMModel.model_validate_doc] method.
 
 !!! tip
     If the provided documents contain extra fields, ODMantic will ignore them. This can
@@ -76,7 +76,7 @@ You can parse MongoDB document to instances using the
 
 ### Dumping documents
 You can generate a document from instances using the
-[doc][odmantic.model._BaseODMModel.doc] method.
+[model_dump_doc][odmantic.model._BaseODMModel.model_dump_doc] method.
 ```python linenums="1" hl_lines="20 27 38-39 44"
 --8<-- "raw_query_usage/extract_from_existing.py"
 ```

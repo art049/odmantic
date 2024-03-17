@@ -11,9 +11,9 @@ jobs:
   static-analysis:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Set up Python 3.9
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: "3.9"
       - uses: pre-commit/action@v2.0.0
@@ -26,14 +26,20 @@ jobs:
     strategy:
       matrix:
         python-version:
-          - "3.7"
           - "3.8"
           - "3.9"
           - "3.10"
-          #- "3.11" # TODO: Enable once 3.11 is released
+          - "3.11"
+          #- "3.12" # FIXME: async-asgi-testclient doesn't support Python 3.12 yet
+        pydantic-version:
+          - "2.5.2"
+        motor-version:
+          - "3.1.1"
+          - "3.2.0"
+          - "3.3.2"
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Mongo Service
         id: mongo-service
         uses: art049/mongodb-cluster-action@v0
@@ -41,23 +47,26 @@ jobs:
           version: "4.4"
           mode: standalone
       - name: "Set up Python ${{ matrix.python-version }}"
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: "${{ matrix.python-version }}"
       - name: Cache environment
         uses: actions/cache@v2
+        id: cache
         with:
-          path: |
-            .venv
-            .tox
-          key: env-compatibility-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml') }}
-      - name: Install tox
-        run: pip install "tox~=3.27.1" flit
+          path: ${{ env.pythonLocation }}
+          key: env-compatibility-${{ runner.os }}-${{ matrix.python-version }}-${{ matrix.pydantic-version }}-${{ matrix.motor-version }}-${{ hashFiles('pyproject.toml') }}
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          pip install ".[test]"
+          pip install "pydantic==${{ matrix.pydantic-version }}" "motor==${{ matrix.motor-version }}"
+
       - name: Run compatibility checks.
         run: |
-          export VERSION_STR=$(echo ${{ matrix.python-version }} | sed -e "s/\.//g")
-          export TOX_SKIP_ENV=$(printf '^(?!py%s-)' $VERSION_STR)
-          tox --parallel auto
+          python -c "import motor; print(motor.version)" 1>&2
+          python -c "import pydantic; print(pydantic.VERSION)" 1>&2
+          python -m pytest -q -rs
 
   tests:
     runs-on: ubuntu-latest
@@ -65,11 +74,10 @@ jobs:
     strategy:
       matrix:
         python-version:
-          - "3.7"
           - "3.8"
           - "3.9"
           - "3.10"
-          #- "3.11" # TODO: Enable once 3.11 is released
+          - "3.11"
         mongo-version:
           - "4.4"
           - "5"
@@ -77,17 +85,17 @@ jobs:
         mongo-mode:
           - standalone
         include:
-          - python-version: 3.8
+          - python-version: 3.11
             mongo-version: 4.0
             mongo-mode: replicaSet
-          - python-version: 3.8
+          - python-version: 3.11
             mongo-version: 4.2
             mongo-mode: sharded
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip
@@ -112,21 +120,22 @@ jobs:
           TEST_MONGO_URI: ${{ steps.mongo-service.outputs.connection-string }}
           TEST_MONGO_MODE: ${{ matrix.mongo-mode }}
 
-      - uses: codecov/codecov-action@v1
+      - uses: codecov/codecov-action@v3
         if: github.event_name != 'schedule' # Don't report coverage for nightly builds
         with:
           file: ./coverage.xml
           flags: tests-${{ matrix.python-version }}-${{ matrix.mongo-version }}-${{ matrix.mongo-mode }}
           fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   integrated-realworld-test:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           path: odmantic-current
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           repository: art049/fastapi-odmantic-realworld-example
           submodules: recursive
@@ -135,10 +144,10 @@ jobs:
         run: |
           pipx install poetry
           pipx install flit
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v4
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: "3.11"
           cache: "poetry"
       - name: Install dependencies (w/o ODMantic)
         working-directory: fastapi-odmantic-realworld-example
@@ -168,3 +177,13 @@ jobs:
         run: ./realworld/api/run-api-tests.sh
         env:
           APIURL: http://localhost:8000
+
+  all-ci-checks:
+    needs:
+      - static-analysis
+      - compatibility-tests
+      - tests
+      - integrated-realworld-test
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "All CI checks passed."

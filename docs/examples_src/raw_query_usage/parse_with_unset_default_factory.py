@@ -15,7 +15,7 @@ class User(Model):
 document = {"name": "Leeroy", "_id": ObjectId("5f8352a87a733b8b18b0cb27")}
 
 try:
-    User.parse_doc(document)
+    User.model_validate_doc(document)
 except DocumentParsingError as e:
     print(e)
     #> 1 validation error for User

@@ -25,7 +25,7 @@ def test_simple_model_serialization():
         ...
 
     id_ = ObjectId()
-    assert json.loads(M(id=id_).json()) == {"id": str(id_)}
+    assert json.loads(M(id=id_).model_dump_json()) == {"id": str(id_)}
 
 
 TWITTER_USERS = [TwitterUser(), TwitterUser(), TwitterUser()]
@@ -107,7 +107,7 @@ MAIN_TWITTER_USER = TwitterUser(following=[e.id for e in TWITTER_USERS])
             dict(
                 objectId_="5f6bd0f85cac5a450e8eb9e8",
                 long_=258,
-                decimal_=256.123457,
+                decimal_="256.123457",
                 binary_=b"\x48\x49".decode(),
                 regex_=r"^.*$",
             ),
@@ -115,30 +115,33 @@ MAIN_TWITTER_USER = TwitterUser(following=[e.id for e in TWITTER_USERS])
     ),
 )
 def test_zoo_serialization_no_id(instance: Model, expected_parsed_json: Dict):
-    parsed_data = json.loads(instance.json())
+    parsed_data = json.loads(instance.model_dump_json())
     del parsed_data["id"]
     assert parsed_data == expected_parsed_json
 
 
+@pytest.mark.filterwarnings("ignore:`json_encoders` is deprecated")
 def test_custom_json_encoders():
     class M(Model):
         a: datetime = datetime.now()
 
-        class Config:
-            json_encoders = {datetime: lambda _: "encoded"}
+        model_config = {"json_encoders": {datetime: lambda _: "encoded"}}
 
     instance = M()
-    parsed = json.loads(instance.json())
+    parsed = json.loads(instance.model_dump_json())
     assert parsed == {"id": str(instance.id), "a": "encoded"}
 
 
+@pytest.mark.xfail(
+    reason=(
+        "This doesn't work any more with pydantic v2 since bson fields are "
+        "now annotated and take precedence over the custom json encoder."
+    )
+)
 def test_custom_json_encoders_override_builtin_bson():
     class M(Model):
-        ...
-
-        class Config:
-            json_encoders = {ObjectId: lambda _: "encoded"}
+        model_config = {"json_encoders": {ObjectId: lambda _: "encoded"}}
 
     instance = M()
-    parsed = json.loads(instance.json())
+    parsed = json.loads(instance.model_dump_json())
     assert parsed == {"id": "encoded"}

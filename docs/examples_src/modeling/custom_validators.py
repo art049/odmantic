@@ -1,6 +1,6 @@
 from typing import ClassVar
 
-from pydantic import ValidationError, root_validator
+from pydantic import ValidationError, model_validator
 
 from odmantic import Model
 
@@ -11,7 +11,7 @@ class SmallRectangle(Model):
     length: float
     width: float
 
-    @root_validator
+    @model_validator(mode="before")
     def check_width_length(cls, values):
         length = values.get("length", 0)
         width = values.get("width", 0)
@@ -19,7 +19,7 @@ class SmallRectangle(Model):
             raise ValueError("width can't be greater than length")
         return values
 
-    @root_validator
+    @model_validator(mode="before")
     def check_area(cls, values):
         length = values.get("length", 0)
         width = values.get("width", 0)
@@ -29,7 +29,7 @@ class SmallRectangle(Model):
 
 
 print(SmallRectangle(length=2, width=1))
-#> id=ObjectId('5f81e3c073103f509f97e374'), length=2.0, width=1.0
+# > id=ObjectId('5f81e3c073103f509f97e374'), length=2.0, width=1.0
 
 try:
     SmallRectangle(length=2)
@@ -47,8 +47,7 @@ except ValidationError as e:
     print(e)
     """
     1 validation error for SmallRectangle
-    __root__
-      width can't be greater than length (type=value_error)
+      Value error, width can't be greater than length
     """
 
 try:
@@ -58,5 +57,5 @@ except ValidationError as e:
     """
     1 validation error for SmallRectangle
     __root__
-      area is greater than 9 (type=value_error)
+      Value error, area is greater than 9
     """

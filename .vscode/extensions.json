@@ -5,6 +5,7 @@
     "ms-python.python",
     "ms-python.vscode-pylance",
     "littlefoxteam.vscode-python-test-adapter",
-    "hbenl.vscode-test-explorer"
+    "hbenl.vscode-test-explorer",
+    "charliermarsh.ruff"
   ]
 }

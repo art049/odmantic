@@ -7,12 +7,13 @@ class M(BaseBSONModel):
     id: ObjectId
     date: datetime
 
-    class Config:
-        json_encoders = {
+    model_config = {
+        "json_encoders": {
             **BSON_TYPES_ENCODERS,
             datetime: lambda dt: dt.year,
         }
+    }
 
 
-print(M(id=ObjectId(), date=datetime.utcnow()).json())
+print(M(id=ObjectId(), date=datetime.utcnow()).model_dump_json())
 #> {"id": "5fa3378c8fde3766574d874d", "date": 2020}

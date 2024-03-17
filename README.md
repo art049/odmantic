@@ -1,20 +1,10 @@
-<div align="center">
-<h1>ODMantic</h1>
-<a href="https://github.com/art049/odmantic/actions?query=workflow%3A%22build%22+branch%3Amaster" target="_blank">
-    <img src="https://github.com/art049/odmantic/workflows/build/badge.svg" alt="build">
-</a>
-<a href="https://codecov.io/gh/art049/odmantic" target="_blank">
-    <img src="https://codecov.io/gh/art049/odmantic/branch/master/graph/badge.svg?token=3NYZK14STZ" alt="coverage">
-</a>
-<img src="https://img.shields.io/badge/python-3.7%20|%203.8%20|%203.9%20|%203.10-informational.svg" alt="python-3.7-3.8-3.9-3.10">
-<a href="https://pypi.org/project/odmantic" target="_blank">
-    <img src="https://img.shields.io/pypi/v/odmantic?color=%2334D058&label=pypi" alt="Package version">
-</a>
-<a href="https://gitter.im/odmantic/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge" target="_blank">
-    <img src="https://badges.gitter.im/odmantic/community.svg" alt="Gitter">
-</a>
+<b><h1>ODMantic</h1></b>
 
-</div>
+[![build](https://github.com/art049/odmantic/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/art049/odmantic/actions/workflows/ci.yml)
+[![coverage](https://codecov.io/gh/art049/odmantic/branch/master/graph/badge.svg?token=3NYZK14STZ)](https://codecov.io/gh/art049/odmantic)
+![python-3.8-3.9-3.10-3.11-3.12](https://img.shields.io/badge/python-3.8%20|%203.9%20|%203.10%20|%203.11%20|%203.12-informational.svg)
+[![Package version](https://img.shields.io/pypi/v/odmantic?color=%2334D058&label=pypi)](https://pypi.org/project/odmantic)
+[![CodSpeed](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/art049/odmantic)
 
 ---
 
@@ -23,17 +13,17 @@
 ---
 
 Sync and Async ODM (Object Document Mapper) for <a href="https://www.mongodb.com/"
-target="_blank">MongoDB</a> based on standard python type hints. Built on top of <a
-href="https://docs.pydantic.dev/" target="_blank">pydantic</a> for model
+target="_blank">MongoDB</a> based on standard Python type hints. Built on top of <a
+href="https://docs.pydantic.dev/" target="_blank">Pydantic</a> for model
 definition and validation.
 
 Core features:
 
-- **Simple**: define your model by typing your fields using python types, build queries
-  using python comparison operators
+- **Simple**: define your model by typing your fields using Python types, build queries
+  using Python comparison operators
 
 - **Developer experience**: field/method autocompletion, type hints, data validation,
-  perform database operations with a functional API
+  performing database operations with a functional API
 
 - **Fully typed**: leverage static analysis to reduce runtime issues
 
@@ -43,11 +33,13 @@ Core features:
   target="_blank">sanic</a>, <a href="https://www.starlette.io/"
   target="_blank">Starlette</a>, ...) but works also perfectly in synchronous environments
 
-- **Serialization**: built in JSON serialization and JSON schema generation
+- **Serialization**: built-in JSON serialization and JSON schema generation
 
 ## Requirements
 
-**Python**: 3.7 and later (tested against 3.7, 3.8, 3.9 and 3.10)
+**Python**: 3.8 and later (tested against 3.8, 3.9, 3.10 and 3.11)
+
+**Pydantic**: 2.5 and later
 
 **MongoDB**: 4.0 and later
 
@@ -66,7 +58,7 @@ pip install odmantic
 > python3.8 -m asyncio
 > ```
 >
-> If you are using an earlier version of Python you can use <a
+> If you are using an earlier version of Python, you can use <a
 > href="https://ipython.readthedocs.io/en/stable/install/index.html"
 > target="_blank">IPython</a> which provide an Autoawait feature (starting from Python
 > 3.6).
@@ -91,10 +83,9 @@ example, the model will represent book publishers.
 This model contains three fields:
 
 - `name`: This is the name of the Publisher. This is a simple string field without any
-  specific validation but it will be required to build a new Publisher.
+  specific validation, but it will be required to build a new Publisher.
 
-- `founded`: This is the year of foundation of the Publisher. Since the printing press
-  has been invented in 1440, it would be handy to allow only values above 1440. The
+- `founded`: This is the year of foundation of the Publisher. Since the printing press was invented in 1440, it would be handy to allow only values above 1440. The
   `ge` keyword argument passed to the Field is exactly doing this. The model will
   require a founded value greater or equal than 1440.
 
@@ -292,10 +283,7 @@ lulu.founded = 1000
 #>   (type=value_error.number.not_gt; limit_value=1440)
 ```
 
-This will raise an exception as it's not matching the model definition. The raised
-exception is actually a `ValidationError` created by from <a
-href="https://docs.pydantic.dev/latest/usage/models/#error-handling"
-target="_blank">pydantic</a>.
+This will raise an exception as it's not matching the model definition.
 
 ### Next steps
 

@@ -17,7 +17,7 @@ name. For example, a model class named `PersonModel` will belong in the `person`
 collection.
 
 It's possible to customize the collection name of a model by specifying the `collection`
-option in the `Config` class.
+option in the `model_config` class attribute.
 
 !!! example "Custom collection name example"
     ```python hl_lines="7-8"
@@ -27,8 +27,9 @@ option in the `Config` class.
         name: str
         population: int
 
-        class Config:
-            collection = "city"
+        model_config = {
+            "collection": "city"
+        }
     ```
     Now, when `CapitalCity` instances will be persisted to the database, they will
     belong in the `city` collection instead of `capital_city`.
@@ -45,9 +46,9 @@ Field descriptors as explained in [Indexed fields](fields.md#indexed-fields) or
 [Unique fields](fields.md#unique-fields). However, this way doesn't allow a great
 flexibility on index definition.
 
-That's why you can also use the `Config.indexes` generator to specify advanced indexes
-(compound indexes, custom names). This static function defined in the `Config` class
-should yield [odmantic.Index][odmantic.index.Index].
+That's why you can also use the `model_config.indexes` generator to specify advanced indexes
+(compound indexes, custom names). This static function defined in the `model_config` class
+attribute should yield [odmantic.Index][odmantic.index.Index].
 
 
 For example:
@@ -135,15 +136,30 @@ ensure that the area of the rectangle is less or equal to 9.
 !!! tip
     You can define class variables in the Models using the `typing.ClassVar` type
     construct, as done in this example with `MAX_AREA`. Those class variables will be
-    completely ignored by ODMantic while persisting instances to the database.
+    completely ignored by ODMantic while persisting instances in the database.
 
 ### Advanced Configuration
 
-The model configuration is done in the same way as with Pydantic models: using a [Config
-class](https://docs.pydantic.dev/latest/usage/model_config/){:target=blank_} defined
-in the model body.
+The model configuration is done in the same way as with Pydantic models: using a
+[ConfigDict](https://docs.pydantic.dev/latest/usage/model_config/){:target=blank_} `model_config` defined in the model body.
 
-**Available options**:
+Here is an example of a model configuration:
+
+```python
+class Event(Model):
+    date: datetime
+
+    model_config = {
+        "collection": "event_collection",
+        "parse_doc_with_default_factories": True,
+        "indexes": lambda: [
+            Index(Event.date, unique=True),
+            pymongo.IndexModel([("date", pymongo.DESCENDING)]),
+        ],
+    }
+```
+
+#### Available options
 
  `#!python collection: str`
  :    Customize the collection name associated to the model. See [this
@@ -190,10 +206,11 @@ in the model body.
         class Event(Model):
             date: datetime
 
-            class Config:
-                json_encoders = {
+            model_config = {
+                "json_encoders": {
                     datetime: lambda v: v.timestamp()
                 }
+            }
         ```
 
 `#!python extra: pydantic.Extra` *(inherited from Pydantic)*
@@ -201,21 +218,9 @@ in the model body.
 
       Default: `#!python Extra.ignore`
 
- `#!python json_loads` *(inherited from Pydantic)*
- :    Function used to decode JSON data
-
-      Default: `#!python json.loads`
-
- `#!python json_dumps` *(inherited from Pydantic)*
- :    Function used to encode JSON data
-
-      Default: `#!python json.dumps`
-
-
-
 
 For more details and examples about the options inherited from Pydantic, you can have a
-look to [Pydantic: Model
+look at [Pydantic: Model
 Config](https://docs.pydantic.dev/latest/usage/model_config/){:target=blank_}
 
 !!! warning
@@ -389,7 +394,7 @@ publisher. We can thus model this relation as a many-to-one relationship.
 
 The definition of a reference field **requires** the presence of the [Reference()][odmantic.reference.Reference]
 descriptor. Once the models are defined, linking two instances is done simply by
-assigning the reference field of referencing instance to the referenced instance.
+assigning the reference field of the referencing instance to the referenced instance.
 
 ??? question "Why is it required to include the Reference descriptor ?"
     The main goal behind enforcing the presence of the descriptor is to have a clear
@@ -415,7 +420,7 @@ assigning the reference field of referencing instance to the referenced instance
     }
     ```
     We can see that the publishers have been persisted to their collection even if no
-    explicit save has been perfomed.
+    explicit save has been performed.
     When calling the [engine.save][odmantic.engine.AIOEngine.save] method, the engine
     will persist automatically the referenced documents.
 

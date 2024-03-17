@@ -2,14 +2,15 @@ from typing import Dict, List, Optional, Tuple
 
 import pytest
 from bson.objectid import ObjectId
-from pydantic import root_validator
-from pydantic.error_wrappers import ValidationError
+from inline_snapshot import snapshot
+from pydantic import ValidationError, model_validator, root_validator
 from pydantic.main import BaseModel
 
 from odmantic.exceptions import DocumentParsingError
 from odmantic.field import Field
 from odmantic.model import EmbeddedModel, Model
 from odmantic.reference import Reference
+from tests.integration.utils import redact_objectid
 from tests.zoo.person import PersonModel
 
 
@@ -99,7 +100,7 @@ def test_fields_modified_on_construction():
 
 
 def test_fields_modified_on_document_parsing():
-    instance = PersonModel.parse_doc(
+    instance = PersonModel.model_validate_doc(
         {"_id": ObjectId(), "first_name": "Jackie", "last_name": "Chan"}
     )
     assert instance.__fields_modified__ == set(["first_name", "last_name", "id"])
@@ -111,13 +112,13 @@ def test_document_parsing_error_keyname():
 
     id = ObjectId()
     with pytest.raises(DocumentParsingError) as exc_info:
-        M.parse_doc({"_id": id})
-    assert str(exc_info.value) == (
-        "1 validation error for M\n"
-        "field\n"
-        "  key not found in document "
-        "(type=value_error.keynotfoundindocument; key_name='custom')\n"
-        f"(M instance details: id={repr(id)})"
+        M.model_validate_doc({"_id": id})
+    assert redact_objectid(str(exc_info.value), id) == snapshot(
+        """\
+1 validation error for M
+field
+  Key 'custom' not found in document [type=odmantic::key_not_found_in_document, input_value={'_id': ObjectId('<ObjectId>')}, input_type=dict]\
+"""  # noqa: E501
     )
 
 
@@ -132,10 +133,14 @@ def test_document_parsing_error_embedded_keyname():
         e: E
 
     with pytest.raises(DocumentParsingError) as exc_info:
-        M.parse_doc({"_id": ObjectId(), "e": {"f": {}}})
-    assert (
-        "1 validation error for M\n" "e -> f -> a\n" "  key not found in document"
-    ) in str(exc_info.value)
+        M.model_validate_doc({"_id": ObjectId(), "e": {"f": {}}})
+    assert str(exc_info.value) == snapshot(
+        """\
+1 validation error for M
+e.f.a
+  Key 'a' not found in document [type=odmantic::key_not_found_in_document, input_value={}, input_type=dict]\
+"""  # noqa: E501
+    )
 
 
 def test_embedded_document_parsing_error():
@@ -143,12 +148,13 @@ def test_embedded_document_parsing_error():
         f: int
 
     with pytest.raises(DocumentParsingError) as exc_info:
-        E.parse_doc({})
-    assert str(exc_info.value) == (
-        "1 validation error for E\n"
-        "f\n"
-        "  key not found in document "
-        "(type=value_error.keynotfoundindocument; key_name='f')"
+        E.model_validate_doc({})
+    assert str(exc_info.value) == snapshot(
+        """\
+1 validation error for E
+f
+  Key 'f' not found in document [type=odmantic::key_not_found_in_document, input_value={}, input_type=dict]\
+"""  # noqa: E501
     )
 
 
@@ -157,11 +163,13 @@ def test_embedded_document_parsing_validation_error():
         f: int
 
     with pytest.raises(DocumentParsingError) as exc_info:
-        E.parse_doc({"f": "aa"})
-    assert str(exc_info.value) == (
-        "1 validation error for E\n"
-        "f\n"
-        "  value is not a valid integer (type=type_error.integer)"
+        E.model_validate_doc({"f": "aa"})
+    assert str(exc_info.value).splitlines()[:-1] == snapshot(
+        [
+            "1 validation error for E",
+            "f",
+            "  Input should be a valid integer, unable to parse string as an integer [type=int_parsing, input_value='aa', input_type=str]",  # noqa: E501
+        ]
     )
 
 
@@ -174,7 +182,7 @@ def test_embedded_model_alternate_key_name_with_default():
 
     _id = ObjectId()
     doc = {"_id": _id}
-    parsed = M.parse_doc(doc)
+    parsed = M.model_validate_doc(doc)
     assert parsed.f.name == "Jack"
 
 
@@ -188,7 +196,7 @@ def test_embedded_model_alternate_key_name_parsing_exception():
     _id = ObjectId()
     doc = {"_id": _id}
     with pytest.raises(DocumentParsingError):
-        M.parse_doc(doc)
+        M.model_validate_doc(doc)
 
 
 def test_embedded_model_alternate_key_name():
@@ -199,9 +207,9 @@ def test_embedded_model_alternate_key_name():
         f: Em
 
     instance = M(f=Em(name="Jack"))
-    doc = instance.doc()
+    doc = instance.model_dump_doc()
     assert doc["f"] == {"username": "Jack"}
-    parsed = M.parse_doc(doc)
+    parsed = M.model_validate_doc(doc)
     assert parsed == instance
 
 
@@ -213,9 +221,9 @@ def test_embedded_model_list_alternate_key_name():
         f: List[Em]
 
     instance = M(f=[Em(name="Jack")])
-    doc = instance.doc()
+    doc = instance.model_dump_doc()
     assert doc["f"] == [{"username": "Jack"}]
-    parsed = M.parse_doc(doc)
+    parsed = M.model_validate_doc(doc)
     assert parsed == instance
 
 
@@ -227,9 +235,9 @@ def test_embedded_model_tuple_alternate_key_name():
         f: Tuple[Em, ...]
 
     instance = M(f=(Em(name="Jack"),))
-    doc = instance.doc()
+    doc = instance.model_dump_doc()
     assert doc["f"] == [{"username": "Jack"}]
-    parsed = M.parse_doc(doc)
+    parsed = M.model_validate_doc(doc)
     assert parsed == instance
 
 
@@ -240,10 +248,16 @@ def test_embedded_model_list_parsing_invalid_type():
     class M(Model):
         f: List[Em]
 
-    with pytest.raises(
-        DocumentParsingError, match="incorrect generic embedded model value"
-    ):
-        M.parse_doc({"_id": 1, "f": {1: {"name": "Jack"}}})
+    with pytest.raises(DocumentParsingError) as exc_info:
+        M.model_validate_doc({"_id": 1, "f": {1: {"name": "Jack"}}})
+
+    assert str(exc_info.value) == snapshot(
+        """\
+1 validation error for M
+f
+  Incorrect generic embedded model value '{1: {'name': 'Jack'}}' [type=odmantic::incorrect_generic_embedded_model_value, input_value={'_id': 1, 'f': {1: {'name': 'Jack'}}}, input_type=dict]\
+"""  # noqa: E501
+    )
 
 
 def test_embedded_model_list_parsing_missing_value():
@@ -255,13 +269,14 @@ def test_embedded_model_list_parsing_missing_value():
 
     with pytest.raises(
         DocumentParsingError,
-        match="key not found in document",
     ) as exc_info:
-        M.parse_doc({"_id": 1})
-    assert (
-        "1 validation error for M\n"
-        "f\n"
-        "  key not found in document" in str(exc_info.value)
+        M.model_validate_doc({"_id": 1})
+    assert str(exc_info.value) == snapshot(
+        """\
+1 validation error for M
+f
+  Key 'f' not found in document [type=odmantic::key_not_found_in_document, input_value={'_id': 1}, input_type=dict]\
+"""  # noqa: E501
     )
 
 
@@ -272,7 +287,7 @@ def test_embedded_model_list_parsing_missing_value_with_default():
     class M(Model):
         f: List[Em] = [Em(name="John")]
 
-    parsed = M.parse_doc({"_id": ObjectId()})
+    parsed = M.model_validate_doc({"_id": ObjectId()})
     assert parsed.f == [Em(name="John")]
 
 
@@ -283,10 +298,15 @@ def test_embedded_model_dict_parsing_invalid_value():
     class M(Model):
         f: Dict[str, Em]
 
-    with pytest.raises(
-        DocumentParsingError, match="incorrect generic embedded model value"
-    ):
-        M.parse_doc({"_id": 1, "f": []})
+    with pytest.raises(DocumentParsingError) as exc_info:
+        M.model_validate_doc({"_id": 1, "f": []})
+    assert str(exc_info.value) == snapshot(
+        """\
+1 validation error for M
+f
+  Incorrect generic embedded model value '[]' [type=odmantic::incorrect_generic_embedded_model_value, input_value={'_id': 1, 'f': []}, input_type=dict]\
+"""  # noqa: E501
+    )
 
 
 def test_embedded_model_dict_parsing_invalid_sub_value():
@@ -296,14 +316,15 @@ def test_embedded_model_dict_parsing_invalid_sub_value():
     class M(Model):
         f: Dict[str, Em]
 
-    with pytest.raises(ValidationError, match="key not found in document") as exc_info:
-        M.parse_doc({"_id": ObjectId(), "f": {"key": {"not_there": "a"}}})
-    assert (
-        "1 validation error for M\n"
-        'f -> ["key"] -> e\n'
-        "  key not found in document "
-        "(type=value_error.keynotfoundindocument; key_name='e')"
-    ) in str(exc_info.value)
+    with pytest.raises(DocumentParsingError) as exc_info:
+        M.model_validate_doc({"_id": ObjectId(), "f": {"key": {"not_there": "a"}}})
+    assert str(exc_info.value) == snapshot(
+        """\
+1 validation error for M
+f.["key"].e
+  Key 'e' not found in document [type=odmantic::key_not_found_in_document, input_value={'not_there': 'a'}, input_type=dict]\
+"""  # noqa: E501
+    )
 
 
 def test_embedded_model_list_parsing_invalid_sub_value():
@@ -313,18 +334,19 @@ def test_embedded_model_list_parsing_invalid_sub_value():
     class M(Model):
         f: List[Em]
 
-    with pytest.raises(ValidationError, match="key not found in document") as exc_info:
-        M.parse_doc({"_id": ObjectId(), "f": [{"not_there": "a"}]})
-    assert (
-        "1 validation error for M\n"
-        "f -> [0] -> e\n"
-        "  key not found in document "
-        "(type=value_error.keynotfoundindocument; key_name='e')"
-    ) in str(exc_info.value)
+    with pytest.raises(DocumentParsingError) as exc_info:
+        M.model_validate_doc({"_id": ObjectId(), "f": [{"not_there": "a"}]})
+    assert str(exc_info.value) == snapshot(
+        """\
+1 validation error for M
+f.[0].e
+  Key 'e' not found in document [type=odmantic::key_not_found_in_document, input_value={'not_there': 'a'}, input_type=dict]\
+"""  # noqa: E501
+    )
 
 
 def test_fields_modified_on_object_parsing():
-    instance = PersonModel.parse_obj(
+    instance = PersonModel.model_validate(
         {"_id": ObjectId(), "first_name": "Jackie", "last_name": "Chan"}
     )
     assert instance.__fields_modified__ == set(["first_name", "last_name", "id"])
@@ -341,13 +363,13 @@ def test_change_primary_key_value():
 
 def test_model_copy_without_update():
     instance = PersonModel(first_name="Jean", last_name="Valjean")
-    copied = instance.copy()
+    copied = instance.model_copy()
     assert instance == copied
 
 
 def test_model_copy_with_update():
     instance = PersonModel(first_name="Jean", last_name="Valjean")
-    copied = instance.copy(update={"last_name": "Pierre"})
+    copied = instance.model_copy(update={"last_name": "Pierre"})
     assert instance.id == copied.id
     assert instance.first_name == copied.first_name
     assert copied.last_name == "Pierre"
@@ -355,10 +377,22 @@ def test_model_copy_with_update():
 
 def test_model_copy_with_update_primary_key():
     instance = PersonModel(first_name="Jean", last_name="Valjean")
-    copied = instance.copy(update={"id": ObjectId()})
+    copied = instance.model_copy(update={"id": ObjectId()})
     assert instance.first_name == copied.first_name
     assert copied.last_name == copied.last_name
     assert instance.id != copied.id
+
+
+@pytest.mark.filterwarnings("ignore:copy is deprecated")
+def test_deprecated_model_copy_call():
+    class M(Model):
+        ...
+
+    with pytest.raises(NotImplementedError):
+        M().copy(include={"id"})
+
+    with pytest.raises(NotImplementedError):
+        M().copy(exclude={"id"})
 
 
 def test_model_copy_deep_embedded():
@@ -369,7 +403,7 @@ def test_model_copy_deep_embedded():
         e: E
 
     instance = M(e=E(f=1))
-    copied = instance.copy(deep=True)
+    copied = instance.model_copy(deep=True)
     assert instance.e is not copied.e
 
 
@@ -384,7 +418,7 @@ def test_model_copy_deep_embedded_mutability():
         e: E
 
     instance = M(e=E(f=F(g=1)))
-    copied = instance.copy(deep=True)
+    copied = instance.model_copy(deep=True)
     copied.e.f.g = 42
     assert instance.e.f.g != copied.e.f.g
 
@@ -394,11 +428,10 @@ def test_model_copy_not_deep_embedded():
         f: int
 
     class M(Model):
-
         e: E
 
     instance = M(e=E(f=1))
-    copied = instance.copy(deep=False)
+    copied = instance.model_copy(deep=False)
     assert instance.e is copied.e
 
 
@@ -412,8 +445,8 @@ def test_model_copy_with_reference(deep: bool):
 
     ref_instance = R(f=12)
     instance = M(r=ref_instance)
-    copied = instance.copy(deep=deep)
-    assert instance.doc() == copied.doc()
+    copied = instance.model_copy(deep=deep)
+    assert instance.model_dump_doc() == copied.model_dump_doc()
     assert instance.r == copied.r
 
 
@@ -424,7 +457,7 @@ def test_model_copy_field_modified(deep: bool):
 
     instance = M(f=5)
     object.__setattr__(instance, "__fields_modified__", set())
-    copied = instance.copy(update={"f": 12}, deep=deep)
+    copied = instance.model_copy(update={"f": 12}, deep=deep)
     assert "f" in copied.__fields_modified__
 
 
@@ -437,7 +470,7 @@ def test_model_copy_field_modified_on_primary_field_change(deep: bool):
 
     instance = M(f0=12, f1=5, f2=6)
     object.__setattr__(instance, "__fields_modified__", set())
-    copied = instance.copy(deep=deep)
+    copied = instance.model_copy(deep=deep)
     assert {"id", "f0", "f1", "f2"} == copied.__fields_modified__
 
 
@@ -455,28 +488,28 @@ def test_update_pydantic_model(instance_to_update):
         first_name: str
 
     update_obj = Update(first_name=UPDATED_NAME)
-    instance_to_update.update(update_obj)
+    instance_to_update.model_update(update_obj)
     assert instance_to_update.first_name == UPDATED_NAME
     assert instance_to_update.last_name == INITIAL_LAST_NAME
 
 
 def test_update_dictionary(instance_to_update):
     update_obj = {"first_name": UPDATED_NAME}
-    instance_to_update.update(update_obj)
+    instance_to_update.model_update(update_obj)
     assert instance_to_update.first_name == UPDATED_NAME
     assert instance_to_update.last_name == INITIAL_LAST_NAME
 
 
 def test_update_include(instance_to_update):
     update_obj = {"first_name": UPDATED_NAME}
-    instance_to_update.update(update_obj, include=set())
+    instance_to_update.model_update(update_obj, include=set())
     assert instance_to_update.first_name == INITIAL_FIRST_NAME
     assert instance_to_update.last_name == INITIAL_LAST_NAME
 
 
 def test_update_exclude(instance_to_update):
     update_obj = {"first_name": UPDATED_NAME}
-    instance_to_update.update(update_obj, exclude={"first_name"})
+    instance_to_update.model_update(update_obj, exclude={"first_name"})
     assert instance_to_update.first_name == INITIAL_FIRST_NAME
     assert instance_to_update.last_name == INITIAL_LAST_NAME
 
@@ -487,26 +520,28 @@ def test_update_exclude_none(instance_to_update):
         last_name: Optional[str]
 
     update_obj = Update(first_name=UPDATED_NAME, last_name=None)
-    instance_to_update.update(update_obj, exclude_unset=False, exclude_none=True)
+    instance_to_update.model_update(update_obj, exclude_unset=False, exclude_none=True)
     assert instance_to_update.first_name == UPDATED_NAME
     assert instance_to_update.last_name == INITIAL_LAST_NAME
 
 
 def test_update_exclude_defaults(instance_to_update):
-    initial_instance = instance_to_update.copy()
+    initial_instance = instance_to_update.model_copy()
 
     class Update(BaseModel):
         first_name: Optional[str] = None
         last_name: str = UPDATED_NAME
 
     update_obj = Update()
-    instance_to_update.update(update_obj, exclude_unset=False, exclude_defaults=True)
+    instance_to_update.model_update(
+        update_obj, exclude_unset=False, exclude_defaults=True
+    )
     assert instance_to_update == initial_instance
 
 
 def test_update_exclude_over_include(instance_to_update):
     update_obj = {"first_name": UPDATED_NAME}
-    instance_to_update.update(
+    instance_to_update.model_update(
         update_obj, include={"first_name"}, exclude={"first_name"}
     )
     assert instance_to_update.first_name == INITIAL_FIRST_NAME
@@ -520,7 +555,7 @@ def test_update_invalid():
     instance = M(f=12)
     update_obj = {"f": "aaa"}
     with pytest.raises(ValidationError):
-        instance.update(update_obj)
+        instance.model_update(update_obj)
 
 
 def test_update_model_undue_update_fields():
@@ -529,7 +564,7 @@ def test_update_model_undue_update_fields():
 
     instance = M(f=12)
     update_obj = {"not_in_model": "aaa"}
-    instance.update(update_obj)
+    instance.model_update(update_obj)
 
 
 def test_update_pydantic_unset_update_fields():
@@ -543,7 +578,7 @@ def test_update_pydantic_unset_update_fields():
 
     instance = M(f=0)
     update_obj = P()
-    instance.update(update_obj)
+    instance.model_update(update_obj)
     assert instance.f != UPDATEED_VALUE
 
 
@@ -558,7 +593,7 @@ def test_update_pydantic_unset_update_fields_include_unset():
 
     instance = M(f=0)
     update_obj = P()
-    instance.update(update_obj, exclude_unset=False)
+    instance.model_update(update_obj, exclude_unset=False)
     assert instance.f == UPDATEED_VALUE
 
 
@@ -567,7 +602,7 @@ def test_update_embedded_model():
         f: int
 
     instance = E(f=12)
-    instance.update({"f": 15})
+    instance.model_update({"f": 15})
     assert instance.f == 15
 
 
@@ -582,7 +617,7 @@ def test_update_reference():
     r1 = R(f=1)
 
     instance = M(r=r0)
-    instance.update({"r": r1})
+    instance.model_update({"r": r1})
     assert instance.r.f == r1.f
     assert instance.r == r1
 
@@ -593,7 +628,7 @@ def test_update_type_coercion():
 
     instance = M(f=12)
     update_obj = {"f": "12"}
-    instance.update(update_obj)
+    instance.model_update(update_obj)
     assert isinstance(instance.f, int)
 
 
@@ -603,7 +638,7 @@ def test_update_side_effect_field_modified():
         height: float
         area: float = 0
 
-        @root_validator()
+        @model_validator(mode="before")
         def set_area(cls, v):
             v["area"] = v["width"] * v["height"]
             return v
@@ -611,7 +646,29 @@ def test_update_side_effect_field_modified():
     r = Rectangle(width=1, height=1)
     assert r.area == 1
     r.__fields_modified__.clear()
-    r.update({"width": 5})
+    r.model_update({"width": 5})
+    assert r.area == 5
+    assert "area" in r.__fields_modified__
+
+
+@pytest.mark.filterwarnings(
+    "ignore: Pydantic V1 style `@root_validator` validators are deprecated"
+)
+def test_update_side_effect_field_modified_with_root_validator():
+    class Rectangle(Model):
+        width: float
+        height: float
+        area: float = 0
+
+        @root_validator(skip_on_failure=True)
+        def set_area(cls, v):
+            v["area"] = v["width"] * v["height"]
+            return v
+
+    r = Rectangle(width=1, height=1)
+    assert r.area == 1
+    r.__fields_modified__.clear()
+    r.model_update({"width": 5})
     assert r.area == 5
     assert "area" in r.__fields_modified__
 
@@ -623,7 +680,7 @@ def test_update_dict_id_exception():
 
     m = M(alternate_id=0, f=0)
     with pytest.raises(ValueError, match="Updating the primary key is not supported"):
-        m.update({"alternate_id": 1})
+        m.model_update({"alternate_id": 1})
 
 
 @pytest.mark.parametrize(
@@ -640,7 +697,7 @@ def test_update_dict_alternate_id_filtered(update_kwargs):
         f: int
 
     m = M(alternate_id=0, f=0)
-    m.update({"alternate_id": 1}, **update_kwargs)
+    m.model_update({"alternate_id": 1}, **update_kwargs)
     assert m.f == 0 and m.alternate_id == 0, "instance should be unchanged"
 
 
@@ -655,7 +712,7 @@ def test_update_pydantic_id_exception():
         alternate_id: int
 
     with pytest.raises(ValueError, match="Updating the primary key is not supported"):
-        m.update(UpdateObject(alternate_id=1))
+        m.model_update(UpdateObject(alternate_id=1))
 
 
 @pytest.mark.parametrize(
@@ -675,5 +732,5 @@ def test_update_pydantic_alternate_id_filtered(update_kwargs):
         alternate_id: int
 
     m = M(alternate_id=0, f=0)
-    m.update(UpdateObject(alternate_id=1), **update_kwargs)
+    m.model_update(UpdateObject(alternate_id=1), **update_kwargs)
     assert m.f == 0 and m.alternate_id == 0, "instance should be unchanged"

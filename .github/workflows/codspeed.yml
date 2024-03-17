@@ -1,0 +1,41 @@
+name: CodSpeed
+
+on:
+  # Run on pushes to the main branch
+  push:
+    branches:
+      - "master" # or "main"
+  # Run on pull requests
+  pull_request:
+  # `workflow_dispatch` allows CodSpeed to trigger backtest
+  # performance analysis in order to generate initial data.
+  workflow_dispatch:
+
+jobs:
+  benchmarks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.12
+          cache: pip
+          cache-dependency-path: "pyproject.toml"
+      - name: Mongo Service
+        id: mongo-service
+        uses: art049/mongodb-cluster-action@v0
+        with:
+          version: "4.2"
+          mode: "sharded"
+      - name: Install dependencies
+        run: |
+          pip install flit
+          pip install ".[test]"
+      - name: Run benches
+        uses: CodSpeedHQ/action@v1
+        with:
+          run: pytest tests/integration/benchmarks --codspeed
+        env:
+          TEST_MONGO_URI: ${{ steps.mongo-service.outputs.connection-string }}
+          TEST_MONGO_MODE: "sharded"

@@ -61,7 +61,7 @@ class Index:
         self,
         *fields: Union[FieldProxyAny, SortExpression],
         unique: bool = False,
-        name: Optional[str] = None
+        name: Optional[str] = None,
     ) -> None:
         """Declare an ODM index in the Model.Config.indexes generator.
 
@@ -74,10 +74,9 @@ class Index:
             name: str
             score: int
 
-            class Config:
-                @staticmethod
-                def indexes():
-                    yield Index(Player.name, desc(Player.score))
+            model_config = {
+                "indexes": lambda: [Index(Player.name, desc(Player.score))],
+            }
         ```
 
         Args:

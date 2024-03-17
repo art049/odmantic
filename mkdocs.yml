@@ -77,11 +77,12 @@ plugins:
           rendering:
             show_source: true
             show_root_heading: true
-      watch:
-        - odmantic/
+watch:
+  - odmantic/
+  - docs/
 
 nav:
-  - Overview: index.md
+  - Getting Started: index.md
   - fields.md
   - modeling.md
   - engine.md
@@ -98,10 +99,11 @@ nav:
       - odmantic.reference: ./api_reference/reference.md
       - odmantic.index: ./api_reference/index.md
       - odmantic.bson: ./api_reference/bson.md
-      - odmantic.fastapi: ./api_reference/fastapi.md
       - odmantic.exceptions: ./api_reference/exceptions.md
+      - odmantic.config: ./api_reference/config.md
   - contributing.md
   - changelog.md
+  - migration_guide.md
 
 extra:
   social:

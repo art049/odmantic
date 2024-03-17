@@ -80,7 +80,7 @@ class BaseCursor(Generic[ModelType]):
         self._results: Optional[List[ModelType]] = None
 
     def _parse_document(self, raw_doc: Dict) -> ModelType:
-        instance = self._model.parse_doc(raw_doc)
+        instance = self._model.model_validate_doc(raw_doc)
         object.__setattr__(instance, "__fields_modified__", set())
         return instance
 
@@ -214,7 +214,7 @@ class BaseEngine:
                                     doc_namespace=f"{doc_namespace}{ref_field_name}.",
                                 ),
                             ],
-                            "as": odm_reference.key_name
+                            "as": odm_reference.key_name,
                             # FIXME if ref field name is an existing key_name ?
                         }
                     },
@@ -521,11 +521,11 @@ class AIOEngine(BaseEngine):
 
         fields_to_update = instance.__fields_modified__ | instance.__mutable_fields__
         if len(fields_to_update) > 0:
-            doc = instance.doc(include=fields_to_update)
+            doc = instance.model_dump_doc(include=fields_to_update)
             collection = self.get_collection(type(instance))
             try:
                 await collection.update_one(
-                    instance.doc(include={instance.__primary_field__}),
+                    instance.model_dump_doc(include={instance.__primary_field__}),
                     {"$set": doc},
                     upsert=True,
                     session=session,
@@ -927,11 +927,11 @@ class SyncEngine(BaseEngine):
 
         fields_to_update = instance.__fields_modified__ | instance.__mutable_fields__
         if len(fields_to_update) > 0:
-            doc = instance.doc(include=fields_to_update)
+            doc = instance.model_dump_doc(include=fields_to_update)
             collection = self.get_collection(type(instance))
             try:
                 collection.update_one(
-                    instance.doc(include={instance.__primary_field__}),
+                    instance.model_dump_doc(include={instance.__primary_field__}),
                     {"$set": doc},
                     upsert=True,
                     session=session,

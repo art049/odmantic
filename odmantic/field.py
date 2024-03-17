@@ -1,8 +1,10 @@
+from __future__ import annotations
+
 import abc
-from copy import deepcopy
 from typing import (
     TYPE_CHECKING,
     Any,
+    Callable,
     Iterable,
     Optional,
     Pattern,
@@ -12,10 +14,11 @@ from typing import (
     cast,
 )
 
+from pydantic.config import JsonDict
 from pydantic.fields import Field as PDField
-from pydantic.fields import FieldInfo, ModelField, Undefined
+from pydantic.fields import FieldInfo, PydanticUndefined
 
-from odmantic.config import BaseODMConfig
+from odmantic.config import ODMConfigDict
 from odmantic.query import (
     QueryExpression,
     SortExpression,
@@ -32,23 +35,24 @@ from odmantic.query import (
     not_in,
 )
 
-from .typing import NoArgAnyCallable
-
 if TYPE_CHECKING:
     from odmantic.model import EmbeddedModel, Model  # noqa: F401
 
+    from .typing import NoArgAnyCallable
+
 
 def Field(
-    default: Any = Undefined,
+    default: Any = PydanticUndefined,
     *,
     key_name: Optional[str] = None,
     primary_field: bool = False,
     index: bool = False,
     unique: bool = False,
-    default_factory: Optional[NoArgAnyCallable] = None,
+    default_factory: Optional["NoArgAnyCallable"] = None,
     # alias: str = None, # FIXME not supported yet
     title: Optional[str] = None,
     description: Optional[str] = None,
+    json_schema_extra: JsonDict | Callable[[JsonDict], None] | None = None,
     const: Optional[bool] = None,
     gt: Optional[float] = None,
     ge: Optional[float] = None,
@@ -60,7 +64,6 @@ def Field(
     min_length: Optional[int] = None,
     max_length: Optional[int] = None,
     regex: Optional[str] = None,
-    **extra: Any,
 ) -> Any:
     """Used to provide extra information about a field, either for the model schema or
     complex validation. Some arguments apply only to number fields (``int``, ``float``,
@@ -90,6 +93,7 @@ def Field(
             for this field.
         title: can be any string, used in the schema
         description: can be any string, used in the schema
+        json_schema_extra: Any additional JSON schema data for the schema property.
         const: this field is required and *must* take it's default value
         gt: only applies to numbers, requires the field to be "greater than". The
             schema will have an ``exclusiveMinimum`` validation keyword
@@ -112,7 +116,6 @@ def Field(
         regex: only applies to strings, requires the field match agains a regular
             expression pattern string. The schema will have a ``pattern`` validation
             keyword
-        **extra: any additional keyword arguments will be added as is to the schema
 
     <!---
     # noqa: DAR201
@@ -123,12 +126,14 @@ def Field(
     """
     # Perform casts on optional fields to avoid incompatibility due to the strict
     # optional mypy setting
+    # TODO: add remaining validation fields from pydantic
     pydantic_field = PDField(
         default,
         default_factory=default_factory,
         # alias=alias,  # FIXME check aliases compatibility
         title=cast(str, title),
         description=cast(str, description),
+        json_schema_extra=json_schema_extra,
         const=cast(bool, const),
         gt=cast(float, gt),
         ge=cast(float, ge),
@@ -140,7 +145,6 @@ def Field(
         min_length=cast(int, min_length),
         max_length=cast(int, max_length),
         regex=cast(str, regex),
-        **extra,
     )
     if primary_field:
         if key_name is not None and key_name != "_id":
@@ -186,35 +190,33 @@ class ODMFieldInfo:
 
 
 class ODMBaseField(metaclass=abc.ABCMeta):
-
     __slots__ = ("key_name", "model_config", "pydantic_field")
     __allowed_operators__: Set[str]
 
-    def __init__(self, key_name: str, model_config: Type[BaseODMConfig]):
+    def __init__(self, key_name: str, model_config: ODMConfigDict):
         self.key_name = key_name
         self.model_config = model_config
 
-    def bind_pydantic_field(self, field: ModelField) -> None:
+    def bind_pydantic_field(self, field: FieldInfo) -> None:
         self.pydantic_field = field
 
     def is_required_in_doc(self) -> bool:
-        if self.model_config.parse_doc_with_default_factories:
-            return self.pydantic_field.required  # type: ignore
+        if self.model_config["parse_doc_with_default_factories"]:
+            return self.pydantic_field.is_required()
         else:
             return (
                 self.pydantic_field.default_factory is not None
-                or self.pydantic_field.required  # type: ignore
+                or self.pydantic_field.is_required()
             )
 
 
 class ODMBaseIndexableField(ODMBaseField, metaclass=abc.ABCMeta):
-
     __slots__ = ("index", "unique")
 
     def __init__(
         self,
         key_name: str,
-        model_config: Type[BaseODMConfig],
+        model_config: ODMConfigDict,
         index: bool,
         unique: bool,
     ):
@@ -235,7 +237,7 @@ class ODMField(ODMBaseIndexableField):
         self,
         *,
         key_name: str,
-        model_config: Type["BaseODMConfig"],
+        model_config: ODMConfigDict,
         primary_field: bool,
         index: bool = False,
         unique: bool = False,
@@ -247,15 +249,9 @@ class ODMField(ODMBaseIndexableField):
         # The default importing value doesn't consider the default_factory setting by
         # default as it could result in inconsistent behaviors for datetime.now
         # factories for example
-        if self.model_config.parse_doc_with_default_factories:
-            return self.pydantic_field.get_default()
-
-        if self.pydantic_field.default is None:
-            # deepcopy is quite slow on None
-            value = None
-        else:
-            value = deepcopy(self.pydantic_field.default)
-        return value
+        return self.pydantic_field.get_default(
+            call_default_factory=self.model_config["parse_doc_with_default_factories"]
+        )
 
 
 class ODMReference(ODMBaseField):
@@ -265,14 +261,13 @@ class ODMReference(ODMBaseField):
     __allowed_operators__ = set(("eq", "ne", "in_", "not_in"))
 
     def __init__(
-        self, key_name: str, model_config: Type[BaseODMConfig], model: Type["Model"]
+        self, key_name: str, model_config: ODMConfigDict, model: Type["Model"]
     ):
         super().__init__(key_name, model_config)
         self.model = model
 
 
 class ODMEmbedded(ODMField):
-
     __slots__ = "model"
     __allowed_operators__ = set(("eq", "ne", "in_", "not_in"))
 
@@ -280,7 +275,7 @@ class ODMEmbedded(ODMField):
         self,
         primary_field: bool,
         key_name: str,
-        model_config: Type[BaseODMConfig],
+        model_config: ODMConfigDict,
         model: Type["EmbeddedModel"],
         index: bool = False,
         unique: bool = False,
@@ -303,7 +298,7 @@ class ODMEmbeddedGeneric(ODMField):
     def __init__(
         self,
         key_name: str,
-        model_config: Type[BaseODMConfig],
+        model_config: ODMConfigDict,
         model: Type["EmbeddedModel"],
         generic_origin: Any,
         index: bool = False,

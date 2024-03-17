@@ -11,8 +11,8 @@ class TreeKind(str, enum.Enum):
 
 
 class TreeModel(Model):
-    name: str = Field(primary_key=True, default="Acacia des montagnes")
-    average_size: float = Field(mongo_name="size")
+    name: str = Field(default="Acacia des montagnes")
+    average_size: float = Field(key_name="size")
     discovery_year: int
     kind: TreeKind
     genesis_continents: List[str]

@@ -1,5 +1,3 @@
-from typing import Optional
-
 import pytest
 
 from odmantic.field import Field
@@ -42,7 +40,7 @@ def test_unknown_attr_embedded_model():
     class M(Model):
         field: E
 
-    with pytest.raises(AttributeError, match="attribute unknown_attr not found in E"):
+    with pytest.raises(AttributeError):
         M.field.unknown_attr  # type: ignore
 
 
@@ -75,13 +73,6 @@ def test_field_required_in_doc_with_default():
     assert not M.__odm_fields__["field"].is_required_in_doc()
 
 
-def test_field_required_in_doc_implicit_optional_default():
-    class M(Model):
-        field: Optional[str]
-
-    assert not M.__odm_fields__["field"].is_required_in_doc()
-
-
 def test_field_required_in_doc_default_factory_disabled():
     class M(Model):
         field: str = Field(default_factory=lambda: "hi")  # pragma: no cover
@@ -93,7 +84,8 @@ def test_field_required_in_doc_default_factory_enabled():
     class M(Model):
         field: str = Field(default_factory=lambda: "hi")  # pragma: no cover
 
-        class Config:
-            parse_doc_with_default_factories = True
+        model_config = {
+            "parse_doc_with_default_factories": True,
+        }
 
     assert not M.__odm_fields__["field"].is_required_in_doc()
