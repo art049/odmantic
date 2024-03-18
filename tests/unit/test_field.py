@@ -108,8 +108,6 @@ def test_multiple_optional_fields():
         == Optional[odmantic.bson._datetime]
     )
 
-    try:
-        instance = M(field="Hi")
-        instance.optionalBoolField = True
-    except Exception:
-        pytest.fail("a boolean value can not be assigned to a boolean field")
+    instance = M(field="Hi")
+    # This should work and never throw a value error
+    instance.optionalBoolField = True
