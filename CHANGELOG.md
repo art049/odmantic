@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- feat: support the examples property in field ([#404](https://github.com/art049/odmantic/pull/404) by [@Mokto](https://github.com/Mokto))
+
 - Fix changing example ([#406](https://github.com/art049/odmantic/pull/406) by [@Mokto](https://github.com/Mokto))
 
 - Support defining multiple optional fields with different types ([#416](https://github.com/art049/odmantic/pull/416) by [@netomi](https://github.com/netomi))
