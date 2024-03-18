@@ -1,3 +1,7 @@
+from datetime import datetime
+from typing import Optional
+
+import odmantic
 import pytest
 
 from odmantic.field import Field
@@ -89,3 +93,19 @@ def test_field_required_in_doc_default_factory_enabled():
         }
 
     assert not M.__odm_fields__["field"].is_required_in_doc()
+
+
+def test_multiple_optional_fields():
+    class M(Model):
+        field: str = Field(default_factory=lambda: "hi")  # pragma: no cover
+        optionalBoolField: Optional[bool] = None
+        optionalDatetimeField: Optional[datetime] = None
+
+    assert M.__odm_fields__["optionalBoolField"].pydantic_field.annotation == Optional[bool]
+    assert M.__odm_fields__["optionalDatetimeField"].pydantic_field.annotation == Optional[odmantic.bson._datetime]
+
+    try:
+        instance = M(field="Hi")
+        instance.optionalBoolField = True
+    except:
+        pytest.fail("a boolean value can not be assigned to a boolean field")
