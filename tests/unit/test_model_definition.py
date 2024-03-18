@@ -516,3 +516,15 @@ def test_model_definition_with_generic_literals():
         f: List[Literal["a", "b", "c"]]  # noqa: F821
 
     assert M(f=["a", "c"]).f == ["a", "c"]
+
+
+def test_model_with_multiple_optional_fields():
+    class Person(Model):
+        hashed_password: Optional[str]
+        totp_secret: Optional[str] = Field(default=None)
+        totp_counter: Optional[int] = Field(default=None)
+
+    user = {
+        "hashed_password": "hashed_password",
+    }
+    Person(**user)
