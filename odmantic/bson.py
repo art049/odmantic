@@ -347,9 +347,7 @@ class _datetime(datetime):
     def __get_pydantic_json_schema__(
         cls, _core_schema: core_schema.CoreSchema, handler: GetJsonSchemaHandler
     ) -> JsonSchemaValue:
-        schema = handler(core_schema.datetime_schema())
-        schema.update(example=datetime.utcnow().isoformat())
-        return schema
+        return handler(core_schema.datetime_schema())
 
 
 class _decimalDecimalPydanticAnnotation:
