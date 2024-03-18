@@ -64,6 +64,7 @@ def Field(
     min_length: Optional[int] = None,
     max_length: Optional[int] = None,
     regex: Optional[str] = None,
+    examples: list[Any] | None = None,
 ) -> Any:
     """Used to provide extra information about a field, either for the model schema or
     complex validation. Some arguments apply only to number fields (``int``, ``float``,
@@ -93,6 +94,7 @@ def Field(
             for this field.
         title: can be any string, used in the schema
         description: can be any string, used in the schema
+        examples: can be any list, used in the schema
         json_schema_extra: Any additional JSON schema data for the schema property.
         const: this field is required and *must* take it's default value
         gt: only applies to numbers, requires the field to be "greater than". The
@@ -133,6 +135,7 @@ def Field(
         # alias=alias,  # FIXME check aliases compatibility
         title=cast(str, title),
         description=cast(str, description),
+        examples=examples,
         json_schema_extra=json_schema_extra,
         const=cast(bool, const),
         gt=cast(float, gt),
