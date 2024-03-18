@@ -21,8 +21,7 @@ pytestmark = pytest.mark.asyncio
 
 
 def test_simple_model_serialization():
-    class M(Model):
-        ...
+    class M(Model): ...
 
     id_ = ObjectId()
     assert json.loads(M(id=id_).model_dump_json()) == {"id": str(id_)}

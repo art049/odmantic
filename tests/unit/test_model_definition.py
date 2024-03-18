@@ -30,12 +30,10 @@ from odmantic.model import EmbeddedModel, Model
 from odmantic.reference import Reference
 
 
-class TheClassName(Model):
-    ...
+class TheClassName(Model): ...
 
 
-class TheClassNameModel(Model):
-    ...
+class TheClassNameModel(Model): ...
 
 
 class TheClassNameOverriden(Model):
@@ -51,8 +49,7 @@ def test_auto_collection_name():
 
 
 def test_auto_collection_name_nested():
-    class theNestedClassName(Model):
-        ...
+    class theNestedClassName(Model): ...
 
     assert theNestedClassName.__collection__ == "the_nested_class_name"
 
@@ -63,8 +60,7 @@ def test_auto_collection_name_nested():
 
 
 def test_get_collection_name_pos():
-    class Thing(Model):
-        ...
+    class Thing(Model): ...
 
     assert +Thing == "thing"
 

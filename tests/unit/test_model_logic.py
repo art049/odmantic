@@ -353,8 +353,7 @@ def test_fields_modified_on_object_parsing():
 
 
 def test_change_primary_key_value():
-    class M(Model):
-        ...
+    class M(Model): ...
 
     instance = M()
     with pytest.raises(NotImplementedError, match="assigning a new primary key"):
@@ -385,8 +384,7 @@ def test_model_copy_with_update_primary_key():
 
 @pytest.mark.filterwarnings("ignore:copy is deprecated")
 def test_deprecated_model_copy_call():
-    class M(Model):
-        ...
+    class M(Model): ...
 
     with pytest.raises(NotImplementedError):
         M().copy(include={"id"})

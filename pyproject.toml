@@ -45,7 +45,7 @@ dependencies = [
 ]
 [project.optional-dependencies]
 test = [
-    "ruff ~= 0.0.277",
+    "ruff ~= 0.3.3",
     "mypy ~= 1.4.1",
     "pytest ~= 7.0",
     "pytest-xdist ~= 2.1.0",
@@ -86,8 +86,9 @@ requires = ["flit_core >=3.2,<4"]
 build-backend = "flit_core.buildapi"
 
 [tool.ruff]
-per-file-ignores = { "tests/*" = ["C", "I"], "odmantic/typing.py" = ["I001"] }
 line-length = 88
+[tool.ruff.lint]
+per-file-ignores = { "tests/*" = ["C", "I"], "odmantic/typing.py" = ["I001"] }
 select = ["E", "F", "I", "C"]
 ignore = ["C405"]
 exclude = [
@@ -111,9 +112,7 @@ exclude = [
     "node_modules",
     "venv",
 ]
-
-[tool.ruff.mccabe]
-max-complexity = 10
+mccabe.max-complexity = 10
 
 [tool.pydocstyle]
 convention = "google"

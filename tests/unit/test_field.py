@@ -1,9 +1,9 @@
 from datetime import datetime
 from typing import Optional
 
-import odmantic
 import pytest
 
+import odmantic
 from odmantic.field import Field
 from odmantic.model import EmbeddedModel, Model
 from odmantic.reference import Reference
@@ -38,8 +38,7 @@ def test_pos_key_name():
 
 
 def test_unknown_attr_embedded_model():
-    class E(EmbeddedModel):
-        ...
+    class E(EmbeddedModel): ...
 
     class M(Model):
         field: E
@@ -50,8 +49,7 @@ def test_unknown_attr_embedded_model():
 
 @pytest.mark.parametrize("operator_name", ("lt", "lte", "gt", "gte", "match"))
 def test_reference_field_operator_not_allowed(operator_name: str):
-    class E(Model):
-        ...
+    class E(Model): ...
 
     class M(Model):
         field: E = Reference()
@@ -101,11 +99,17 @@ def test_multiple_optional_fields():
         optionalBoolField: Optional[bool] = None
         optionalDatetimeField: Optional[datetime] = None
 
-    assert M.__odm_fields__["optionalBoolField"].pydantic_field.annotation == Optional[bool]
-    assert M.__odm_fields__["optionalDatetimeField"].pydantic_field.annotation == Optional[odmantic.bson._datetime]
+    assert (
+        M.__odm_fields__["optionalBoolField"].pydantic_field.annotation
+        == Optional[bool]
+    )
+    assert (
+        M.__odm_fields__["optionalDatetimeField"].pydantic_field.annotation
+        == Optional[odmantic.bson._datetime]
+    )
 
     try:
         instance = M(field="Hi")
         instance.optionalBoolField = True
-    except:
+    except Exception:
         pytest.fail("a boolean value can not be assigned to a boolean field")

@@ -6,8 +6,7 @@ from odmantic import Model
 
 
 def test_objectid_serialization():
-    class M(Model):
-        ...
+    class M(Model): ...
 
     instance = M()
     doc = instance.model_dump_doc()

@@ -69,8 +69,7 @@ def test_object_id_fastapi_pydantic_response_model(fastapi_app, test_client):
 
 
 def test_object_id_fastapi_odmantic_response_pydantic_model(fastapi_app, test_client):
-    class ODMModel(Model):
-        ...
+    class ODMModel(Model): ...
 
     object = ODMModel()
 
@@ -83,8 +82,7 @@ def test_object_id_fastapi_odmantic_response_pydantic_model(fastapi_app, test_cl
 
 
 def test_object_id_fastapi_odmantic_response_model(fastapi_app, test_client):
-    class ODMModel(Model):
-        ...
+    class ODMModel(Model): ...
 
     object = ODMModel()
 
@@ -126,8 +124,7 @@ def test_docstring_not_nullified(base: Type):
 
 @pytest.mark.parametrize("base", (Model, EmbeddedModel))
 def test_docstring_nullified(base: Type):
-    class M(base):
-        ...
+    class M(base): ...
 
     doc = getdoc(M)
     assert doc == ""
@@ -142,8 +139,7 @@ def test_base_classes_docstring_not_nullified(base: Type):
 
 @pytest.mark.parametrize("base", (Model, EmbeddedModel))
 def test_pydantic_model_title(base: Type):
-    class M(base):
-        ...
+    class M(base): ...
 
     assert M.__pydantic_model__.model_json_schema()["title"] == "M"
 
@@ -157,8 +153,7 @@ def test_pydantic_model_custom_title(base: Type):
 
 
 def test_pydantic_model_references():
-    class Referenced(Model):
-        ...
+    class Referenced(Model): ...
 
     class Base(Model):
         field: Referenced = Reference()
@@ -172,13 +167,13 @@ def test_pydantic_model_references():
 
     b_pure = Base.__pydantic_model__(field=Referenced().__pydantic_model__())
     assert not issubclass(
-        type(b_pure.field), Model  # type: ignore
+        type(b_pure.field),  # type: ignore
+        Model,
     ), "the pure field should not inherit from Model"
 
 
 def test_openapi_json_references(fastapi_app, test_client):
-    class Referenced(Model):
-        ...
+    class Referenced(Model): ...
 
     class Base(Model):
         field: Referenced = Reference()

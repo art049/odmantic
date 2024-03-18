@@ -28,10 +28,12 @@ repos:
           - motor~=3.0.0
           - types-pytz~=2022.1.1
         args: [--no-pretty, --show-error-codes]
-  - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.0.277
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.3.3
     hooks:
       - id: ruff
+        exclude: "^docs/.*|.github/release.py"
+      - id: ruff-format
         exclude: "^docs/.*|.github/release.py"
 
   - repo: https://github.com/pycqa/pydocstyle
