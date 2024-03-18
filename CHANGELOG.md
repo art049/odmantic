@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- chore: bump ruff and use ruff format ([#425](https://github.com/art049/odmantic/pull/425) by [@art049](https://github.com/art049))
+
 - feat: support the examples property in field ([#404](https://github.com/art049/odmantic/pull/404) by [@Mokto](https://github.com/Mokto))
 
 - Fix changing example ([#406](https://github.com/art049/odmantic/pull/406) by [@Mokto](https://github.com/Mokto))
