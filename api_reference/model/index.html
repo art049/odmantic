@@ -20,7 +20,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.14">
     
     
       
@@ -28,7 +28,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.10ba22f1.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
@@ -434,10 +434,8 @@
     
     
     
-    
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
-        
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
@@ -521,7 +519,7 @@
         <li class="md-nav__item">
   <a href="#odmantic.model._BaseODMModel.model_copy" class="md-nav__link">
     <span class="md-ellipsis">
-      model_copy()
+      model_copy
     </span>
   </a>
   
@@ -530,7 +528,7 @@
         <li class="md-nav__item">
   <a href="#odmantic.model._BaseODMModel.model_dump_doc" class="md-nav__link">
     <span class="md-ellipsis">
-      model_dump_doc()
+      model_dump_doc
     </span>
   </a>
   
@@ -539,7 +537,7 @@
         <li class="md-nav__item">
   <a href="#odmantic.model._BaseODMModel.model_update" class="md-nav__link">
     <span class="md-ellipsis">
-      model_update()
+      model_update
     </span>
   </a>
   
@@ -548,7 +546,7 @@
         <li class="md-nav__item">
   <a href="#odmantic.model._BaseODMModel.model_validate_doc" class="md-nav__link">
     <span class="md-ellipsis">
-      model_validate_doc()
+      model_validate_doc
     </span>
   </a>
   
@@ -873,7 +871,7 @@
         <li class="md-nav__item">
   <a href="#odmantic.model._BaseODMModel.model_copy" class="md-nav__link">
     <span class="md-ellipsis">
-      model_copy()
+      model_copy
     </span>
   </a>
   
@@ -882,7 +880,7 @@
         <li class="md-nav__item">
   <a href="#odmantic.model._BaseODMModel.model_dump_doc" class="md-nav__link">
     <span class="md-ellipsis">
-      model_dump_doc()
+      model_dump_doc
     </span>
   </a>
   
@@ -891,7 +889,7 @@
         <li class="md-nav__item">
   <a href="#odmantic.model._BaseODMModel.model_update" class="md-nav__link">
     <span class="md-ellipsis">
-      model_update()
+      model_update
     </span>
   </a>
   
@@ -900,7 +898,7 @@
         <li class="md-nav__item">
   <a href="#odmantic.model._BaseODMModel.model_validate_doc" class="md-nav__link">
     <span class="md-ellipsis">
-      model_validate_doc()
+      model_validate_doc
     </span>
   </a>
   
@@ -963,7 +961,8 @@
 
             <details class="quote">
               <summary>Source code in <code>odmantic/model.py</code></summary>
-              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">521</span>
+              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">520</span>
+<span class="normal">521</span>
 <span class="normal">522</span>
 <span class="normal">523</span>
 <span class="normal">524</span>
@@ -1373,8 +1372,7 @@
 <span class="normal">928</span>
 <span class="normal">929</span>
 <span class="normal">930</span>
-<span class="normal">931</span>
-<span class="normal">932</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">_BaseODMModel</span><span class="p">(</span><span class="n">pydantic</span><span class="o">.</span><span class="n">BaseModel</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+<span class="normal">931</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">_BaseODMModel</span><span class="p">(</span><span class="n">pydantic</span><span class="o">.</span><span class="n">BaseModel</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for [Model][odmantic.model.Model] and</span>
 <span class="sd">    [EmbeddedModel][odmantic.model.EmbeddedModel].</span>
 
@@ -1806,7 +1804,6 @@
 
 
 
-
 <h2 id="odmantic.model._BaseODMModel.model_copy" class="doc doc-heading">
           <code class=" language-python"><span class="n">model_copy</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">update</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">deep</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
 
@@ -1892,7 +1889,8 @@ this data</strong>.</p>
 
           <details class="quote">
             <summary>Source code in <code>odmantic/model.py</code></summary>
-            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">584</span>
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">583</span>
+<span class="normal">584</span>
 <span class="normal">585</span>
 <span class="normal">586</span>
 <span class="normal">587</span>
@@ -1913,8 +1911,7 @@ this data</strong>.</p>
 <span class="normal">602</span>
 <span class="normal">603</span>
 <span class="normal">604</span>
-<span class="normal">605</span>
-<span class="normal">606</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">model_copy</span><span class="p">(</span>
+<span class="normal">605</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">model_copy</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">:</span> <span class="n">BaseT</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">update</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;DictStrAny&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -1945,7 +1942,6 @@ this data</strong>.</p>
 
 
 <div class="doc doc-object doc-function">
-
 
 
 
@@ -2016,7 +2012,8 @@ included</p>
 
           <details class="quote">
             <summary>Source code in <code>odmantic/model.py</code></summary>
-            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">717</span>
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">716</span>
+<span class="normal">717</span>
 <span class="normal">718</span>
 <span class="normal">719</span>
 <span class="normal">720</span>
@@ -2029,8 +2026,7 @@ included</p>
 <span class="normal">727</span>
 <span class="normal">728</span>
 <span class="normal">729</span>
-<span class="normal">730</span>
-<span class="normal">731</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">model_dump_doc</span><span class="p">(</span>
+<span class="normal">730</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">model_dump_doc</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">include</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;AbstractSetIntStr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a document (BSON) representation of the instance (as a dictionary).</span>
@@ -2053,7 +2049,6 @@ included</p>
 
 
 <div class="doc doc-object doc-function">
-
 
 
 
@@ -2203,7 +2198,8 @@ value in the patch object (only applies to Pydantic models)</p>
 
           <details class="quote">
             <summary>Source code in <code>odmantic/model.py</code></summary>
-            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">642</span>
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">641</span>
+<span class="normal">642</span>
 <span class="normal">643</span>
 <span class="normal">644</span>
 <span class="normal">645</span>
@@ -2265,8 +2261,7 @@ value in the patch object (only applies to Pydantic models)</p>
 <span class="normal">701</span>
 <span class="normal">702</span>
 <span class="normal">703</span>
-<span class="normal">704</span>
-<span class="normal">705</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">model_update</span><span class="p">(</span>
+<span class="normal">704</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">model_update</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">patch_object</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">BaseModel</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
     <span class="o">*</span><span class="p">,</span>
@@ -2338,7 +2333,6 @@ value in the patch object (only applies to Pydantic models)</p>
 
 
 <div class="doc doc-object doc-function">
-
 
 
 
@@ -2436,7 +2430,8 @@ value in the patch object (only applies to Pydantic models)</p>
 
           <details class="quote">
             <summary>Source code in <code>odmantic/model.py</code></summary>
-            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">784</span>
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">783</span>
+<span class="normal">784</span>
 <span class="normal">785</span>
 <span class="normal">786</span>
 <span class="normal">787</span>
@@ -2462,8 +2457,7 @@ value in the patch object (only applies to Pydantic models)</p>
 <span class="normal">807</span>
 <span class="normal">808</span>
 <span class="normal">809</span>
-<span class="normal">810</span>
-<span class="normal">811</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="normal">810</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
 <span class="k">def</span> <span class="nf">model_validate_doc</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">BaseT</span><span class="p">],</span> <span class="n">raw_doc</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseT</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse a BSON document into an instance of the Model</span>
 
@@ -2503,6 +2497,7 @@ value in the patch object (only applies to Pydantic models)</p>
 
   </div>
 
+
 </div>
 
 <div class="doc doc-object doc-class">
@@ -2521,7 +2516,8 @@ name by setting the <code>__collection__</code> class variable in the model clas
 
             <details class="quote">
               <summary>Source code in <code>odmantic/model.py</code></summary>
-              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 935</span>
+              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 934</span>
+<span class="normal"> 935</span>
 <span class="normal"> 936</span>
 <span class="normal"> 937</span>
 <span class="normal"> 938</span>
@@ -2618,8 +2614,7 @@ name by setting the <code>__collection__</code> class variable in the model clas
 <span class="normal">1029</span>
 <span class="normal">1030</span>
 <span class="normal">1031</span>
-<span class="normal">1032</span>
-<span class="normal">1033</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">_BaseODMModel</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ModelMetaclass</span><span class="p">):</span>
+<span class="normal">1032</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">_BaseODMModel</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ModelMetaclass</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class that can be extended to create an ODMantic Model.</span>
 
 <span class="sd">    Each model will be bound to a MongoDB collection. You can customize the collection</span>
@@ -2739,6 +2734,7 @@ name by setting the <code>__collection__</code> class variable in the model clas
 
   </div>
 
+
 </div>
 
 <div class="doc doc-object doc-class">
@@ -2757,12 +2753,12 @@ integrated in a regular ODMantic Model.</p>
 
             <details class="quote">
               <summary>Source code in <code>odmantic/model.py</code></summary>
-              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1036</span>
+              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1035</span>
+<span class="normal">1036</span>
 <span class="normal">1037</span>
 <span class="normal">1038</span>
 <span class="normal">1039</span>
-<span class="normal">1040</span>
-<span class="normal">1041</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">EmbeddedModel</span><span class="p">(</span><span class="n">_BaseODMModel</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">EmbeddedModelMetaclass</span><span class="p">):</span>
+<span class="normal">1040</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">EmbeddedModel</span><span class="p">(</span><span class="n">_BaseODMModel</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">EmbeddedModelMetaclass</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class that can be extended to create an ODMantic Embedded Model.</span>
 
 <span class="sd">    An embedded document cannot be persisted directly to the database but should be</span>
@@ -2772,6 +2768,7 @@ integrated in a regular ODMantic Model.</p>
             </details>
 
   </div>
+
 
 </div>
 
@@ -2861,10 +2858,10 @@ integrated in a regular ODMantic Model.</p>
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["instant", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["instant", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.bd41221c.min.js"></script>
       
         <script src="../../js/gitter.js"></script>
       

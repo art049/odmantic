@@ -20,7 +20,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.14">
     
     
       
@@ -28,7 +28,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.10ba22f1.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
@@ -434,10 +434,8 @@
     
     
     
-    
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
-        
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
@@ -1036,14 +1034,14 @@
 
             <details class="quote">
               <summary>Source code in <code>odmantic/bson.py</code></summary>
-              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">420</span>
+              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">418</span>
+<span class="normal">419</span>
+<span class="normal">420</span>
 <span class="normal">421</span>
 <span class="normal">422</span>
 <span class="normal">423</span>
 <span class="normal">424</span>
-<span class="normal">425</span>
-<span class="normal">426</span>
-<span class="normal">427</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">BaseBSONModel</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="normal">425</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">BaseBSONModel</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Equivalent of `pydantic.BaseModel` supporting BSON types serialization.</span>
 
 <span class="sd">    If you want to apply other custom JSON encoders, you&#39;ll need to use</span>
@@ -1072,9 +1070,11 @@
 
   </div>
 
+
 </div>
 
 <div class="doc doc-object doc-attribute">
+
 
 
 
@@ -1082,7 +1082,7 @@
   <div class="doc doc-contents first">
   </div>
 
-</div><p>Encoders required to encode BSON fields (can be used in the Pydantic Model's <code>Config.json_encoders</code> parameter). See <a href="https://pydantic-docs.helpmanual.io/usage/exporting_models/#json_encoders" target="blank_">pydantic: JSON Encoders</a> for more details.</p>
+</div><p>Encoders required to encode BSON fields (can be used in the Pydantic Model's <code>Config.json_encoders</code> parameter). See <a href="https://docs.pydantic.dev/latest/api/config/#pydantic.config.ConfigDict.json_encoders" target="blank_">pydantic: JSON Encoders</a> for more details.</p>
 <h2 id="custom-bson-serializer-annotation">Custom BSON serializer annotation<a class="headerlink" href="#custom-bson-serializer-annotation" title="Permanent link">&para;</a></h2>
 
 
@@ -1127,6 +1127,7 @@
   </div>
 
   </div>
+
 
 </div><h2 id="pydantic-type-helpers">Pydantic type helpers<a class="headerlink" href="#pydantic-type-helpers" title="Permanent link">&para;</a></h2>
 <p>Those helpers inherit directly from their respective <code>bson</code> types. They add the field
@@ -1265,6 +1266,7 @@ validation logic required by Pydantic to work with them. On top of this, the app
 
   </div>
 
+
 </div>
 
 <div class="doc doc-object doc-class">
@@ -1365,6 +1367,7 @@ validation logic required by Pydantic to work with them. On top of this, the app
 
   </div>
 
+
 </div>
 
 <div class="doc doc-object doc-class">
@@ -1422,7 +1425,7 @@ validation logic required by Pydantic to work with them. On top of this, the app
         <span class="n">_handler</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="n">core_schema</span><span class="o">.</span><span class="n">CoreSchema</span><span class="p">],</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">core_schema</span><span class="o">.</span><span class="n">CoreSchema</span><span class="p">:</span>
         <span class="k">def</span> <span class="nf">validate_from_decimal_repr</span><span class="p">(</span>
-            <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">decimal</span><span class="o">.</span><span class="n">Decimal</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="nb">int</span><span class="p">]]</span>
+            <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">decimal</span><span class="o">.</span><span class="n">Decimal</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="nb">int</span><span class="p">]],</span>
         <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">bson</span><span class="o">.</span><span class="n">decimal128</span><span class="o">.</span><span class="n">Decimal128</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">bson</span><span class="o">.</span><span class="n">decimal128</span><span class="o">.</span><span class="n">Decimal128</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
@@ -1470,6 +1473,7 @@ validation logic required by Pydantic to work with them. On top of this, the app
   </div>
 
   </div>
+
 
 </div>
 
@@ -1570,6 +1574,7 @@ validation logic required by Pydantic to work with them. On top of this, the app
   </div>
 
   </div>
+
 
 </div>
 
@@ -1699,6 +1704,7 @@ validation logic required by Pydantic to work with them. On top of this, the app
 
   </div>
 
+
 </div>
 
 
@@ -1787,10 +1793,10 @@ validation logic required by Pydantic to work with them. On top of this, the app
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["instant", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["instant", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.bd41221c.min.js"></script>
       
         <script src="../../js/gitter.js"></script>
       
