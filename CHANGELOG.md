@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Fix changing example ([#406](https://github.com/art049/odmantic/pull/406) by [@Mokto](https://github.com/Mokto))
+
 - Support defining multiple optional fields with different types ([#416](https://github.com/art049/odmantic/pull/416) by [@netomi](https://github.com/netomi))
 
 - Fix Pydantic URLs ([#366](https://github.com/art049/odmantic/pull/366) by [@aminalaee](https://github.com/aminalaee))
