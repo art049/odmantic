@@ -38,8 +38,6 @@ tasks:
       - git tag v{{.NEW_VERSION}}
       - git push --tags
       - gh release create -d --target {{.RELEASE_BRANCH}} --title v{{.NEW_VERSION}} --notes-file {{.RELEASE_NOTE_FILE}} v{{.NEW_VERSION}}
-      - flit build
-      - flit publish
 
   clean:
     cmds:
