@@ -67,7 +67,7 @@ To define choices, it's possible to use the standard `enum` classes:
     { "_id" : ObjectId("5f818f2dd5708527282c49b7"), "kind" : "small", "name" : "Spruce" }
     ```
 
-If you try to use a value not present in the allowed choices, a [ValidationError](https://pydantic-docs.helpmanual.io/usage/models/#error-handling){:target=blank_} exception will be raised.
+If you try to use a value not present in the allowed choices, a [ValidationError](https://docs.pydantic.dev/latest/usage/models/#error-handling){:target=blank_} exception will be raised.
 
 !!! warning "Usage of `enum.auto`"
     If you might add some values to an `Enum`, it's strongly recommended not to use the
@@ -159,7 +159,7 @@ Those types can be used directly as field types:
 ### Pydantic fields
 
 Most of the types supported by pydantic are supported by ODMantic. See [pydantic:
-Field Types](https://pydantic-docs.helpmanual.io/usage/types){:target=bank_} for more
+Field Types](https://docs.pydantic.dev/latest/usage/types/types/){:target=bank_} for more
 field types.
 
 Unsupported fields:
@@ -208,7 +208,7 @@ descriptor using the `default` keyword argument.
     Currently the default values are not validated yet during the model creation.
 
     An inconsistent default value might raise a
-    [ValidationError](https://pydantic-docs.helpmanual.io/usage/models/#error-handling){:target=blank_}
+    [ValidationError](https://docs.pydantic.dev/latest/usage/models/#error-handling){:target=blank_}
     while building an instance.
 
 ### Document structure
@@ -300,13 +300,13 @@ validation features provided by pydantic are available:
   --8<-- "fields/validation_field_descriptor.py"
   ```
 
-- Use strict types to prevent to coercion from compatible types ([pydantic: Strict Types](https://pydantic-docs.helpmanual.io/usage/types/#strict-types){:target=blank_})
+- Use strict types to prevent to coercion from compatible types ([pydantic: Strict Types](https://docs.pydantic.dev/latest/usage/types/strict_types/){:target=blank_})
   ```python linenums="1"
   --8<-- "fields/validation_strict_types.py"
   ```
 
 - Define custom field validators ([pydantic:
-  Validators](https://pydantic-docs.helpmanual.io/usage/validators/){:target=blank_})
+  Validators](https://docs.pydantic.dev/latest/usage/validators/){:target=blank_})
   ```python linenums="1"
   --8<-- "fields/custom_field_validators.py"
   ```

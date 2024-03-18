@@ -14,7 +14,7 @@
 
 Sync and Async ODM (Object Document Mapper) for <a href="https://www.mongodb.com/"
 target="_blank">MongoDB</a> based on standard Python type hints. Built on top of <a
-href="https://pydantic-docs.helpmanual.io/" target="_blank">Pydantic</a> for model
+href="https://docs.pydantic.dev/" target="_blank">Pydantic</a> for model
 definition and validation.
 
 Core features:

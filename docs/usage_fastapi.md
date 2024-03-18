@@ -278,7 +278,7 @@ the error.
         {"detail":[{"loc":["body","average_size"],"msg":"field required","type":"value_error.missing"}]}%
         ```
     The validation error structure is the one that is defined by the [Pydantic:
-     ValidationError](https://pydantic-docs.helpmanual.io/usage/models/#error-handling){:target=blank_}
+     ValidationError](https://docs.pydantic.dev/latest/usage/models/#error-handling){:target=blank_}
      exception.
 
 Finally, specifying the `response_model` in the `app.put` decorator is not
@@ -712,7 +712,7 @@ We can then finish by saving and returning the updated tree.
     : this field is **required** and an `int` value **must** be provided
 
     (More details: [pydantic #1223](https://github.com/samuelcolvin/pydantic/issues/1223#issuecomment-594632324){:target=blank_},
-     [pydantic: Required fields](https://pydantic-docs.helpmanual.io/usage/models/#required-fields){:target=blank_})
+     [pydantic: Required fields](https://docs.pydantic.dev/latest/usage/models/#required-fields){:target=blank_})
 
     By default [Model.model_update][odmantic.model._BaseODMModel.model_update], will not apply
     values from unset (not explicitely populated) fields. Since we don't want to allow

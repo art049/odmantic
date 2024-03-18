@@ -122,7 +122,7 @@ For example, defining a [text index](https://www.mongodb.com/docs/manual/core/in
 
 Exactly as done with pydantic, it's possible to define custom model validators as
 described in the [pydantic: Root
-Validators](https://pydantic-docs.helpmanual.io/usage/validators/#root-validators){:target=blank_}
+Validators](https://docs.pydantic.dev/latest/usage/validators/){:target=blank_}
 documentation (this apply as well to Embedded Models).
 
 In the following example, we will define a rectangle class and add two validators: The
@@ -141,7 +141,7 @@ ensure that the area of the rectangle is less or equal to 9.
 ### Advanced Configuration
 
 The model configuration is done in the same way as with Pydantic models: using a
-[ConfigDict](https://pydantic-docs.helpmanual.io/usage/model_config/){:target=blank_} `model_config` defined in the model body.
+[ConfigDict](https://docs.pydantic.dev/latest/usage/model_config/){:target=blank_} `model_config` defined in the model body.
 
 Here is an example of a model configuration:
 
@@ -158,7 +158,6 @@ class Event(Model):
         ],
     }
 ```
-
 
 #### Available options
 
@@ -187,7 +186,7 @@ class Event(Model):
 
 `#!python schema_extra: dict` *(inherited from Pydantic)*
  :    A dict used to extend/update the generated JSON Schema, or a callable to
-      post-process it. See [Pydantic: Schema customization](https://pydantic-docs.helpmanual.io/usage/schema/#schema-customization){:target=_blank} for more details.
+      post-process it. See [Pydantic: Schema customization](https://docs.pydantic.dev/latest/usage/json_schema/#schema-customization){:target=_blank} for more details.
 
       Default: `#!python {}`
 
@@ -222,7 +221,7 @@ class Event(Model):
 
 For more details and examples about the options inherited from Pydantic, you can have a
 look at [Pydantic: Model
-Config](https://pydantic-docs.helpmanual.io/usage/model_config/){:target=blank_}
+Config](https://docs.pydantic.dev/latest/usage/model_config/){:target=blank_}
 
 !!! warning
     Only the options described above are supported and other options from Pydantic can't
