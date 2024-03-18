@@ -5,17 +5,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- chore: add a test with a model when defining multiple optional fields ([#426](https://github.com/art049/odmantic/pull/426) by [@art049](https://github.com/art049))
+## [1.0.1] - 2024-03-18
 
-- chore: bump ruff and use ruff format ([#425](https://github.com/art049/odmantic/pull/425) by [@art049](https://github.com/art049))
+### Fixed
 
-- feat: support the examples property in field ([#404](https://github.com/art049/odmantic/pull/404) by [@Mokto](https://github.com/Mokto))
+- Optional and Union generic types definition issues ([#416](https://github.com/art049/odmantic/pull/416) by [@netomi](https://github.com/netomi))
 
-- Fix changing example ([#406](https://github.com/art049/odmantic/pull/406) by [@Mokto](https://github.com/Mokto))
+- Remove continuously changing example for DateTime objects ([#406](https://github.com/art049/odmantic/pull/406) by [@Mokto](https://github.com/Mokto))
 
-- Support defining multiple optional fields with different types ([#416](https://github.com/art049/odmantic/pull/416) by [@netomi](https://github.com/netomi))
+### Added
 
-- Fix Pydantic URLs ([#366](https://github.com/art049/odmantic/pull/366) by [@aminalaee](https://github.com/aminalaee))
+- Support the `examples` property in Field descriptors ([#404](https://github.com/art049/odmantic/pull/404) by [@Mokto](https://github.com/Mokto))
+
+### Internals
+
+- Fix Pydantic docs URLs ([#366](https://github.com/art049/odmantic/pull/366) by [@aminalaee](https://github.com/aminalaee))
+
+- Add a test with a model when defining multiple optional fields ([#426](https://github.com/art049/odmantic/pull/426) by [@art049](https://github.com/art049))
+
+- Bump ruff and use ruff format ([#425](https://github.com/art049/odmantic/pull/425) by [@art049](https://github.com/art049))
+
 
 ## [1.0.0] - 2023-12-13
 
@@ -426,4 +435,5 @@ _We comply with the new Pydantic method naming, prefixing them with `model_`_
 [0.9.1]: https://github.com/art049/odmantic/compare/v0.9.0...v0.9.1
 [0.9.2]: https://github.com/art049/odmantic/compare/v0.9.1...v0.9.2
 [1.0.0]: https://github.com/art049/odmantic/compare/v0.9.2...v1.0.0
-[unreleased]: https://github.com/art049/odmantic/compare/v1.0.0...HEAD
+[1.0.1]: https://github.com/art049/odmantic/compare/v1.0.0...v1.0.1
+[unreleased]: https://github.com/art049/odmantic/compare/v1.0.1...HEAD
