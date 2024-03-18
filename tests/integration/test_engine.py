@@ -1005,7 +1005,8 @@ async def test_find_sort_desc(
     aio_engine: AIOEngine, person_persisted: List[PersonModel]
 ):
     results = await aio_engine.find(
-        PersonModel, sort=PersonModel.last_name.desc()  # type: ignore
+        PersonModel,
+        sort=PersonModel.last_name.desc(),  # type: ignore
     )
     assert results == list(
         reversed(sorted(person_persisted, key=lambda person: person.last_name))

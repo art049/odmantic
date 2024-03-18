@@ -35,7 +35,8 @@ def test_validate_type_bson_substituted(base, replacement):
 @pytest.mark.parametrize("base, replacement", _BSON_SUBSTITUTED_FIELDS.items())
 def test_optional_bson_subst(base, replacement):
     assert are_generics_equal(
-        validate_type(Optional[base]), Optional[replacement]  # type: ignore
+        validate_type(Optional[base]),
+        Optional[replacement],
     )
 
 
@@ -126,8 +127,7 @@ def test_mutable_types_mutables(t: Type):
 
 
 def test_mutable_types_unknown_type():
-    class T:
-        ...
+    class T: ...
 
     assert is_type_mutable(T)
 

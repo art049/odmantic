@@ -3,8 +3,7 @@ import pytest
 from odmantic import EmbeddedModel, Model
 
 
-class M(Model):
-    ...
+class M(Model): ...
 
 
 def test_deprecated_copy():
@@ -19,8 +18,7 @@ def test_deprecated_update():
 
 def test_deprecated_update_basemodel():
     # EmbeddedModel is a subclass of BaseModel not redefine update
-    class E(EmbeddedModel):
-        ...
+    class E(EmbeddedModel): ...
 
     with pytest.deprecated_call():
         E().update({})

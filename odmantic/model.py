@@ -194,8 +194,9 @@ def validate_type(type_: Type) -> Type:
         # generics is found
         # https://github.com/pydantic/pydantic/issues/8354
         if type_origin is Union:
-            # as new_arg_types is a tuple, we can directly create a matching Union instance,
-            # instead of hacking our way around it: https://stackoverflow.com/a/72884529/3784643
+            # as new_arg_types is a tuple, we can directly create a matching Union
+            # instance, instead of hacking our way around it:
+            # https://stackoverflow.com/a/72884529/3784643
             type_ = Union[new_arg_types]  # type: ignore
         else:
             type_ = GenericAlias(type_origin, new_arg_types)  # type: ignore
@@ -409,9 +410,9 @@ class BaseModelMetaclass(pydantic._internal._model_construction.ModelMetaclass):
             odm_fields: Dict[str, ODMBaseField] = namespace["__odm_fields__"]
             for field_name, field in odm_fields.items():
                 if isinstance(field, (ODMReference, ODMEmbedded)):
-                    namespace["__annotations__"][
-                        field_name
-                    ] = field.model.__pydantic_model__
+                    namespace["__annotations__"][field_name] = (
+                        field.model.__pydantic_model__
+                    )
             # Build the pydantic model
             pydantic_cls = (
                 pydantic._internal._model_construction.ModelMetaclass.__new__(

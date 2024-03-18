@@ -13,8 +13,7 @@ class ODMBaseIndex(metaclass=ABCMeta):
         self.index_name = index_name
 
     @abstractmethod
-    def get_index_specifier(self) -> Sequence[Tuple[str, int]]:
-        ...
+    def get_index_specifier(self) -> Sequence[Tuple[str, int]]: ...
 
     def get_pymongo_index(self) -> pymongo.IndexModel:
         kwargs: Dict[str, Any] = {"keys": self.get_index_specifier()}

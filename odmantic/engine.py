@@ -230,7 +230,7 @@ class BaseEngine:
 
     @staticmethod
     def _build_sort_expression(
-        sort_field: Union[FieldProxy, SortExpression]
+        sort_field: Union[FieldProxy, SortExpression],
     ) -> SortExpression:
         return (
             SortExpression({+sort_field: 1})
@@ -338,7 +338,7 @@ class AIOEngine(BaseEngine):
 
     @staticmethod
     def _get_session(
-        session: Union[AIOSessionType, AIOSessionBase]
+        session: Union[AIOSessionType, AIOSessionBase],
     ) -> Optional[AsyncIOMotorClientSession]:
         if isinstance(session, (AIOSession, AIOTransaction)):
             return session.get_driver_session()
@@ -750,7 +750,7 @@ class SyncEngine(BaseEngine):
 
     @staticmethod
     def _get_session(
-        session: Union[SyncSessionType, SyncSessionBase]
+        session: Union[SyncSessionType, SyncSessionBase],
     ) -> Optional[ClientSession]:
         if isinstance(session, (SyncSession, SyncTransaction)):
             return session.get_driver_session()

@@ -36,7 +36,6 @@ def is_sub_dict(a: Dict, b: Dict) -> bool:
 async def test_create_trees_count_get(
     base_example_client: TestClient, aio_engine: AIOEngine, count: int
 ):
-
     for _ in range(count):
         response = await base_example_client.put("/trees/", json=EXAMPLE_TREE_BODY)
         assert response.status_code == 200
