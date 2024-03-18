@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Fix Pydantic URLs ([#366](https://github.com/art049/odmantic/pull/366) by [@aminalaee](https://github.com/aminalaee))
+
 ## [1.0.0] - 2023-12-13
 
 I'm excited to announce ODMantic v1.0.0, with Pydantic v2 support! 🎉
