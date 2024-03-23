@@ -1,9 +1,9 @@
-FROM fkrull/multi-python
+FROM mcr.microsoft.com/devcontainers/python:3.8
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
+    netcat-openbsd \
     git-lfs \
-    netcat \
   && apt-get clean autoclean \
   && apt-get autoremove -y \
   && rm -rf /var/lib/apt/lists/* \
