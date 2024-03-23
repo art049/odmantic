@@ -45,8 +45,6 @@ dependencies = [
 ]
 [project.optional-dependencies]
 test = [
-    "ruff ~= 0.3.3",
-    "mypy ~= 1.4.1",
     "pytest ~= 7.0",
     "pytest-xdist ~= 2.1.0",
     "pytest-asyncio ~= 0.16.0",
@@ -62,8 +60,6 @@ test = [
     "uvicorn ~= 0.17.0",
     "fastapi >=0.104.0",
     "requests ~= 2.24",
-    "typer ~= 0.4.1",
-    "semver ~= 2.13.0",
     "pytest-benchmark ~= 4.0.0",
     "pytest-codspeed ~= 2.1.0",
     "httpx ~= 0.24.1",
@@ -75,8 +71,8 @@ doc = [
     "mkdocstrings[python] ~= 0.24.0",
     "mkdocs-macros-plugin ~= 1.0.4",
 ]
-lint = ["isort ~= 5.13.2", "black ~= 24.3.0"]
-dev = ["ipython ~= 7.16.1"]
+lint = ["ruff ~= 0.3.3", "mypy ~= 1.4.1"]
+dev = ["semver ~= 2.13.0", "typer ~= 0.4.1", "ipython ~= 7.16.1"]
 
 [project.urls]
 Documentation = "https://art049.github.io/odmantic"
