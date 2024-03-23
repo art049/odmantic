@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- make dev container work ([#438](https://github.com/art049/odmantic/pull/438) by [@art049](https://github.com/art049))
+
 ## [1.0.1] - 2024-03-18
 
 ### Fixed
