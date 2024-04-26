@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- chore(bench): update CodSpeed/action to v2 ([#461](https://github.com/art049/odmantic/pull/461) by [@adriencaccia](https://github.com/adriencaccia))
+
 - fix: support pydantic 2.7 ([#462](https://github.com/art049/odmantic/pull/462) by [@adriencaccia](https://github.com/adriencaccia))
 
 - make dev container work ([#438](https://github.com/art049/odmantic/pull/438) by [@art049](https://github.com/art049))
