@@ -534,8 +534,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         # __fields_modified__ is not a ClassVar but this allows to hide this field from
         # the dataclass transform generated constructor
         __fields_modified__: ClassVar[Set[str]] = set()
-
-    model_config: ClassVar[ODMConfigDict]
+        model_config: ClassVar[ODMConfigDict]
 
     __slots__ = ("__fields_modified__",)
 
