@@ -71,7 +71,7 @@ doc = [
     "mkdocstrings[python] ~= 0.24.0",
     "mkdocs-macros-plugin ~= 1.0.4",
 ]
-lint = ["ruff ~= 0.3.3", "mypy ~= 1.4.1"]
+lint = ["ruff ~= 0.4.2", "mypy ~= 1.4.1"]
 dev = ["semver ~= 2.13.0", "typer ~= 0.4.1", "ipython ~= 7.16.1"]
 
 [project.urls]
