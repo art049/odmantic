@@ -5,11 +5,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- chore(bench): update CodSpeed/action to v2 ([#461](https://github.com/art049/odmantic/pull/461) by [@adriencaccia](https://github.com/adriencaccia))
+## [1.0.2] - 2024-04-26
+
+### Fixed
 
 - fix: support pydantic 2.7 ([#462](https://github.com/art049/odmantic/pull/462) by [@adriencaccia](https://github.com/adriencaccia))
 
-- make dev container work ([#438](https://github.com/art049/odmantic/pull/438) by [@art049](https://github.com/art049))
+### Internals
+
+- chore(bench): update CodSpeed/action to v2 ([#461](https://github.com/art049/odmantic/pull/461) by [@adriencaccia](https://github.com/adriencaccia))
+
+- Fix dev container environment ([#438](https://github.com/art049/odmantic/pull/438) by [@Kludex](https://github.com/Kludex) and [@art049](https://github.com/art049))
+
+
 
 ## [1.0.1] - 2024-03-18
 
@@ -442,4 +450,5 @@ _We comply with the new Pydantic method naming, prefixing them with `model_`_
 [0.9.2]: https://github.com/art049/odmantic/compare/v0.9.1...v0.9.2
 [1.0.0]: https://github.com/art049/odmantic/compare/v0.9.2...v1.0.0
 [1.0.1]: https://github.com/art049/odmantic/compare/v1.0.0...v1.0.1
-[unreleased]: https://github.com/art049/odmantic/compare/v1.0.1...HEAD
+[1.0.2]: https://github.com/art049/odmantic/compare/v1.0.1...v1.0.2
+[unreleased]: https://github.com/art049/odmantic/compare/v1.0.2...HEAD
