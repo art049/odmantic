@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- fix: support pydantic 2.7 ([#462](https://github.com/art049/odmantic/pull/462) by [@adriencaccia](https://github.com/adriencaccia))
+
 - make dev container work ([#438](https://github.com/art049/odmantic/pull/438) by [@art049](https://github.com/art049))
 
 ## [1.0.1] - 2024-03-18
