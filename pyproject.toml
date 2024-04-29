@@ -68,7 +68,7 @@ fastapi = ["fastapi >=0.100.0"]
 doc = [
     "pydocstyle[toml] ~= 6.3.0",
     "mkdocs-material ~= 9.5.2",
-    "mkdocstrings[python] ~= 0.24.0",
+    "mkdocstrings[python] ~= 0.25.0",
     "mkdocs-macros-plugin ~= 1.0.4",
 ]
 lint = ["ruff ~= 0.3.3", "mypy ~= 1.4.1"]
