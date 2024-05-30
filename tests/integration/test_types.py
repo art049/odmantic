@@ -2,17 +2,7 @@ import dataclasses
 import re
 from datetime import datetime
 from decimal import Decimal
-from typing import (
-    Any,
-    Dict,
-    Generic,
-    List,
-    Pattern,
-    Tuple,
-    Type,
-    TypeVar,
-    Union,
-)
+from typing import Any, Dict, Generic, List, Pattern, Tuple, Type, TypeVar, Union
 
 import pytest
 from bson import Binary, Decimal128, Int64, ObjectId, Regex

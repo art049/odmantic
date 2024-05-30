@@ -369,6 +369,7 @@ def test_sync_embedded_model_optional_list_custom_key_name_save_and_fetch(
 
 
 async def test_embedded_model_dict_custom_key_name_save_and_fetch(
+    pymongo_database: Database,
     aio_engine: AIOEngine,
 ):
     class In(EmbeddedModel):
@@ -381,9 +382,18 @@ async def test_embedded_model_dict_custom_key_name_save_and_fetch(
     await aio_engine.save(instance)
     fetched = await aio_engine.find_one(Out)
     assert instance == fetched
+    document = pymongo_database[Out.__collection__].find_one(
+        {
+            +Out.id: instance.id,  # type: ignore
+        }
+    )
+    assert document is not None
+    assert document["in"]
+    assert document["in"]["key"]["in-a"] == 3
 
 
 def test_sync_embedded_model_dict_custom_key_name_save_and_fetch(
+    pymongo_database: Database,
     sync_engine: SyncEngine,
 ):
     class In(EmbeddedModel):
@@ -396,3 +406,59 @@ def test_sync_embedded_model_dict_custom_key_name_save_and_fetch(
     sync_engine.save(instance)
     fetched = sync_engine.find_one(Out)
     assert instance == fetched
+    document = pymongo_database[Out.__collection__].find_one(
+        {
+            +Out.id: instance.id,  # type: ignore
+        }
+    )
+    assert document is not None
+    assert document["in"]
+    assert document["in"]["key"]["in-a"] == 3
+
+
+async def test_embedded_model_optional_dict_custom_key_name_save_and_fetch(
+    pymongo_database: Database,
+    aio_engine: AIOEngine,
+):
+    class In(EmbeddedModel):
+        a: int = Field(key_name="in-a")
+
+    class Out(Model):
+        inner: Optional[Dict[str, In]] = Field(key_name="in", default_factory=dict)
+
+    instance = Out(inner={"key": In(a=3)})
+    await aio_engine.save(instance)
+    fetched = await aio_engine.find_one(Out)
+    assert instance == fetched
+    document = pymongo_database[Out.__collection__].find_one(
+        {
+            +Out.id: instance.id,  # type: ignore
+        }
+    )
+    assert document is not None
+    assert document["in"]
+    assert document["in"]["key"]["in-a"] == 3
+
+
+def test_sync_embedded_model_optional_dict_custom_key_name_save_and_fetch(
+    pymongo_database: Database,
+    sync_engine: SyncEngine,
+):
+    class In(EmbeddedModel):
+        a: int = Field(key_name="in-a")
+
+    class Out(Model):
+        inner: Optional[Dict[str, In]] = Field(key_name="in", default_factory=dict)
+
+    instance = Out(inner={"key": In(a=3)})
+    sync_engine.save(instance)
+    fetched = sync_engine.find_one(Out)
+    assert instance == fetched
+    document = pymongo_database[Out.__collection__].find_one(
+        {
+            +Out.id: instance.id,  # type: ignore
+        }
+    )
+    assert document is not None
+    assert document["in"]
+    assert document["in"]["key"]["in-a"] == 3
