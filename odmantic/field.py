@@ -13,6 +13,7 @@ from typing import (
     Union,
     cast,
 )
+import warnings
 
 from pydantic.config import JsonDict
 from pydantic.fields import Field as PDField
@@ -63,7 +64,8 @@ def Field(
     max_items: Optional[int] = None,
     min_length: Optional[int] = None,
     max_length: Optional[int] = None,
-    regex: Optional[str] = None,
+    regex: Optional[str] = None,  # Deprecated, use pattern instead
+    pattern: Optional[str] = None,  # New parameter
     examples: list[Any] | None = None,
 ) -> Any:
     """Used to provide extra information about a field, either for the model schema or
@@ -80,7 +82,6 @@ def Field(
     Warning:
         `primary_field` can't be used along with `key_name` since the key_name will be
         set to `_id`.
-
 
     Args:
         default: since this is replacing the field’s default, its first argument is
@@ -115,7 +116,8 @@ def Field(
             length. The schema will have a ``maximum`` validation keyword
         max_length: only applies to strings, requires the field to have a maximum
             length. The schema will have a ``maxLength`` validation keyword
-        regex: only applies to strings, requires the field match agains a regular
+        regex: deprecated, use pattern instead.
+        pattern: only applies to strings, requires the field match against a regular
             expression pattern string. The schema will have a ``pattern`` validation
             keyword
 
@@ -126,6 +128,12 @@ def Field(
     # noqa: DAR101
     -->
     """
+    if regex and pattern:
+        raise ValueError("Cannot specify both 'regex' and 'pattern'. Use only 'pattern'.")
+    if regex:
+        warnings.warn("'regex' is deprecated, use 'pattern' instead.", DeprecationWarning)
+        pattern = regex
+
     # Perform casts on optional fields to avoid incompatibility due to the strict
     # optional mypy setting
     # TODO: add remaining validation fields from pydantic
@@ -147,7 +155,7 @@ def Field(
         max_items=cast(int, max_items),
         min_length=cast(int, min_length),
         max_length=cast(int, max_length),
-        regex=cast(str, regex),
+        pattern=cast(str, pattern),  # Updated to use pattern
     )
     if primary_field:
         if key_name is not None and key_name != "_id":
