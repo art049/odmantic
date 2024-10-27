@@ -709,11 +709,17 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
     @deprecated(
         "doc is deprecated, please use model_dump_doc instead",
     )
-    def doc(self, include: Optional["AbstractSetIntStr"] = None) -> Dict[str, Any]:
-        return self.model_dump_doc(include=include)
+    def doc(
+        self,
+        include: Optional["AbstractSetIntStr"] = None,
+        exclude_none: bool = False,
+    ) -> Dict[str, Any]:
+        return self.model_dump_doc(include=include, exclude_none=exclude_none)
 
     def model_dump_doc(
-        self, include: Optional["AbstractSetIntStr"] = None
+        self,
+        include: Optional["AbstractSetIntStr"] = None,
+        exclude_none: bool = False,
     ) -> Dict[str, Any]:
         """Generate a document (BSON) representation of the instance (as a dictionary).
 
@@ -724,7 +730,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
         Returns:
             the document associated to the instance
         """
-        raw_doc = self.model_dump()
+        raw_doc = self.model_dump(exclude_none=exclude_none)
         doc = self.__doc(raw_doc, type(self), include)
         return doc
 
@@ -736,6 +742,8 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
     ) -> Dict[str, Any]:
         doc: Dict[str, Any] = {}
         for field_name, field in model.__odm_fields__.items():
+            if field_name not in raw_doc:
+                continue
             if include is not None and field_name not in include:
                 continue
             if isinstance(field, ODMReference):
