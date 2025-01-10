@@ -528,3 +528,15 @@ def test_model_with_multiple_optional_fields():
         "hashed_password": "hashed_password",
     }
     Person(**user)
+
+
+@pytest.mark.skipif(
+    sys.version_info[:3] < (3, 10, 0),
+    reason="Union syntax not supported by python < 3.10",
+)
+def test_model_with_p310_union_syntax():
+    class M(Model):
+        f: int | str  # type: ignore[syntax]
+
+    assert M(f=1).f == 1
+    assert M(f="hello").f == "hello"
