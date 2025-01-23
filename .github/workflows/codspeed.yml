@@ -13,11 +13,20 @@ on:
 
 jobs:
   benchmarks:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - mode: Instrumentation
+            runs-on: ubuntu-latest
+          - mode: WallTime
+            runs-on: codspeed-macro
+
+    runs-on: ${{ matrix.runs-on }}
+    name: Run ${{ matrix.mode }} benchmarks
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: 3.12
           cache: pip
@@ -27,15 +36,15 @@ jobs:
         uses: art049/mongodb-cluster-action@v0
         with:
           version: "4.2"
-          mode: "sharded"
+          mode: "standalone"
       - name: Install dependencies
         run: |
           pip install flit
           pip install ".[test]"
       - name: Run benches
-        uses: CodSpeedHQ/action@v2
+        uses: CodSpeedHQ/action@v3
         with:
           run: pytest tests/integration/benchmarks --codspeed
         env:
           TEST_MONGO_URI: ${{ steps.mongo-service.outputs.connection-string }}
-          TEST_MONGO_MODE: "sharded"
+          TEST_MONGO_MODE: "standalone"
