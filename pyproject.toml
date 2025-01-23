@@ -61,7 +61,7 @@ test = [
     "fastapi >=0.104.0",
     "requests ~= 2.24",
     "pytest-benchmark ~= 4.0.0",
-    "pytest-codspeed ~= 2.1.0",
+    "pytest-codspeed ~= 3.1.2; python_version>='3.9'",
     "httpx ~= 0.24.1",
 ]
 fastapi = ["fastapi >=0.100.0"]
