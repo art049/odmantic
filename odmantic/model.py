@@ -69,6 +69,7 @@ from odmantic.typing import (
     dataclass_transform,
     get_args,
     get_first_type_argument_subclassing,
+    get_generic_origin,
     get_origin,
     is_classvar,
     is_type_argument_subclass,
@@ -303,7 +304,7 @@ class BaseModelMetaclass(pydantic._internal._model_construction.ModelMetaclass):
                         "Declaring a generic type of embedded models containing "
                         f"references is not allowed: {field_name} in {name}"
                     )
-                generic_origin = get_origin(field_type)
+                generic_origin = get_generic_origin(field_type)
                 assert generic_origin is not None
                 odm_fields[field_name] = ODMEmbeddedGeneric(
                     model=model,

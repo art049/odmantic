@@ -367,7 +367,7 @@ async def test_custom_text_index(aio_engine: AIOEngine):
     assert await aio_engine.find_one(Post, {"$text": {"$search": "python"}}) is not None
 
 
-async def test_sync_custom_text_index(sync_engine: SyncEngine):
+def test_sync_custom_text_index(sync_engine: SyncEngine):
     class Post(Model):
         title: str
         content: str
