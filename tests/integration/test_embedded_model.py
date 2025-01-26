@@ -1,4 +1,4 @@
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Union
 
 import pytest
 
@@ -311,3 +311,35 @@ def test_sync_embedded_model_dict_custom_key_name_save_and_fetch(
     sync_engine.save(instance)
     fetched = sync_engine.find_one(Out)
     assert instance == fetched
+
+
+async def test_embedded_model_with_missing_default(
+    aio_engine: AIOEngine,
+):
+    class E(EmbeddedModel):
+        f: int
+
+    class M(Model):
+        e: Union[E, None]
+
+    m = M()
+    assert m.e is None
+    await aio_engine.save(m)
+    fetched = await aio_engine.find_one(M)
+    assert fetched is not None and fetched.e is None
+
+
+def test_sync_embedded_model_with_missing_default(
+    sync_engine: SyncEngine,
+):
+    class E(EmbeddedModel):
+        f: int
+
+    class M(Model):
+        e: Union[E, None]
+
+    m = M()
+    assert m.e is None
+    sync_engine.save(m)
+    fetched = sync_engine.find_one(M)
+    assert fetched is not None and fetched.e is None
