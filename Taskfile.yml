@@ -25,7 +25,7 @@ tasks:
     deps:
       - task: "mongodb:check"
     cmds:
-      - python -m pytest -rs -n auto
+      - uv run python -m pytest -rs -n auto
 
   bench:
     desc: |
@@ -33,7 +33,7 @@ tasks:
     deps:
       - task: "mongodb:check"
     cmds:
-      - python -m pytest --benchmark-enable --benchmark-only
+      - uv run python -m pytest --benchmark-enable --benchmark-only
 
   default:
     desc: |
@@ -41,7 +41,7 @@ tasks:
     deps:
       - task: mongodb
     cmds:
-      - python -m pytest -rs --testmon
+      - uv run python -m pytest -rs --testmon
 
   coverage:
     desc: Get the test coverage (xml and html) with the current version.
@@ -68,8 +68,7 @@ tasks:
   format:
     desc: Format the code (and imports).
     cmds:
-      - python -m isort odmantic tests
-      - python -m black odmantic tests
+      - uv run python -m ruff check odmantic tests
 
   setup:
     desc: Configure the development environment.
@@ -100,17 +99,17 @@ tasks:
 
   setup:deps-setup:
     deps:
-      - task: setup:flit
+      - task: setup:uv
     cmds:
-      - flit install --deps=all --python python
+      - uv sync --all-extras --dev
     sources:
       - pyproject.toml
 
-  setup:flit:
+  setup:uv:
     cmds:
-      - pip install flit
+      - pip install uv
     status:
-      - which flit
+      - which uv
 
   clean:
     cmds:
