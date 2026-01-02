@@ -609,7 +609,9 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
 
         Set them as if they were modified to make sure they are saved in the database.
         """
-        object.__setattr__(self, "__fields_modified__", set(self.model_fields))
+        object.__setattr__(
+            self, "__fields_modified__", set(self.__class__.model_fields)
+        )
         for field_name, field in self.__odm_fields__.items():
             if isinstance(field, ODMEmbedded):
                 value = getattr(self, field_name)
@@ -1006,7 +1008,7 @@ class Model(_BaseODMModel, metaclass=ModelMetaclass):
     ) -> None:
         is_primary_field_in_patch = (
             isinstance(patch_object, BaseModel)
-            and self.__primary_field__ in patch_object.model_fields
+            and self.__primary_field__ in patch_object.__class__.model_fields
         ) or (isinstance(patch_object, dict) and self.__primary_field__ in patch_object)
         if is_primary_field_in_patch:
             if (
