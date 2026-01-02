@@ -1,4 +1,5 @@
 version = 1
+revision = 1
 requires-python = ">=3.8"
 resolution-markers = [
     "python_full_version >= '3.12'",
@@ -1241,7 +1242,7 @@ requires-dist = [
     { name = "mkdocstrings", extras = ["python"], marker = "extra == 'doc'", specifier = "~=0.24.0" },
     { name = "motor", specifier = ">=3.1.1" },
     { name = "mypy", marker = "extra == 'lint'", specifier = "~=1.4.1" },
-    { name = "pydantic", specifier = ">=2.5.2" },
+    { name = "pydantic", specifier = ">=2.7.0" },
     { name = "pydocstyle", extras = ["toml"], marker = "extra == 'doc'", specifier = "~=6.3.0" },
     { name = "pymongo", specifier = ">=4.1.0" },
     { name = "pytest", marker = "extra == 'test'", specifier = "~=7.0" },
@@ -1259,6 +1260,7 @@ requires-dist = [
     { name = "typing-extensions", marker = "python_full_version < '3.11'", specifier = ">=4.2.0" },
     { name = "uvicorn", marker = "extra == 'test'", specifier = "~=0.17.0" },
 ]
+provides-extras = ["test", "fastapi", "doc", "lint", "dev"]
 
 [[package]]
 name = "packaging"
