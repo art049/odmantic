@@ -61,7 +61,19 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
           pip install ".[test]"
-          pip install "pydantic==${{ matrix.pydantic-version }}" "motor==${{ matrix.motor-version }}"
+          PYTHON_VERSION="${{ matrix.python-version }}"
+          MOTOR_VERSION="${{ matrix.motor-version }}"
+
+          # Install pydantic
+          pip install "pydantic==${{ matrix.pydantic-version }}"
+
+          # Install Motor
+          if [[ "$PYTHON_VERSION" == "3.8" && "$MOTOR_VERSION" == "3.7.1" ]]; then
+            # For Python 3.8, use the latest compatible Motor (<3.7.0)
+            echo "Motor 3.7.0+ requires Python 3.9+. Using latest compatible Motor version for Python 3.8."
+          else
+            pip install "motor==${MOTOR_VERSION}"
+          fi
 
           # Motor < 3.5 is incompatible with PyMongo >= 4.9
           MOTOR_VERSION="${{ matrix.motor-version }}"
