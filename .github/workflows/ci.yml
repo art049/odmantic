@@ -62,6 +62,14 @@ jobs:
           pip install ".[test]"
           pip install "pydantic==${{ matrix.pydantic-version }}" "motor==${{ matrix.motor-version }}"
 
+          # Motor < 3.5 is incompatible with PyMongo >= 4.9
+          MOTOR_VERSION="${{ matrix.motor-version }}"
+          if [[ "$MOTOR_VERSION" =~ ^3\.[0-4]\. ]]; then
+            pip install "pymongo<4.9"
+          else
+            pip install -U pymongo
+          fi
+
       - name: Run compatibility checks.
         run: |
           python -c "import motor; print(motor.version)" 1>&2
