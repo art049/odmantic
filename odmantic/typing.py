@@ -32,7 +32,7 @@ if TYPE_CHECKING:
     ReprArgs: TypeAlias = "Iterable[tuple[str | None, Any]]"
     AbstractSetIntStr: TypeAlias = "AbstractSet[int] | AbstractSet[str]"
     MappingIntStrAny: TypeAlias = "Mapping[int, Any] | Mapping[str, Any]"
-    DictStrAny: TypeAlias = Dict[str, Any]
+    DictStrAny: TypeAlias = Mapping[str, Any]
     IncEx: TypeAlias = "set[int] | set[str] | dict[int, Any] | dict[str, Any] | None"
 
 
