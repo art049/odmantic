@@ -40,7 +40,7 @@ jobs:
           pip install flit
           pip install ".[test]"
       - name: Run benches
-        uses: CodSpeedHQ/action@v2
+        uses: CodSpeedHQ/action@v3
         with:
           run: pytest tests/integration/benchmarks --codspeed
         env:
