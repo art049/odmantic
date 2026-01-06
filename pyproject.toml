@@ -38,7 +38,7 @@ classifiers = [
 
 requires-python = ">=3.8"
 dependencies = [
-    "pydantic >=2.7.0",
+    "pydantic >=2.7.0,<2.11.0",
     "typing-extensions >= 4.2.0; python_version<'3.11'",
     "motor >=3.1.1",
     "pymongo >=4.1.0",
