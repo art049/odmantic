@@ -182,7 +182,7 @@ jobs:
         run: |
           echo "$(grep -v 'odmantic =' ./pyproject.toml)" > pyproject.toml
           poetry lock
-          poetry install
+          poetry install --no-root
       - name: Install current ODMantic version
         working-directory: fastapi-odmantic-realworld-example
         run: poetry run pip install ../odmantic-current/
