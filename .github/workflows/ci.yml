@@ -162,7 +162,7 @@ jobs:
         with:
           python-version: "3.11"
       - name: Mongo Service
-        run: bash mongodb-cluster/run.sh
+        run: bash odmantic-current/mongodb-cluster/run.sh
       - name: Install dependencies (w/o ODMantic)
         working-directory: fastapi-odmantic-realworld-example
         run: |
