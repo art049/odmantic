@@ -161,6 +161,10 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: Install poetry and flit
+        run: |
+          uv tool install poetry
+          uv tool install flit
       - name: Mongo Service
         run: bash odmantic-current/mongodb-cluster/run.sh
       - name: Install dependencies (w/o ODMantic)
@@ -175,7 +179,7 @@ jobs:
       - name: Start the FastAPI server
         working-directory: fastapi-odmantic-realworld-example
         run: |
-          ./scripts/start.sh &
+          uv run ./scripts/start.sh &
           # Wait for the server
           while ! curl "http://localhost:8000/health" > /dev/null 2>&1
           do
