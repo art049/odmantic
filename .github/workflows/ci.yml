@@ -130,7 +130,7 @@ jobs:
           TEST_MONGO_URI: ${{ steps.mongo-service.outputs.connection-string }}
           TEST_MONGO_MODE: ${{ matrix.mongo-mode }}
 
-      - uses: codecov/codecov-action@v3
+      - uses: codecov/codecov-action@v5
         if: github.event_name != 'schedule' # Don't report coverage for nightly builds
         with:
           file: ./coverage.xml
