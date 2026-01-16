@@ -2,6 +2,9 @@ name: docs-preview
 on:
   - pull_request
 
+env:
+  UV_NO_SYNC: true
+
 jobs:
   deploy-docs:
     runs-on: ubuntu-latest
