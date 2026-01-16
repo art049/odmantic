@@ -161,6 +161,8 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: Mongo Service
+        run: bash mongodb-cluster/run.sh
       - name: Install dependencies (w/o ODMantic)
         working-directory: fastapi-odmantic-realworld-example
         run: |
@@ -170,8 +172,6 @@ jobs:
       - name: Install current ODMantic version
         working-directory: fastapi-odmantic-realworld-example
         run: uv tool run poetry run pip install ../odmantic-current/
-      - name: Mongo Service
-        run: bash mongodb-cluster/run.sh
       - name: Start the FastAPI server
         working-directory: fastapi-odmantic-realworld-example
         run: |
