@@ -7,6 +7,9 @@ on:
   schedule:
     - cron: "0 2 * * *"
 
+env:
+  UV_NO_SYNC: true
+
 jobs:
   static-analysis:
     runs-on: ubuntu-latest
@@ -50,23 +53,23 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "${{ matrix.python-version }}"
-      - name: Cache environment
-        uses: actions/cache@v4
-        id: cache
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v7
         with:
-          path: ${{ env.pythonLocation }}
-          key: env-compatibility-${{ runner.os }}-${{ matrix.python-version }}-${{ matrix.pydantic-version }}-${{ matrix.motor-version }}-${{ hashFiles('pyproject.toml') }}
+          enable-cache: true
+          cache-dependency-glob: |
+            pyproject.toml
+            uv.lock
       - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          pip install ".[test]"
-          pip install "pydantic==${{ matrix.pydantic-version }}" "motor==${{ matrix.motor-version }}"
+          uv sync --locked --no-dev --extra test
+          uv pip install "pydantic==${{ matrix.pydantic-version }}" "motor==${{ matrix.motor-version }}"
 
       - name: Run compatibility checks.
         run: |
-          python -c "import motor; print(motor.version)" 1>&2
-          python -c "import pydantic; print(pydantic.VERSION)" 1>&2
-          python -m pytest -q -rs
+          uv run python -c "import motor; print(motor.version)" 1>&2
+          uv run python -c "import pydantic; print(pydantic.VERSION)" 1>&2
+          uv run python -m pytest -q -rs
 
   tests:
     runs-on: ubuntu-latest
@@ -100,6 +103,13 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: pip
           cache-dependency-path: "pyproject.toml"
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+          cache-dependency-glob: |
+            pyproject.toml
+            uv.lock
       - name: Mongo Service
         id: mongo-service
         uses: art049/mongodb-cluster-action@v0
@@ -108,14 +118,14 @@ jobs:
           mode: ${{ matrix.mongo-mode }}
       - name: Install dependencies
         run: |
-          pip install flit
-          pip install ".[test]"
+          uv sync --locked --no-dev --extra test
+          uv pip install flit
       - name: Run all tests
         run: |
           set -e
-          coverage run -m pytest -v
-          coverage report -m
-          coverage xml
+          uv run coverage run -m pytest -v
+          uv run coverage report -m
+          uv run coverage xml
         env:
           TEST_MONGO_URI: ${{ steps.mongo-service.outputs.connection-string }}
           TEST_MONGO_MODE: ${{ matrix.mongo-mode }}
@@ -142,8 +152,8 @@ jobs:
           path: fastapi-odmantic-realworld-example
       - name: Install poetry and flit
         run: |
-          pipx install poetry
-          pipx install flit
+          uv tool install poetry
+          uv tool install flit
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
@@ -153,11 +163,11 @@ jobs:
         working-directory: fastapi-odmantic-realworld-example
         run: |
           echo "$(grep -v 'odmantic =' ./pyproject.toml)" > pyproject.toml
-          poetry lock --no-update
-          poetry install
+          uv tool run poetry lock --no-update
+          uv tool run poetry install
       - name: Install current ODMantic version
         working-directory: fastapi-odmantic-realworld-example
-        run: poetry run pip install ../odmantic-current/
+        run: uv tool run poetry run pip install ../odmantic-current/
       - name: Start the MongoDB instance
         uses: art049/mongodb-cluster-action@v0
         id: mongodb-cluster-action
