@@ -51,7 +51,7 @@ jobs:
         with:
           python-version: "${{ matrix.python-version }}"
       - name: Cache environment
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         id: cache
         with:
           path: ${{ env.pythonLocation }}
