@@ -18,7 +18,7 @@ elif [[ "$MODE" == "replicaSet" ]]; then
   echo "Creating a ReplicaSet MongoDB cluster"
   cd "$SCRIPT_DIR/replica"
   export VERSION
-  docker-compose up -d
+  docker compose up -d
   echo "Initializing the replicaSet"
   ./start.sh
   MONGOCSTRING='mongodb://172.16.17.11:27017,172.16.17.12:27017,172.16.17.13:27017/?replicaSet=mongodb-action-replica-set'
@@ -26,7 +26,7 @@ elif [[ "$MODE" == "sharded" ]]; then
   echo "Creating a Sharded MongoDB cluster"
   cd "$SCRIPT_DIR/sharded"
   export VERSION
-  docker-compose up -d
+  docker compose up -d
   echo "Initializing the sharded cluster"
   ./start.sh
   MONGOCSTRING='mongodb://172.16.17.10:27017/?retryWrites=false'
