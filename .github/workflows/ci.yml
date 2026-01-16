@@ -44,11 +44,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Mongo Service
-        id: mongo-service
-        uses: art049/mongodb-cluster-action@v0
-        with:
-          version: "4.4"
-          mode: standalone
+        run: bash mongodb-cluster/run.sh
+        env:
+          MODE: standalone
+          VERSION: "4.4"
       - name: "Set up Python ${{ matrix.python-version }}"
         uses: actions/setup-python@v5
         with:
@@ -87,13 +86,17 @@ jobs:
           - "6"
         mongo-mode:
           - standalone
+        connection-string:
+          - mongodb://localhost:27017/
         include:
           - python-version: 3.11
             mongo-version: 4.0
             mongo-mode: replicaSet
+            connection-string: mongodb://172.16.17.11:27017,172.16.17.12:27017,172.16.17.13:27017/?replicaSet=mongodb-action-replica-set
           - python-version: 3.11
             mongo-version: 4.2
             mongo-mode: sharded
+            connection-string: mongodb://172.16.17.10:27017/?retryWrites=false
 
     steps:
       - uses: actions/checkout@v4
@@ -109,11 +112,10 @@ jobs:
             pyproject.toml
             uv.lock
       - name: Mongo Service
-        id: mongo-service
-        uses: art049/mongodb-cluster-action@v0
-        with:
-          version: ${{ matrix.mongo-version }}
-          mode: ${{ matrix.mongo-mode }}
+        run: bash mongodb-cluster/run.sh
+        env:
+          MODE: ${{ matrix.mongo-mode }}
+          VERSION: ${{ matrix.mongo-version }}
       - name: Install dependencies
         run: |
           uv sync --locked --no-dev --extra test
@@ -125,7 +127,7 @@ jobs:
           uv run coverage report -m
           uv run coverage xml
         env:
-          TEST_MONGO_URI: ${{ steps.mongo-service.outputs.connection-string }}
+          TEST_MONGO_URI: ${{ matrix.connection-string }}
           TEST_MONGO_MODE: ${{ matrix.mongo-mode }}
 
       - uses: codecov/codecov-action@v5
@@ -165,9 +167,8 @@ jobs:
       - name: Install current ODMantic version
         working-directory: fastapi-odmantic-realworld-example
         run: uv tool run poetry run pip install ../odmantic-current/
-      - name: Start the MongoDB instance
-        uses: art049/mongodb-cluster-action@v0
-        id: mongodb-cluster-action
+      - name: Mongo Service
+        run: bash mongodb-cluster/run.sh
       - name: Start the FastAPI server
         working-directory: fastapi-odmantic-realworld-example
         run: |
@@ -179,7 +180,7 @@ jobs:
           done
           echo "Server ready."
         env:
-          MONGO_URI: ${{ steps.mongodb-cluster-action.outputs.connection-string }}
+          MONGO_URI: "mongodb://localhost:27017/"
       - name: Run realworld backend tests
         working-directory: fastapi-odmantic-realworld-example
         run: ./realworld/api/run-api-tests.sh

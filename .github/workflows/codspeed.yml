@@ -23,11 +23,10 @@ jobs:
           cache: pip
           cache-dependency-path: "pyproject.toml"
       - name: Mongo Service
-        id: mongo-service
-        uses: art049/mongodb-cluster-action@v0
-        with:
-          version: "4.2"
-          mode: "sharded"
+        run: bash mongodb-cluster/run.sh
+        env:
+          MODE: sharded
+          VERSION: "4.2"
       - name: Install dependencies
         run: |
           pip install flit
@@ -37,5 +36,5 @@ jobs:
         with:
           run: pytest tests/integration/benchmarks --codspeed
         env:
-          TEST_MONGO_URI: ${{ steps.mongo-service.outputs.connection-string }}
+          TEST_MONGO_URI: "mongodb://172.16.17.10:27017/?retryWrites=false"
           TEST_MONGO_MODE: "sharded"
