@@ -163,6 +163,7 @@ jobs:
           python-version: "3.11"
       - name: Install poetry and flit
         run: |
+          uv venv
           uv pip install poetry
           uv pip install flit
       - name: Mongo Service
