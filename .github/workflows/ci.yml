@@ -157,10 +157,6 @@ jobs:
           repository: art049/fastapi-odmantic-realworld-example
           submodules: recursive
           path: fastapi-odmantic-realworld-example
-      - name: Install poetry and flit
-        run: |
-          uv tool install poetry
-          uv tool install flit
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
