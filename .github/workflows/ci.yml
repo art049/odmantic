@@ -62,7 +62,7 @@ jobs:
       - name: Install dependencies
         run: |
           uv sync --locked --no-dev --extra test
-          uv pip install "pydantic==${{ matrix.pydantic-version }}" "motor==${{ matrix.motor-version }}"
+          uv pip install "pymongo<4.9" "pydantic==${{ matrix.pydantic-version }}" "motor==${{ matrix.motor-version }}"
 
       - name: Run compatibility checks.
         run: |
