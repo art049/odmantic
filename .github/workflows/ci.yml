@@ -163,19 +163,19 @@ jobs:
           python-version: "3.11"
       - name: Install poetry and flit
         run: |
-          uv tool install poetry
-          uv tool install flit
+          uv pip install poetry
+          uv pip install flit
       - name: Mongo Service
         run: bash odmantic-current/mongodb-cluster/run.sh
       - name: Install dependencies (w/o ODMantic)
         working-directory: fastapi-odmantic-realworld-example
         run: |
           echo "$(grep -v 'odmantic =' ./pyproject.toml)" > pyproject.toml
-          uv tool run poetry lock
-          uv tool run poetry install --no-root
+          uv run poetry lock
+          uv run poetry install --no-root
       - name: Install current ODMantic version
         working-directory: fastapi-odmantic-realworld-example
-        run: uv tool run poetry run pip install ../odmantic-current/
+        run: uv run poetry run pip install ../odmantic-current/
       - name: Start the FastAPI server
         working-directory: fastapi-odmantic-realworld-example
         run: |
