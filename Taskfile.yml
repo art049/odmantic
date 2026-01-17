@@ -7,8 +7,8 @@ silent: true
 includes:
   release: ./.github
   mongodb:
-    taskfile: ./.mongodb-cluster-action/Taskfile.yml
-    dir: .mongodb-cluster-action
+    taskfile: ./mongodb-cluster/Taskfile.yml
+    dir: ./mongodb-cluster
     optional: true
 
 tasks:

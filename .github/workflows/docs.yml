@@ -7,25 +7,32 @@ on:
       - edited
   workflow_dispatch:
 
+env:
+  UV_NO_SYNC: true
+
 jobs:
   deploy-docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           lfs: true
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v2
+      - name: "Set up Python 3.8"
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.8
-          cache: pip
-          cache-dependency-path: "pyproject.toml"
+          python-version: "3.8"
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+          cache-dependency-glob: |
+            pyproject.toml
+            uv.lock
       - name: Install dependencies
         run: |
-          pip install flit
-          pip install ".[doc]"
+          uv sync --locked --no-dev --extra doc
       - name: Build documentation
-        run: mkdocs build -f ./mkdocs.yml
+        run: uv run mkdocs build -f ./mkdocs.yml
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
