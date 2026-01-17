@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - 👷 Fix CI ([#519](https://github.com/art049/odmantic/pull/519) by [@tiangolo](https://github.com/tiangolo))
 
+#### Internal
+
+- 👷 Upgrade GitHub Action latest-changes ([#521](https://github.com/art049/odmantic/pull/521) by [@tiangolo](https://github.com/tiangolo))
+
 ## [1.0.2] - 2024-04-26
 
 ### Fixed
