@@ -582,7 +582,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
     def model_copy(
         self: BaseT,
         *,
-        update: Optional["DictStrAny"] = None,
+        update: Optional["DictStrAny"] = None,  # type: ignore[override]
         deep: bool = False,
     ) -> BaseT:
         """Duplicate a model, optionally choose which fields to change.
