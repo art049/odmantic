@@ -17,6 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Internal
 
+- 👷 Make pre-commit run with Python 3.12 in CI ([#539](https://github.com/art049/odmantic/pull/539) by [@tiangolo](https://github.com/tiangolo))
+
+
 - ⬆️ Add Python 3.12 to CI ([#538](https://github.com/art049/odmantic/pull/538) by [@tiangolo](https://github.com/tiangolo))
 
 
