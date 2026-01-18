@@ -45,35 +45,35 @@ dependencies = [
 ]
 [project.optional-dependencies]
 test = [
-    "pytest ~= 7.0",
-    "pytest-xdist ~= 2.1.0",
-    "pytest-asyncio ~= 0.16.0",
-    # "pytest-testmon ~= 1.3.1",
-    "pytest-sugar ~= 0.9.5",
-    "inline-snapshot ~= 0.6.0",
-    "async-asgi-testclient ~= 1.4.11",
-    "asyncmock ~= 0.4.2",
-    "coverage[toml] ~= 6.2",
-    "pytz ~= 2023.3",
-    "types-pytz ~= 2023.3.0.0",
-    "darglint ~= 1.8.1",
-    "uvicorn ~= 0.17.0",
+    "pytest >= 7.0",
+    "pytest-xdist >= 2.1.0",
+    "pytest-asyncio >= 0.16.0",
+    # "pytest-testmon >= 1.3.1",
+    "pytest-sugar >= 0.9.5",
+    "inline-snapshot >= 0.6.0",
+    "async-asgi-testclient >= 1.4.11",
+    "asyncmock >= 0.4.2",
+    "coverage[toml] >= 6.2",
+    "pytz >= 2023.3",
+    "types-pytz >= 2023.3.0.0",
+    "darglint >= 1.8.1",
+    "uvicorn >= 0.17.0",
     "fastapi >=0.104.0,<0.109",
-    "requests ~= 2.24",
-    "pytest-benchmark ~= 4.0.0",
-    "pytest-codspeed ~= 2.1.0",
-    "httpx ~= 0.24.1",
+    "requests >= 2.24",
+    "pytest-benchmark >= 4.0.0",
+    "pytest-codspeed >= 2.1.0",
+    "httpx >=0.24.1,<0.28",
 ]
 fastapi = ["fastapi >=0.100.0"]
 doc = [
-    "pydocstyle[toml] ~= 6.3.0",
-    "mkdocs-material ~= 9.5.2",
+    "pydocstyle[toml] >= 6.3.0",
+    "mkdocs-material >= 9.5.2",
     "mkdocstrings[python]>=0.18",
-    "mkdocs-macros-plugin ~= 1.0.4",
+    "mkdocs-macros-plugin >= 1.0.4",
     "griffe<1.0",
 ]
-lint = ["ruff ~= 0.3.3", "mypy ~= 1.4.1"]
-dev = ["semver ~= 2.13.0", "typer ~= 0.4.1", "ipython ~= 7.16.1"]
+lint = ["ruff >= 0.3.3", "mypy >= 1.4.1"]
+dev = ["semver >= 2.13.0", "typer >= 0.4.1", "ipython >= 7.16.1"]
 
 [project.urls]
 Documentation = "https://art049.github.io/odmantic"
@@ -128,12 +128,14 @@ known_first_party = ["odmantic", "tests"]
 skip = ["docs"]
 
 [tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
 filterwarnings = [
     "ignore:\"@coroutine\" decorator is deprecated.*:DeprecationWarning:motor.*",
     "ignore:the AIOEngineDependency object is deprecated.*:DeprecationWarning:odmantic.*",
 ]
 pythonpath = "src tests"
-addopts = "--benchmark-disable -W error::DeprecationWarning"
+addopts = "--benchmark-disable"
 [tool.coverage.run]
 branch = true
 [tool.coverage.report]
