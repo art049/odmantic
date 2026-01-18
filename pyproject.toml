@@ -69,7 +69,7 @@ doc = [
     "pydocstyle[toml] ~= 6.3.0",
     "mkdocs-material ~= 9.5.2",
     "mkdocstrings[python]>=0.18",
-    "mkdocs-macros-plugin ~= 1.0.4",
+    "mkdocs-macros-plugin~=1.5.0",
     "griffe<1.0",
 ]
 lint = ["ruff ~= 0.3.3", "mypy ~= 1.4.1"]
