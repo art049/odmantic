@@ -635,7 +635,7 @@ version = "1.3.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "typing-extensions", version = "4.13.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
-    { name = "typing-extensions", version = "4.15.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9' and python_full_version < '3.13'" },
+    { name = "typing-extensions", version = "4.15.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.9' and python_full_version < '3.12'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/50/79/66800aadf48771f6b62f7eb014e352e5d06856655206165d775e675a02c9/exceptiongroup-1.3.1.tar.gz", hash = "sha256:8b412432c6055b0b7d14c310000ae93352ed6754f70fa8f7c34141f91c4e3219", size = 30371, upload-time = "2025-11-21T23:01:54.787Z" }
 wheels = [
@@ -1781,7 +1781,7 @@ requires-dist = [
     { name = "pytest-asyncio", marker = "extra == 'test'", specifier = "~=0.16.0" },
     { name = "pytest-benchmark", marker = "extra == 'test'", specifier = "~=4.0.0" },
     { name = "pytest-codspeed", marker = "extra == 'test'", specifier = "~=2.1.0" },
-    { name = "pytest-sugar", marker = "extra == 'test'", specifier = "~=0.9.5" },
+    { name = "pytest-sugar", marker = "extra == 'test'", specifier = "~=1.1.1" },
     { name = "pytest-xdist", marker = "extra == 'test'", specifier = "~=2.1.0" },
     { name = "pytz", marker = "extra == 'test'", specifier = "~=2023.3" },
     { name = "requests", marker = "extra == 'test'", specifier = "~=2.24" },
@@ -2558,18 +2558,17 @@ wheels = [
 
 [[package]]
 name = "pytest-sugar"
-version = "0.9.7"
+version = "1.1.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "packaging" },
     { name = "pytest" },
     { name = "termcolor", version = "2.4.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.9'" },
     { name = "termcolor", version = "3.1.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.9.*'" },
     { name = "termcolor", version = "3.3.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/57/18/fe569040c5796879288544b1cc98888fce1754138d54e8287ed21614491e/pytest-sugar-0.9.7.tar.gz", hash = "sha256:f1e74c1abfa55f7241cf7088032b6e378566f16b938f3f08905e2cf4494edd46", size = 14874, upload-time = "2023-04-10T11:17:32.071Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/0b/4e/60fed105549297ba1a700e1ea7b828044842ea27d72c898990510b79b0e2/pytest-sugar-1.1.1.tar.gz", hash = "sha256:73b8b65163ebf10f9f671efab9eed3d56f20d2ca68bda83fa64740a92c08f65d", size = 16533, upload-time = "2025-08-23T12:19:35.737Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c7/b2/8f5d346c86e690c58da3b21b7c14d656b4100606abed8e91a98e8b50f3bf/pytest_sugar-0.9.7-py2.py3-none-any.whl", hash = "sha256:8cb5a4e5f8bbcd834622b0235db9e50432f4cbd71fef55b467fe44e43701e062", size = 10034, upload-time = "2023-04-10T11:17:30.233Z" },
+    { url = "https://files.pythonhosted.org/packages/87/d5/81d38a91c1fdafb6711f053f5a9b92ff788013b19821257c2c38c1e132df/pytest_sugar-1.1.1-py3-none-any.whl", hash = "sha256:2f8319b907548d5b9d03a171515c1d43d2e38e32bd8182a1781eb20b43344cc8", size = 11440, upload-time = "2025-08-23T12:19:34.894Z" },
 ]
 
 [[package]]
