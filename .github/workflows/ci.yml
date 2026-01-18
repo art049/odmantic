@@ -33,7 +33,7 @@ jobs:
           - "3.9"
           - "3.10"
           - "3.11"
-          #- "3.12" # FIXME: async-asgi-testclient doesn't support Python 3.12 yet
+          - "3.12"
         pydantic-version:
           - "2.5.2"
         motor-version:
@@ -80,6 +80,7 @@ jobs:
           - "3.9"
           - "3.10"
           - "3.11"
+          - "3.12"
         mongo-version:
           - "4.4"
           - "5"
@@ -89,11 +90,11 @@ jobs:
         connection-string:
           - mongodb://localhost:27017/
         include:
-          - python-version: 3.11
+          - python-version: "3.12"
             mongo-version: 4.0
             mongo-mode: replicaSet
             connection-string: mongodb://172.16.17.11:27017,172.16.17.12:27017,172.16.17.13:27017/?replicaSet=mongodb-action-replica-set
-          - python-version: 3.11
+          - python-version: "3.12"
             mongo-version: 4.2
             mongo-mode: sharded
             connection-string: mongodb://172.16.17.10:27017/?retryWrites=false
@@ -158,10 +159,10 @@ jobs:
           repository: art049/fastapi-odmantic-realworld-example
           submodules: recursive
           path: fastapi-odmantic-realworld-example
-      - name: Set up Python 3.11
+      - name: Set up Python 3.12
         uses: actions/setup-python@v6
         with:
-          python-version: "3.11"
+          python-version: "3.12"
       - name: Install poetry and flit
         run: |
           uv pip install poetry
