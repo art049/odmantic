@@ -65,6 +65,7 @@ from odmantic.field import (
 from odmantic.index import Index, ODMBaseIndex, ODMSingleFieldIndex
 from odmantic.reference import ODMReferenceInfo
 from odmantic.typing import (
+    Annotated,
     GenericAlias,
     dataclass_transform,
     get_args,
@@ -198,6 +199,10 @@ def validate_type(type_: Type) -> Type:
             # instance, instead of hacking our way around it:
             # https://stackoverflow.com/a/72884529/3784643
             type_ = Union[new_arg_types]  # type: ignore
+        elif type_origin is Annotated:
+            # Annotated types must be reconstructed using Annotated[...] syntax
+            # to preserve __metadata__. Using GenericAlias creates a broken type.
+            type_ = Annotated[new_arg_types]  # type: ignore
         else:
             type_ = GenericAlias(type_origin, new_arg_types)  # type: ignore
     return type_
