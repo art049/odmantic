@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.3] - 2025-01-19
+
 #### Fixes
 
 - 🐛 Fix compatibility with latest Pydantic, upgrade locked dependencies with uv ([#522](https://github.com/art049/odmantic/pull/522) by [@tiangolo](https://github.com/tiangolo))
