@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - 👷 Fix CI ([#519](https://github.com/art049/odmantic/pull/519) by [@tiangolo](https://github.com/tiangolo))
 
+#### Fixes
+
+- 🐛 Fix compatibility with latest Pydantic, upgrade locked dependencies with uv ([#522](https://github.com/art049/odmantic/pull/522) by [@tiangolo](https://github.com/tiangolo))
+
 #### Internal
 
 - 👷 Remove not used config in Codcov ([#525](https://github.com/art049/odmantic/pull/525) by [@tiangolo](https://github.com/tiangolo))
