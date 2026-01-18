@@ -17,6 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Internal
 
+- ⬆️ Unpin dev dependencies, use uv.lock and upgrade ([#536](https://github.com/art049/odmantic/pull/536) by [@tiangolo](https://github.com/tiangolo))
+
+
 - 👷 Remove not used config in Codcov ([#525](https://github.com/art049/odmantic/pull/525) by [@tiangolo](https://github.com/tiangolo))
 
 
