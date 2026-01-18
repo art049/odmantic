@@ -17,6 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Internal
 
+- ⬆️ Add Python 3.12 to CI ([#538](https://github.com/art049/odmantic/pull/538) by [@tiangolo](https://github.com/tiangolo))
+
+
 - ⬆️ Unpin dev dependencies, use uv.lock and upgrade ([#536](https://github.com/art049/odmantic/pull/536) by [@tiangolo](https://github.com/tiangolo))
 
 
