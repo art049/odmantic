@@ -67,7 +67,7 @@ test = [
 fastapi = ["fastapi >=0.100.0"]
 doc = [
     "pydocstyle[toml] ~= 6.3.0",
-    "mkdocs-material ~= 9.5.2",
+    "mkdocs-material~=9.7.1",
     "mkdocstrings[python]>=0.18",
     "mkdocs-macros-plugin ~= 1.0.4",
     "griffe<1.0",
