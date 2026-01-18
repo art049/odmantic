@@ -41,6 +41,7 @@ jobs:
       - name: Run benches
         uses: CodSpeedHQ/action@v4
         with:
+          mode: simulation
           run: uv run pytest tests/integration/benchmarks --codspeed
         env:
           TEST_MONGO_URI: "mongodb://172.16.17.10:27017/?retryWrites=false"
