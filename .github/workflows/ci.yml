@@ -14,9 +14,9 @@ jobs:
   static-analysis:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.8"
       - uses: pre-commit/action@v3.0.1
@@ -42,14 +42,14 @@ jobs:
           - "3.3.2"
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Mongo Service
         run: bash mongodb-cluster/run.sh
         env:
           MODE: standalone
           VERSION: "4.4"
       - name: "Set up Python ${{ matrix.python-version }}"
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "${{ matrix.python-version }}"
       - name: Setup uv
@@ -99,9 +99,9 @@ jobs:
             connection-string: mongodb://172.16.17.10:27017/?retryWrites=false
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
       - name: Setup uv
@@ -144,7 +144,7 @@ jobs:
       UV_SYSTEM_PYTHON: true
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           path: odmantic-current
       - name: Setup uv
@@ -154,13 +154,13 @@ jobs:
           cache-dependency-glob: |
             pyproject.toml
             uv.lock
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           repository: art049/fastapi-odmantic-realworld-example
           submodules: recursive
           path: fastapi-odmantic-realworld-example
       - name: Set up Python 3.11
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.11"
       - name: Install poetry and flit
