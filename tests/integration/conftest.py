@@ -1,4 +1,3 @@
-import asyncio
 import os
 from enum import Enum
 from unittest.mock import Mock
