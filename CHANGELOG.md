@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Internal
 
+- 📝 Update release notes ([#541](https://github.com/art049/odmantic/pull/541) by [@tiangolo](https://github.com/tiangolo))
+
+
 - 👷 Update release CI, use uv ([#520](https://github.com/art049/odmantic/pull/520) by [@tiangolo](https://github.com/tiangolo))
 
 - 👷 Fix CI ([#519](https://github.com/art049/odmantic/pull/519) by [@tiangolo](https://github.com/tiangolo))
