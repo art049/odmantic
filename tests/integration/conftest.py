@@ -62,7 +62,6 @@ def database_name():
     return f"odmantic-test-{uuid4()}"
 
 
-@pytest.mark.asyncio
 @pytest.fixture(scope="function")
 async def aio_engine(motor_client: AsyncIOMotorClient, database_name: str):
     sess = AIOEngine(motor_client, database_name)
