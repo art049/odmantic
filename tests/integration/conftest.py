@@ -5,6 +5,7 @@ from unittest.mock import Mock
 from uuid import uuid4
 
 import pytest
+import pytest_asyncio
 from motor.motor_asyncio import AsyncIOMotorClient
 from pymongo import MongoClient
 
@@ -33,18 +34,10 @@ only_on_replica = pytest.mark.skipif(
 )
 
 
-@pytest.fixture(scope="session")
-def event_loop():
-    loop = asyncio.get_event_loop_policy().new_event_loop()
-    asyncio.set_event_loop(loop)
-    yield loop
-    loop.close()
-
-
-@pytest.fixture(scope="session")
-def motor_client(event_loop):
+@pytest_asyncio.fixture(scope="function")
+async def motor_client():
     mongo_uri = TEST_MONGO_URI
-    client = AsyncIOMotorClient(mongo_uri, io_loop=event_loop)
+    client = AsyncIOMotorClient(mongo_uri)
     yield client
     client.close()
 
@@ -62,7 +55,7 @@ def database_name():
     return f"odmantic-test-{uuid4()}"
 
 
-@pytest.fixture(scope="function")
+@pytest_asyncio.fixture(scope="function")
 async def aio_engine(motor_client: AsyncIOMotorClient, database_name: str):
     sess = AIOEngine(motor_client, database_name)
     yield sess
@@ -80,8 +73,8 @@ def sync_engine(pymongo_client: MongoClient, database_name: str):
         pymongo_client.drop_database(database_name)
 
 
-@pytest.fixture(scope="function")
-def motor_database(database_name: str, motor_client: AsyncIOMotorClient):
+@pytest_asyncio.fixture(scope="function")
+async def motor_database(database_name: str, motor_client: AsyncIOMotorClient):
     return motor_client[database_name]
 
 
@@ -90,8 +83,8 @@ def pymongo_database(database_name: str, pymongo_client: MongoClient):
     return pymongo_client[database_name]
 
 
-@pytest.fixture(scope="function")
-def aio_mock_collection(aio_engine: AIOEngine, monkeypatch):
+@pytest_asyncio.fixture(scope="function")
+async def aio_mock_collection(aio_engine: AIOEngine, monkeypatch):
     def f():
         collection = Mock()
         collection.update_one = AsyncMock()

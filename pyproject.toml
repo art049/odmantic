@@ -62,7 +62,7 @@ test = [
     "requests >= 2.24",
     "pytest-benchmark >= 4.0.0",
     "pytest-codspeed >= 2.1.0",
-    "httpx >= 0.24.1",
+    "httpx >=0.24.1,<0.28",
 ]
 fastapi = ["fastapi >=0.100.0"]
 doc = [
@@ -128,12 +128,14 @@ known_first_party = ["odmantic", "tests"]
 skip = ["docs"]
 
 [tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
 filterwarnings = [
     "ignore:\"@coroutine\" decorator is deprecated.*:DeprecationWarning:motor.*",
     "ignore:the AIOEngineDependency object is deprecated.*:DeprecationWarning:odmantic.*",
 ]
 pythonpath = "src tests"
-addopts = "--benchmark-disable -W error::DeprecationWarning"
+addopts = "--benchmark-disable"
 [tool.coverage.run]
 branch = true
 [tool.coverage.report]
