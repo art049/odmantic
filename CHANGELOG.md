@@ -5,17 +5,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- 👷 Update release CI, use uv ([#520](https://github.com/art049/odmantic/pull/520) by [@tiangolo](https://github.com/tiangolo))
-
-- Access `model_fields` on class and not instance ([#510](https://github.com/art049/odmantic/pull/510) by [@sydney-runkle](https://github.com/sydney-runkle))
-
-- 👷 Fix CI ([#519](https://github.com/art049/odmantic/pull/519) by [@tiangolo](https://github.com/tiangolo))
-
 #### Fixes
 
 - 🐛 Fix compatibility with latest Pydantic, upgrade locked dependencies with uv ([#522](https://github.com/art049/odmantic/pull/522) by [@tiangolo](https://github.com/tiangolo))
 
+- Access `model_fields` on class and not instance ([#510](https://github.com/art049/odmantic/pull/510) by [@sydney-runkle](https://github.com/sydney-runkle))
+
 #### Internal
+
+- 👷 Update release CI, use uv ([#520](https://github.com/art049/odmantic/pull/520) by [@tiangolo](https://github.com/tiangolo))
+
+- 👷 Fix CI ([#519](https://github.com/art049/odmantic/pull/519) by [@tiangolo](https://github.com/tiangolo))
 
 - 👷 Make pre-commit run with Python 3.12 in CI ([#539](https://github.com/art049/odmantic/pull/539) by [@tiangolo](https://github.com/tiangolo))
 
