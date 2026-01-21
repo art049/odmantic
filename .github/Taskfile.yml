@@ -8,7 +8,7 @@ vars:
   RELEASE_BRANCH: "master"
   CURRENT_BRANCH:
     sh: git rev-parse --symbolic-full-name --abbrev-ref HEAD
-  RELEASE_COMMIT_FILES: "pyproject.toml CHANGELOG.md"
+  RELEASE_COMMIT_FILES: "pyproject.toml uv.lock CHANGELOG.md"
 
 tasks:
   default:
@@ -32,6 +32,7 @@ tasks:
       NEW_VERSION:
         sh: cat {{.VERSION_FILE}}
     cmds:
+      - uv lock
       - git add {{.RELEASE_COMMIT_FILES}}
       - git commit -m "Release {{.NEW_VERSION}} 🚀"
       - git push
