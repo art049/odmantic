@@ -1,6 +1,6 @@
 [project]
 name = "odmantic"
-version = "1.0.2"
+version = "1.0.3"
 description = "ODMantic, an AsyncIO MongoDB Object Document Mapper for Python using type hints "
 authors = [{ name = "Arthur Pastel", email = "arthur.pastel@gmail.com" }]
 license = { file = "LICENSE" }
@@ -73,7 +73,7 @@ doc = [
     "griffe<1.0",
 ]
 lint = ["ruff >= 0.3.3", "mypy >= 1.4.1"]
-dev = ["semver >= 2.13.0", "typer >= 0.4.1", "ipython >= 7.16.1"]
+dev = ["ipython >= 7.16.1"]
 
 [project.urls]
 Documentation = "https://art049.github.io/odmantic"

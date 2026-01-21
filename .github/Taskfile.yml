@@ -24,7 +24,7 @@ tasks:
 
   prepare-workspace:
     cmds:
-      - python .github/release.py
+      - uv run .github/release.py
   publish-release:
     vars:
       RELEASE_NOTE:

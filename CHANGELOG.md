@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.3] - 2026-01-21
+
 #### Fixes
 
 - 🐛 Fix compatibility with latest Pydantic, upgrade locked dependencies with uv ([#522](https://github.com/art049/odmantic/pull/522) by [@tiangolo](https://github.com/tiangolo))
@@ -14,7 +16,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Internal
 
 - 📝 Update release notes ([#541](https://github.com/art049/odmantic/pull/541) by [@tiangolo](https://github.com/tiangolo))
-
 
 - 👷 Update release CI, use uv ([#520](https://github.com/art049/odmantic/pull/520) by [@tiangolo](https://github.com/tiangolo))
 
@@ -486,4 +487,5 @@ _We comply with the new Pydantic method naming, prefixing them with `model_`_
 [1.0.0]: https://github.com/art049/odmantic/compare/v0.9.2...v1.0.0
 [1.0.1]: https://github.com/art049/odmantic/compare/v1.0.0...v1.0.1
 [1.0.2]: https://github.com/art049/odmantic/compare/v1.0.1...v1.0.2
-[unreleased]: https://github.com/art049/odmantic/compare/v1.0.2...HEAD
+[1.0.3]: https://github.com/art049/odmantic/compare/v1.0.2...v1.0.3
+[unreleased]: https://github.com/art049/odmantic/compare/v1.0.3...HEAD

@@ -1,6 +1,14 @@
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "semver>=2.13.0",
+#     "typer>=0.4.1",
+# ]
+# ///
+
 import datetime
-import importlib.metadata
 import os
+import tomllib
 from enum import Enum
 
 import typer
@@ -15,7 +23,9 @@ class BumpType(str, Enum):
 
 
 def get_current_version() -> VersionInfo:
-    version = importlib.metadata.version("odmantic")
+    with open("./pyproject.toml", "rb") as f:
+        pyproject = tomllib.load(f)
+    version = pyproject["project"]["version"]
     return VersionInfo.parse(version)
 
 
@@ -132,7 +142,7 @@ def main() -> None:
     bump_type: BumpType = typer.prompt(
         typer.style("Release type ?", fg=typer.colors.BLUE, bold=True),
         type=Choice(list(BumpType.__members__)),
-        default=BumpType.patch,
+        default=BumpType.patch.value,
         show_choices=True,
     )
     new_version = get_new_version(current_version, bump_type)
