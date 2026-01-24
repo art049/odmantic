@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Internal
 
+- ⬆️ bump nwtgck/actions-netlify from 1.1 to 3.0 ([#527](https://github.com/art049/odmantic/pull/527) by [@dependabot[bot]](https://github.com/apps/dependabot))
+
+
 - ⬆️ bump filelock from 3.16.1 to 3.20.3 ([#537](https://github.com/art049/odmantic/pull/537) by [@dependabot[bot]](https://github.com/apps/dependabot))
 
 
