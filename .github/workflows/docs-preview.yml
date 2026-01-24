@@ -30,7 +30,7 @@ jobs:
         run: uv run mkdocs build -f ./mkdocs.yml
 
       - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v1.1
+        uses: nwtgck/actions-netlify@v3.0
         id: deployment
         with:
           publish-dir: "./site"
