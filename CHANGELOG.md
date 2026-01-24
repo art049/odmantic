@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+#### Features
+
+- ✨ Add support for Python 3.10 Union syntax, like: `name: str | None = None` ([#501](https://github.com/art049/odmantic/pull/501) by [@rhyn0](https://github.com/rhyn0))
+
 ## [1.0.3] - 2026-01-21
 
 #### Fixes
