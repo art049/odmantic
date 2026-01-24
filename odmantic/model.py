@@ -4,6 +4,7 @@ import datetime
 import decimal
 import enum
 import pathlib
+import types
 import uuid
 from abc import ABCMeta
 from collections.abc import Callable as abcCallable
@@ -194,7 +195,7 @@ def validate_type(type_: Type) -> Type:
         # FIXME: remove this hack when a better solution to handle dynamic
         # generics is found
         # https://github.com/pydantic/pydantic/issues/8354
-        if type_origin is Union:
+        if type_origin is Union or type_origin is getattr(types, "UnionType", Union):
             # as new_arg_types is a tuple, we can directly create a matching Union
             # instance, instead of hacking our way around it:
             # https://stackoverflow.com/a/72884529/3784643
