@@ -66,6 +66,7 @@ from odmantic.field import (
 from odmantic.index import Index, ODMBaseIndex, ODMSingleFieldIndex
 from odmantic.reference import ODMReferenceInfo
 from odmantic.typing import (
+    Annotated,
     GenericAlias,
     dataclass_transform,
     get_args,
@@ -199,6 +200,10 @@ def validate_type(type_: Type) -> Type:
             # instance, instead of hacking our way around it:
             # https://stackoverflow.com/a/72884529/3784643
             type_ = Union[new_arg_types]  # type: ignore
+        elif type_origin is Annotated:
+            # Annotated types must be reconstructed using Annotated[...] syntax
+            # to preserve __metadata__. Using GenericAlias creates a broken type.
+            type_ = Annotated[new_arg_types]  # type: ignore
         else:
             type_ = GenericAlias(type_origin, new_arg_types)  # type: ignore
     return type_
@@ -583,7 +588,7 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
     def model_copy(
         self: BaseT,
         *,
-        update: Optional["DictStrAny"] = None,
+        update: Optional["DictStrAny"] = None,  # type: ignore[override]
         deep: bool = False,
     ) -> BaseT:
         """Duplicate a model, optionally choose which fields to change.
@@ -610,7 +615,9 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
 
         Set them as if they were modified to make sure they are saved in the database.
         """
-        object.__setattr__(self, "__fields_modified__", set(self.model_fields))
+        object.__setattr__(
+            self, "__fields_modified__", set(self.__class__.model_fields)
+        )
         for field_name, field in self.__odm_fields__.items():
             if isinstance(field, ODMEmbedded):
                 value = getattr(self, field_name)
@@ -1007,7 +1014,7 @@ class Model(_BaseODMModel, metaclass=ModelMetaclass):
     ) -> None:
         is_primary_field_in_patch = (
             isinstance(patch_object, BaseModel)
-            and self.__primary_field__ in patch_object.model_fields
+            and self.__primary_field__ in patch_object.__class__.model_fields
         ) or (isinstance(patch_object, dict) and self.__primary_field__ in patch_object)
         if is_primary_field_in_patch:
             if (

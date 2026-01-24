@@ -7,16 +7,19 @@ on:
   schedule:
     - cron: "0 2 * * *"
 
+env:
+  UV_NO_SYNC: true
+
 jobs:
   static-analysis:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
-          python-version: "3.8"
-      - uses: pre-commit/action@v2.0.0
+          python-version: "3.12"
+      - uses: pre-commit/action@v3.0.1
         with:
           extra_args: --all-files
 
@@ -30,7 +33,7 @@ jobs:
           - "3.9"
           - "3.10"
           - "3.11"
-          #- "3.12" # FIXME: async-asgi-testclient doesn't support Python 3.12 yet
+          - "3.12"
         pydantic-version:
           - "2.5.2"
         motor-version:
@@ -39,34 +42,33 @@ jobs:
           - "3.3.2"
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Mongo Service
-        id: mongo-service
-        uses: art049/mongodb-cluster-action@v0
-        with:
-          version: "4.4"
-          mode: standalone
+        run: bash mongodb-cluster/run.sh
+        env:
+          MODE: standalone
+          VERSION: "4.4"
       - name: "Set up Python ${{ matrix.python-version }}"
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "${{ matrix.python-version }}"
-      - name: Cache environment
-        uses: actions/cache@v2
-        id: cache
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v7
         with:
-          path: ${{ env.pythonLocation }}
-          key: env-compatibility-${{ runner.os }}-${{ matrix.python-version }}-${{ matrix.pydantic-version }}-${{ matrix.motor-version }}-${{ hashFiles('pyproject.toml') }}
+          enable-cache: true
+          cache-dependency-glob: |
+            pyproject.toml
+            uv.lock
       - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          pip install ".[test]"
-          pip install "pydantic==${{ matrix.pydantic-version }}" "motor==${{ matrix.motor-version }}"
+          uv sync --locked --no-dev --extra test
+          uv pip install "pymongo<4.9" "pydantic==${{ matrix.pydantic-version }}" "motor==${{ matrix.motor-version }}"
 
       - name: Run compatibility checks.
         run: |
-          python -c "import motor; print(motor.version)" 1>&2
-          python -c "import pydantic; print(pydantic.VERSION)" 1>&2
-          python -m pytest -q -rs
+          uv run python -c "import motor; print(motor.version)" 1>&2
+          uv run python -c "import pydantic; print(pydantic.VERSION)" 1>&2
+          uv run python -m pytest -q -rs
 
   tests:
     runs-on: ubuntu-latest
@@ -78,89 +80,104 @@ jobs:
           - "3.9"
           - "3.10"
           - "3.11"
+          - "3.12"
         mongo-version:
           - "4.4"
           - "5"
           - "6"
         mongo-mode:
           - standalone
+        connection-string:
+          - mongodb://localhost:27017/
         include:
-          - python-version: 3.11
+          - python-version: "3.12"
             mongo-version: 4.0
             mongo-mode: replicaSet
-          - python-version: 3.11
+            connection-string: mongodb://172.16.17.11:27017,172.16.17.12:27017,172.16.17.13:27017/?replicaSet=mongodb-action-replica-set
+          - python-version: "3.12"
             mongo-version: 4.2
             mongo-mode: sharded
+            connection-string: mongodb://172.16.17.10:27017/?retryWrites=false
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
-          cache: pip
-          cache-dependency-path: "pyproject.toml"
-      - name: Mongo Service
-        id: mongo-service
-        uses: art049/mongodb-cluster-action@v0
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v7
         with:
-          version: ${{ matrix.mongo-version }}
-          mode: ${{ matrix.mongo-mode }}
+          enable-cache: true
+          cache-dependency-glob: |
+            pyproject.toml
+            uv.lock
+      - name: Mongo Service
+        run: bash mongodb-cluster/run.sh
+        env:
+          MODE: ${{ matrix.mongo-mode }}
+          VERSION: ${{ matrix.mongo-version }}
       - name: Install dependencies
         run: |
-          pip install flit
-          pip install ".[test]"
+          uv sync --locked --no-dev --extra test
+          uv pip install flit
       - name: Run all tests
         run: |
           set -e
-          coverage run -m pytest -v
-          coverage report -m
-          coverage xml
+          uv run coverage run -m pytest -v
+          uv run coverage report -m
+          uv run coverage xml
         env:
-          TEST_MONGO_URI: ${{ steps.mongo-service.outputs.connection-string }}
+          TEST_MONGO_URI: ${{ matrix.connection-string }}
           TEST_MONGO_MODE: ${{ matrix.mongo-mode }}
 
-      - uses: codecov/codecov-action@v3
+      - uses: codecov/codecov-action@v5
         if: github.event_name != 'schedule' # Don't report coverage for nightly builds
         with:
-          file: ./coverage.xml
           flags: tests-${{ matrix.python-version }}-${{ matrix.mongo-version }}-${{ matrix.mongo-mode }}
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
 
   integrated-realworld-test:
     runs-on: ubuntu-latest
+    env:
+      UV_SYSTEM_PYTHON: true
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           path: odmantic-current
-      - uses: actions/checkout@v4
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+          cache-dependency-glob: |
+            pyproject.toml
+            uv.lock
+      - uses: actions/checkout@v6
         with:
           repository: art049/fastapi-odmantic-realworld-example
           submodules: recursive
           path: fastapi-odmantic-realworld-example
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
       - name: Install poetry and flit
         run: |
-          pipx install poetry
-          pipx install flit
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-          cache: "poetry"
+          uv pip install poetry
+          uv pip install flit
+      - name: Mongo Service
+        run: bash odmantic-current/mongodb-cluster/run.sh
       - name: Install dependencies (w/o ODMantic)
         working-directory: fastapi-odmantic-realworld-example
         run: |
           echo "$(grep -v 'odmantic =' ./pyproject.toml)" > pyproject.toml
-          poetry lock --no-update
-          poetry install
+          poetry lock
+          poetry install --no-root
       - name: Install current ODMantic version
         working-directory: fastapi-odmantic-realworld-example
         run: poetry run pip install ../odmantic-current/
-      - name: Start the MongoDB instance
-        uses: art049/mongodb-cluster-action@v0
-        id: mongodb-cluster-action
       - name: Start the FastAPI server
         working-directory: fastapi-odmantic-realworld-example
         run: |
@@ -172,7 +189,7 @@ jobs:
           done
           echo "Server ready."
         env:
-          MONGO_URI: ${{ steps.mongodb-cluster-action.outputs.connection-string }}
+          MONGO_URI: "mongodb://localhost:27017/"
       - name: Run realworld backend tests
         working-directory: fastapi-odmantic-realworld-example
         run: ./realworld/api/run-api-tests.sh

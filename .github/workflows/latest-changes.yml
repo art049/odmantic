@@ -16,12 +16,12 @@ jobs:
   latest-changes:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v6
         with:
           token: ${{ secrets.GH_W_TOKEN }}
       - name: Disable LFS hooks
         run: rm .git/hooks/post-commit .git/hooks/pre-push
-      - uses: docker://tiangolo/latest-changes:0.0.3
+      - uses: tiangolo/latest-changes@0.4.1
         with:
           token: ${{ secrets.GH_W_TOKEN }}
           template_file: ./.github/latest-changes.jinja2
