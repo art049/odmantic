@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-01-24
+
 #### Features
 
 - ✨ Add support for Python 3.10 Union syntax, like: `name: str | None = None` ([#501](https://github.com/art049/odmantic/pull/501) by [@rhyn0](https://github.com/rhyn0))
@@ -492,4 +494,5 @@ _We comply with the new Pydantic method naming, prefixing them with `model_`_
 [1.0.1]: https://github.com/art049/odmantic/compare/v1.0.0...v1.0.1
 [1.0.2]: https://github.com/art049/odmantic/compare/v1.0.1...v1.0.2
 [1.0.3]: https://github.com/art049/odmantic/compare/v1.0.2...v1.0.3
-[unreleased]: https://github.com/art049/odmantic/compare/v1.0.3...HEAD
+[1.1.0]: https://github.com/art049/odmantic/compare/v1.0.3...v1.1.0
+[unreleased]: https://github.com/art049/odmantic/compare/v1.1.0...HEAD
