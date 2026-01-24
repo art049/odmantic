@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Internal
 
+- ⬆️ bump peaceiris/actions-gh-pages from 3 to 4 ([#526](https://github.com/art049/odmantic/pull/526) by [@dependabot[bot]](https://github.com/apps/dependabot))
+
+
 - ⬆️ bump nwtgck/actions-netlify from 1.1 to 3.0 ([#527](https://github.com/art049/odmantic/pull/527) by [@dependabot[bot]](https://github.com/apps/dependabot))
 
 
