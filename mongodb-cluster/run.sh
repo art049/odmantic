@@ -10,7 +10,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 if [[ "$MODE" == "standalone" ]]; then
   echo "Creating a standalone MongoDB instance"
-  docker run --name odmantic-mongo-test \
+  docker run --rm --name odmantic-mongo-test \
     -p 27017:27017 \
     -d mongo:${VERSION}
   MONGOCSTRING='mongodb://localhost:27017/'
