@@ -2362,7 +2362,7 @@ requires-dist = [
     { name = "fastapi", marker = "extra == 'fastapi'", specifier = ">=0.100.0" },
     { name = "fastapi", marker = "extra == 'test'", specifier = ">=0.104.0,<0.109" },
     { name = "griffe", marker = "extra == 'doc'", specifier = "<1.0" },
-    { name = "httpx", marker = "extra == 'test'", specifier = ">=0.24.1,<0.28" },
+    { name = "httpx", marker = "extra == 'test'", specifier = ">=0.24.1" },
     { name = "inline-snapshot", marker = "extra == 'test'", specifier = ">=0.6.0" },
     { name = "ipython", marker = "extra == 'dev'", specifier = ">=7.16.1" },
     { name = "mkdocs-macros-plugin", marker = "extra == 'doc'", specifier = ">=1.0.4" },
