@@ -59,7 +59,7 @@ jobs:
             pyproject.toml
             uv.lock
       - name: Install dependencies
-        run: uv sync --locked --no-dev --extra test
+        run: uv sync --no-dev --extra test
       - name: Run compatibility checks.
         run: |
           uv run python -c "import motor; print(motor.version)" 1>&2
@@ -119,7 +119,7 @@ jobs:
           MODE: ${{ matrix.mongo-mode }}
           VERSION: ${{ matrix.mongo-version }}
       - name: Install dependencies
-        run: uv sync --locked --no-dev --extra test
+        run: uv sync --no-dev --extra test
       - name: Run all tests
         run: |
           set -e
