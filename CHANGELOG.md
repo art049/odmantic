@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Internal
 
+- 🔨 Auto remove test Docker container when stop, for local dev ([#544](https://github.com/art049/odmantic/pull/544) by [@tiangolo](https://github.com/tiangolo))
+
+
 - ⬆️ bump peaceiris/actions-gh-pages from 3 to 4 ([#526](https://github.com/art049/odmantic/pull/526) by [@dependabot[bot]](https://github.com/apps/dependabot))
 
 
