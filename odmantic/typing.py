@@ -18,15 +18,29 @@ import typing
 import types
 from typing import Callable as TypingCallable
 
-# Copy from Pydantic: pydantic/_internal/_typing_extra.py
+# Copy from Pydantic: pydantic/v1/typing.py
+# This can probably be replaced by the logic in: pydantic/_internal/_typing_extra.py
+# after dropping support for Python 3.8 and 3.9
+try:
+    from typing import GenericAlias as TypingGenericAlias  # type: ignore
+except ImportError:
+    # python < 3.9 does not have GenericAlias (list[int], tuple[str, ...] and so on)
+    TypingGenericAlias = ()
 if sys.version_info < (3, 10):
-    WithArgsTypes: tuple[Any, ...] = (typing._GenericAlias, types.GenericAlias)  # type: ignore[attr-defined]
+
+    def is_union(tp: Union[Type[Any], None]) -> bool:
+        return tp is Union
+
+    WithArgsTypes = (TypingGenericAlias,)
+
 else:
-    WithArgsTypes: tuple[Any, ...] = (
-        typing._GenericAlias,
-        types.GenericAlias,
-        types.UnionType,
-    )
+    import types
+    import typing
+
+    def is_union(tp: Union[Type[Any], None]) -> bool:
+        return tp is Union or tp is types.UnionType  # noqa: E721
+
+    WithArgsTypes = (typing._GenericAlias, types.GenericAlias, types.UnionType)
 
 
 if sys.version_info < (3, 11):
@@ -60,7 +74,7 @@ if TYPE_CHECKING:
 
 
 def lenient_issubclass(
-    cls: Any, class_or_tuple: Union[type[Any], tuple[type[Any], ...], None]
+    cls: Any, class_or_tuple: Union[Type[Any], Tuple[Type[Any], ...], None]
 ) -> bool:
     # Copy of Pydantic: pydantic/_internal/_utils.py
     try:
@@ -70,6 +84,7 @@ def lenient_issubclass(
             return False
         raise  # pragma: no cover
 
+
 def _check_classvar(v: Union[Type[Any], None]) -> bool:
     # Copy of Pydantic: pydantic/v1/typing.py
     # This can probably be replaced by the logic in: pydantic/_internal/_typing_extra.py
@@ -77,7 +92,8 @@ def _check_classvar(v: Union[Type[Any], None]) -> bool:
     if v is None:
         return False
 
-    return v.__class__ == ClassVar.__class__ and getattr(v, '_name', None) == 'ClassVar'
+    return v.__class__ == ClassVar.__class__ and getattr(v, "_name", None) == "ClassVar"
+
 
 def is_classvar(ann_type: Type[Any]) -> bool:
     # Copy of Pydantic: pydantic/v1/typing.py
@@ -88,7 +104,9 @@ def is_classvar(ann_type: Type[Any]) -> bool:
 
     # this is an ugly workaround for class vars that contain forward references and are therefore themselves
     # forward references, see #3679
-    if ann_type.__class__ == ForwardRef and ann_type.__forward_arg__.startswith('ClassVar['):
+    if ann_type.__class__ == ForwardRef and ann_type.__forward_arg__.startswith(
+        "ClassVar["
+    ):
         return True
 
     return False
