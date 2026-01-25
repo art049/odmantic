@@ -62,7 +62,7 @@ test = [
     "requests >= 2.24",
     "pytest-benchmark >= 4.0.0",
     "pytest-codspeed >= 2.1.0",
-    "httpx >=0.24.1,<0.28",
+    "httpx >=0.24.1",
 ]
 fastapi = ["fastapi >=0.100.0"]
 doc = [
