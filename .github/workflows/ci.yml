@@ -34,12 +34,11 @@ jobs:
           - "3.10"
           - "3.11"
           - "3.12"
-        pydantic-version:
-          - "2.5.2"
-        motor-version:
-          - "3.1.1"
-          - "3.2.0"
-          - "3.3.2"
+        uv-resolution:
+          - highest
+          - lowest-direct
+    env:
+        UV_RESOLUTION: ${{ matrix.uv-resolution }}
 
     steps:
       - uses: actions/checkout@v6
@@ -60,10 +59,7 @@ jobs:
             pyproject.toml
             uv.lock
       - name: Install dependencies
-        run: |
-          uv sync --locked --no-dev --extra test
-          uv pip install "pymongo<4.9" "pydantic==${{ matrix.pydantic-version }}" "motor==${{ matrix.motor-version }}"
-
+        run: uv sync --no-dev --extra test
       - name: Run compatibility checks.
         run: |
           uv run python -c "import motor; print(motor.version)" 1>&2
@@ -81,6 +77,9 @@ jobs:
           - "3.10"
           - "3.11"
           - "3.12"
+        uv-resolution:
+          - highest
+          - lowest-direct
         mongo-version:
           - "4.4"
           - "5"
@@ -98,6 +97,8 @@ jobs:
             mongo-version: 4.2
             mongo-mode: sharded
             connection-string: mongodb://172.16.17.10:27017/?retryWrites=false
+    env:
+      UV_RESOLUTION: ${{ matrix.uv-resolution }}
 
     steps:
       - uses: actions/checkout@v6
@@ -118,9 +119,7 @@ jobs:
           MODE: ${{ matrix.mongo-mode }}
           VERSION: ${{ matrix.mongo-version }}
       - name: Install dependencies
-        run: |
-          uv sync --locked --no-dev --extra test
-          uv pip install flit
+        run: uv sync --no-dev --extra test
       - name: Run all tests
         run: |
           set -e
