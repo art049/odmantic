@@ -69,6 +69,7 @@ from odmantic.typing import (
     Annotated,
     GenericAlias,
     dataclass_transform,
+    get_annotations_from_namespace,
     get_args,
     get_first_type_argument_subclassing,
     get_origin,
@@ -216,7 +217,7 @@ class BaseModelMetaclass(pydantic._internal._model_construction.ModelMetaclass):
     ) -> None:
         """Validate the class name space in place"""
         annotations = resolve_annotations(
-            namespace.get("__annotations__", {}), namespace.get("__module__")
+            get_annotations_from_namespace(namespace), namespace.get("__module__")
         )
         config = validate_config(namespace.get("model_config", ODMConfigDict()), name)
         odm_fields: Dict[str, ODMBaseField] = {}
