@@ -545,8 +545,8 @@ class _BaseODMModel(pydantic.BaseModel, metaclass=ABCMeta):
     __slots__ = ("__fields_modified__",)
 
     def __init__(self, **data: Any):
-        super().__init__(**data)
         object.__setattr__(self, "__fields_modified__", set(self.__odm_fields__.keys()))
+        super().__init__(**data)
 
     @classmethod
     # TODO: rename to model_validate
