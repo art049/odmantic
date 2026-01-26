@@ -148,6 +148,8 @@ _IMMUTABLE_TYPES = (
 def is_type_mutable(type_: Type) -> bool:
     type_origin: Optional[Type] = getattr(type_, "__origin__", None)
     if type_origin is not None:
+        if type_origin is Literal:
+            return False
         type_args: Tuple[Type, ...] = getattr(type_, "__args__", ())
         for type_arg in type_args:
             if type_arg is ...:  # Handle tuple definition
