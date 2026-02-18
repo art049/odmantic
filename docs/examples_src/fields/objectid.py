@@ -6,7 +6,7 @@ class Player(Model):
 
 
 leeroy = Player(name="Leeroy Jenkins")
-print(leeroy.id)
+print(repr(leeroy.id))
 #> ObjectId('5ed50fcad11d1975aa3d7a28')
 print(repr(leeroy))
 #> Player(id=ObjectId('5ed50fcad11d1975aa3d7a28'), name="Leeroy Jenkins")
