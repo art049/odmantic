@@ -131,7 +131,7 @@ jobs:
           TEST_MONGO_URI: ${{ matrix.connection-string }}
           TEST_MONGO_MODE: ${{ matrix.mongo-mode }}
 
-      - uses: codecov/codecov-action@v5
+      - uses: codecov/codecov-action@v6
         if: github.event_name != 'schedule' # Don't report coverage for nightly builds
         with:
           flags: tests-${{ matrix.python-version }}-${{ matrix.mongo-version }}-${{ matrix.mongo-mode }}
