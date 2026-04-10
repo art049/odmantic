@@ -739,7 +739,7 @@ class SyncEngine(BaseEngine):
         """
         if client is None:
             client = MongoClient(driver=_DRIVER_INFO)
-        else:
+        elif hasattr(client, "append_metadata"):
             client.append_metadata(_DRIVER_INFO)
         super().__init__(client=client, database=database)
 
