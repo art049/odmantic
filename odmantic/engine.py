@@ -1,3 +1,4 @@
+from importlib.metadata import version as _get_version
 from typing import (
     Any,
     AsyncGenerator,
@@ -24,6 +25,7 @@ from pymongo.client_session import ClientSession
 from pymongo.collection import Collection
 from pymongo.command_cursor import CommandCursor
 from pymongo.database import Database
+from pymongo.driver_info import DriverInfo
 
 from odmantic.exceptions import DocumentNotFoundError, DuplicateKeyError
 from odmantic.field import FieldProxy, ODMReference
@@ -52,6 +54,8 @@ try:
 except ImportError:  # pragma: no cover
     motor = None
 
+
+_DRIVER_INFO = DriverInfo(name="ODMantic", version=_get_version("odmantic"))
 
 ModelType = TypeVar("ModelType", bound=Model)
 
@@ -322,7 +326,7 @@ class AIOEngine(BaseEngine):
                 + 'pip install "odmantic[motor]"'
             )
         if client is None:
-            client = AsyncIOMotorClient()
+            client = AsyncIOMotorClient(driver=_DRIVER_INFO)
         super().__init__(client=client, database=database)
 
     def get_collection(self, model: Type[ModelType]) -> "AsyncIOMotorCollection":
@@ -733,7 +737,9 @@ class SyncEngine(BaseEngine):
             database: name of the database to use
         """
         if client is None:
-            client = MongoClient()
+            client = MongoClient(driver=_DRIVER_INFO)
+        elif hasattr(client, "append_metadata"):
+            client.append_metadata(_DRIVER_INFO)
         super().__init__(client=client, database=database)
 
     def get_collection(self, model: Type[ModelType]) -> "Collection":

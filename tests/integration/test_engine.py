@@ -1,4 +1,5 @@
 from typing import Dict, List, Optional, Tuple
+from unittest.mock import MagicMock
 
 import pytest
 from bson import ObjectId as BsonObjectId
@@ -40,6 +41,12 @@ def test_no_motor_raises_for_aioengine_client_creation():
 def test_default_pymongo_client_creation():
     engine = SyncEngine()
     assert isinstance(engine.client, MongoClient)
+
+
+def test_sync_engine_calls_append_metadata_on_existing_client():
+    client = MagicMock()
+    SyncEngine(client=client)
+    client.append_metadata.assert_called_once()
 
 
 def test_no_motor_passes_with_syncengine_client_creation():
