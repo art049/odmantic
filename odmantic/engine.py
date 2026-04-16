@@ -1,3 +1,4 @@
+from importlib.metadata import version as _get_version
 from typing import (
     Any,
     AsyncGenerator,
@@ -17,8 +18,6 @@ from typing import (
     Union,
     cast,
 )
-
-from importlib.metadata import version as _get_version
 
 import pymongo
 from pymongo import MongoClient
