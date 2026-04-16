@@ -44,7 +44,7 @@ def test_default_pymongo_client_creation():
 
 
 def test_sync_engine_calls_append_metadata_on_existing_client():
-    client = MagicMock(spec=MongoClient)
+    client = MagicMock()
     SyncEngine(client=client)
     client.append_metadata.assert_called_once()
 
