@@ -1,0 +1,65 @@
+networks:
+  main-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: "172.16.17.0/24"
+
+x-mongo-base: &mongo-base
+  image: "mongo:${VERSION}"
+  volumes:
+    - ./:/scripts
+
+services:
+  router:
+    <<: *mongo-base
+    command: mongos --configdb config-rs/172.16.17.11:27019 --bind_ip_all
+    networks:
+      main-net:
+        ipv4_address: 172.16.17.10
+
+  configsvr:
+    <<: *mongo-base
+    command: mongod --configsvr --replSet config-rs #Port 27019
+    networks:
+      main-net:
+        ipv4_address: 172.16.17.11
+
+  shard0a:
+    <<: *mongo-base
+    command: mongod --replSet shard0 --shardsvr # Port: 27018
+    networks:
+      main-net:
+        ipv4_address: 172.16.17.20
+  shard0b:
+    <<: *mongo-base
+    command: mongod --replSet shard0 --shardsvr # Port: 27018
+    networks:
+      main-net:
+        ipv4_address: 172.16.17.21
+
+  shard1a:
+    <<: *mongo-base
+    command: mongod --replSet shard1 --shardsvr # Port: 27018
+    networks:
+      main-net:
+        ipv4_address: 172.16.17.30
+  shard1b:
+    <<: *mongo-base
+    command: mongod --replSet shard1 --shardsvr # Port: 27018
+    networks:
+      main-net:
+        ipv4_address: 172.16.17.31
+
+  shard2a:
+    <<: *mongo-base
+    command: mongod --replSet shard2 --shardsvr # Port: 27018
+    networks:
+      main-net:
+        ipv4_address: 172.16.17.40
+  shard2b:
+    <<: *mongo-base
+    command: mongod --replSet shard2 --shardsvr # Port: 27018
+    networks:
+      main-net:
+        ipv4_address: 172.16.17.41

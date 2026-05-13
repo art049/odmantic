@@ -5,6 +5,67 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+#### Internal
+
+- ⬆️ Bump httpx version for tests ([#545](https://github.com/art049/odmantic/pull/545) by [@tiangolo](https://github.com/tiangolo))
+
+
+- 🔨 Auto remove test Docker container when stop, for local dev ([#544](https://github.com/art049/odmantic/pull/544) by [@tiangolo](https://github.com/tiangolo))
+
+
+- ⬆️ bump peaceiris/actions-gh-pages from 3 to 4 ([#526](https://github.com/art049/odmantic/pull/526) by [@dependabot[bot]](https://github.com/apps/dependabot))
+
+
+- ⬆️ bump nwtgck/actions-netlify from 1.1 to 3.0 ([#527](https://github.com/art049/odmantic/pull/527) by [@dependabot[bot]](https://github.com/apps/dependabot))
+
+
+- ⬆️ bump filelock from 3.16.1 to 3.20.3 ([#537](https://github.com/art049/odmantic/pull/537) by [@dependabot[bot]](https://github.com/apps/dependabot))
+
+
+- ⬆️ bump wheel from 0.45.1 to 0.46.2 ([#543](https://github.com/art049/odmantic/pull/543) by [@dependabot[bot]](https://github.com/apps/dependabot))
+
+## [1.1.0] - 2026-01-24
+
+#### Features
+
+- ✨ Add support for Python 3.10 Union syntax, like: `name: str | None = None` ([#501](https://github.com/art049/odmantic/pull/501) by [@rhyn0](https://github.com/rhyn0))
+
+## [1.0.3] - 2026-01-21
+
+#### Fixes
+
+- 🐛 Fix compatibility with latest Pydantic, upgrade locked dependencies with uv ([#522](https://github.com/art049/odmantic/pull/522) by [@tiangolo](https://github.com/tiangolo))
+
+- Access `model_fields` on class and not instance ([#510](https://github.com/art049/odmantic/pull/510) by [@sydney-runkle](https://github.com/sydney-runkle))
+
+#### Internal
+
+- 📝 Update release notes ([#541](https://github.com/art049/odmantic/pull/541) by [@tiangolo](https://github.com/tiangolo))
+
+- 👷 Update release CI, use uv ([#520](https://github.com/art049/odmantic/pull/520) by [@tiangolo](https://github.com/tiangolo))
+
+- 👷 Fix CI ([#519](https://github.com/art049/odmantic/pull/519) by [@tiangolo](https://github.com/tiangolo))
+
+- 👷 Make pre-commit run with Python 3.12 in CI ([#539](https://github.com/art049/odmantic/pull/539) by [@tiangolo](https://github.com/tiangolo))
+
+
+- ⬆️ Add Python 3.12 to CI ([#538](https://github.com/art049/odmantic/pull/538) by [@tiangolo](https://github.com/tiangolo))
+
+
+- ⬆️ Unpin dev dependencies, use uv.lock and upgrade ([#536](https://github.com/art049/odmantic/pull/536) by [@tiangolo](https://github.com/tiangolo))
+
+
+- 👷 Remove not used config in Codcov ([#525](https://github.com/art049/odmantic/pull/525) by [@tiangolo](https://github.com/tiangolo))
+
+
+- 👷 Update dependabot, set up Dependabot for GitHub Actions ([#524](https://github.com/art049/odmantic/pull/524) by [@tiangolo](https://github.com/tiangolo))
+
+
+- 👷 Update GitHub Actions versions ([#523](https://github.com/art049/odmantic/pull/523) by [@tiangolo](https://github.com/tiangolo))
+
+
+- 👷 Upgrade GitHub Action latest-changes ([#521](https://github.com/art049/odmantic/pull/521) by [@tiangolo](https://github.com/tiangolo))
+
 ## [1.0.2] - 2024-04-26
 
 ### Fixed
@@ -451,4 +512,6 @@ _We comply with the new Pydantic method naming, prefixing them with `model_`_
 [1.0.0]: https://github.com/art049/odmantic/compare/v0.9.2...v1.0.0
 [1.0.1]: https://github.com/art049/odmantic/compare/v1.0.0...v1.0.1
 [1.0.2]: https://github.com/art049/odmantic/compare/v1.0.1...v1.0.2
-[unreleased]: https://github.com/art049/odmantic/compare/v1.0.2...HEAD
+[1.0.3]: https://github.com/art049/odmantic/compare/v1.0.2...v1.0.3
+[1.1.0]: https://github.com/art049/odmantic/compare/v1.0.3...v1.1.0
+[unreleased]: https://github.com/art049/odmantic/compare/v1.1.0...HEAD
