@@ -350,7 +350,7 @@ class AIOEngine(BaseEngine):
         models: Sequence[Type[ModelType]],
         *,
         update_existing_indexes: bool = False,
-        session: SyncSessionType = None,
+        session: AIOSessionType = None,
     ) -> None:
         """Apply model constraints to the database.
 
